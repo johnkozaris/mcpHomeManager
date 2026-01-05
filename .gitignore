@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.coverage
+.coverage.*
+
+# Root-level package manager artifacts (frontend has its own)
+/package.json
+/pnpm-lock.yaml
+/yarn.lock
+
+# Linter caches
+.ruff_cache/
+
+# Build output
+dist/
+build/
+*.egg-info/
+*.tsbuildinfo
+frontend/test-results/
+frontend/playwright-report/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# AI assistant config
+.claude/
+CLAUDE.md
+frontend/CLAUDE.md
+.github/copilot-instructions.md
+.github/lsp.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Alembic
+alembic/versions/*.pyc
+
+# Snyk Security Extension - AI Rules (auto-generated)
+.github/instructions/snyk_rules.instructions.md
