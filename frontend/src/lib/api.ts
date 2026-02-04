@@ -1,0 +1,355 @@
+import type {
+  AppConfig,
+  AppDefinition,
+  AuditListResponse,
+  CreateServiceRequest,
+  CreateUserRequest,
+  DiscoveredService,
+  GenericToolDefinition,
+  HealthResponse,
+  ImportResult,
+  OpenAPIImportResult,
+  PermissionProfile,
+  ServiceConnection,
+  ServiceDetail,
+  SetupResponse,
+  SmtpConfigResponse,
+  TestResult,
+  ToolDefinition,
+  UpdateServiceRequest,
+  User,
+} from "./types";
+
+const BASE = "/api";
+const LOGGED_IN_KEY = "logged_in";
+const USERNAME_KEY = "username";
+const AUTH_STATE_CHANGED_EVENT = "mcp-home:auth-state-changed";
+
+class UnauthorizedError extends Error {
+  readonly status = 401;
+
+  constructor(message: string) {
+    super(message);
+    this.name = "UnauthorizedError";
+  }
+}
+
+function emitAuthStateChanged(): void {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event(AUTH_STATE_CHANGED_EVENT));
+  }
+}
+
+export function onAuthStateChanged(listener: () => void): () => void {
+  if (typeof window === "undefined") {
+    return () => {};
+  }
+
+  window.addEventListener(AUTH_STATE_CHANGED_EVENT, listener);
+  return () => window.removeEventListener(AUTH_STATE_CHANGED_EVENT, listener);
+}
+
+export function hasSessionToken(): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  return localStorage.getItem(LOGGED_IN_KEY) === "1";
+}
+
+/** Mark session as active (flag only — token is in httpOnly cookie). */
+export function setSessionToken(token: string | null): void {
+  if (token) {
+    localStorage.setItem(LOGGED_IN_KEY, "1");
+  } else {
+    localStorage.removeItem(LOGGED_IN_KEY);
+  }
+
+  emitAuthStateChanged();
+}
+
+/**
+ * Session auth uses httpOnly cookies (sent automatically by the browser).
+ * No Authorization header needed for web session requests.
+ */
+function authHeaders(): Record<string, string> {
+  return {};
+}
+
+async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(`${BASE}${path}`, {
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      ...authHeaders(),
+      ...init?.headers,
+    },
+    ...init,
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "Unknown error");
+    // On 401, clear stored credentials and let route guards / UI handle navigation.
+    if (res.status === 401 && !path.startsWith("/auth/")) {
+      clearSession();
+      throw new UnauthorizedError(text || "Unauthorized");
+    }
+    throw new Error(`${res.status}: ${text}`);
+  }
+  if (res.status === 204) return undefined as T;
+  return res.json() as Promise<T>;
+}
+
+/** Clear all session data (local flags — server cookie is cleared via /api/auth/logout). */
+export function clearSession(): void {
+  localStorage.removeItem(LOGGED_IN_KEY);
+  localStorage.removeItem(USERNAME_KEY);
+  emitAuthStateChanged();
+}
+
+// Services
+export const api = {
+  auth: {
+    login: (username: string, password: string) =>
+      request<{ token: string; username: string; is_admin: boolean }>(
+        "/auth/login",
+        {
+          method: "POST",
+          body: JSON.stringify({ username, password }),
+        },
+      ),
+    me: () =>
+      request<{
+        username: string;
+        is_admin: boolean;
+        allowed_service_ids: string[];
+        has_api_key: boolean;
+      }>("/auth/me"),
+    createApiKey: () =>
+      request<{ api_key: string }>("/auth/api-key", { method: "POST" }),
+    revokeApiKey: () => request<void>("/auth/api-key", { method: "DELETE" }),
+    forgotPassword: (email: string) =>
+      request<{ status: string }>("/auth/forgot-password", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+      }),
+    resetPassword: (token: string, password: string) =>
+      request<{ status: string }>("/auth/reset-password", {
+        method: "POST",
+        body: JSON.stringify({ token, password }),
+      }),
+  },
+
+  setup: {
+    status: () => request<{ setup_required: boolean }>("/setup/status"),
+    create: (data: { username: string; password: string; email?: string }) =>
+      request<SetupResponse>("/setup/", {
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
+  },
+
+  services: {
+    list: () => request<ServiceConnection[]>("/services/"),
+    get: (id: string) => request<ServiceDetail>(`/services/${id}`),
+    create: (data: CreateServiceRequest) =>
+      request<ServiceConnection>("/services/", {
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
+    update: (id: string, data: UpdateServiceRequest) =>
+      request<ServiceConnection>(`/services/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      }),
+    delete: (id: string) =>
+      request<void>(`/services/${id}`, { method: "DELETE" }),
+    test: (id: string) =>
+      request<TestResult>(`/services/${id}/test`, { method: "POST" }),
+    getProfiles: (id: string) =>
+      request<PermissionProfile[]>(`/services/${id}/profiles`),
+    applyProfile: (id: string, profileName: string) =>
+      request<{ status: string; profile: string }>(
+        `/services/${id}/apply-profile`,
+        {
+          method: "POST",
+          body: JSON.stringify({ profile_name: profileName }),
+        },
+      ),
+    exportYaml: async () => {
+      const res = await fetch(`${BASE}/services/export`, {
+        credentials: "same-origin",
+        headers: authHeaders(),
+      });
+      if (!res.ok) throw new Error(`${res.status}: ${await res.text()}`);
+      return res.text();
+    },
+    importYaml: (yamlContent: string, tokenMap: Record<string, string>) =>
+      request<ImportResult>("/services/import", {
+        method: "POST",
+        body: JSON.stringify({
+          yaml_content: yamlContent,
+          token_map: tokenMap,
+        }),
+      }),
+  },
+
+  tools: {
+    list: () => request<ToolDefinition[]>("/tools/"),
+    updatePermission: (
+      serviceId: string,
+      toolName: string,
+      data: {
+        is_enabled: boolean;
+        description_override?: string | null;
+        parameters_schema_override?: Record<string, unknown> | null;
+      },
+    ) =>
+      request<ToolDefinition>(`/tools/${serviceId}/${toolName}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      }),
+  },
+
+  audit: {
+    list: (params?: {
+      limit?: number;
+      offset?: number;
+      service_name?: string;
+      tool_name?: string;
+      status?: string;
+      created_after?: string;
+      created_before?: string;
+    }) => {
+      const search = new URLSearchParams();
+      if (params?.limit != null) search.set("limit", String(params.limit));
+      if (params?.offset != null) search.set("offset", String(params.offset));
+      if (params?.service_name) search.set("service_name", params.service_name);
+      if (params?.tool_name) search.set("tool_name", params.tool_name);
+      if (params?.status) search.set("status", params.status);
+      if (params?.created_after)
+        search.set("created_after", params.created_after);
+      if (params?.created_before)
+        search.set("created_before", params.created_before);
+      const qs = search.toString();
+      return request<AuditListResponse>(`/audit/${qs ? `?${qs}` : ""}`);
+    },
+  },
+
+  health: {
+    check: () => request<HealthResponse>("/health/"),
+    config: () => request<AppConfig>("/health/config"),
+  },
+
+  admin: {
+    getSmtp: () => request<SmtpConfigResponse>("/admin/smtp"),
+    updateSmtp: (data: {
+      host: string;
+      port: number;
+      username?: string | null;
+      password?: string | null;
+      from_email: string;
+      use_tls: boolean;
+      is_enabled: boolean;
+    }) =>
+      request<SmtpConfigResponse>("/admin/smtp", {
+        method: "PUT",
+        body: JSON.stringify(data),
+      }),
+    testSmtp: () =>
+      request<{ success: boolean; message: string }>("/admin/smtp/test", {
+        method: "POST",
+      }),
+    getSelfMcp: () => request<{ enabled: boolean }>("/admin/self-mcp"),
+    setSelfMcp: (enabled: boolean) =>
+      request<{ enabled: boolean }>("/admin/self-mcp", {
+        method: "PUT",
+        body: JSON.stringify({ enabled }),
+      }),
+  },
+
+  discovery: {
+    scan: () => request<DiscoveredService[]>("/discovery/"),
+  },
+
+  users: {
+    list: () => request<User[]>("/users/"),
+    create: (data: CreateUserRequest) =>
+      request<User>("/users/", {
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
+    delete: (id: string) => request<void>(`/users/${id}`, { method: "DELETE" }),
+    update: (
+      id: string,
+      data: {
+        is_admin?: boolean;
+        self_mcp_enabled?: boolean;
+        allowed_service_ids?: string[];
+      },
+    ) =>
+      request<User>(`/users/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      }),
+  },
+
+  genericTools: {
+    create: (serviceId: string, data: GenericToolDefinition) =>
+      request<{ status: string; tool_name: string; tools_count: number }>(
+        `/services/${serviceId}/tools`,
+        { method: "POST", body: JSON.stringify(data) },
+      ),
+    importOpenapi: (serviceId: string, spec: string) =>
+      request<OpenAPIImportResult>(`/services/${serviceId}/import-openapi`, {
+        method: "POST",
+        body: JSON.stringify({ spec }),
+      }),
+    delete: (serviceId: string, toolName: string) =>
+      request<void>(
+        `/services/${serviceId}/tools/${encodeURIComponent(toolName)}`,
+        { method: "DELETE" },
+      ),
+    update: (
+      serviceId: string,
+      toolName: string,
+      data: Record<string, unknown>,
+    ) =>
+      request<{ status: string; tool_name: string; tools_count: number }>(
+        `/services/${serviceId}/tools/${encodeURIComponent(toolName)}`,
+        { method: "PATCH", body: JSON.stringify(data) },
+      ),
+    testTool: (serviceId: string, toolName: string) =>
+      request<{ success: boolean; message: string }>(
+        `/services/${serviceId}/tools/${encodeURIComponent(toolName)}/test`,
+        { method: "POST" },
+      ),
+  },
+
+  apps: {
+    list: () => request<AppDefinition[]>("/tools/apps"),
+    render: (name: string, args: Record<string, unknown> = {}) =>
+      fetch(`${BASE}/tools/apps/${encodeURIComponent(name)}/render`, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json", ...authHeaders() },
+        body: JSON.stringify(args),
+      }).then(async (res) => {
+        if (!res.ok) throw new Error(`${res.status}: ${await res.text()}`);
+        return res.text();
+      }),
+    action: (
+      name: string,
+      action: string,
+      payload: Record<string, unknown> = {},
+    ) =>
+      fetch(`${BASE}/tools/apps/${encodeURIComponent(name)}/action`, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json", ...authHeaders() },
+        body: JSON.stringify({ action, payload }),
+      }).then(async (res) => {
+        if (!res.ok) throw new Error(`${res.status}: ${await res.text()}`);
+        return res.text();
+      }),
+  },
+};
