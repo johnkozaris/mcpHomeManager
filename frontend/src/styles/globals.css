@@ -1,0 +1,357 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── Tailwind v4 theme tokens ─────────────────────────────── */
+@theme {
+  --color-canvas: var(--canvas);
+  --color-canvas-secondary: var(--canvas-secondary);
+  --color-canvas-tertiary: var(--canvas-tertiary);
+  --color-canvas-hover: var(--canvas-hover);
+
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+
+  --color-ink: var(--ink);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-tertiary: var(--ink-tertiary);
+  --color-ink-faint: var(--ink-faint);
+
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-line-hover: var(--line-hover);
+
+  --color-terra: var(--terra);
+  --color-terra-light: var(--terra-light);
+  --color-terra-dark: var(--terra-dark);
+  --color-terra-bg: var(--terra-bg);
+
+  --color-sage: var(--sage);
+  --color-sage-bg: var(--sage-bg);
+  --color-clay: var(--clay);
+  --color-clay-bg: var(--clay-bg);
+  --color-rust: var(--rust);
+  --color-rust-bg: var(--rust-bg);
+  --color-info: var(--info);
+  --color-info-bg: var(--info-bg);
+  --color-coral: var(--coral);
+  --color-coral-bg: var(--coral-bg);
+  --color-stone: var(--stone);
+  --color-stone-bg: var(--stone-bg);
+
+  --font-sans:
+    "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", Menlo, monospace;
+
+  --text-2xs: 0.75rem;
+  --text-2xs--line-height: 1.125rem;
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.25rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.375rem;
+  --text-base: 0.9375rem;
+  --text-base--line-height: 1.625rem;
+  --text-lg: 1.0625rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.3125rem;
+  --text-xl--line-height: 1.875rem;
+  --text-2xl: 1.625rem;
+  --text-2xl--line-height: 2.125rem;
+  --text-3xl: 2rem;
+  --text-3xl--line-height: 2.5rem;
+  --text-4xl: 2.75rem;
+  --text-4xl--line-height: 3.25rem;
+  --text-4xl--letter-spacing: -0.02em;
+
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
+
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 0 0 1px var(--line), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-elevated: 0 0 0 1px var(--line), 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-focus: 0 0 0 2px var(--canvas), 0 0 0 4px var(--terra);
+}
+
+/* ─── Light theme ─────────────────────────────────────────── */
+:root {
+  --canvas: #f5f4ef;
+  --canvas-secondary: #eceae3;
+  --canvas-tertiary: #e3e0d8;
+  --canvas-hover: #dbd8cf;
+
+  --surface: #ffffff;
+  --surface-hover: #faf9f6;
+
+  --ink: #1a1816;
+  --ink-secondary: #4a4641;
+  --ink-tertiary: #78736b;
+  --ink-faint: #b8b2a8;
+
+  --line: rgba(0, 0, 0, 0.06);
+  --line-strong: rgba(0, 0, 0, 0.1);
+  --line-hover: rgba(0, 0, 0, 0.14);
+
+  --terra: #4a7cc9;
+  --terra-light: #5d8dd4;
+  --terra-dark: #3a6cb8;
+  --terra-bg: #edf2fb;
+
+  --coral: #c4634a;
+  --coral-bg: #fdf0ec;
+
+  --sage: #3d8f56;
+  --sage-bg: #ecf5ef;
+  --clay: #b8861e;
+  --clay-bg: #fdf5e6;
+  --rust: #c04040;
+  --rust-bg: #fdeeed;
+  --info: #4878a8;
+  --info-bg: #eaf0f7;
+  --stone: #8c877f;
+  --stone-bg: #efeee8;
+
+  color-scheme: light;
+}
+
+/* ─── Dark theme ──────────────────────────────────────────── */
+.dark {
+  --canvas: #1a1918;
+  --canvas-secondary: #222120;
+  --canvas-tertiary: #2c2b29;
+  --canvas-hover: #363533;
+
+  --surface: #282726;
+  --surface-hover: #323130;
+
+  --ink: #f5f2ef;
+  --ink-secondary: #d5d0c9;
+  --ink-tertiary: #a8a29a;
+  --ink-faint: #5c5854;
+
+  --line: rgba(255, 255, 255, 0.06);
+  --line-strong: rgba(255, 255, 255, 0.1);
+  --line-hover: rgba(255, 255, 255, 0.14);
+
+  --terra: #7ea8d8;
+  --terra-light: #96bce3;
+  --terra-dark: #6694cc;
+  --terra-bg: #1e2a3a;
+
+  --coral: #d88068;
+  --coral-bg: #2e2422;
+
+  --sage: #5aaa70;
+  --sage-bg: #1e2c22;
+  --clay: #d4a038;
+  --clay-bg: #2c2720;
+  --rust: #d45555;
+  --rust-bg: #2e2020;
+  --info: #6898c0;
+  --info-bg: #1e2630;
+  --stone: #6e6a64;
+  --stone-bg: #282724;
+
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-elevated:
+    0 4px 16px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-focus: 0 0 0 2px var(--canvas), 0 0 0 4px var(--terra);
+
+  color-scheme: dark;
+}
+
+/* ─── Base ────────────────────────────────────────────────── */
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  body {
+    @apply bg-canvas text-ink antialiased;
+    font-weight: 425;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--terra) 25%, transparent);
+    color: var(--ink);
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--ink-faint);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ink-tertiary);
+  }
+}
+
+/* ─── Service brand colors (theme-independent) ──────────── */
+:root,
+.dark {
+  --brand-forgejo: #e07035;
+  --brand-homeassistant: #049cdb;
+  --brand-paperless: #2da540;
+  --brand-immich: #4250ee;
+  --brand-nextcloud: #0082c9;
+  --brand-uptimekuma: #5cdd8b;
+  --brand-adguard: #68bc71;
+  --brand-nginxproxymanager: #f15833;
+  --brand-portainer: #13bef9;
+  --brand-freshrss: #f89d35;
+  --brand-wallabag: #97c153;
+  --brand-stirlingpdf: #e74c3c;
+  --brand-wikijs: #1976d2;
+  --brand-calibreweb: #8b4513;
+  --brand-cloudflare: #f38020;
+  --brand-tailscale: #4a8eff;
+  --brand-generic-rest: #8b5cf6;
+}
+
+/* ─── Terminal chrome (always dark) ───────────────────────── */
+:root,
+.dark {
+  --terminal-bg: #1e1e1e;
+  --terminal-title: #2d2d2d;
+  --terminal-text: #d4d4d4;
+  --terminal-label: #999;
+  --terminal-border: #333;
+  --terminal-dot-red: #ff5f57;
+  --terminal-dot-yellow: #febc2e;
+  --terminal-dot-green: #28c840;
+}
+
+/* ─── Component classes ────────────────────────────────────── */
+@layer components {
+  /* Cards — borderless with subtle shadow, smooth hover elevation */
+  .card {
+    @apply bg-surface rounded-2xl;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.06),
+      0 1px 2px rgba(0, 0, 0, 0.04);
+    transition:
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+  .card:hover {
+    box-shadow:
+      0 6px 16px rgba(0, 0, 0, 0.1),
+      0 2px 6px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+  }
+  .card:active {
+    transform: translateY(0);
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.06),
+      0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+  .dark .card {
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.2),
+      0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+  .dark .card:hover {
+    box-shadow:
+      0 6px 20px rgba(0, 0, 0, 0.3),
+      0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  .input-field {
+    @apply w-full rounded-xl bg-canvas border border-line-strong px-4 py-3
+           text-base text-ink placeholder:text-ink-tertiary
+           focus:outline-none focus:shadow-focus focus:border-transparent
+           disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-canvas-secondary
+           transition-all duration-150;
+  }
+
+  .page-header {
+    @apply text-2xl font-bold tracking-tight text-ink;
+  }
+
+  .page-description {
+    @apply text-sm text-ink-secondary mt-1;
+  }
+
+  .section-label {
+    @apply text-xs font-semibold text-ink-tertiary uppercase tracking-wider;
+  }
+
+  /* Filter pills — rounded-full for modern pill shape */
+  .chip {
+    @apply px-3.5 py-1.5 rounded-full text-sm font-medium transition-all cursor-pointer;
+  }
+  .chip-active {
+    @apply bg-terra text-white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  }
+  .chip-inactive {
+    @apply text-ink-secondary hover:text-ink hover:bg-canvas-tertiary;
+  }
+
+  /* Hero gradient banner — soft blue-to-teal, clean and modern */
+  .hero-banner {
+    background: linear-gradient(135deg, #3a6b8c 0%, #4a88a8 40%, #4a9a8e 100%);
+  }
+  .dark .hero-banner {
+    background: linear-gradient(135deg, #1e3446 0%, #1e4458 40%, #1e4e46 100%);
+  }
+
+  /* Tool card — elevated surface with subtle hover */
+  .tool-card {
+    @apply bg-surface rounded-2xl overflow-hidden;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.06),
+      0 1px 2px rgba(0, 0, 0, 0.04);
+    transition:
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+  .tool-card:hover {
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.08),
+      0 2px 4px rgba(0, 0, 0, 0.04);
+    transform: translateY(-1px);
+  }
+
+  /* Dark warm sidebar */
+  .sidebar {
+    background: #1e1c1a;
+    color: #c8c4bc;
+    overflow: hidden;
+  }
+  .dark .sidebar {
+    background: #141312;
+  }
+
+  .sidebar-link {
+    padding: 10px 14px;
+    border-radius: var(--radius-lg);
+    color: #9a958d;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #e8e4dc;
+  }
+  .sidebar-link-active {
+    padding: 10px 14px;
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    box-shadow: inset 3px 0 0 var(--terra);
+  }
+}
