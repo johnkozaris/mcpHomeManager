@@ -24,3 +24,4 @@ class IServiceClient(ABC):
     async def close(self) -> None:
         """Release underlying HTTP resources."""
         ...
+
