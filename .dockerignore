@@ -1,0 +1,39 @@
+# VCS & IDE
+.git
+.github
+.vscode
+
+# Python
+.venv
+__pycache__
+*.pyc
+*.pyo
+
+# Node
+node_modules
+dist
+
+# Environment & secrets
+.env
+.env.local
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation & non-runtime files
+FUTURE_IDEAS.md
+CONTRIBUTING.md
+TESTING.md
+CLAUDE.md
+*.md
+!README.md
+
+# Tests (not needed in production image)
+backend/tests/
+frontend/src/**/*.test.tsx
+frontend/src/**/*.test.ts
+frontend/vitest.config.ts
+
