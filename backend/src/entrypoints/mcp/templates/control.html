@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ service.display_name }} — {{ app_name }}{% endblock %}
+{% block content %}
+<div class="header">
+  <span class="icon">{{ service.service_type | service_icon }}</span>
+  <h1>{{ service.display_name }}</h1>
+  <span class="badge {{ service.health_status | status_color }}">{{ service.health_status | status_label }}</span>
+</div>
+
+<div class="card" style="margin-bottom: 16px;">
+  <table>
+    <tr>
+      <td style="color: var(--text-muted); width: 100px;">Name</td>
+      <td>{{ service.name }}</td>
+    </tr>
+    <tr>
+      <td style="color: var(--text-muted);">Type</td>
+      <td>{{ service.service_type }}</td>
+    </tr>
+    <tr>
+      <td style="color: var(--text-muted);">URL</td>
+      <td style="font-family: monospace; font-size: 12px;">{{ service.base_url }}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="section-title">Available Tools ({{ tools | length }})</div>
+{% if tools %}
+<div style="display: flex; flex-direction: column; gap: 8px;">
+  {% for tool in tools %}
+  <div class="card tool-card">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <span class="tool-name">{{ tool.name }}</span>
+      {% if tool.is_enabled %}
+      <span class="badge status-healthy">enabled</span>
+      {% else %}
+      <span class="badge status-unknown">disabled</span>
+      {% endif %}
+    </div>
+    <div class="tool-desc">{{ tool.description }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card empty">No tools registered for this service.</div>
+{% endif %}
+{% endblock %}

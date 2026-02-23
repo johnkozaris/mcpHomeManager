@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Forgejo Repositories{% endblock %}
+{% block content %}
+<div class="header">
+  <span class="icon">&#128421;</span>
+  <div>
+    <h1>Repository Browser</h1>
+    <span class="subtitle">{{ repos | length }} repositories{% if owner_filter %} for {{ owner_filter }}{% endif %}</span>
+  </div>
+</div>
+
+{% if repos %}
+<div class="grid">
+  {% for repo in repos %}
+  <div class="card" style="padding: 14px 16px;">
+    <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">
+      {{ repo.full_name or repo.name }}
+    </div>
+    {% if repo.description %}
+    <div style="color: var(--text-muted); font-size: 12px; margin-bottom: 8px;">
+      {{ repo.description }}
+    </div>
+    {% endif %}
+    <div style="display: flex; gap: 12px; font-size: 11px; color: var(--text-muted);">
+      {% if repo.stars_count is defined %}
+      <span>&#9733; {{ repo.stars_count }}</span>
+      {% endif %}
+      {% if repo.forks_count is defined %}
+      <span>&#128274; {{ repo.forks_count }}</span>
+      {% endif %}
+      {% if repo.updated_at %}
+      <span>Updated {{ repo.updated_at | time_ago }}</span>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty">No repositories found{% if owner_filter %} for "{{ owner_filter }}"{% endif %}.</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — {{ app_name }}{% endblock %}
+{% block content %}
+<div class="header">
+  <h1>Dashboard</h1>
+  <span class="subtitle">Service health &amp; recent activity</span>
+</div>
+
+<div class="stat-row">
+  <div class="card stat">
+    <div class="value">{{ stats.services_total }}</div>
+    <div class="label">Services</div>
+  </div>
+  <div class="card stat">
+    <div class="value status-healthy">{{ stats.services_healthy }}</div>
+    <div class="label">Healthy</div>
+  </div>
+  <div class="card stat">
+    <div class="value">{{ stats.tools_enabled }}</div>
+    <div class="label">Tools</div>
+  </div>
+</div>
+
+<div class="section-title">Services</div>
+{% if services %}
+<div class="grid">
+  {% for svc in services %}
+  <div class="card">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+      <span class="icon">{{ svc.service_type | service_icon }}</span>
+      <strong>{{ svc.display_name }}</strong>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <span class="badge {{ svc.health_status | status_color }}">{{ svc.health_status | status_label }}</span>
+      <span style="color: var(--text-muted); font-size: 12px;">{{ svc.tool_count }} tool{{ "s" if svc.tool_count != 1 }}</span>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card empty">No services connected yet.</div>
+{% endif %}
+
+<div class="section-title" style="margin-top: 16px;">Recent Activity</div>
+{% if recent_logs %}
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Tool</th>
+        <th>Service</th>
+        <th>Status</th>
+        <th>Duration</th>
+        <th>When</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for log in recent_logs %}
+      <tr>
+        <td style="font-family: monospace; font-size: 12px;">{{ log.tool_name }}</td>
+        <td>{{ log.service_name }}</td>
+        <td><span class="badge {{ 'status-healthy' if log.status == 'success' else 'status-unhealthy' }}">{{ log.status }}</span></td>
+        <td>{{ log.duration_ms }}ms</td>
+        <td style="color: var(--text-muted);">{{ log.created_at | time_ago }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="card empty">No recent tool calls.</div>
+{% endif %}
+{% endblock %}

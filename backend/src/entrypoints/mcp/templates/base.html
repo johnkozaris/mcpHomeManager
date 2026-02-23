@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ app_name }}{% endblock %}</title>
+<style>
+  :root {
+    --bg-canvas: #faf9f5;
+    --bg-card: #ffffff;
+    --text-ink: #1a1a1a;
+    --text-muted: #6b6b6b;
+    --border-line: #e5e2db;
+    --accent: #4a7cc9;
+    --accent-light: rgba(74, 124, 201, 0.08);
+    --status-healthy: #2da540;
+    --status-unhealthy: #e07035;
+    --status-unknown: #9ca3af;
+    --radius: 8px;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-canvas: #1a1a1a;
+      --bg-card: #262626;
+      --text-ink: #e8e4de;
+      --text-muted: #9a9a9a;
+      --border-line: #3a3a3a;
+      --accent: #6898d8;
+      --accent-light: rgba(104, 152, 216, 0.12);
+      --shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-ink);
+    background: var(--bg-canvas);
+    padding: 16px;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-line);
+  }
+
+  .header h1 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .header .subtitle {
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-line);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    box-shadow: var(--shadow);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .status-healthy { color: var(--status-healthy); }
+  .status-unhealthy { color: var(--status-unhealthy); }
+  .status-unknown { color: var(--status-unknown); }
+
+  .badge.status-healthy { background: rgba(45, 165, 64, 0.1); }
+  .badge.status-unhealthy { background: rgba(224, 112, 53, 0.1); }
+  .badge.status-unknown { background: rgba(156, 163, 175, 0.1); }
+
+  .stat-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .stat {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .stat .value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .stat .label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--border-line);
+  }
+
+  td {
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--border-line);
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  .icon { font-size: 18px; }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .empty {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  pre {
+    background: var(--bg-canvas);
+    border: 1px solid var(--border-line);
+    border-radius: var(--radius);
+    padding: 12px;
+    overflow-x: auto;
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .tool-card {
+    padding: 10px 14px;
+  }
+
+  .tool-card .tool-name {
+    font-weight: 600;
+    font-size: 13px;
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+  }
+
+  .tool-card .tool-desc {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  .footer {
+    margin-top: 16px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-line);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+{% block content %}{% endblock %}
+<div class="footer">{{ app_name }}</div>
+<script>
+// Post actions to the parent window (when rendered in an iframe)
+function mcpAction(action, payload) {
+  if (window.parent !== window) {
+    window.parent.postMessage({ type: 'mcp-app-action', action: action, payload: payload || {} }, '*');
+  }
+}
+</script>
+</body>
+</html>

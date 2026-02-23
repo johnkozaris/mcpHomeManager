@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Home Assistant Entities{% endblock %}
+{% block content %}
+<div class="header">
+  <span class="icon">&#127968;</span>
+  <div>
+    <h1>Entity Dashboard</h1>
+    <span class="subtitle">{{ entity_count }} entities{% if domain_filter %} ({{ domain_filter }}){% endif %}</span>
+  </div>
+</div>
+
+{% for domain, entities in domains.items() %}
+<div style="margin-bottom: 20px;">
+  <h2 class="section-title">{{ domain }} ({{ entities | length }})</h2>
+  <div class="grid">
+    {% for entity in entities %}
+    <div class="card tool-card">
+      <div class="tool-name">{{ entity.friendly_name or entity.entity_id }}</div>
+      <div style="display: flex; align-items: center; gap: 6px; margin-top: 4px;">
+        <span class="badge {% if entity.state in ('on', 'home', 'open') %}status-healthy{% elif entity.state in ('off', 'away', 'closed') %}status-unknown{% else %}status-unhealthy{% endif %}">
+          {{ entity.state }}
+        </span>
+      </div>
+      <div class="tool-desc">{{ entity.entity_id }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endfor %}
+
+{% if not domains %}
+<div class="empty">No entities found{% if domain_filter %} for domain "{{ domain_filter }}"{% endif %}.</div>
+{% endif %}
+{% endblock %}

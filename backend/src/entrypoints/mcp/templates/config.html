@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Configuration — {{ app_name }}{% endblock %}
+{% block content %}
+<div class="header">
+  <h1>Configuration</h1>
+  {% if single %}
+  <span class="subtitle">{{ services[0].display_name }}</span>
+  {% else %}
+  <span class="subtitle">All services</span>
+  {% endif %}
+</div>
+
+{% for svc in services %}
+<div style="margin-bottom: 16px;">
+  <div class="section-title" style="display: flex; align-items: center; gap: 6px;">
+    <span class="icon" style="font-size: 14px;">{{ svc.service_type | service_icon }}</span>
+    {{ svc.display_name }}
+  </div>
+  <div class="card">
+    <table style="margin-bottom: 8px;">
+      <tr>
+        <td style="color: var(--text-muted); width: 100px;">Name</td>
+        <td>{{ svc.name }}</td>
+      </tr>
+      <tr>
+        <td style="color: var(--text-muted);">Type</td>
+        <td>{{ svc.service_type }}</td>
+      </tr>
+      <tr>
+        <td style="color: var(--text-muted);">URL</td>
+        <td style="font-family: monospace; font-size: 12px;">{{ svc.base_url }}</td>
+      </tr>
+    </table>
+    {% if svc.config %}
+    <div class="section-title" style="font-size: 11px;">Extra Configuration</div>
+    <pre>{{ svc.config_json }}</pre>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+
+{% if not services %}
+<div class="card empty">No services configured.</div>
+{% endif %}
+{% endblock %}

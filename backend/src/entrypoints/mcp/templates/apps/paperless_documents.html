@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Paperless Document Search{% endblock %}
+{% block content %}
+<div class="header">
+  <span class="icon">&#128196;</span>
+  <div>
+    <h1>Document Search</h1>
+    <span class="subtitle">{{ total }} results for "{{ query }}"</span>
+  </div>
+</div>
+
+{% if documents %}
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Correspondent</th>
+      <th>Tags</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for doc in documents %}
+    <tr>
+      <td style="font-weight: 500;">{{ doc.title }}</td>
+      <td>{{ doc.correspondent or "—" }}</td>
+      <td>
+        {% for tag in doc.tags %}
+        <span class="badge" style="background: var(--accent-light); color: var(--accent); margin-right: 4px;">{{ tag }}</span>
+        {% endfor %}
+      </td>
+      <td style="color: var(--text-muted); font-size: 12px;">{{ doc.created }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty">No documents found for "{{ query }}".</div>
+{% endif %}
+{% endblock %}
