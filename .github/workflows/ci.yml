@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend:
+    name: Backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        working-directory: backend
+        run: uv sync
+
+      - name: Check imports
+        working-directory: backend
+        run: |
+          PYTHONPATH=src uv run python -c "
+          from domain.entities import ServiceConnection, ServiceType
+          from domain.ports import IServiceRepository, IServiceClient
+          from services.client_factory import ServiceClientFactory
+          from services.service_manager import ServiceManager
+          from services.tool_registry import ToolRegistry
+          from entrypoints.mcp.server import MCPServerFactory
+          from entrypoints.api.services import ServiceController
+          from entrypoints.api.health import HealthController
+          print('All imports OK')
+          "
+
+      - name: Lint
+        working-directory: backend
+        run: uv run ruff check src/
+
+  frontend:
+    name: Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: pnpm install --frozen-lockfile
+
+      - name: Type check and build
+        working-directory: frontend
+        run: pnpm build
+
+  docker:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build backend image
+        run: docker build -f Dockerfile.backend -t mcp-home-backend .
+
+      - name: Build frontend image
+        run: docker build -f Dockerfile.frontend -t mcp-home-frontend .
