@@ -502,14 +502,19 @@ export function ServiceDetail() {
                 <ToolList
                   tools={service.tools}
                   showJsonView
-                  onToggle={(toolName, enabled) =>
+                  onToggle={(toolName, enabled) => {
+                    const tool = service.tools.find((t) => t.name === toolName);
                     updateToolPermission.mutate({
                       serviceId: service.id,
                       toolName,
                       isEnabled: enabled,
-                    })
-                  }
-                  onSaveOverrides={(toolName, descOverride, schemaOverride) => {
+                      descriptionOverride: tool?.description_override,
+                      parametersSchemaOverride: tool?.parameters_schema_override,
+                      httpMethodOverride: tool?.http_method_override,
+                      pathTemplateOverride: tool?.path_template_override,
+                    });
+                  }}
+                  onSaveOverrides={(toolName, descOverride, schemaOverride, methodOverride, pathOverride) => {
                     const tool = service.tools.find((t) => t.name === toolName);
                     updateToolPermission.mutate({
                       serviceId: service.id,
@@ -517,6 +522,8 @@ export function ServiceDetail() {
                       isEnabled: tool?.is_enabled ?? true,
                       descriptionOverride: descOverride,
                       parametersSchemaOverride: schemaOverride,
+                      httpMethodOverride: methodOverride,
+                      pathTemplateOverride: pathOverride,
                     });
                   }}
                   onDelete={(toolName) =>

@@ -202,6 +202,8 @@ export const api = {
         is_enabled: boolean;
         description_override?: string | null;
         parameters_schema_override?: Record<string, unknown> | null;
+        http_method_override?: string | null;
+        path_template_override?: string | null;
       },
     ) =>
       request<ToolDefinition>(`/tools/${serviceId}/${toolName}`, {

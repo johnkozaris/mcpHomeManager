@@ -45,6 +45,10 @@ class ToolController(Controller):
                     is_enabled=t.definition.is_enabled,
                     description_override=t.description_override,
                     parameters_schema_override=t.parameters_schema_override,
+                    http_method=t.original_http_method,
+                    path_template=t.original_path_template,
+                    http_method_override=t.http_method_override,
+                    path_template_override=t.path_template_override,
                 )
             )
         return results
@@ -78,6 +82,8 @@ class ToolController(Controller):
             data.is_enabled,
             description_override=data.description_override or None,
             parameters_schema_override=data.parameters_schema_override or None,
+            http_method_override=data.http_method_override or None,
+            path_template_override=data.path_template_override or None,
         )
         await db_session.commit()
 
@@ -85,6 +91,8 @@ class ToolController(Controller):
         await tool_registry.refresh()
 
         tool = tool_registry.active_tools.get(tool_name)
+        if not tool:
+            tool = tool_registry.all_tools.get(tool_name)
         if tool:
             return ToolResponse(
                 name=tool.definition.name,
@@ -94,6 +102,10 @@ class ToolController(Controller):
                 is_enabled=tool.definition.is_enabled,
                 description_override=tool.description_override,
                 parameters_schema_override=tool.parameters_schema_override,
+                http_method=tool.original_http_method,
+                path_template=tool.original_path_template,
+                http_method_override=tool.http_method_override,
+                path_template_override=tool.path_template_override,
             )
         # Tool was disabled
         return ToolResponse(

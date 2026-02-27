@@ -8,12 +8,16 @@ from infrastructure.clients.base_client import BaseServiceClient
 _TOOLS = [
     ToolDefinition(
         name="uptimekuma_list_monitors",
+        http_method="GET",
+        path_template="/api/monitors",
         service_type=ServiceType.UPTIME_KUMA,
         description="List all monitoring targets with their current status",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="uptimekuma_get_monitor",
+        http_method="GET",
+        path_template="/api/monitors/{monitor_id}",
         service_type=ServiceType.UPTIME_KUMA,
         description="Get detailed status and history for a specific monitor",
         parameters_schema={
@@ -26,6 +30,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="uptimekuma_pause_monitor",
+        http_method="POST",
+        path_template="/api/monitors/{monitor_id}/pause",
         service_type=ServiceType.UPTIME_KUMA,
         description="Pause a monitor (stop checking)",
         parameters_schema={
@@ -38,6 +44,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="uptimekuma_resume_monitor",
+        http_method="POST",
+        path_template="/api/monitors/{monitor_id}/resume",
         service_type=ServiceType.UPTIME_KUMA,
         description="Resume a paused monitor",
         parameters_schema={

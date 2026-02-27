@@ -8,12 +8,16 @@ from infrastructure.clients.base_client import BaseServiceClient
 _TOOLS = [
     ToolDefinition(
         name="npm_list_proxy_hosts",
+        http_method="GET",
+        path_template="/api/nginx/proxy-hosts",
         service_type=ServiceType.NGINX_PROXY_MANAGER,
         description="List all proxy hosts configured in Nginx Proxy Manager",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="npm_get_proxy_host",
+        http_method="GET",
+        path_template="/api/nginx/proxy-hosts/{id}",
         service_type=ServiceType.NGINX_PROXY_MANAGER,
         description="Get details of a specific proxy host by ID",
         parameters_schema={
@@ -26,6 +30,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="npm_create_proxy_host",
+        http_method="POST",
+        path_template="/api/nginx/proxy-hosts",
         service_type=ServiceType.NGINX_PROXY_MANAGER,
         description="Create a new proxy host",
         parameters_schema={
@@ -54,6 +60,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="npm_delete_proxy_host",
+        http_method="DELETE",
+        path_template="/api/nginx/proxy-hosts/{id}",
         service_type=ServiceType.NGINX_PROXY_MANAGER,
         description="Delete a proxy host by ID",
         parameters_schema={
@@ -66,18 +74,24 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="npm_list_redirection_hosts",
+        http_method="GET",
+        path_template="/api/nginx/redirection-hosts",
         service_type=ServiceType.NGINX_PROXY_MANAGER,
         description="List all redirection hosts",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="npm_list_streams",
+        http_method="GET",
+        path_template="/api/nginx/streams",
         service_type=ServiceType.NGINX_PROXY_MANAGER,
         description="List all TCP/UDP stream proxies",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="npm_list_certificates",
+        http_method="GET",
+        path_template="/api/nginx/certificates",
         service_type=ServiceType.NGINX_PROXY_MANAGER,
         description="List all SSL certificates",
         parameters_schema={"type": "object", "properties": {}},

@@ -11,3 +11,5 @@ class ToolDefinition:
     description: str
     parameters_schema: dict[str, Any] = field(default_factory=dict)
     is_enabled: bool = True
+    http_method: str | None = None
+    path_template: str | None = None

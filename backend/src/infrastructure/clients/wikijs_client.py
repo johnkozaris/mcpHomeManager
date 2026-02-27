@@ -8,12 +8,16 @@ from infrastructure.clients.base_client import BaseServiceClient
 _TOOLS = [
     ToolDefinition(
         name="wikijs_list_pages",
+        http_method="POST",
+        path_template="/graphql",
         service_type=ServiceType.WIKIJS,
         description="List all pages in Wiki.js (title, path, id, updated)",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="wikijs_get_page",
+        http_method="POST",
+        path_template="/graphql",
         service_type=ServiceType.WIKIJS,
         description="Get a Wiki.js page content by ID",
         parameters_schema={
@@ -26,6 +30,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="wikijs_search",
+        http_method="POST",
+        path_template="/graphql",
         service_type=ServiceType.WIKIJS,
         description="Search Wiki.js pages by text query",
         parameters_schema={
@@ -38,6 +44,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="wikijs_create_page",
+        http_method="POST",
+        path_template="/graphql",
         service_type=ServiceType.WIKIJS,
         description="Create a new Wiki.js page",
         parameters_schema={
@@ -57,6 +65,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="wikijs_update_page",
+        http_method="POST",
+        path_template="/graphql",
         service_type=ServiceType.WIKIJS,
         description="Update an existing Wiki.js page",
         parameters_schema={
@@ -72,6 +82,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="wikijs_list_users",
+        http_method="POST",
+        path_template="/graphql",
         service_type=ServiceType.WIKIJS,
         description="List all Wiki.js users",
         parameters_schema={"type": "object", "properties": {}},

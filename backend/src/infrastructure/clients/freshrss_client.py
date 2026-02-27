@@ -10,18 +10,24 @@ _API = "/api/greader.php/reader/api/0"
 _TOOLS = [
     ToolDefinition(
         name="freshrss_list_feeds",
+        http_method="GET",
+        path_template="/api/greader.php/reader/api/0/subscription/list",
         service_type=ServiceType.FRESHRSS,
         description="List all subscribed RSS feeds",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="freshrss_get_unread_count",
+        http_method="GET",
+        path_template="/api/greader.php/reader/api/0/unread-count",
         service_type=ServiceType.FRESHRSS,
         description="Get unread article counts per feed",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="freshrss_get_articles",
+        http_method="GET",
+        path_template="/api/greader.php/reader/api/0/stream/contents/user/-/state/com.google/reading-list",
         service_type=ServiceType.FRESHRSS,
         description="Get recent articles from all feeds",
         parameters_schema={
@@ -37,6 +43,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="freshrss_get_unread",
+        http_method="GET",
+        path_template="/api/greader.php/reader/api/0/stream/contents/user/-/state/com.google/reading-list",
         service_type=ServiceType.FRESHRSS,
         description="Get unread articles only",
         parameters_schema={
@@ -52,6 +60,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="freshrss_mark_read",
+        http_method="POST",
+        path_template="/api/greader.php/reader/api/0/edit-tag",
         service_type=ServiceType.FRESHRSS,
         description="Mark an article as read",
         parameters_schema={
@@ -64,6 +74,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="freshrss_star_article",
+        http_method="POST",
+        path_template="/api/greader.php/reader/api/0/edit-tag",
         service_type=ServiceType.FRESHRSS,
         description="Star/bookmark an article",
         parameters_schema={
@@ -76,6 +88,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="freshrss_add_feed",
+        http_method="POST",
+        path_template="/api/greader.php/reader/api/0/subscription/quickadd",
         service_type=ServiceType.FRESHRSS,
         description="Subscribe to a new RSS feed by URL",
         parameters_schema={

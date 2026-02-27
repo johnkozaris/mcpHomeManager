@@ -68,6 +68,9 @@ export interface ToolDefinition {
   parameters_schema_override: Record<string, unknown> | null;
   http_method: string | null;
   path_template: string | null;
+  http_method_override: string | null;
+  path_template_override: string | null;
+  is_user_defined?: boolean;
 }
 
 export interface AuditEntry {

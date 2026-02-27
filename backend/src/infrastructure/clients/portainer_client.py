@@ -8,12 +8,16 @@ from infrastructure.clients.base_client import BaseServiceClient
 _TOOLS = [
     ToolDefinition(
         name="portainer_list_endpoints",
+        http_method="GET",
+        path_template="/api/endpoints",
         service_type=ServiceType.PORTAINER,
         description="List all Docker/Kubernetes environments managed by Portainer",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="portainer_list_containers",
+        http_method="GET",
+        path_template="/api/endpoints/{endpoint_id}/docker/containers/json",
         service_type=ServiceType.PORTAINER,
         description="List all containers in a Docker environment",
         parameters_schema={
@@ -29,6 +33,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="portainer_get_container",
+        http_method="GET",
+        path_template="/api/endpoints/{endpoint_id}/docker/containers/{container_id}/json",
         service_type=ServiceType.PORTAINER,
         description="Get detailed information about a specific container",
         parameters_schema={
@@ -48,6 +54,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="portainer_start_container",
+        http_method="POST",
+        path_template="/api/endpoints/{endpoint_id}/docker/containers/{container_id}/start",
         service_type=ServiceType.PORTAINER,
         description="Start a stopped container",
         parameters_schema={
@@ -67,6 +75,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="portainer_stop_container",
+        http_method="POST",
+        path_template="/api/endpoints/{endpoint_id}/docker/containers/{container_id}/stop",
         service_type=ServiceType.PORTAINER,
         description="Stop a running container",
         parameters_schema={
@@ -86,6 +96,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="portainer_restart_container",
+        http_method="POST",
+        path_template="/api/endpoints/{endpoint_id}/docker/containers/{container_id}/restart",
         service_type=ServiceType.PORTAINER,
         description="Restart a container",
         parameters_schema={
@@ -105,12 +117,16 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="portainer_list_stacks",
+        http_method="GET",
+        path_template="/api/stacks",
         service_type=ServiceType.PORTAINER,
         description="List all Docker Compose stacks managed by Portainer",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="portainer_get_container_logs",
+        http_method="GET",
+        path_template="/api/endpoints/{endpoint_id}/docker/containers/{container_id}/logs",
         service_type=ServiceType.PORTAINER,
         description="Get recent logs from a container",
         parameters_schema={

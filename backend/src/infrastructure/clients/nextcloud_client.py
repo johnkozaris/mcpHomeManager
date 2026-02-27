@@ -8,6 +8,8 @@ from infrastructure.clients.base_client import BaseServiceClient
 _TOOLS = [
     ToolDefinition(
         name="nextcloud_list_files",
+        http_method="GET",
+        path_template="/ocs/v2.php/apps/files/api/v1/files",
         service_type=ServiceType.NEXTCLOUD,
         description="List files and folders in a Nextcloud directory",
         parameters_schema={
@@ -23,6 +25,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="nextcloud_search_files",
+        http_method="GET",
+        path_template="/ocs/v2.php/search/providers/files/search",
         service_type=ServiceType.NEXTCLOUD,
         description="Search for files by name across Nextcloud",
         parameters_schema={
@@ -35,12 +39,16 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="nextcloud_list_notes",
+        http_method="GET",
+        path_template="/index.php/apps/notes/api/v1/notes",
         service_type=ServiceType.NEXTCLOUD,
         description="List all notes from Nextcloud Notes app",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="nextcloud_get_note",
+        http_method="GET",
+        path_template="/index.php/apps/notes/api/v1/notes/{note_id}",
         service_type=ServiceType.NEXTCLOUD,
         description="Get a specific note by ID",
         parameters_schema={
@@ -53,6 +61,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="nextcloud_user_status",
+        http_method="GET",
+        path_template="/ocs/v2.php/cloud/user",
         service_type=ServiceType.NEXTCLOUD,
         description="Get Nextcloud server and user status",
         parameters_schema={"type": "object", "properties": {}},

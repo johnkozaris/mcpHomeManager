@@ -87,17 +87,23 @@ export function useUpdateToolPermission() {
       isEnabled,
       descriptionOverride,
       parametersSchemaOverride,
+      httpMethodOverride,
+      pathTemplateOverride,
     }: {
       serviceId: string;
       toolName: string;
       isEnabled: boolean;
       descriptionOverride?: string | null;
       parametersSchemaOverride?: Record<string, unknown> | null;
+      httpMethodOverride?: string | null;
+      pathTemplateOverride?: string | null;
     }) =>
       api.tools.updatePermission(serviceId, toolName, {
         is_enabled: isEnabled,
         description_override: descriptionOverride,
         parameters_schema_override: parametersSchemaOverride,
+        http_method_override: httpMethodOverride,
+        path_template_override: pathTemplateOverride,
       }),
     onSuccess: (_data, variables) => {
       qc.invalidateQueries({ queryKey: ["tools"] });

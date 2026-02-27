@@ -11,6 +11,8 @@ from infrastructure.clients.base_client import BaseServiceClient
 _TOOLS = [
     ToolDefinition(
         name="ha_get_entity_state",
+        http_method="GET",
+        path_template="/api/states/{entity_id}",
         service_type=ServiceType.HOME_ASSISTANT,
         description="Get the current state of a Home Assistant entity",
         parameters_schema={
@@ -26,6 +28,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="ha_list_entities",
+        http_method="GET",
+        path_template="/api/states",
         service_type=ServiceType.HOME_ASSISTANT,
         description="List all Home Assistant entities, optionally filtered by domain",
         parameters_schema={
@@ -40,6 +44,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="ha_call_service",
+        http_method="POST",
+        path_template="/api/services/{domain}/{service}",
         service_type=ServiceType.HOME_ASSISTANT,
         description="Call a Home Assistant service (e.g. turn_on, turn_off, set_temperature)",
         parameters_schema={
@@ -64,6 +70,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="ha_get_services",
+        http_method="GET",
+        path_template="/api/services",
         service_type=ServiceType.HOME_ASSISTANT,
         description="List all available Home Assistant services and their parameters",
         parameters_schema={

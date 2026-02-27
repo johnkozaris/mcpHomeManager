@@ -123,10 +123,14 @@ export function Tools() {
                   serviceId,
                   toolName,
                   isEnabled: enabled,
+                  descriptionOverride: tool?.description_override,
+                  parametersSchemaOverride: tool?.parameters_schema_override,
+                  httpMethodOverride: tool?.http_method_override,
+                  pathTemplateOverride: tool?.path_template_override,
                 });
               }
             }}
-            onSaveOverrides={(toolName, descOverride, schemaOverride) => {
+            onSaveOverrides={(toolName, descOverride, schemaOverride, methodOverride, pathOverride) => {
               const tool = filtered.find((t) => t.name === toolName);
               const serviceId = tool
                 ? serviceIdByType.get(tool.service_type)
@@ -138,6 +142,8 @@ export function Tools() {
                   isEnabled: tool?.is_enabled ?? true,
                   descriptionOverride: descOverride,
                   parametersSchemaOverride: schemaOverride,
+                  httpMethodOverride: methodOverride,
+                  pathTemplateOverride: pathOverride,
                 });
               }
             }}

@@ -23,6 +23,8 @@ _AVAILABLE_OPERATIONS = {
 _TOOLS = [
     ToolDefinition(
         name="stirling_health",
+        http_method="GET",
+        path_template="/api/v1/general/status",
         service_type=ServiceType.STIRLING_PDF,
         description="Check if Stirling PDF is running and responding",
         parameters_schema={"type": "object", "properties": {}},

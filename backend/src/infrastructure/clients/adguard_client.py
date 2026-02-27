@@ -8,12 +8,16 @@ from infrastructure.clients.base_client import BaseServiceClient
 _TOOLS = [
     ToolDefinition(
         name="adguard_status",
+        http_method="GET",
+        path_template="/control/status",
         service_type=ServiceType.ADGUARD,
         description="Get AdGuard Home status (filtering enabled, DNS addresses, version)",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="adguard_query_log",
+        http_method="GET",
+        path_template="/control/querylog",
         service_type=ServiceType.ADGUARD,
         description="Get recent DNS query log entries",
         parameters_schema={
@@ -26,24 +30,32 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="adguard_stats",
+        http_method="GET",
+        path_template="/control/stats",
         service_type=ServiceType.ADGUARD,
         description="Get DNS statistics (queries, blocked, top clients, top domains)",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="adguard_list_filters",
+        http_method="GET",
+        path_template="/control/filtering/status",
         service_type=ServiceType.ADGUARD,
         description="List all DNS filtering rules and blocklists",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="adguard_list_rewrites",
+        http_method="GET",
+        path_template="/control/rewrite/list",
         service_type=ServiceType.ADGUARD,
         description="List all DNS rewrite rules",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="adguard_toggle_protection",
+        http_method="POST",
+        path_template="/control/dns_config",
         service_type=ServiceType.ADGUARD,
         description="Enable or disable DNS filtering protection",
         parameters_schema={

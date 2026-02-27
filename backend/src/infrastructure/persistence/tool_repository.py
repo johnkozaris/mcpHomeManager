@@ -21,6 +21,8 @@ class ToolPermissionRepository(IToolPermissionRepository):
                 is_enabled=row.is_enabled,
                 description_override=row.description_override,
                 parameters_schema_override=row.parameters_schema_override,
+                http_method_override=row.http_method_override,
+                path_template_override=row.path_template_override,
             )
             for row in result.scalars().all()
         }
@@ -32,6 +34,8 @@ class ToolPermissionRepository(IToolPermissionRepository):
         is_enabled: bool,
         description_override: str | None = None,
         parameters_schema_override: dict[str, Any] | None = None,
+        http_method_override: str | None = None,
+        path_template_override: str | None = None,
     ) -> None:
         result = await self._session.execute(
             select(ToolPermissionModel).where(
@@ -44,6 +48,8 @@ class ToolPermissionRepository(IToolPermissionRepository):
             existing.is_enabled = is_enabled
             existing.description_override = description_override
             existing.parameters_schema_override = parameters_schema_override
+            existing.http_method_override = http_method_override
+            existing.path_template_override = path_template_override
         else:
             self._session.add(
                 ToolPermissionModel(
@@ -52,6 +58,8 @@ class ToolPermissionRepository(IToolPermissionRepository):
                     is_enabled=is_enabled,
                     description_override=description_override,
                     parameters_schema_override=parameters_schema_override,
+                    http_method_override=http_method_override,
+                    path_template_override=path_template_override,
                 )
             )
         await self._session.flush()

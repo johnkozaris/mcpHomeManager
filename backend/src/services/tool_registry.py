@@ -32,6 +32,11 @@ class ActiveTool:
     service_id: UUID | None = None
     description_override: str | None = None
     parameters_schema_override: dict[str, Any] | None = None
+    http_method_override: str | None = None
+    path_template_override: str | None = None
+    # Original (pre-override) values for the UI to show defaults
+    original_http_method: str | None = None
+    original_path_template: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -230,6 +235,9 @@ class ToolRegistry:
 
                     overrides = await tool_repo.get_by_service_id(svc.id)
 
+                    # Collect endpoint-overridden tools that need a GenericRestClient
+                    endpoint_override_specs: list[GenericToolSpec] = []
+
                     def _register_tools(
                         src_client: IServiceClient,
                         svc_overrides: dict,
@@ -241,6 +249,12 @@ class ToolRegistry:
                             desc_override = override.description_override if override else None
                             schema_override = (
                                 override.parameters_schema_override if override else None
+                            )
+                            method_override = (
+                                override.http_method_override if override else None
+                            )
+                            path_override = (
+                                override.path_template_override if override else None
                             )
 
                             resolved = tool_def
@@ -254,15 +268,44 @@ class ToolRegistry:
                                     resolved,
                                     parameters_schema=schema_override,
                                 )
+                            if method_override:
+                                resolved = replace(resolved, http_method=method_override)
+                            if path_override:
+                                resolved = replace(resolved, path_template=path_override)
                             resolved = replace(resolved, is_enabled=is_enabled)
+
+                            # Determine execution client: if endpoint is overridden
+                            # on a built-in tool, route through GenericRestClient
+                            exec_client = src_client
+                            has_endpoint_override = method_override or path_override
+                            # Only reroute tools that originally have HTTP endpoints
+                            is_http_tool = tool_def.http_method is not None or tool_def.path_template is not None
+                            if has_endpoint_override and is_http_tool and src_client is not custom_tool_client:
+                                # Will be routed through a per-service override client
+                                final_method = method_override or tool_def.http_method or "GET"
+                                final_path = path_override or tool_def.path_template or "/"
+                                endpoint_override_specs.append(
+                                    GenericToolSpec(
+                                        tool_name=tool_def.name,
+                                        description=resolved.description,
+                                        http_method=final_method,
+                                        path_template=final_path,
+                                        params_schema=resolved.parameters_schema,
+                                    )
+                                )
+                                exec_client = None  # placeholder, set after loop
 
                             active = ActiveTool(
                                 definition=resolved,
-                                client=src_client,
+                                client=exec_client,
                                 service_name=svc_ref.name,
                                 service_id=svc_ref.id,
                                 description_override=desc_override,
                                 parameters_schema_override=schema_override,
+                                http_method_override=method_override,
+                                path_template_override=path_override,
+                                original_http_method=tool_def.http_method,
+                                original_path_template=tool_def.path_template,
                             )
 
                             new_all_tools[tool_def.name] = active
@@ -288,6 +331,34 @@ class ToolRegistry:
                     # For built-in services they come from a separate client.
                     if custom_tool_client is not None and custom_tool_client is not client:
                         _register_tools(custom_tool_client, overrides, svc)
+
+                    # Create a GenericRestClient for endpoint-overridden built-in tools
+                    if endpoint_override_specs:
+                        from infrastructure.clients.generic_rest_client import (
+                            GenericRestClient,
+                        )
+
+                        override_client = GenericRestClient(
+                            svc.base_url,
+                            token,
+                            endpoint_override_specs,
+                            config=svc.config,
+                        )
+                        new_clients.append(override_client)
+
+                        # Patch the client reference on overridden tools
+                        for spec in endpoint_override_specs:
+                            for store in (new_tools, new_all_tools):
+                                if spec.tool_name in store:
+                                    old = store[spec.tool_name]
+                                    if old.client is None:
+                                        store[spec.tool_name] = replace(
+                                            old, client=override_client
+                                        )
+                            # Also patch in result list
+                            for i, at in enumerate(result):
+                                if at.definition.name == spec.tool_name and at.client is None:
+                                    result[i] = replace(at, client=override_client)
 
                     # Discover apps from IAppProvider clients
                     if isinstance(client, IAppProvider):

@@ -14,6 +14,8 @@ interface Props {
     toolName: string,
     descriptionOverride: string | null,
     parametersSchemaOverride: Record<string, unknown> | null,
+    httpMethodOverride?: string | null,
+    pathTemplateOverride?: string | null,
   ) => void;
   showService?: boolean;
   showJsonView?: boolean;

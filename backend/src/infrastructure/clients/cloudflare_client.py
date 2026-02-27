@@ -8,6 +8,8 @@ from infrastructure.clients.base_client import BaseServiceClient
 _TOOLS = [
     ToolDefinition(
         name="cloudflare_list_zones",
+        http_method="GET",
+        path_template="/client/v4/zones",
         service_type=ServiceType.CLOUDFLARE,
         description="List zones (domains) in your Cloudflare account",
         parameters_schema={
@@ -25,6 +27,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="cloudflare_list_dns_records",
+        http_method="GET",
+        path_template="/client/v4/zones/{zone_id}/dns_records",
         service_type=ServiceType.CLOUDFLARE,
         description="List DNS records for a zone",
         parameters_schema={
@@ -48,6 +52,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="cloudflare_create_dns_record",
+        http_method="POST",
+        path_template="/client/v4/zones/{zone_id}/dns_records",
         service_type=ServiceType.CLOUDFLARE,
         description="Create a new DNS record in a zone",
         parameters_schema={
@@ -80,6 +86,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="cloudflare_list_tunnels",
+        http_method="GET",
+        path_template="/client/v4/accounts/{account_id}/cfd_tunnel",
         service_type=ServiceType.CLOUDFLARE,
         description="List Cloudflare Tunnels for an account",
         parameters_schema={
@@ -104,6 +112,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="cloudflare_get_tunnel",
+        http_method="GET",
+        path_template="/client/v4/accounts/{account_id}/cfd_tunnel/{tunnel_id}",
         service_type=ServiceType.CLOUDFLARE,
         description="Get details of a specific Cloudflare Tunnel",
         parameters_schema={

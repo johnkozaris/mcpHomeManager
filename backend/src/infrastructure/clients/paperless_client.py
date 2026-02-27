@@ -10,6 +10,8 @@ from infrastructure.clients.base_client import BaseServiceClient
 _TOOLS = [
     ToolDefinition(
         name="paperless_search_documents",
+        http_method="GET",
+        path_template="/api/documents/",
         service_type=ServiceType.PAPERLESS,
         description="Full-text search across all documents in Paperless-ngx",
         parameters_schema={
@@ -24,6 +26,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="paperless_get_document",
+        http_method="GET",
+        path_template="/api/documents/{document_id}/",
         service_type=ServiceType.PAPERLESS,
         description="Get metadata for a specific document by ID",
         parameters_schema={
@@ -36,18 +40,24 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="paperless_list_tags",
+        http_method="GET",
+        path_template="/api/tags/",
         service_type=ServiceType.PAPERLESS,
         description="List all document tags",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="paperless_list_correspondents",
+        http_method="GET",
+        path_template="/api/correspondents/",
         service_type=ServiceType.PAPERLESS,
         description="List all correspondents (document senders/sources)",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="paperless_list_document_types",
+        http_method="GET",
+        path_template="/api/document_types/",
         service_type=ServiceType.PAPERLESS,
         description="List all document types/categories",
         parameters_schema={"type": "object", "properties": {}},

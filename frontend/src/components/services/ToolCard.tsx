@@ -123,6 +123,8 @@ interface ToolCardProps {
     toolName: string,
     descriptionOverride: string | null,
     parametersSchemaOverride: Record<string, unknown> | null,
+    httpMethodOverride?: string | null,
+    pathTemplateOverride?: string | null,
   ) => void;
   showService?: boolean;
   onDelete?: (toolName: string) => void;
@@ -130,6 +132,8 @@ interface ToolCardProps {
   onTestTool?: (toolName: string) => void;
   testResult?: { success: boolean; message: string } | null;
   testingTool?: string | null;
+  /** True when this is a user-created generic tool (not a built-in) */
+  isGenericTool?: boolean;
 }
 
 const HINT_SEPARATOR = "\n\n[Hint] ";
@@ -159,9 +163,10 @@ export function ToolCard({
   onTestTool,
   testResult,
   testingTool,
+  isGenericTool,
 }: ToolCardProps) {
-  // A tool is custom (user-defined) if it has http_method set
-  const isCustomTool = tool.http_method != null;
+  // A tool is custom (user-defined generic_rest) if is_user_defined or explicitly set
+  const isCustomTool = isGenericTool ?? tool.is_user_defined ?? false;
   const [expanded, setExpanded] = useState(false);
   const [editing, setEditing] = useState(false);
   const [editDesc, setEditDesc] = useState("");
@@ -169,6 +174,8 @@ export function ToolCard({
   const [editParamDescs, setEditParamDescs] = useState<Record<string, string>>(
     {},
   );
+  const [editMethod, setEditMethod] = useState("");
+  const [editPath, setEditPath] = useState("");
 
   const schemaProps = tool.parameters_schema?.properties;
   const hasParams =
@@ -191,6 +198,8 @@ export function ToolCard({
       }
     }
     setEditParamDescs(paramDescs);
+    setEditMethod(tool.http_method_override ?? tool.http_method ?? "");
+    setEditPath(tool.path_template_override ?? tool.path_template ?? "");
     setEditing(true);
     setExpanded(true);
   };
@@ -221,7 +230,14 @@ export function ToolCard({
         };
       }
     }
-    onSaveOverrides(tool.name, descOverride, schemaOverride);
+
+    // Compute endpoint overrides — null means "use the default"
+    const origMethod = tool.http_method ?? "";
+    const origPath = tool.path_template ?? "";
+    const methodOverride = editMethod !== origMethod ? (editMethod || null) : null;
+    const pathOverride = editPath !== origPath ? (editPath || null) : null;
+
+    onSaveOverrides(tool.name, descOverride, schemaOverride, methodOverride, pathOverride);
     setEditing(false);
   };
 
@@ -268,6 +284,21 @@ export function ToolCard({
               </div>
             );
           })()}
+
+        {/* Endpoint info */}
+        {!editing && tool.http_method && tool.path_template && (
+          <div className="flex items-center gap-1.5 mb-3">
+            <Badge variant={tool.http_method_override || tool.path_template_override ? "brand" : "default"}>
+              {tool.http_method_override ?? tool.http_method}
+            </Badge>
+            <code className="text-2xs text-ink-tertiary font-mono truncate">
+              {tool.path_template_override ?? tool.path_template}
+            </code>
+            {(tool.http_method_override || tool.path_template_override) && (
+              <span className="text-2xs text-clay">(customized)</span>
+            )}
+          </div>
+        )}
 
         {/* Controls row */}
         {!editing && (
@@ -405,6 +436,34 @@ export function ToolCard({
               this tool.
             </p>
           </div>
+          {tool.http_method && (
+            <div>
+              <span className="text-2xs font-semibold text-ink-tertiary uppercase tracking-wider block mb-1.5">
+                Endpoint
+              </span>
+              <div className="flex gap-2">
+                <select
+                  value={editMethod}
+                  onChange={(e) => setEditMethod(e.target.value)}
+                  className="text-xs px-2.5 py-2 rounded-lg bg-canvas border border-line-strong text-ink focus:outline-none focus:shadow-focus focus:border-transparent transition-all w-28 shrink-0"
+                >
+                  {["GET", "POST", "PUT", "PATCH", "DELETE"].map((m) => (
+                    <option key={m} value={m}>{m}</option>
+                  ))}
+                </select>
+                <input
+                  type="text"
+                  value={editPath}
+                  onChange={(e) => setEditPath(e.target.value)}
+                  className="flex-1 text-xs font-mono px-3 py-2 rounded-lg bg-canvas border border-line-strong text-ink placeholder:text-ink-faint focus:outline-none focus:shadow-focus focus:border-transparent transition-all"
+                  placeholder="/api/v1/endpoint"
+                />
+              </div>
+              <p className="text-2xs text-ink-faint mt-1">
+                Use <code className="text-terra">{"{param}"}</code> for path parameters. Changes override the default endpoint.
+              </p>
+            </div>
+          )}
           {hasParams && (
             <div>
               <span className="text-2xs font-semibold text-ink-tertiary uppercase tracking-wider block mb-1.5">
@@ -434,11 +493,11 @@ export function ToolCard({
             >
               <X size={12} /> Cancel
             </button>
-            {tool.description_override && (
+            {(tool.description_override || tool.parameters_schema_override || tool.http_method_override || tool.path_template_override) && (
               <button
                 type="button"
                 onClick={() => {
-                  onSaveOverrides?.(tool.name, null, null);
+                  onSaveOverrides?.(tool.name, null, null, null, null);
                   setEditing(false);
                 }}
                 className="ml-auto text-2xs text-ink-tertiary hover:text-rust transition-colors"

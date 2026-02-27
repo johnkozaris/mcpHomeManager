@@ -10,6 +10,8 @@ from infrastructure.clients.base_client import BaseServiceClient
 _TOOLS = [
     ToolDefinition(
         name="forgejo_list_repos",
+        http_method="GET",
+        path_template="/api/v1/user/repos",
         service_type=ServiceType.FORGEJO,
         description="List repositories accessible to the authenticated user",
         parameters_schema={
@@ -22,6 +24,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="forgejo_get_repo",
+        http_method="GET",
+        path_template="/api/v1/repos/{owner}/{repo}",
         service_type=ServiceType.FORGEJO,
         description="Get details of a specific repository",
         parameters_schema={
@@ -35,6 +39,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="forgejo_list_issues",
+        http_method="GET",
+        path_template="/api/v1/repos/{owner}/{repo}/issues",
         service_type=ServiceType.FORGEJO,
         description="List issues in a repository",
         parameters_schema={
@@ -55,6 +61,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="forgejo_create_issue",
+        http_method="POST",
+        path_template="/api/v1/repos/{owner}/{repo}/issues",
         service_type=ServiceType.FORGEJO,
         description="Create a new issue in a repository",
         parameters_schema={
@@ -70,6 +78,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="forgejo_list_pull_requests",
+        http_method="GET",
+        path_template="/api/v1/repos/{owner}/{repo}/pulls",
         service_type=ServiceType.FORGEJO,
         description="List pull requests in a repository",
         parameters_schema={
@@ -89,6 +99,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="forgejo_create_pull_request",
+        http_method="POST",
+        path_template="/api/v1/repos/{owner}/{repo}/pulls",
         service_type=ServiceType.FORGEJO,
         description="Create a pull request",
         parameters_schema={
@@ -106,6 +118,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="forgejo_search_repos",
+        http_method="GET",
+        path_template="/api/v1/repos/search",
         service_type=ServiceType.FORGEJO,
         description="Search repositories by name or description",
         parameters_schema={

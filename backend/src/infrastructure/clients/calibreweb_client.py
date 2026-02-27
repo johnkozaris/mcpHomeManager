@@ -10,6 +10,8 @@ from infrastructure.clients.base_client import BaseServiceClient
 _TOOLS = [
     ToolDefinition(
         name="calibreweb_search_books",
+        http_method="GET",
+        path_template="/ajax/listbooks",
         service_type=ServiceType.CALIBRE_WEB,
         description="Search and list books in the Calibre-Web library",
         parameters_schema={
@@ -45,6 +47,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="calibreweb_list_authors",
+        http_method="GET",
+        path_template="/get_authors_json",
         service_type=ServiceType.CALIBRE_WEB,
         description="List or search authors in the Calibre-Web library",
         parameters_schema={
@@ -59,6 +63,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="calibreweb_list_categories",
+        http_method="GET",
+        path_template="/get_tags_json",
         service_type=ServiceType.CALIBRE_WEB,
         description="List or search categories (tags) in the Calibre-Web library",
         parameters_schema={
@@ -73,6 +79,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="calibreweb_list_series",
+        http_method="GET",
+        path_template="/get_series_json",
         service_type=ServiceType.CALIBRE_WEB,
         description="List or search book series in the Calibre-Web library",
         parameters_schema={
@@ -87,6 +95,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="calibreweb_toggle_read",
+        http_method="POST",
+        path_template="/ajax/toggleread/{book_id}",
         service_type=ServiceType.CALIBRE_WEB,
         description="Toggle the read/unread status of a book",
         parameters_schema={

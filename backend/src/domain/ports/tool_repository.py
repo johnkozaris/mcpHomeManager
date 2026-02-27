@@ -11,6 +11,8 @@ class ToolOverride:
     is_enabled: bool = True
     description_override: str | None = None
     parameters_schema_override: dict[str, Any] | None = None
+    http_method_override: str | None = None
+    path_template_override: str | None = None
 
 
 class IToolPermissionRepository(ABC):
@@ -27,4 +29,6 @@ class IToolPermissionRepository(ABC):
         is_enabled: bool,
         description_override: str | None = None,
         parameters_schema_override: dict[str, Any] | None = None,
+        http_method_override: str | None = None,
+        path_template_override: str | None = None,
     ) -> None: ...

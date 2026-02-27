@@ -127,10 +127,10 @@ class ServiceController(Controller):
         svc = await service_manager.get_by_id(service_id)
 
         # Load custom tool definitions so we can include http_method / path_template
-        generic_tool_defs: dict[str, tuple[str, str]] = {}
+        generic_tool_defs: set[str] = set()
         gt_repo = GenericToolDefinitionRepository(db_session)
         for td in await gt_repo.get_by_service_id(service_id):
-            generic_tool_defs[td.tool_name] = (td.http_method, td.path_template)
+            generic_tool_defs.add(td.tool_name)
 
         svc_tools = [
             ToolResponse(
@@ -141,8 +141,11 @@ class ServiceController(Controller):
                 is_enabled=t.definition.is_enabled,
                 description_override=t.description_override,
                 parameters_schema_override=t.parameters_schema_override,
-                http_method=generic_tool_defs.get(t.definition.name, (None, None))[0],
-                path_template=generic_tool_defs.get(t.definition.name, (None, None))[1],
+                http_method=t.original_http_method,
+                path_template=t.original_path_template,
+                http_method_override=t.http_method_override,
+                path_template_override=t.path_template_override,
+                is_user_defined=t.definition.name in generic_tool_defs,
             )
             for t in tool_registry.all_tools.values()
             if t.service_name == svc.name

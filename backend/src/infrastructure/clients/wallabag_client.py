@@ -8,6 +8,8 @@ from infrastructure.clients.base_client import BaseServiceClient
 _TOOLS = [
     ToolDefinition(
         name="wallabag_list_entries",
+        http_method="GET",
+        path_template="/api/entries.json",
         service_type=ServiceType.WALLABAG,
         description="List saved articles from Wallabag",
         parameters_schema={
@@ -38,6 +40,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="wallabag_get_entry",
+        http_method="GET",
+        path_template="/api/entries/{entry_id}.json",
         service_type=ServiceType.WALLABAG,
         description="Get a full Wallabag article by ID",
         parameters_schema={
@@ -50,6 +54,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="wallabag_save_url",
+        http_method="POST",
+        path_template="/api/entries.json",
         service_type=ServiceType.WALLABAG,
         description="Save a URL to Wallabag for later reading",
         parameters_schema={
@@ -62,6 +68,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="wallabag_delete_entry",
+        http_method="DELETE",
+        path_template="/api/entries/{entry_id}.json",
         service_type=ServiceType.WALLABAG,
         description="Delete a Wallabag article by ID",
         parameters_schema={
@@ -74,12 +82,16 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="wallabag_list_tags",
+        http_method="GET",
+        path_template="/api/tags.json",
         service_type=ServiceType.WALLABAG,
         description="List all tags in Wallabag",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="wallabag_tag_entry",
+        http_method="POST",
+        path_template="/api/entries/{entry_id}/tags.json",
         service_type=ServiceType.WALLABAG,
         description="Add tags to a Wallabag article",
         parameters_schema={
@@ -96,6 +108,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="wallabag_search",
+        http_method="GET",
+        path_template="/api/search.json",
         service_type=ServiceType.WALLABAG,
         description="Search Wallabag articles by term",
         parameters_schema={

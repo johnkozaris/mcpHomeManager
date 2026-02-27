@@ -9,6 +9,8 @@ from infrastructure.clients.base_client import BaseServiceClient
 _TOOLS = [
     ToolDefinition(
         name="tailscale_list_devices",
+        http_method="GET",
+        path_template="/tailnet/-/devices",
         service_type=ServiceType.TAILSCALE,
         description="List all devices in the tailnet",
         parameters_schema={
@@ -25,6 +27,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="tailscale_get_device",
+        http_method="GET",
+        path_template="/device/{device_id}",
         service_type=ServiceType.TAILSCALE,
         description="Get detailed information about a specific device",
         parameters_schema={
@@ -37,6 +41,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="tailscale_authorize_device",
+        http_method="POST",
+        path_template="/device/{device_id}/authorized",
         service_type=ServiceType.TAILSCALE,
         description="Authorize or deauthorize a device in the tailnet",
         parameters_schema={
@@ -53,6 +59,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="tailscale_get_device_routes",
+        http_method="GET",
+        path_template="/device/{device_id}/routes",
         service_type=ServiceType.TAILSCALE,
         description="Get the subnet routes advertised and enabled for a device",
         parameters_schema={
@@ -65,6 +73,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="tailscale_list_dns_nameservers",
+        http_method="GET",
+        path_template="/tailnet/-/dns/nameservers",
         service_type=ServiceType.TAILSCALE,
         description="List the DNS nameservers configured for the tailnet",
         parameters_schema={"type": "object", "properties": {}},

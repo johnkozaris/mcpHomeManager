@@ -8,6 +8,8 @@ from infrastructure.clients.base_client import BaseServiceClient
 _TOOLS = [
     ToolDefinition(
         name="immich_search_photos",
+        http_method="POST",
+        path_template="/api/search/smart",
         service_type=ServiceType.IMMICH,
         description="Search photos and videos by text query (uses CLIP ML model)",
         parameters_schema={
@@ -22,6 +24,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="immich_get_asset",
+        http_method="GET",
+        path_template="/api/assets/{asset_id}",
         service_type=ServiceType.IMMICH,
         description="Get metadata for a specific photo or video asset",
         parameters_schema={
@@ -34,12 +38,16 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="immich_list_albums",
+        http_method="GET",
+        path_template="/api/albums",
         service_type=ServiceType.IMMICH,
         description="List all photo albums",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
         name="immich_get_album",
+        http_method="GET",
+        path_template="/api/albums/{album_id}",
         service_type=ServiceType.IMMICH,
         description="Get album details including its assets",
         parameters_schema={
@@ -52,6 +60,8 @@ _TOOLS = [
     ),
     ToolDefinition(
         name="immich_server_stats",
+        http_method="GET",
+        path_template="/api/server/statistics",
         service_type=ServiceType.IMMICH,
         description="Get Immich server statistics (photo/video counts, disk usage)",
         parameters_schema={"type": "object", "properties": {}},
