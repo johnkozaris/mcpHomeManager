@@ -56,6 +56,7 @@ from infrastructure.persistence.audit_repository import AuditRepository
 from infrastructure.persistence.generic_tool_repository import GenericToolDefinitionRepository
 from infrastructure.persistence.service_repository import ServiceRepository
 from infrastructure.persistence.tool_repository import ToolPermissionRepository
+from infrastructure.persistence.user_repository import UserRepository
 from security.api_auth_middleware import ApiAuthMiddleware
 from security.mcp_auth import verify_mcp_request
 from services.audit_service import AuditService
@@ -63,6 +64,7 @@ from services.client_factory import ServiceClientFactory
 from services.health_service import HealthCheckRunner
 from services.service_manager import ServiceManager
 from services.tool_registry import ToolRegistry
+from services.user_service import UserService
 
 logger = structlog.get_logger()
 
@@ -119,6 +121,13 @@ async def provide_audit_service(db_session: AsyncSession) -> AuditService:
     return AuditService(repository=AuditRepository(db_session))
 
 
+async def provide_user_service(
+    db_session: AsyncSession,
+    state: State,
+) -> UserService:
+    return UserService(UserRepository(db_session), encryption=state.encryption)
+
+
 async def provide_service_manager(
     db_session: AsyncSession,
     state: State,
@@ -153,12 +162,6 @@ async def app_lifespan(app: Litestar) -> AsyncGenerator[None]:
             'Generate a new key with: python -c "from cryptography.fernet import Fernet; '
             'print(Fernet.generate_key().decode())"'
         ) from e
-
-    if "REPLACE_WITH_POSTGRES_PASSWORD" in settings.database_url:
-        logger.warning(
-            "Using default database password 'REPLACE_WITH_POSTGRES_PASSWORD'. "
-            "Set POSTGRES_PASSWORD in .env for production deployments."
-        )
 
     # Build singletons and store in app.state
     client_factory = ServiceClientFactory()
@@ -328,6 +331,7 @@ def create_app() -> Litestar:
             "client_factory": Provide(provide_client_factory),
             "tool_registry": Provide(provide_tool_registry),
             "audit_service": Provide(provide_audit_service),
+            "user_service": Provide(provide_user_service),
             "service_manager": Provide(provide_service_manager),
         },
         exception_handlers={

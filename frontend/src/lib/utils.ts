@@ -36,6 +36,29 @@ export function getMcpEndpoint(): string {
   return `${window.location.origin}/mcp/`;
 }
 
+/* ─── MCP JSON config ─────────────────────────────────────── */
+
+/** Build the standard MCP JSON config snippet for agent setup guides. */
+export function buildMcpJsonConfig(
+  mcpEndpoint: string,
+  apiKey?: string | null,
+): string {
+  return JSON.stringify(
+    {
+      mcpServers: {
+        homelab: {
+          url: mcpEndpoint,
+          headers: {
+            Authorization: `Bearer ${apiKey ?? "YOUR_API_KEY"}`,
+          },
+        },
+      },
+    },
+    null,
+    2,
+  );
+}
+
 /* ─── API error parsing ────────────────────────────────────── */
 
 /** Extract a human-readable message from an API error response.

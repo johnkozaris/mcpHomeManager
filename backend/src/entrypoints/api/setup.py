@@ -10,13 +10,11 @@ from typing import Annotated
 import msgspec
 import structlog
 from litestar import Controller, Response, get, post
-from litestar.datastructures import State
 from litestar.exceptions import ClientException
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from config import settings
-from entrypoints.api.auth import SESSION_COOKIE_MAX_AGE, SESSION_COOKIE_NAME, create_session
+from entrypoints.api.auth import apply_session_cookie, create_session
 from infrastructure.persistence.user_repository import UserRepository
 from services.user_service import UserService
 
@@ -64,8 +62,8 @@ class SetupController(Controller):
     async def setup(
         self,
         db_session: AsyncSession,
-        state: State,
         data: SetupRequest,
+        user_service: UserService,
     ) -> Response[SetupResponse]:
         """Create the initial admin account. Only works when no users exist."""
         repo = UserRepository(db_session)
@@ -84,10 +82,8 @@ class SetupController(Controller):
             if len(parts) != 2 or not parts[0] or not parts[1] or "." not in parts[1]:
                 raise ClientException("Invalid email address.")
 
-        svc = UserService(repo, encryption=state.encryption)
-
         try:
-            user = await svc.create_user(
+            user = await user_service.create_user(
                 username=data.username,
                 is_admin=True,
                 self_mcp_enabled=True,
@@ -103,7 +99,7 @@ class SetupController(Controller):
         # Auto-generate an MCP API key for the admin
         if user.id is None:
             raise RuntimeError("User was created without an ID — this should never happen")
-        _, api_key = await svc.generate_api_key(user.id)
+        _, api_key = await user_service.generate_api_key(user.id)
 
         # Create a session so the admin is logged in immediately
         token = await create_session(
@@ -124,13 +120,5 @@ class SetupController(Controller):
             api_key=api_key,
         )
         response = Response(content=body)
-        response.set_cookie(
-            key=SESSION_COOKIE_NAME,
-            value=token,
-            max_age=SESSION_COOKIE_MAX_AGE,
-            httponly=True,
-            secure=settings.public_url.startswith("https"),
-            samesite="lax",
-            path="/",
-        )
+        apply_session_cookie(response, token)
         return response

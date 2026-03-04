@@ -1,7 +1,9 @@
 import { TerminalBlock } from "@/components/ui/TerminalBlock";
 import { Badge } from "@/components/ui/Badge";
 import { McpEndpointBar } from "@/components/ui/McpEndpointBar";
-import { getMcpEndpoint } from "@/lib/utils";
+import { buildMcpJsonConfig, getMcpEndpoint } from "@/lib/utils";
+import { useCurrentUser } from "@/hooks/useAuth";
+import { api } from "@/lib/api";
 import {
   Terminal,
   Globe,
@@ -11,7 +13,7 @@ import {
   Puzzle,
   ChevronDown,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function AgentCard({
   name,
@@ -84,11 +86,17 @@ function Step({ children }: { children: React.ReactNode }) {
 
 export function Agents() {
   const mcpEndpoint = getMcpEndpoint();
-  const jsonConfig = JSON.stringify(
-    { mcpServers: { homelab: { url: mcpEndpoint } } },
-    null,
-    2,
-  );
+  const { data: currentUser } = useCurrentUser();
+  const [apiKey, setApiKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (currentUser?.has_api_key) {
+      api.auth.getApiKey().then((d) => setApiKey(d.api_key)).catch(() => {});
+    }
+  }, [currentUser?.has_api_key]);
+
+  const keyPlaceholder = apiKey ?? "YOUR_API_KEY";
+  const jsonConfig = buildMcpJsonConfig(mcpEndpoint, apiKey);
 
   return (
     <div className="space-y-8">
@@ -100,7 +108,7 @@ export function Agents() {
         </p>
       </div>
 
-      <McpEndpointBar />
+      <McpEndpointBar apiKey={apiKey} />
 
       {/* Agent cards */}
       <div className="space-y-3">
@@ -171,7 +179,7 @@ export function Agents() {
             </Step>
           </Guide>
           <TerminalBlock
-            code={`claude mcp add homelab --transport streamable-http ${mcpEndpoint}`}
+            code={`claude mcp add homelab --transport http --header "Authorization: Bearer ${keyPlaceholder}" ${mcpEndpoint}`}
             label="Terminal"
           />
           <Guide color="var(--terra)">
@@ -302,7 +310,7 @@ export function Agents() {
           <div className="grid grid-cols-3 gap-3">
             {[
               { label: "Transport", value: "Streamable HTTP" },
-              { label: "Auth", value: "X-API-Key header" },
+              { label: "Auth", value: "Authorization: Bearer" },
               { label: "Discovery", value: "Automatic" },
             ].map((item) => (
               <div

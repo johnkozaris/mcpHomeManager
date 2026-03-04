@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Terminal, Copy, Check, Braces } from "lucide-react";
-import { getMcpEndpoint } from "@/lib/utils";
+import { buildMcpJsonConfig, getMcpEndpoint } from "@/lib/utils";
 
-export function McpEndpointBar() {
+export function McpEndpointBar({ apiKey }: { apiKey?: string | null } = {}) {
   const mcpEndpoint = getMcpEndpoint();
   const [copiedUrl, setCopiedUrl] = useState(false);
   const [copiedJson, setCopiedJson] = useState(false);
@@ -25,12 +25,7 @@ export function McpEndpointBar() {
   };
 
   const copyJson = () => {
-    const json = JSON.stringify(
-      { mcpServers: { homelab: { url: mcpEndpoint } } },
-      null,
-      2,
-    );
-    navigator.clipboard.writeText(json);
+    navigator.clipboard.writeText(buildMcpJsonConfig(mcpEndpoint, apiKey));
     setCopiedJson(true);
   };
 

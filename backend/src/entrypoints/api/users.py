@@ -9,7 +9,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from domain.entities.user import User
 from entrypoints.api.guards import require_admin
 from entrypoints.api.schemas import CreateUserRequest, UpdateUserRequest, UserResponse
-from infrastructure.persistence.user_repository import UserRepository
 from services.user_service import UserService
 
 
@@ -32,9 +31,8 @@ class UserController(Controller):
     guards = [require_admin]
 
     @get("/")
-    async def list_users(self, db_session: AsyncSession) -> list[UserResponse]:
-        svc = UserService(UserRepository(db_session))
-        users = await svc.list_all()
+    async def list_users(self, user_service: UserService) -> list[UserResponse]:
+        users = await user_service.list_all()
         return [_to_response(u) for u in users]
 
     @post("/")
@@ -42,11 +40,11 @@ class UserController(Controller):
         self,
         db_session: AsyncSession,
         data: CreateUserRequest,
+        user_service: UserService,
     ) -> UserResponse:
-        svc = UserService(UserRepository(db_session))
         service_ids = [UUID(sid) for sid in data.allowed_service_ids]
         try:
-            user = await svc.create_user(
+            user = await user_service.create_user(
                 username=data.username,
                 is_admin=data.is_admin,
                 allowed_service_ids=service_ids,
@@ -62,11 +60,10 @@ class UserController(Controller):
     @get("/{user_id:uuid}")
     async def get_user(
         self,
-        db_session: AsyncSession,
         user_id: UUID,
+        user_service: UserService,
     ) -> UserResponse:
-        svc = UserService(UserRepository(db_session))
-        user = await svc.get_by_id(user_id)
+        user = await user_service.get_by_id(user_id)
         if user is None:
             raise NotFoundException("User not found")
         return _to_response(user)
@@ -77,8 +74,8 @@ class UserController(Controller):
         db_session: AsyncSession,
         user_id: UUID,
         data: UpdateUserRequest,
+        user_service: UserService,
     ) -> UserResponse:
-        svc = UserService(UserRepository(db_session))
         try:
             kwargs: dict = {}
             if data.is_admin is not None:
@@ -87,7 +84,7 @@ class UserController(Controller):
                 kwargs["allowed_service_ids"] = [UUID(s) for s in data.allowed_service_ids]
             if data.self_mcp_enabled is not None:
                 kwargs["self_mcp_enabled"] = data.self_mcp_enabled
-            user = await svc.update_user(user_id, **kwargs)
+            user = await user_service.update_user(user_id, **kwargs)
         except ValueError as e:
             raise NotFoundException(str(e)) from e
         await db_session.commit()
@@ -98,7 +95,7 @@ class UserController(Controller):
         self,
         db_session: AsyncSession,
         user_id: UUID,
+        user_service: UserService,
     ) -> None:
-        svc = UserService(UserRepository(db_session))
-        await svc.delete_user(user_id)
+        await user_service.delete_user(user_id)
         await db_session.commit()
