@@ -1,10 +1,7 @@
 """Per-request user context for MCP tool authorization (contextvars-safe)."""
 
 import contextvars
-from collections.abc import Callable
-from typing import Any
-
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+from uuid import UUID
 
 from domain.entities.user import User
 
@@ -15,24 +12,16 @@ current_user_var: contextvars.ContextVar[User | None] = contextvars.ContextVar(
 )
 
 
-async def check_user_service_access(
-    session_factory: async_sessionmaker[AsyncSession],
-    user: User,
-    service_name: str,
-) -> bool:
-    """Check if a non-admin user has access to a given service by name."""
-    from infrastructure.persistence.service_repository import ServiceRepository
-
-    async with session_factory() as session:
-        repo = ServiceRepository(session)
-        svc = await repo.get_by_name(service_name)
-        if svc is None or svc.id is None:
-            return False
-        return svc.id in user.allowed_service_ids
+def can_user_access_service(user: User, service_id: UUID | None) -> bool:
+    """Check whether the user can access a service by ID."""
+    if user.is_admin:
+        return True
+    if service_id is None:
+        return False
+    return service_id in user.allowed_service_ids
 
 
 async def filter_services_for_user(
-    session_factory: async_sessionmaker[AsyncSession] | Callable[[], Any] | None,
     services: list,
     *,
     id_attr: str = "id",

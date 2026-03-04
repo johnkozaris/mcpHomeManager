@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useAppName } from "@/hooks/useAppName";
 import { useNavigate } from "@tanstack/react-router";
-import { api, setSessionToken } from "@/lib/api";
+import { api } from "@/lib/api";
+import { queryClient } from "@/lib/queryClient";
 import { parseApiError } from "@/lib/utils";
 import { Home, Copy, Check } from "lucide-react";
 
@@ -35,8 +36,6 @@ export function Setup() {
         password,
         email: email || undefined,
       });
-      setSessionToken(result.token);
-      localStorage.setItem("username", result.username);
       setApiKey(result.api_key);
     } catch (err) {
       setError(parseApiError(err, "Setup failed"));
@@ -90,7 +89,10 @@ export function Setup() {
             </div>
 
             <button
-              onClick={() => navigate({ to: "/" })}
+              onClick={() => {
+                queryClient.clear();
+                navigate({ to: "/" });
+              }}
               className="w-full py-2.5 rounded-lg bg-terra text-white text-sm font-medium
                          hover:bg-terra-hover active:scale-[0.98] transition-all"
             >

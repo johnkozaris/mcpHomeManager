@@ -12,7 +12,8 @@ import { RouteErrorFallback } from "@/components/RouteErrorFallback";
 import { Dashboard } from "@/pages/Dashboard";
 import { Login } from "@/pages/Login";
 import { Setup } from "@/pages/Setup";
-import { api, hasSessionToken } from "@/lib/api";
+import { api } from "@/lib/api";
+import { queryKeys } from "@/lib/query-keys";
 import { queryClient } from "@/lib/queryClient";
 
 /* ─── Auth helper ─────────────────────────────────────────── */
@@ -20,7 +21,7 @@ import { queryClient } from "@/lib/queryClient";
 async function requireAuth() {
   try {
     const config = await queryClient.ensureQueryData({
-      queryKey: ["config"],
+      queryKey: queryKeys.config(),
       queryFn: api.health.config,
       staleTime: 30_000,
     });
@@ -32,7 +33,14 @@ async function requireAuth() {
     if (err && typeof err === "object" && "to" in err) throw err;
     // Network error — let them through, they'll get errors on the pages
   }
-  if (!hasSessionToken()) {
+
+  try {
+    await queryClient.ensureQueryData({
+      queryKey: queryKeys.authMe(),
+      queryFn: api.auth.me,
+      staleTime: 30_000,
+    });
+  } catch {
     throw redirect({ to: "/login" });
   }
 }
@@ -54,7 +62,7 @@ const setupRoute = createRoute({
   beforeLoad: async () => {
     try {
       const config = await queryClient.ensureQueryData({
-        queryKey: ["config"],
+        queryKey: queryKeys.config(),
         queryFn: api.health.config,
         staleTime: 30_000,
       });

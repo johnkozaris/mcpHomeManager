@@ -8,6 +8,8 @@ import structlog
 from litestar.response.base import ASGIResponse
 from litestar.types import Receive, Scope, Send
 
+from security.auth_helpers import authenticate_api_key, extract_api_token
+
 logger = structlog.get_logger()
 
 _AUTH_FAIL_WINDOW_SECONDS = 60
@@ -121,8 +123,7 @@ async def verify_mcp_request(
     headers_dict = dict(scope.get("headers", []))
     auth_header = headers_dict.get(b"authorization", b"").decode()
     api_key_header = headers_dict.get(b"x-api-key", b"").decode()
-    bearer_token = auth_header[7:].strip() if auth_header.lower().startswith("bearer ") else ""
-    provided_key = api_key_header or bearer_token
+    provided_key = extract_api_token(auth_header=auth_header, api_key_header=api_key_header)
 
     if not provided_key:
         return await _deny_auth(scope, receive, send, reason="missing_api_key")
@@ -134,12 +135,7 @@ async def verify_mcp_request(
         await _send_unauthorized(scope, receive, send)
         return False
 
-    from infrastructure.persistence.user_repository import UserRepository
-    from services.user_service import UserService
-
-    async with app.state.session_factory() as session:
-        user_svc = UserService(UserRepository(session))
-        user = await user_svc.authenticate_by_key(provided_key)
+    user = await authenticate_api_key(app.state.session_factory, provided_key)
 
     if user is None:
         return await _deny_auth(scope, receive, send, reason="invalid_api_key")

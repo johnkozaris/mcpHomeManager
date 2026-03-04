@@ -16,11 +16,19 @@ from entrypoints.mcp.audit_util import record_audit_safe
 from entrypoints.mcp.template_engine import TemplateEngine
 from entrypoints.mcp.user_context import current_user_var, filter_services_for_user
 from infrastructure.persistence.audit_repository import AuditRepository
+from infrastructure.persistence.generic_tool_repository import GenericToolDefinitionRepository
 from infrastructure.persistence.service_repository import ServiceRepository
 from infrastructure.persistence.tool_repository import ToolPermissionRepository
 from services.audit_service import AuditService
 from services.client_factory import ServiceClientFactory
+from services.generic_tool_service import (
+    GenericToolConflictError,
+    GenericToolNotFoundError,
+    GenericToolService,
+    GenericToolValidationError,
+)
 from services.service_manager import ServiceManager
+from services.tool_permission_service import ToolPermissionService
 from services.tool_registry import ToolRegistry
 
 logger = structlog.get_logger()
@@ -113,7 +121,7 @@ def register_meta_tools(
             services = await repo.get_all()
 
         # Filter to user-accessible services in multi-user mode
-        services = await filter_services_for_user(session_factory, services)
+        services = await filter_services_for_user(services)
 
         active = tool_registry.active_tools
         user = current_user_var.get()
@@ -196,8 +204,15 @@ def register_meta_tools(
             if svc is None or svc.id is None:
                 return json.dumps({"error": f"Service '{service_name}' not found"})
 
-            tool_repo = ToolPermissionRepository(session)
-            await tool_repo.set_permission(svc.id, tool_name, enabled)
+            permission_service = ToolPermissionService(ToolPermissionRepository(session))
+            try:
+                await permission_service.set_permission(
+                    svc.id,
+                    tool_name=tool_name,
+                    is_enabled=enabled,
+                )
+            except ValueError as e:
+                return json.dumps({"error": str(e)})
             await session.commit()
 
         await tool_registry.refresh()
@@ -238,10 +253,7 @@ def register_meta_tools(
             async with session_factory() as session:
                 repo = ServiceRepository(session)
                 all_services = await repo.get_all()
-            allowed_services = await filter_services_for_user(
-                session_factory,
-                all_services,
-            )
+            allowed_services = await filter_services_for_user(all_services)
             allowed_names = {s.name for s in allowed_services}
             entries = [e for e in entries if e.service_name in allowed_names]
 
@@ -270,7 +282,7 @@ def register_meta_tools(
             services = await repo.get_all()
 
         # Filter to user-accessible services in multi-user mode
-        services = await filter_services_for_user(session_factory, services)
+        services = await filter_services_for_user(services)
 
         active = tool_registry.active_tools
         healthy = sum(1 for s in services if s.health_status == HealthStatus.HEALTHY)
@@ -304,7 +316,7 @@ def register_meta_tools(
             audit = AuditService(repository=AuditRepository(session))
             recent = await audit.get_recent(limit=10)
 
-        services = await filter_services_for_user(session_factory, all_services)
+        services = await filter_services_for_user(all_services)
 
         # Filter audit logs to only show entries for accessible services
         allowed_names = {s.name for s in services}
@@ -367,7 +379,7 @@ def register_meta_tools(
             return json.dumps({"error": f"Service '{service_name}' not found"})
 
         # Enforce multi-user access control
-        allowed = await filter_services_for_user(session_factory, [svc])
+        allowed = await filter_services_for_user([svc])
         if not allowed:
             return json.dumps({"error": f"Access denied to service '{service_name}'"})
 
@@ -415,7 +427,7 @@ def register_meta_tools(
                 raw_services = await repo.get_all()
 
         # Enforce multi-user access control
-        services = await filter_services_for_user(session_factory, raw_services)
+        services = await filter_services_for_user(raw_services)
 
         if service_name and not services:
             return json.dumps({"error": f"Service '{service_name}' not found"})
@@ -455,7 +467,7 @@ def register_meta_tools(
         async with session_factory() as session:
             repo = ServiceRepository(session)
             all_services = await repo.get_all()
-        accessible = await filter_services_for_user(session_factory, all_services)
+        accessible = await filter_services_for_user(all_services)
         accessible_names = {s.name for s in accessible}
 
         tools_list = []
@@ -496,48 +508,28 @@ def register_meta_tools(
         _require_admin_user()
         start = time.monotonic()
 
-        from domain.validation import validate_tool_name
-
-        try:
-            validate_tool_name(tool_name)
-        except ValueError as e:
-            return json.dumps({"error": str(e)})
-
-        valid_methods = {"GET", "POST", "PUT", "PATCH", "DELETE"}
-        if http_method.upper() not in valid_methods:
-            allowed = ", ".join(sorted(valid_methods))
-            return json.dumps({"error": f"Invalid HTTP method '{http_method}'. Use: {allowed}"})
-
         async with session_factory() as session:
             repo = ServiceRepository(session)
             svc = await repo.get_by_name(service_name)
             if svc is None or svc.id is None:
                 return json.dumps({"error": f"Service '{service_name}' not found"})
 
-            from infrastructure.persistence.generic_tool_repository import (
-                GenericToolDefinitionRepository,
-            )
-
-            tool_repo = GenericToolDefinitionRepository(session)
+            generic_tools = GenericToolService(GenericToolDefinitionRepository(session))
             try:
-                schema = json.loads(params_schema)
-            except json.JSONDecodeError as e:
-                return json.dumps({"error": f"Invalid params_schema JSON: {e}"})
-
-            from sqlalchemy.exc import IntegrityError
-
-            try:
-                await tool_repo.create(
-                    svc.id, tool_name, description, http_method.upper(), path_template, schema
+                schema = generic_tools.parse_params_schema_json(params_schema)
+                await generic_tools.create_tool(
+                    svc.id,
+                    tool_name=tool_name,
+                    description=description,
+                    http_method=http_method,
+                    path_template=path_template,
+                    params_schema=schema,
                 )
                 await session.commit()
-            except IntegrityError:
-                return json.dumps(
-                    {"error": f"Tool '{tool_name}' already exists on service '{service_name}'"}
-                )
-            except Exception:
-                logger.exception("Failed to create generic tool %s on %s", tool_name, service_name)
-                return json.dumps({"error": "Failed to create tool"})
+            except GenericToolConflictError as e:
+                return json.dumps({"error": str(e)})
+            except GenericToolValidationError as e:
+                return json.dumps({"error": str(e)})
 
         await tool_registry.refresh()
         await _audit_meta_tool(
@@ -569,16 +561,11 @@ def register_meta_tools(
             if svc is None or svc.id is None:
                 return json.dumps({"error": f"Service '{service_name}' not found"})
 
-            from infrastructure.persistence.generic_tool_repository import (
-                GenericToolDefinitionRepository,
-            )
-
-            tool_repo = GenericToolDefinitionRepository(session)
-            deleted = await tool_repo.delete(svc.id, tool_name)
-            if not deleted:
-                return json.dumps(
-                    {"error": f"Tool '{tool_name}' not found on service '{service_name}'"}
-                )
+            generic_tools = GenericToolService(GenericToolDefinitionRepository(session))
+            try:
+                await generic_tools.delete_tool(svc.id, tool_name)
+            except GenericToolNotFoundError as e:
+                return json.dumps({"error": str(e)})
             await session.commit()
 
         await tool_registry.refresh()
@@ -609,44 +596,32 @@ def register_meta_tools(
         _require_admin_user()
         start = time.monotonic()
 
-        if http_method is not None:
-            valid_methods = {"GET", "POST", "PUT", "PATCH", "DELETE"}
-            if http_method.upper() not in valid_methods:
-                allowed = ", ".join(sorted(valid_methods))
-                return json.dumps({"error": f"Invalid HTTP method '{http_method}'. Use: {allowed}"})
-
         async with session_factory() as session:
             repo = ServiceRepository(session)
             svc = await repo.get_by_name(service_name)
             if svc is None or svc.id is None:
                 return json.dumps({"error": f"Service '{service_name}' not found"})
 
-            from infrastructure.persistence.generic_tool_repository import (
-                GenericToolDefinitionRepository,
-            )
-
-            tool_repo = GenericToolDefinitionRepository(session)
-
-            schema = None
-            if params_schema is not None:
-                try:
-                    schema = json.loads(params_schema)
-                except json.JSONDecodeError as e:
-                    return json.dumps({"error": f"Invalid params_schema JSON: {e}"})
-
-            row = await tool_repo.update(
-                svc.id,
-                tool_name,
-                description=description,
-                http_method=http_method.upper() if http_method else None,
-                path_template=path_template,
-                params_schema=schema,
-            )
-            if row is None:
-                return json.dumps(
-                    {"error": f"Tool '{tool_name}' not found on service '{service_name}'"}
+            generic_tools = GenericToolService(GenericToolDefinitionRepository(session))
+            try:
+                schema = (
+                    generic_tools.parse_params_schema_json(params_schema)
+                    if params_schema is not None
+                    else None
                 )
-            await session.commit()
+                await generic_tools.update_tool(
+                    svc.id,
+                    tool_name,
+                    description=description,
+                    http_method=http_method,
+                    path_template=path_template,
+                    params_schema=schema,
+                )
+                await session.commit()
+            except GenericToolNotFoundError as e:
+                return json.dumps({"error": str(e)})
+            except GenericToolValidationError as e:
+                return json.dumps({"error": str(e)})
 
         await tool_registry.refresh()
         await _audit_meta_tool(

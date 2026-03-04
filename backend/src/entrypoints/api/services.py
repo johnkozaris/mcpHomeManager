@@ -6,7 +6,6 @@ import httpx
 import structlog
 from litestar import Controller, MediaType, Request, Response, delete, get, patch, post
 from litestar.exceptions import ClientException, NotFoundException
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from domain.entities.service_connection import ServiceConnection, ServiceType
@@ -35,9 +34,15 @@ from infrastructure.persistence.tool_repository import ToolPermissionRepository
 from security.auth_context import AuthContext
 from services.audit_service import AuditService
 from services.config_export import ConfigExporter
-from services.openapi_parser import OpenAPIParser
+from services.generic_tool_service import (
+    GenericToolConflictError,
+    GenericToolNotFoundError,
+    GenericToolService,
+    GenericToolValidationError,
+)
 from services.permission_profiles import PROFILES
 from services.service_manager import ServiceManager
+from services.tool_permission_service import ToolPermissionService
 from services.tool_registry import ToolRegistry
 
 
@@ -136,6 +141,8 @@ class ServiceController(Controller):
             ToolResponse(
                 name=t.definition.name,
                 service_type=t.definition.service_type.value,
+                service_id=t.service_id,
+                service_name=t.service_name,
                 description=t.definition.description,
                 parameters_schema=t.definition.parameters_schema,
                 is_enabled=t.definition.is_enabled,
@@ -328,9 +335,13 @@ class ServiceController(Controller):
 
         if svc.id is None:
             raise NotFoundException("Service has no ID")
-        tool_repo = ToolPermissionRepository(db_session)
+        permissions = ToolPermissionService(ToolPermissionRepository(db_session))
         for tool_name, enabled in profile.tool_states.items():
-            await tool_repo.set_permission(svc.id, tool_name, enabled)
+            await permissions.set_permission(
+                svc.id,
+                tool_name=tool_name,
+                is_enabled=enabled,
+            )
         await db_session.commit()
         await tool_registry.refresh()
 
@@ -369,9 +380,9 @@ class ServiceController(Controller):
 
         await service_manager.get_by_id(service_id)
 
-        repo = GenericToolDefinitionRepository(db_session)
+        service = GenericToolService(GenericToolDefinitionRepository(db_session))
         try:
-            row = await repo.create(
+            row = await service.create_tool(
                 service_id=service_id,
                 tool_name=data.tool_name,
                 description=data.description,
@@ -379,11 +390,10 @@ class ServiceController(Controller):
                 path_template=data.path_template,
                 params_schema=data.params_schema,
             )
-        except IntegrityError:
-            raise ClientException(
-                detail=f"Tool '{data.tool_name}' already exists on this service",
-                status_code=409,
-            ) from None
+        except GenericToolConflictError as exc:
+            raise ClientException(detail=str(exc), status_code=409) from exc
+        except GenericToolValidationError as exc:
+            raise ClientException(detail=str(exc), status_code=400) from exc
         await db_session.commit()
         await tool_registry.refresh()
         return GenericToolResult(status="created", tool_name=row.tool_name, tools_count=1)
@@ -403,17 +413,20 @@ class ServiceController(Controller):
         ctx.require_service_access(service_id)
         await service_manager.get_by_id(service_id)
 
-        repo = GenericToolDefinitionRepository(db_session)
-        row = await repo.update(
-            service_id,
-            tool_name,
-            description=data.description,
-            http_method=data.http_method,
-            path_template=data.path_template,
-            params_schema=data.params_schema,
-        )
-        if row is None:
-            raise NotFoundException(f"Tool '{tool_name}' not found")
+        service = GenericToolService(GenericToolDefinitionRepository(db_session))
+        try:
+            row = await service.update_tool(
+                service_id,
+                tool_name,
+                description=data.description,
+                http_method=data.http_method,
+                path_template=data.path_template,
+                params_schema=data.params_schema,
+            )
+        except GenericToolNotFoundError as exc:
+            raise NotFoundException(str(exc)) from exc
+        except GenericToolValidationError as exc:
+            raise ClientException(detail=str(exc), status_code=400) from exc
         await db_session.commit()
         await tool_registry.refresh()
         return GenericToolResult(status="updated", tool_name=row.tool_name, tools_count=1)
@@ -432,10 +445,11 @@ class ServiceController(Controller):
         ctx.require_service_access(service_id)
         await service_manager.get_by_id(service_id)
 
-        repo = GenericToolDefinitionRepository(db_session)
-        deleted = await repo.delete(service_id, tool_name)
-        if not deleted:
-            raise NotFoundException(f"Tool '{tool_name}' not found")
+        service = GenericToolService(GenericToolDefinitionRepository(db_session))
+        try:
+            await service.delete_tool(service_id, tool_name)
+        except GenericToolNotFoundError as exc:
+            raise NotFoundException(str(exc)) from exc
         await db_session.commit()
         await tool_registry.refresh()
 
@@ -453,11 +467,11 @@ class ServiceController(Controller):
         svc = await service_manager.get_by_id(service_id)
         start = time.monotonic()
 
-        repo = GenericToolDefinitionRepository(db_session)
-        tools = await repo.get_by_service_id(service_id)
-        tool = next((t for t in tools if t.tool_name == tool_name), None)
-        if tool is None:
-            raise NotFoundException(f"Tool '{tool_name}' not found")
+        tool_service = GenericToolService(GenericToolDefinitionRepository(db_session))
+        try:
+            tool = await tool_service.get_tool(service_id, tool_name)
+        except GenericToolNotFoundError as exc:
+            raise NotFoundException(str(exc)) from exc
 
         # Probe: substitute path params with "test" placeholder
         path = re.sub(r"\{[^}]+\}", "test", tool.path_template)
@@ -553,34 +567,11 @@ class ServiceController(Controller):
 
         await service_manager.get_by_id(service_id)
 
-        parser = OpenAPIParser()
-        specs = parser.parse(data.spec)
-
-        from domain.validation import validate_tool_name
-
-        repo = GenericToolDefinitionRepository(db_session)
-        existing_tools = await repo.get_by_service_id(service_id)
-        existing_names = {t.tool_name for t in existing_tools}
-        created = []
-        skipped = []
-        for spec in specs:
-            if spec.tool_name in existing_names:
-                skipped.append(spec.tool_name)
-                continue
-            try:
-                validate_tool_name(spec.tool_name)
-            except ValueError:
-                skipped.append(spec.tool_name)
-                continue
-            await repo.create(
-                service_id=service_id,
-                tool_name=spec.tool_name,
-                description=spec.description,
-                http_method=spec.http_method,
-                path_template=spec.path_template,
-                params_schema=spec.params_schema,
-            )
-            created.append(spec.tool_name)
+        service = GenericToolService(GenericToolDefinitionRepository(db_session))
+        try:
+            created, skipped = await service.import_openapi(service_id, data.spec)
+        except (ValueError, GenericToolValidationError) as exc:
+            raise ClientException(detail=str(exc), status_code=400) from exc
 
         await db_session.commit()
         await tool_registry.refresh()

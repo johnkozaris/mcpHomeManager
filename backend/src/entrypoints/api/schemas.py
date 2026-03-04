@@ -44,6 +44,8 @@ class ServiceResponse(msgspec.Struct):
 class ToolResponse(msgspec.Struct):
     name: str
     service_type: str
+    service_id: UUID | None
+    service_name: str | None
     description: str
     parameters_schema: dict[str, Any]
     is_enabled: bool

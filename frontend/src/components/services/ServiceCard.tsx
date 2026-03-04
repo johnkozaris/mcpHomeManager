@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import type { ServiceConnection } from "@/lib/types";
 import { api } from "@/lib/api";
+import { queryKeys } from "@/lib/query-keys";
 import { Badge } from "@/components/ui/Badge";
 import { StatusDot } from "@/components/ui/StatusDot";
 import { ServiceIconBadge, getServiceMeta } from "@/lib/service-meta";
@@ -12,7 +13,7 @@ export function ServiceCard({ service }: { service: ServiceConnection }) {
 
   function handlePrefetch() {
     qc.prefetchQuery({
-      queryKey: ["services", service.id],
+      queryKey: queryKeys.service(service.id),
       queryFn: () => api.services.get(service.id),
       staleTime: 30_000,
     });

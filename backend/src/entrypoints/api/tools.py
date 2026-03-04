@@ -4,6 +4,7 @@ from uuid import UUID
 import structlog
 from litestar import Controller, Request, Response, get, patch, post
 from litestar.enums import MediaType
+from litestar.exceptions import ClientException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from entrypoints.api.schemas import (
@@ -14,6 +15,7 @@ from entrypoints.api.schemas import (
 )
 from entrypoints.mcp.template_engine import TemplateEngine
 from security.auth_context import AuthContext
+from services.tool_permission_service import ToolPermissionService
 from services.tool_registry import ToolRegistry
 
 logger = structlog.get_logger()
@@ -40,6 +42,8 @@ class ToolController(Controller):
                 ToolResponse(
                     name=t.definition.name,
                     service_type=t.definition.service_type.value,
+                    service_id=t.service_id,
+                    service_name=t.service_name,
                     description=t.definition.description,
                     parameters_schema=t.definition.parameters_schema,
                     is_enabled=t.definition.is_enabled,
@@ -63,28 +67,24 @@ class ToolController(Controller):
         tool_name: str,
         data: UpdateToolPermission,
     ) -> ToolResponse:
-        import re
-
-        from litestar.exceptions import ClientException
-
-        if not re.fullmatch(r"[a-zA-Z0-9_\-\.]{1,200}", tool_name):
-            raise ClientException("Invalid tool name")
-
         ctx: AuthContext = request.user
         ctx.require_service_access(service_id)
 
         from infrastructure.persistence.tool_repository import ToolPermissionRepository
 
-        repo = ToolPermissionRepository(db_session)
-        await repo.set_permission(
-            service_id,
-            tool_name,
-            data.is_enabled,
-            description_override=data.description_override or None,
-            parameters_schema_override=data.parameters_schema_override or None,
-            http_method_override=data.http_method_override or None,
-            path_template_override=data.path_template_override or None,
-        )
+        service = ToolPermissionService(ToolPermissionRepository(db_session))
+        try:
+            await service.set_permission(
+                service_id,
+                tool_name=tool_name,
+                is_enabled=data.is_enabled,
+                description_override=data.description_override or None,
+                parameters_schema_override=data.parameters_schema_override or None,
+                http_method_override=data.http_method_override or None,
+                path_template_override=data.path_template_override or None,
+            )
+        except ValueError as exc:
+            raise ClientException(str(exc)) from exc
         await db_session.commit()
 
         # Rebuild tools so the change takes effect (reads committed data)
@@ -97,6 +97,8 @@ class ToolController(Controller):
             return ToolResponse(
                 name=tool.definition.name,
                 service_type=tool.definition.service_type.value,
+                service_id=tool.service_id,
+                service_name=tool.service_name,
                 description=tool.definition.description,
                 parameters_schema=tool.definition.parameters_schema,
                 is_enabled=tool.definition.is_enabled,
@@ -111,6 +113,8 @@ class ToolController(Controller):
         return ToolResponse(
             name=tool_name,
             service_type="",
+            service_id=service_id,
+            service_name=None,
             description="",
             parameters_schema={},
             is_enabled=False,

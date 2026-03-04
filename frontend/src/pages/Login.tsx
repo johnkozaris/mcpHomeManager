@@ -2,7 +2,9 @@ import { useState } from "react";
 import { useAppName } from "@/hooks/useAppName";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { api, setSessionToken } from "@/lib/api";
+import { api } from "@/lib/api";
+import { queryKeys } from "@/lib/query-keys";
+import { queryClient } from "@/lib/queryClient";
 import { parseApiError } from "@/lib/utils";
 import { Home } from "lucide-react";
 
@@ -15,7 +17,7 @@ export function Login() {
   const [loading, setLoading] = useState(false);
 
   const { data: config } = useQuery({
-    queryKey: ["config"],
+    queryKey: queryKeys.config(),
     queryFn: api.health.config,
     staleTime: 60_000,
   });
@@ -26,9 +28,8 @@ export function Login() {
     setLoading(true);
 
     try {
-      const result = await api.auth.login(username, password);
-      setSessionToken(result.token);
-      localStorage.setItem("username", result.username);
+      await api.auth.login(username, password);
+      queryClient.clear();
       navigate({ to: "/" });
     } catch (err) {
       setError(parseApiError(err, "Login failed"));

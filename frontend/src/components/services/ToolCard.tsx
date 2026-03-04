@@ -118,9 +118,9 @@ function EditableParameterSchema({
 
 interface ToolCardProps {
   tool: ToolDefinition;
-  onToggle?: (toolName: string, enabled: boolean) => void;
+  onToggle?: (tool: ToolDefinition, enabled: boolean) => void;
   onSaveOverrides?: (
-    toolName: string,
+    tool: ToolDefinition,
     descriptionOverride: string | null,
     parametersSchemaOverride: Record<string, unknown> | null,
     httpMethodOverride?: string | null,
@@ -237,7 +237,7 @@ export function ToolCard({
     const methodOverride = editMethod !== origMethod ? (editMethod || null) : null;
     const pathOverride = editPath !== origPath ? (editPath || null) : null;
 
-    onSaveOverrides(tool.name, descOverride, schemaOverride, methodOverride, pathOverride);
+    onSaveOverrides(tool, descOverride, schemaOverride, methodOverride, pathOverride);
     setEditing(false);
   };
 
@@ -382,7 +382,7 @@ export function ToolCard({
               {onToggle ? (
                 <Toggle
                   checked={tool.is_enabled}
-                  onChange={(v) => onToggle(tool.name, v)}
+                  onChange={(v) => onToggle(tool, v)}
                 />
               ) : (
                 <Badge variant={tool.is_enabled ? "positive" : "default"}>
@@ -494,14 +494,14 @@ export function ToolCard({
               <X size={12} /> Cancel
             </button>
             {(tool.description_override || tool.parameters_schema_override || tool.http_method_override || tool.path_template_override) && (
-              <button
-                type="button"
-                onClick={() => {
-                  onSaveOverrides?.(tool.name, null, null, null, null);
-                  setEditing(false);
-                }}
-                className="ml-auto text-2xs text-ink-tertiary hover:text-rust transition-colors"
-              >
+                <button
+                  type="button"
+                  onClick={() => {
+                    onSaveOverrides?.(tool, null, null, null, null);
+                    setEditing(false);
+                  }}
+                  className="ml-auto text-2xs text-ink-tertiary hover:text-rust transition-colors"
+                >
                 Reset to original
               </button>
             )}

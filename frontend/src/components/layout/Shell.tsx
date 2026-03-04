@@ -18,7 +18,8 @@ import {
 } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import { useCurrentUser } from "@/hooks/useAuth";
-import { clearSession } from "@/lib/api";
+import { api } from "@/lib/api";
+import { queryClient } from "@/lib/queryClient";
 import logoSrc from "@/assets/logo.png";
 
 const baseNav: {
@@ -133,8 +134,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const [collapsed, setCollapsed] = useState(
     () => localStorage.getItem(COLLAPSED_KEY) === "true",
   );
-  const currentUser =
-    currentUserData?.username ?? localStorage.getItem("username");
+  const currentUser = currentUserData?.username ?? null;
   useEffect(() => {
     document.title = appName;
   }, [appName]);
@@ -148,14 +148,8 @@ export function Shell({ children }: { children: ReactNode }) {
   };
 
   const handleLogout = async () => {
-    try {
-      await fetch("/api/auth/logout", {
-        method: "DELETE",
-        credentials: "same-origin",
-      }).catch(() => {});
-    } finally {
-      clearSession();
-    }
+    await api.auth.logout().catch(() => {});
+    queryClient.clear();
     navigate({ to: "/login" });
   };
 

@@ -1,10 +1,22 @@
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
+import { copyFileSync } from "fs";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+/** Copy index.html → 404.html so Litestar's html_mode serves the SPA shell for unknown routes. */
+function spaFallback(): Plugin {
+  return {
+    name: "spa-fallback",
+    closeBundle() {
+      const dist = path.resolve(__dirname, "dist");
+      copyFileSync(path.join(dist, "index.html"), path.join(dist, "404.html"));
+    },
+  };
+}
 
 export default defineConfig({
   plugins: [
@@ -14,6 +26,7 @@ export default defineConfig({
       },
     }),
     tailwindcss(),
+    spaFallback(),
   ],
   resolve: {
     alias: {

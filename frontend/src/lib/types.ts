@@ -61,6 +61,8 @@ export interface ServiceDetail extends ServiceConnection {
 export interface ToolDefinition {
   name: string;
   service_type: ServiceType;
+  service_id: string | null;
+  service_name: string | null;
   description: string;
   parameters_schema: Record<string, unknown>;
   is_enabled: boolean;

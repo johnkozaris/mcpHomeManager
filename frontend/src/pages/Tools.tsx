@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   useTools,
-  useServices,
   useUpdateToolPermission,
 } from "@/hooks/useServices";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -17,12 +16,23 @@ type StatusFilter = "all" | "enabled" | "disabled";
 
 export function Tools() {
   const { data: tools, isLoading, isError, error } = useTools();
-  const { data: services } = useServices();
   const updateToolPermission = useUpdateToolPermission();
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebouncedValue(search, 200);
   const [filterType, setFilterType] = useState<ServiceType | "all">("all");
   const [filterStatus, setFilterStatus] = useState<StatusFilter>("all");
+  const [actionError, setActionError] = useState<string | null>(null);
+
+  const requireServiceId = (toolName: string, serviceId: string | null): string | null => {
+    if (serviceId) {
+      setActionError(null);
+      return serviceId;
+    }
+    setActionError(
+      `Tool "${toolName}" is missing a linked service and cannot be updated.`,
+    );
+    return null;
+  };
 
   const filtered = tools?.filter((t) => {
     if (filterType !== "all" && t.service_type !== filterType) return false;
@@ -40,14 +50,6 @@ export function Tools() {
   const enabledCount = tools?.filter((t) => t.is_enabled).length ?? 0;
   const disabledCount = (tools?.length ?? 0) - enabledCount;
 
-  const serviceIdByType = (() => {
-    const map = new Map<ServiceType, string>();
-    services?.forEach((s) => {
-      if (!map.has(s.service_type)) map.set(s.service_type, s.id);
-    });
-    return map;
-  })();
-
   return (
     <div className="space-y-6">
       <div>
@@ -64,14 +66,20 @@ export function Tools() {
           <Input
             placeholder="Search tools…"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setActionError(null);
+            }}
           />
         </div>
         <div className="flex items-center gap-1.5">
           {(["all", "enabled", "disabled"] as const).map((status) => (
             <button
               key={status}
-              onClick={() => setFilterStatus(status)}
+              onClick={() => {
+                setFilterStatus(status);
+                setActionError(null);
+              }}
               className={`chip ${filterStatus === status ? "chip-active" : "chip-inactive"}`}
             >
               {status === "all"
@@ -83,7 +91,10 @@ export function Tools() {
           ))}
           <div className="w-px h-5 bg-line-strong mx-1" />
           <button
-            onClick={() => setFilterType("all")}
+            onClick={() => {
+              setFilterType("all");
+              setActionError(null);
+            }}
             className={`chip ${filterType === "all" ? "chip-active" : "chip-inactive"}`}
           >
             All services
@@ -91,11 +102,14 @@ export function Tools() {
           {serviceTypes.map((type) => {
             const meta = getServiceMeta(type);
             return (
-              <button
-                key={type}
-                onClick={() => setFilterType(type)}
-                className={`chip ${filterType === type ? "chip-active" : "chip-inactive"}`}
-              >
+                <button
+                  key={type}
+                  onClick={() => {
+                    setFilterType(type);
+                    setActionError(null);
+                  }}
+                  className={`chip ${filterType === type ? "chip-active" : "chip-inactive"}`}
+                >
                 {meta.label}
               </button>
             );
@@ -109,43 +123,41 @@ export function Tools() {
         error={error instanceof Error ? error : null}
         loadingMessage="Loading tools…"
       >
+        {actionError && (
+          <div className="mb-3 flex items-center gap-2 py-2 px-3 rounded-lg bg-rust-bg border border-rust">
+            <div className="w-1.5 h-1.5 rounded-full bg-rust shrink-0" />
+            <p className="text-sm text-rust">{actionError}</p>
+          </div>
+        )}
         {filtered && filtered.length > 0 ? (
-          <ToolList
-            tools={filtered}
-            showService
-            onToggle={(toolName, enabled) => {
-              const tool = filtered.find((t) => t.name === toolName);
-              const serviceId = tool
-                ? serviceIdByType.get(tool.service_type)
-                : undefined;
-              if (serviceId) {
+            <ToolList
+              tools={filtered}
+              showService
+              onToggle={(tool, enabled) => {
+                const serviceId = requireServiceId(tool.name, tool.service_id);
+                if (!serviceId) return;
                 updateToolPermission.mutate({
                   serviceId,
-                  toolName,
+                  toolName: tool.name,
                   isEnabled: enabled,
-                  descriptionOverride: tool?.description_override,
-                  parametersSchemaOverride: tool?.parameters_schema_override,
-                  httpMethodOverride: tool?.http_method_override,
-                  pathTemplateOverride: tool?.path_template_override,
+                  descriptionOverride: tool.description_override,
+                  parametersSchemaOverride: tool.parameters_schema_override,
+                  httpMethodOverride: tool.http_method_override,
+                  pathTemplateOverride: tool.path_template_override,
                 });
-              }
-            }}
-            onSaveOverrides={(toolName, descOverride, schemaOverride, methodOverride, pathOverride) => {
-              const tool = filtered.find((t) => t.name === toolName);
-              const serviceId = tool
-                ? serviceIdByType.get(tool.service_type)
-                : undefined;
-              if (serviceId) {
+              }}
+              onSaveOverrides={(tool, descOverride, schemaOverride, methodOverride, pathOverride) => {
+                const serviceId = requireServiceId(tool.name, tool.service_id);
+                if (!serviceId) return;
                 updateToolPermission.mutate({
                   serviceId,
-                  toolName,
-                  isEnabled: tool?.is_enabled ?? true,
+                  toolName: tool.name,
+                  isEnabled: tool.is_enabled,
                   descriptionOverride: descOverride,
                   parametersSchemaOverride: schemaOverride,
                   httpMethodOverride: methodOverride,
-                  pathTemplateOverride: pathOverride,
-                });
-              }
+                pathTemplateOverride: pathOverride,
+              });
             }}
           />
         ) : (

@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
+import { queryKeys } from "@/lib/query-keys";
 import type {
   CreateServiceRequest,
   CreateUserRequest,
@@ -10,7 +11,7 @@ import type {
 
 export function useServices() {
   return useQuery({
-    queryKey: ["services"],
+    queryKey: queryKeys.services(),
     queryFn: api.services.list,
   });
 }
@@ -18,12 +19,12 @@ export function useServices() {
 export function useService(id: string) {
   const qc = useQueryClient();
   return useQuery({
-    queryKey: ["services", id],
+    queryKey: queryKeys.service(id),
     queryFn: () => api.services.get(id),
     enabled: !!id,
     placeholderData: () => {
       // Show list-level data instantly while full detail (with tools/config) loads
-      const services = qc.getQueryData<ServiceConnection[]>(["services"]);
+      const services = qc.getQueryData<ServiceConnection[]>(queryKeys.services());
       const match = services?.find((s) => s.id === id);
       if (!match) return undefined;
       return { ...match, config: {}, tools: [] };
@@ -35,7 +36,7 @@ export function useCreateService() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: CreateServiceRequest) => api.services.create(data),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["services"] }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: queryKeys.services() }),
   });
 }
 
@@ -45,8 +46,8 @@ export function useUpdateService() {
     mutationFn: ({ id, data }: { id: string; data: UpdateServiceRequest }) =>
       api.services.update(id, data),
     onSuccess: (_data, variables) => {
-      qc.invalidateQueries({ queryKey: ["services"] });
-      qc.invalidateQueries({ queryKey: ["services", variables.id] });
+      qc.invalidateQueries({ queryKey: queryKeys.services() });
+      qc.invalidateQueries({ queryKey: queryKeys.service(variables.id) });
     },
   });
 }
@@ -55,7 +56,7 @@ export function useDeleteService() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => api.services.delete(id),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["services"] }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: queryKeys.services() }),
   });
 }
 
@@ -64,16 +65,16 @@ export function useTestConnection() {
   return useMutation({
     mutationFn: (id: string) => api.services.test(id),
     onSuccess: (_data, id) => {
-      qc.invalidateQueries({ queryKey: ["services", id] });
-      qc.invalidateQueries({ queryKey: ["services"] });
-      qc.invalidateQueries({ queryKey: ["tools"] });
+      qc.invalidateQueries({ queryKey: queryKeys.service(id) });
+      qc.invalidateQueries({ queryKey: queryKeys.services() });
+      qc.invalidateQueries({ queryKey: queryKeys.tools() });
     },
   });
 }
 
 export function useTools() {
   return useQuery({
-    queryKey: ["tools"],
+    queryKey: queryKeys.tools(),
     queryFn: api.tools.list,
   });
 }
@@ -106,9 +107,9 @@ export function useUpdateToolPermission() {
         path_template_override: pathTemplateOverride,
       }),
     onSuccess: (_data, variables) => {
-      qc.invalidateQueries({ queryKey: ["tools"] });
-      qc.invalidateQueries({ queryKey: ["services"] });
-      qc.invalidateQueries({ queryKey: ["services", variables.serviceId] });
+      qc.invalidateQueries({ queryKey: queryKeys.tools() });
+      qc.invalidateQueries({ queryKey: queryKeys.services() });
+      qc.invalidateQueries({ queryKey: queryKeys.service(variables.serviceId) });
     },
   });
 }
@@ -126,19 +127,20 @@ export function useAuditLog(filters?: {
   toolName?: string;
   status?: string;
 }) {
+  const limit = filters?.limit ?? 50;
+  const offset = filters?.offset ?? 0;
   return useQuery({
-    queryKey: [
-      "audit",
-      filters?.limit ?? 50,
-      filters?.offset ?? 0,
-      filters?.serviceName,
-      filters?.toolName,
-      filters?.status,
-    ],
+    queryKey: queryKeys.audit({
+      limit,
+      offset,
+      serviceName: filters?.serviceName,
+      toolName: filters?.toolName,
+      status: filters?.status,
+    }),
     queryFn: () =>
       api.audit.list({
-        limit: filters?.limit ?? 50,
-        offset: filters?.offset ?? 0,
+        limit,
+        offset,
         service_name: filters?.serviceName,
         tool_name: filters?.toolName,
         status: filters?.status,
@@ -148,7 +150,7 @@ export function useAuditLog(filters?: {
 
 export function useHealth() {
   return useQuery({
-    queryKey: ["health"],
+    queryKey: queryKeys.health(),
     queryFn: api.health.check,
     refetchInterval: 30_000,
   });
@@ -156,7 +158,7 @@ export function useHealth() {
 
 export function useProfiles(serviceId: string) {
   return useQuery({
-    queryKey: ["profiles", serviceId],
+    queryKey: queryKeys.profiles(serviceId),
     queryFn: () => api.services.getProfiles(serviceId),
     enabled: !!serviceId,
   });
@@ -168,9 +170,9 @@ export function useApplyProfile() {
     mutationFn: ({ id, profileName }: { id: string; profileName: string }) =>
       api.services.applyProfile(id, profileName),
     onSuccess: (_data, variables) => {
-      qc.invalidateQueries({ queryKey: ["services"] });
-      qc.invalidateQueries({ queryKey: ["services", variables.id] });
-      qc.invalidateQueries({ queryKey: ["tools"] });
+      qc.invalidateQueries({ queryKey: queryKeys.services() });
+      qc.invalidateQueries({ queryKey: queryKeys.service(variables.id) });
+      qc.invalidateQueries({ queryKey: queryKeys.tools() });
     },
   });
 }
@@ -186,8 +188,8 @@ export function useImportServices() {
       tokenMap: Record<string, string>;
     }) => api.services.importYaml(yamlContent, tokenMap),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["services"] });
-      qc.invalidateQueries({ queryKey: ["tools"] });
+      qc.invalidateQueries({ queryKey: queryKeys.services() });
+      qc.invalidateQueries({ queryKey: queryKeys.tools() });
     },
   });
 }
@@ -205,8 +207,8 @@ export function useCreateGenericTool() {
       data: GenericToolDefinition;
     }) => api.genericTools.create(serviceId, data),
     onSuccess: (_data, variables) => {
-      qc.invalidateQueries({ queryKey: ["services", variables.serviceId] });
-      qc.invalidateQueries({ queryKey: ["tools"] });
+      qc.invalidateQueries({ queryKey: queryKeys.service(variables.serviceId) });
+      qc.invalidateQueries({ queryKey: queryKeys.tools() });
     },
   });
 }
@@ -217,8 +219,8 @@ export function useImportOpenapi() {
     mutationFn: ({ serviceId, spec }: { serviceId: string; spec: string }) =>
       api.genericTools.importOpenapi(serviceId, spec),
     onSuccess: (_data, variables) => {
-      qc.invalidateQueries({ queryKey: ["services", variables.serviceId] });
-      qc.invalidateQueries({ queryKey: ["tools"] });
+      qc.invalidateQueries({ queryKey: queryKeys.service(variables.serviceId) });
+      qc.invalidateQueries({ queryKey: queryKeys.tools() });
     },
   });
 }
@@ -234,8 +236,8 @@ export function useDeleteGenericTool() {
       toolName: string;
     }) => api.genericTools.delete(serviceId, toolName),
     onSuccess: (_data, variables) => {
-      qc.invalidateQueries({ queryKey: ["services", variables.serviceId] });
-      qc.invalidateQueries({ queryKey: ["tools"] });
+      qc.invalidateQueries({ queryKey: queryKeys.service(variables.serviceId) });
+      qc.invalidateQueries({ queryKey: queryKeys.tools() });
     },
   });
 }
@@ -253,8 +255,8 @@ export function useUpdateGenericTool() {
       data: Record<string, unknown>;
     }) => api.genericTools.update(serviceId, toolName, data),
     onSuccess: (_data, variables) => {
-      qc.invalidateQueries({ queryKey: ["services", variables.serviceId] });
-      qc.invalidateQueries({ queryKey: ["tools"] });
+      qc.invalidateQueries({ queryKey: queryKeys.service(variables.serviceId) });
+      qc.invalidateQueries({ queryKey: queryKeys.tools() });
     },
   });
 }
@@ -275,7 +277,7 @@ export function useTestGenericTool() {
 
 export function useUsers() {
   return useQuery({
-    queryKey: ["users"],
+    queryKey: queryKeys.users(),
     queryFn: api.users.list,
   });
 }
@@ -284,7 +286,7 @@ export function useCreateUser() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: CreateUserRequest) => api.users.create(data),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["users"] }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: queryKeys.users() }),
   });
 }
 
@@ -292,7 +294,7 @@ export function useDeleteUser() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => api.users.delete(id),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["users"] }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: queryKeys.users() }),
   });
 }
 
@@ -311,7 +313,7 @@ export function useUpdateUser() {
       };
     }) => api.users.update(userId, data),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["users"] });
+      qc.invalidateQueries({ queryKey: queryKeys.users() });
     },
   });
 }
@@ -320,7 +322,7 @@ export function useUpdateUser() {
 
 export function useApps() {
   return useQuery({
-    queryKey: ["apps"],
+    queryKey: queryKeys.apps(),
     queryFn: api.apps.list,
   });
 }

@@ -1,0 +1,2 @@
+"""Shared domain-level constants."""
+

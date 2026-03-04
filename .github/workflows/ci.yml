@@ -19,30 +19,19 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.14"
 
       - name: Install dependencies
         working-directory: backend
         run: uv sync
 
-      - name: Check imports
-        working-directory: backend
-        run: |
-          PYTHONPATH=src uv run python -c "
-          from domain.entities import ServiceConnection, ServiceType
-          from domain.ports import IServiceRepository, IServiceClient
-          from services.client_factory import ServiceClientFactory
-          from services.service_manager import ServiceManager
-          from services.tool_registry import ToolRegistry
-          from entrypoints.mcp.server import MCPServerFactory
-          from entrypoints.api.services import ServiceController
-          from entrypoints.api.health import HealthController
-          print('All imports OK')
-          "
-
       - name: Lint
         working-directory: backend
         run: uv run ruff check src/
+
+      - name: Test
+        working-directory: backend
+        run: uv run python -m pytest -x -q
 
   frontend:
     name: Frontend
@@ -71,8 +60,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build backend image
-        run: docker build -f Dockerfile.backend -t mcp-home-backend .
-
-      - name: Build frontend image
-        run: docker build -f Dockerfile.frontend -t mcp-home-frontend .
+      - name: Build image
+        run: docker build -t mcp-home-manager .

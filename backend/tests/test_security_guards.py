@@ -7,7 +7,11 @@ import pytest
 from domain.entities.user import User
 from domain.exceptions import ToolExecutionError
 from entrypoints.mcp.meta_tools import _require_admin_user, _require_self_mcp_access
-from entrypoints.mcp.user_context import current_user_var, filter_services_for_user
+from entrypoints.mcp.user_context import (
+    can_user_access_service,
+    current_user_var,
+    filter_services_for_user,
+)
 
 # --- Helpers ---
 
@@ -118,7 +122,7 @@ class TestFilterServicesForUser:
         token = current_user_var.set(None)
         try:
             services = [_FakeService(uuid4())]
-            result = await filter_services_for_user(None, services)
+            result = await filter_services_for_user(services)
             assert result == []
         finally:
             current_user_var.reset(token)
@@ -128,7 +132,7 @@ class TestFilterServicesForUser:
         token = current_user_var.set(user)
         try:
             services = [_FakeService(uuid4()), _FakeService(uuid4())]
-            result = await filter_services_for_user(None, services)
+            result = await filter_services_for_user(services)
             assert result == services
         finally:
             current_user_var.reset(token)
@@ -140,8 +144,25 @@ class TestFilterServicesForUser:
         token = current_user_var.set(user)
         try:
             services = [_FakeService(allowed_id), _FakeService(blocked_id)]
-            result = await filter_services_for_user(None, services)
+            result = await filter_services_for_user(services)
             assert len(result) == 1
             assert result[0].id == allowed_id
         finally:
             current_user_var.reset(token)
+
+
+class TestCanUserAccessService:
+    def test_non_admin_requires_service_id_match(self):
+        allowed_id = uuid4()
+        user = _make_user(is_admin=False, allowed_service_ids=[allowed_id])
+        assert can_user_access_service(user, allowed_id) is True
+        assert can_user_access_service(user, uuid4()) is False
+
+    def test_non_admin_cannot_access_missing_service_id(self):
+        user = _make_user(is_admin=False)
+        assert can_user_access_service(user, None) is False
+
+    def test_admin_can_access_any_service(self):
+        user = _make_user(is_admin=True)
+        assert can_user_access_service(user, uuid4()) is True
+        assert can_user_access_service(user, None) is True

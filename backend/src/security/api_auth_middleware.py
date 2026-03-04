@@ -20,7 +20,7 @@ from litestar.connection import ASGIConnection
 from litestar.exceptions import NotAuthorizedException
 from litestar.middleware import AbstractAuthenticationMiddleware, AuthenticationResult
 
-from security.auth_context import AuthContext
+from security.auth_helpers import authenticate_api_key, build_auth_context, extract_api_token
 
 
 class ApiAuthMiddleware(AbstractAuthenticationMiddleware):
@@ -32,8 +32,10 @@ class ApiAuthMiddleware(AbstractAuthenticationMiddleware):
 
         # 2. Authorization header / X-API-Key (API keys, MCP clients, legacy)
         auth_header = connection.headers.get("authorization", "")
-        bearer_token = auth_header[7:].strip() if auth_header.lower().startswith("bearer ") else ""
-        token = connection.headers.get("x-api-key", "") or bearer_token
+        token = extract_api_token(
+            auth_header=auth_header,
+            api_key_header=connection.headers.get("x-api-key", ""),
+        )
 
         if not token:
             raise NotAuthorizedException(
@@ -80,34 +82,16 @@ class ApiAuthMiddleware(AbstractAuthenticationMiddleware):
             if user is None:
                 raise NotAuthorizedException("User account has been deleted.")
 
-            ctx = AuthContext(
-                is_admin=user.is_admin,
-                allowed_service_ids={str(sid) for sid in user.allowed_service_ids},
-                username=user.username,
-                user_id=str(user.id),
-                self_mcp_enabled=user.self_mcp_enabled,
-            )
+            ctx = build_auth_context(user)
             return AuthenticationResult(user=ctx, auth=token)
 
     async def _authenticate_api_key(
         self, connection: ASGIConnection, token: str
     ) -> AuthenticationResult:
-        from infrastructure.persistence.user_repository import UserRepository
-        from services.user_service import UserService
-
         session_factory = connection.app.state.session_factory
-
-        async with session_factory() as session:
-            user_svc = UserService(UserRepository(session))
-            user = await user_svc.authenticate_by_key(token)
-            if user is not None:
-                ctx = AuthContext(
-                    is_admin=user.is_admin,
-                    allowed_service_ids={str(sid) for sid in user.allowed_service_ids},
-                    username=user.username,
-                    user_id=str(user.id),
-                    self_mcp_enabled=user.self_mcp_enabled,
-                )
-                return AuthenticationResult(user=ctx, auth=token)
+        user = await authenticate_api_key(session_factory, token)
+        if user is not None:
+            ctx = build_auth_context(user)
+            return AuthenticationResult(user=ctx, auth=token)
 
         raise NotAuthorizedException("Invalid credentials.")

@@ -17,7 +17,7 @@ from domain.ports.encryption import IEncryptionPort
 from entrypoints.mcp.audit_util import record_audit_safe
 from entrypoints.mcp.meta_tools import META_TOOL_NAMES, register_meta_tools
 from entrypoints.mcp.template_engine import TemplateEngine
-from entrypoints.mcp.user_context import check_user_service_access, current_user_var
+from entrypoints.mcp.user_context import can_user_access_service, current_user_var
 from services.client_factory import ServiceClientFactory
 from services.tool_registry import ToolRegistry
 
@@ -112,11 +112,7 @@ class MCPServerFactory:
             user = current_user_var.get()
             if user is not None and not user.is_admin:
                 svc_name = current.service_name
-                allowed = await check_user_service_access(
-                    session_factory,
-                    user,
-                    svc_name,
-                )
+                allowed = can_user_access_service(user, current.service_id)
                 if not allowed:
                     raise ToolExecutionError(
                         tool_name,
@@ -171,7 +167,6 @@ class MCPServerFactory:
             return
 
         registry = self._registry
-        session_factory = self._session_factory
         template_engine = self._template_engine
 
         async def app_handler(ctx: Context, **kwargs: Any) -> str:
@@ -182,11 +177,7 @@ class MCPServerFactory:
             # Enforce per-user authorization
             user = current_user_var.get()
             if user is not None and not user.is_admin:
-                allowed = await check_user_service_access(
-                    session_factory,
-                    user,
-                    current.service_name,
-                )
+                allowed = can_user_access_service(user, current.service_id)
                 if not allowed:
                     svc = current.service_name
                     raise ToolExecutionError(

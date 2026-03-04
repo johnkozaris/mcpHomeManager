@@ -9,9 +9,9 @@ interface Props {
   tools: ToolDefinition[];
   /** All tools including disabled — used when we want to show disabled tools greyed out. */
   allTools?: ToolDefinition[];
-  onToggle?: (toolName: string, enabled: boolean) => void;
+  onToggle?: (tool: ToolDefinition, enabled: boolean) => void;
   onSaveOverrides?: (
-    toolName: string,
+    tool: ToolDefinition,
     descriptionOverride: string | null,
     parametersSchemaOverride: Record<string, unknown> | null,
     httpMethodOverride?: string | null,
