@@ -52,6 +52,7 @@ class MeResponse(msgspec.Struct):
     is_admin: bool
     allowed_service_ids: list[str]
     has_api_key: bool
+    can_reveal_api_key: bool = False
 
 
 class ApiKeyResponse(msgspec.Struct):
@@ -94,6 +95,19 @@ async def create_session(
     return token
 
 
+def apply_session_cookie(response: Response, token: str) -> None:
+    """Set the httpOnly session cookie on a response."""
+    response.set_cookie(
+        key=SESSION_COOKIE_NAME,
+        value=token,
+        max_age=SESSION_COOKIE_MAX_AGE,
+        httponly=True,
+        secure=settings.public_url.startswith("https"),
+        samesite="lax",
+        path="/",
+    )
+
+
 class AuthController(Controller):
     path = "/api/auth"
 
@@ -102,6 +116,7 @@ class AuthController(Controller):
         self,
         db_session: AsyncSession,
         data: LoginRequest,
+        user_service: UserService,
     ) -> Response[LoginResponse]:
         """Authenticate with username + password, receive a session token.
 
@@ -109,8 +124,7 @@ class AuthController(Controller):
         (XSS-safe). The token is also returned in the response body for
         backward compatibility, but frontends should rely on the cookie.
         """
-        svc = UserService(UserRepository(db_session))
-        user = await svc.authenticate_by_password(data.username, data.password)
+        user = await user_service.authenticate_by_password(data.username, data.password)
 
         if user is None:
             logger.warning("login_failed", username=data.username)
@@ -130,34 +144,28 @@ class AuthController(Controller):
             is_admin=user.is_admin,
         )
         response = Response(content=body)
-        response.set_cookie(
-            key=SESSION_COOKIE_NAME,
-            value=token,
-            max_age=SESSION_COOKIE_MAX_AGE,
-            httponly=True,
-            secure=settings.public_url.startswith("https"),
-            samesite="lax",
-            path="/",
-        )
+        apply_session_cookie(response, token)
         return response
 
     @get("/me")
-    async def me(self, request: Request, db_session: AsyncSession) -> MeResponse:
+    async def me(self, request: Request, user_service: UserService) -> MeResponse:
         """Return the current authenticated user's info from the session."""
         ctx: AuthContext = request.user
 
         has_api_key = False
+        can_reveal = False
         if ctx.user_id:
-            repo = UserRepository(db_session)
-            user = await repo.get_by_id(UUID(ctx.user_id))
+            user = await user_service.get_by_id(UUID(ctx.user_id))
             if user and user.api_key_hash:
                 has_api_key = True
+                can_reveal = bool(user.encrypted_api_key)
 
         return MeResponse(
             username=ctx.username,
             is_admin=ctx.is_admin,
             allowed_service_ids=sorted(ctx.allowed_service_ids),
             has_api_key=has_api_key,
+            can_reveal_api_key=can_reveal,
         )
 
     @post("/api-key")
@@ -165,37 +173,52 @@ class AuthController(Controller):
         self,
         request: Request,
         db_session: AsyncSession,
-        state: State,
+        user_service: UserService,
     ) -> ApiKeyResponse:
         """Generate a new MCP API key for the current user. Replaces any existing key."""
         ctx: AuthContext = request.user
         if not ctx.user_id:
             raise NotAuthorizedException("A user account is required for API key management.")
 
-        encryption = state.encryption
-        svc = UserService(UserRepository(db_session), encryption=encryption)
         try:
-            _, api_key = await svc.generate_api_key(UUID(ctx.user_id))
+            _, api_key = await user_service.generate_api_key(UUID(ctx.user_id))
         except ValueError as e:
             raise NotAuthorizedException(str(e)) from e
         await db_session.commit()
         logger.info("api_key_generated", username=ctx.username)
         return ApiKeyResponse(api_key=api_key)
 
+    @get("/api-key")
+    async def get_api_key(
+        self,
+        request: Request,
+        user_service: UserService,
+    ) -> ApiKeyResponse:
+        """Reveal the current user's MCP API key (decrypted from storage)."""
+        ctx: AuthContext = request.user
+        if not ctx.user_id:
+            raise NotAuthorizedException("A user account is required for API key management.")
+
+        try:
+            plaintext = await user_service.reveal_api_key(UUID(ctx.user_id))
+        except ValueError as e:
+            raise ClientException(str(e), status_code=404) from e
+        return ApiKeyResponse(api_key=plaintext)
+
     @delete("/api-key")
     async def revoke_api_key(
         self,
         request: Request,
         db_session: AsyncSession,
+        user_service: UserService,
     ) -> None:
         """Revoke the current user's MCP API key."""
         ctx: AuthContext = request.user
         if not ctx.user_id:
             raise NotAuthorizedException("A user account is required for API key management.")
 
-        svc = UserService(UserRepository(db_session))
         try:
-            await svc.revoke_api_key(UUID(ctx.user_id))
+            await user_service.revoke_api_key(UUID(ctx.user_id))
         except ValueError as e:
             raise NotAuthorizedException(str(e)) from e
         await db_session.commit()
@@ -268,6 +291,7 @@ class AuthController(Controller):
         self,
         db_session: AsyncSession,
         data: ResetPasswordRequest,
+        user_service: UserService,
     ) -> dict[str, str]:
         """Reset password using a token from email."""
         if len(data.password) < 8:
@@ -286,9 +310,7 @@ class AuthController(Controller):
             await db_session.commit()
             raise ClientException("This reset link has expired.", status_code=400)
 
-        user_repo = UserRepository(db_session)
-        svc = UserService(user_repo)
-        await svc.set_password(user_id, data.password)
+        await user_service.set_password(user_id, data.password)
 
         await reset_repo.delete_by_hash(token_hash)
         await db_session.commit()

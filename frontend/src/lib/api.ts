@@ -21,9 +21,6 @@ import type {
 } from "./types";
 
 const BASE = "/api";
-const LOGGED_IN_KEY = "logged_in";
-const USERNAME_KEY = "username";
-const AUTH_STATE_CHANGED_EVENT = "mcp-home:auth-state-changed";
 
 class UnauthorizedError extends Error {
   readonly status = 401;
@@ -34,76 +31,25 @@ class UnauthorizedError extends Error {
   }
 }
 
-function emitAuthStateChanged(): void {
-  if (typeof window !== "undefined") {
-    window.dispatchEvent(new Event(AUTH_STATE_CHANGED_EVENT));
-  }
-}
-
-export function onAuthStateChanged(listener: () => void): () => void {
-  if (typeof window === "undefined") {
-    return () => {};
-  }
-
-  window.addEventListener(AUTH_STATE_CHANGED_EVENT, listener);
-  return () => window.removeEventListener(AUTH_STATE_CHANGED_EVENT, listener);
-}
-
-export function hasSessionToken(): boolean {
-  if (typeof window === "undefined") {
-    return false;
-  }
-
-  return localStorage.getItem(LOGGED_IN_KEY) === "1";
-}
-
-/** Mark session as active (flag only — token is in httpOnly cookie). */
-export function setSessionToken(token: string | null): void {
-  if (token) {
-    localStorage.setItem(LOGGED_IN_KEY, "1");
-  } else {
-    localStorage.removeItem(LOGGED_IN_KEY);
-  }
-
-  emitAuthStateChanged();
-}
-
-/**
- * Session auth uses httpOnly cookies (sent automatically by the browser).
- * No Authorization header needed for web session requests.
- */
-function authHeaders(): Record<string, string> {
-  return {};
-}
-
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      ...authHeaders(),
       ...init?.headers,
     },
     ...init,
   });
   if (!res.ok) {
     const text = await res.text().catch(() => "Unknown error");
-    // On 401, clear stored credentials and let route guards / UI handle navigation.
+    // On 401, let route guards / UI handle navigation.
     if (res.status === 401 && !path.startsWith("/auth/")) {
-      clearSession();
       throw new UnauthorizedError(text || "Unauthorized");
     }
     throw new Error(`${res.status}: ${text}`);
   }
   if (res.status === 204) return undefined as T;
   return res.json() as Promise<T>;
-}
-
-/** Clear all session data (local flags — server cookie is cleared via /api/auth/logout). */
-export function clearSession(): void {
-  localStorage.removeItem(LOGGED_IN_KEY);
-  localStorage.removeItem(USERNAME_KEY);
-  emitAuthStateChanged();
 }
 
 // Services
@@ -117,16 +63,19 @@ export const api = {
           body: JSON.stringify({ username, password }),
         },
       ),
+    logout: () => request<void>("/auth/logout", { method: "DELETE" }),
     me: () =>
       request<{
         username: string;
         is_admin: boolean;
         allowed_service_ids: string[];
         has_api_key: boolean;
+        can_reveal_api_key: boolean;
       }>("/auth/me"),
     createApiKey: () =>
       request<{ api_key: string }>("/auth/api-key", { method: "POST" }),
     revokeApiKey: () => request<void>("/auth/api-key", { method: "DELETE" }),
+    getApiKey: () => request<{ api_key: string }>("/auth/api-key"),
     forgotPassword: (email: string) =>
       request<{ status: string }>("/auth/forgot-password", {
         method: "POST",
@@ -178,7 +127,6 @@ export const api = {
     exportYaml: async () => {
       const res = await fetch(`${BASE}/services/export`, {
         credentials: "same-origin",
-        headers: authHeaders(),
       });
       if (!res.ok) throw new Error(`${res.status}: ${await res.text()}`);
       return res.text();
@@ -333,7 +281,7 @@ export const api = {
       fetch(`${BASE}/tools/apps/${encodeURIComponent(name)}/render`, {
         method: "POST",
         credentials: "same-origin",
-        headers: { "Content-Type": "application/json", ...authHeaders() },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(args),
       }).then(async (res) => {
         if (!res.ok) throw new Error(`${res.status}: ${await res.text()}`);
@@ -347,7 +295,7 @@ export const api = {
       fetch(`${BASE}/tools/apps/${encodeURIComponent(name)}/action`, {
         method: "POST",
         credentials: "same-origin",
-        headers: { "Content-Type": "application/json", ...authHeaders() },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action, payload }),
       }).then(async (res) => {
         if (!res.ok) throw new Error(`${res.status}: ${await res.text()}`);

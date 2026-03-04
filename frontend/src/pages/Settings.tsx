@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useHealth } from "@/hooks/useServices";
 import { api } from "@/lib/api";
+import { queryKeys } from "@/lib/query-keys";
 import { useTheme } from "@/hooks/useTheme";
 import { useCurrentUser } from "@/hooks/useAuth";
 import { getMcpEndpoint } from "@/lib/utils";
@@ -28,6 +29,7 @@ import {
   User,
   Key,
   Trash2,
+  Eye,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { parseApiError } from "@/lib/utils";
@@ -35,15 +37,14 @@ import { parseApiError } from "@/lib/utils";
 export function Settings() {
   const { data: health } = useHealth();
   const { data: config } = useQuery({
-    queryKey: ["config"],
+    queryKey: queryKeys.config(),
     queryFn: api.health.config,
   });
   const { theme, toggle } = useTheme();
   const { data: currentUserData } = useCurrentUser();
   const mcpEndpoint = getMcpEndpoint();
   const [copied, setCopied] = useState(false);
-  const currentUser =
-    currentUserData?.username ?? localStorage.getItem("username");
+  const currentUser = currentUserData?.username ?? null;
   useEffect(() => {
     if (!copied) return;
     const id = setTimeout(() => setCopied(false), 2000);
@@ -58,33 +59,35 @@ export function Settings() {
   const [newApiKey, setNewApiKey] = useState<string | null>(null);
   const [showRevokeConfirm, setShowRevokeConfirm] = useState(false);
   const [keyCopied, setKeyCopied] = useState(false);
+  const [revealError, setRevealError] = useState<string | null>(null);
   const generateKey = useMutation({
     mutationFn: () => api.auth.createApiKey(),
     onSuccess: (data) => {
       setNewApiKey(data.api_key);
       setKeyCopied(false);
-      queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.authMe() });
     },
   });
   const revokeKey = useMutation({
     mutationFn: () => api.auth.revokeApiKey(),
     onSuccess: () => {
       setNewApiKey(null);
-      queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.authMe() });
     },
   });
   const hasApiKey = currentUserData?.has_api_key ?? false;
+  const canReveal = currentUserData?.can_reveal_api_key ?? false;
   const isAdmin = currentUserData?.is_admin ?? false;
   const toggleSelfMcp = useMutation({
     mutationFn: () => api.admin.setSelfMcp(!config?.self_mcp_enabled),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["config"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.config() });
     },
   });
 
   // SMTP config state
   const { data: smtpConfig } = useQuery({
-    queryKey: ["admin", "smtp"],
+    queryKey: queryKeys.adminSmtp(),
     queryFn: api.admin.getSmtp,
     enabled: isAdmin,
   });
@@ -129,8 +132,8 @@ export function Settings() {
       setSmtpSaved(true);
       setSmtpSynced(undefined); // re-sync form from server on next refetch
       setTimeout(() => setSmtpSaved(false), 2000);
-      queryClient.invalidateQueries({ queryKey: ["admin", "smtp"] });
-      queryClient.invalidateQueries({ queryKey: ["config"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.adminSmtp() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.config() });
     },
   });
 
@@ -280,7 +283,7 @@ export function Settings() {
               {newApiKey && (
                 <div className="p-3 rounded-xl border border-sage bg-sage-bg space-y-2 mb-3">
                   <p className="text-xs font-semibold text-sage">
-                    Save this key — it won't be shown again
+                    Your API key
                   </p>
                   <div className="flex items-center gap-2">
                     <code className="flex-1 p-2 rounded-lg bg-canvas-tertiary border border-line font-mono text-xs select-all text-ink break-all">
@@ -303,15 +306,47 @@ export function Settings() {
                 </div>
               )}
 
+              {revealError && (
+                <div className="p-2.5 rounded-lg text-xs bg-rust-bg text-rust border border-rust mb-3">
+                  {revealError}
+                </div>
+              )}
+
               <div className="flex gap-2">
                 <Button
                   size="sm"
-                  onClick={() => generateKey.mutate()}
+                  onClick={() => {
+                    setRevealError(null);
+                    generateKey.mutate();
+                  }}
                   disabled={generateKey.isPending}
                 >
                   <Key size={13} />
                   {hasApiKey ? "Regenerate Key" : "Generate Key"}
                 </Button>
+                {hasApiKey && !newApiKey && canReveal && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={async () => {
+                      try {
+                        const data = await api.auth.getApiKey();
+                        setNewApiKey(data.api_key);
+                        setKeyCopied(false);
+                      } catch (err) {
+                        setRevealError(
+                          parseApiError(
+                            err,
+                            "Could not reveal key. Try regenerating instead.",
+                          ),
+                        );
+                      }
+                    }}
+                  >
+                    <Eye size={13} />
+                    Reveal Key
+                  </Button>
+                )}
                 {hasApiKey && (
                   <Button
                     variant="ghost"

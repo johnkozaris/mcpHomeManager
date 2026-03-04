@@ -2,13 +2,20 @@
 
 import pytest
 
-from conftest import FakeUserRepository
+from conftest import FakeEncryption, FakeUserRepository
 from services.user_service import UserService
 
 
 @pytest.fixture
 def user_service(fake_user_repo: FakeUserRepository) -> UserService:
     return UserService(fake_user_repo)
+
+
+@pytest.fixture
+def user_service_with_encryption(
+    fake_user_repo: FakeUserRepository, fake_encryption: FakeEncryption
+) -> UserService:
+    return UserService(fake_user_repo, encryption=fake_encryption)
 
 
 class TestUserService:
@@ -62,3 +69,16 @@ class TestUserService:
         await user_service.delete_user(user.id)
         found = await user_service.get_by_id(user.id)
         assert found is None
+
+    async def test_reveal_api_key(self, user_service_with_encryption: UserService):
+        user = await user_service_with_encryption.create_user("alice")
+        assert user.id is not None
+        _, api_key = await user_service_with_encryption.generate_api_key(user.id)
+        revealed = await user_service_with_encryption.reveal_api_key(user.id)
+        assert revealed == api_key
+
+    async def test_reveal_api_key_no_key_raises(self, user_service_with_encryption: UserService):
+        user = await user_service_with_encryption.create_user("bob")
+        assert user.id is not None
+        with pytest.raises(ValueError, match="No API key set"):
+            await user_service_with_encryption.reveal_api_key(user.id)

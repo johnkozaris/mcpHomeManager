@@ -69,6 +69,17 @@ class UserService:
         updated = await self._repo.update(user)
         return updated, api_key
 
+    async def reveal_api_key(self, user_id: UUID) -> str:
+        """Decrypt and return the user's existing API key."""
+        if self._encryption is None:
+            raise ValueError("Encryption not configured")
+        user = await self._repo.get_by_id(user_id)
+        if user is None:
+            raise ValueError(f"User not found: {user_id}")
+        if not user.encrypted_api_key:
+            raise ValueError("No API key set")
+        return self._encryption.decrypt(user.encrypted_api_key)
+
     async def revoke_api_key(self, user_id: UUID) -> User:
         """Revoke the user's API key."""
         user = await self._repo.get_by_id(user_id)
