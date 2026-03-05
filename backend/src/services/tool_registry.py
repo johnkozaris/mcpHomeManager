@@ -27,7 +27,7 @@ class ActiveTool:
     """An immutable snapshot of a resolved tool: its definition + the client that can execute it."""
 
     definition: ToolDefinition
-    client: IServiceClient
+    client: IServiceClient | None
     service_name: str
     service_id: UUID | None = None
     description_override: str | None = None
@@ -270,7 +270,7 @@ class ToolRegistry:
 
                             # Determine execution client: if endpoint is overridden
                             # on a built-in tool, route through GenericRestClient
-                            exec_client = src_client
+                            exec_client: IServiceClient | None = src_client
                             has_endpoint_override = method_override or path_override
                             # Only reroute tools that originally have HTTP endpoints
                             is_http_tool = tool_def.http_method is not None or tool_def.path_template is not None

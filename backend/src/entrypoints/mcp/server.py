@@ -119,6 +119,8 @@ class MCPServerFactory:
 
             client_name = ctx.client_id or "unknown"
             client = current.client
+            if client is None:
+                raise ToolExecutionError(tool_name, "Tool has no execution client configured")
             svc_name = current.service_name
             start = time.monotonic()
             try:

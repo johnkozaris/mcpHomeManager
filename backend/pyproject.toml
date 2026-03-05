@@ -124,15 +124,6 @@ show_error_codes = true
 mypy_path = "src"
 packages = ["app", "config", "domain", "entrypoints", "infrastructure", "security", "services", "serve", "cli"]
 
-[[tool.mypy.overrides]]
-module = [
-    "aiodocker.*",
-    "mcp.*",
-    "advanced_alchemy.*",
-    "prometheus_client.*",
-    "litestar.*",
-]
-ignore_missing_imports = true
 
 # ── Pytest ──────────────────────────────────────────────────────
 
