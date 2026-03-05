@@ -1,0 +1,11 @@
+{
+  "api": {
+    "generic": "Algo correu mal"
+  },
+  "queryState": {
+    "loading": "A carregar…",
+    "authRequired": "Autenticação necessária — inicie sessão novamente para continuar.",
+    "networkUnreachable": "Não foi possível contactar o servidor. O backend está em execução?",
+    "generic": "Algo correu mal"
+  }
+}

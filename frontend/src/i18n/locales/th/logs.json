@@ -1,0 +1,47 @@
+{
+  "page": {
+    "title": "ประวัติ",
+    "description": "ดูประวัติการเรียก MCP tools, ผลลัพธ์ และ latency",
+    "stats": {
+      "totalCalls": "จำนวนการเรียกทั้งหมด",
+      "successRate": "อัตราสำเร็จ",
+      "errors": "ข้อผิดพลาด",
+      "avgLatency": "Latency เฉลี่ย"
+    },
+    "chart": {
+      "callsOverTime": "การเรียกตามช่วงเวลา"
+    },
+    "filters": {
+      "searchPlaceholder": "ค้นหาด้วยชื่อเครื่องมือ",
+      "allServices": "ทุกบริการ",
+      "status": {
+        "all": "ทั้งหมด",
+        "success": "สำเร็จ",
+        "error": "ผิดพลาด"
+      }
+    },
+    "query": {
+      "loading": "กำลังโหลดประวัติ…"
+    },
+    "table": {
+      "headers": {
+        "status": "สถานะ",
+        "tool": "เครื่องมือ",
+        "service": "บริการ",
+        "client": "ไคลเอนต์",
+        "latency": "Latency",
+        "time": "เวลา"
+      }
+    },
+    "pagination": {
+      "totalEntries": "{count, plural, one {# รายการ} other {# รายการ}}",
+      "page": "หน้า {current} จาก {total}"
+    },
+    "empty": {
+      "filteredTitle": "ไม่พบประวัติที่ตรงเงื่อนไข",
+      "filteredDescription": "ลองปรับฟิลเตอร์",
+      "defaultTitle": "ยังไม่มีประวัติ",
+      "defaultDescription": "เมื่อเอเจนต์เริ่มเรียกใช้เครื่องมือ กิจกรรมจะแสดงที่นี่"
+    }
+  }
+}

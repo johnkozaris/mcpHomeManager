@@ -25,9 +25,12 @@ import type { ServiceType } from "@/lib/types";
 import { StatusDot } from "@/components/ui/StatusDot";
 import { isDismissed, dismiss } from "@/lib/utils";
 import type { ServiceConnection } from "@/lib/types";
+import { useTranslation } from "react-i18next";
 
 /* ─── Hero — compact ───────────────────────────────────────── */
 function HeroBanner({ onDismiss }: { onDismiss: () => void }) {
+  const { t } = useTranslation("dashboard", { keyPrefix: "heroBanner" });
+
   return (
     <div className="hero-banner relative overflow-hidden rounded-2xl">
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
@@ -48,18 +51,16 @@ function HeroBanner({ onDismiss }: { onDismiss: () => void }) {
 
       <div className="relative z-10 px-7 py-6">
         <h1 className="text-xl font-bold text-white tracking-tight">
-          Make your services accessible to AI
+          {t("title")}
         </h1>
-        <p className="text-sm text-white/60 mt-1.5">
-          Turn self-hosted services into tools that AI agents can call
-        </p>
+        <p className="text-sm text-white/60 mt-1.5">{t("description")}</p>
         <div className="flex items-center gap-3 mt-4">
           <Link to="/services">
             <Button
               size="sm"
               className="!bg-white !text-[var(--terra-dark)] hover:!bg-white/90 !shadow-lg !font-bold !rounded-xl"
             >
-              <Plus size={14} /> Connect a service
+              <Plus size={14} /> {t("actions.connectService")}
             </Button>
           </Link>
           <Link to="/agents">
@@ -68,7 +69,7 @@ function HeroBanner({ onDismiss }: { onDismiss: () => void }) {
               size="sm"
               className="!text-white/70 hover:!text-white hover:!bg-white/10 !rounded-xl"
             >
-              Setup guide
+              {t("actions.setupGuide")}
             </Button>
           </Link>
         </div>
@@ -87,49 +88,55 @@ function StatRow({
   toolCount: number;
   auditCount: number;
 }) {
+  const { t } = useTranslation("dashboard", { keyPrefix: "stats" });
   const healthy = services.filter((s) => s.health_status === "healthy").length;
   const enabled = services.filter((s) => s.is_enabled).length;
 
   const stats = [
     {
+      id: "services",
       icon: Server,
       color: "var(--terra)",
       bg: "var(--terra-bg)",
-      label: "Services",
       value: `${services.length}`,
-      sub: `${enabled} active`,
+      sub: t("services.sub", { count: enabled }),
     },
     {
+      id: "tools",
       icon: Wrench,
       color: "var(--sage)",
       bg: "var(--sage-bg)",
-      label: "Tools",
       value: `${toolCount}`,
-      sub: "MCP tools",
+      sub: t("tools.sub"),
     },
     {
+      id: "health",
       icon: Activity,
       color: healthy === services.length ? "var(--sage)" : "var(--clay)",
       bg: healthy === services.length ? "var(--sage-bg)" : "var(--clay-bg)",
-      label: "Health",
       value:
-        healthy === services.length ? "OK" : `${healthy}/${services.length}`,
-      sub: healthy === services.length ? "all connected" : "need attention",
+        healthy === services.length
+          ? t("health.ok")
+          : `${healthy}/${services.length}`,
+      sub:
+        healthy === services.length
+          ? t("health.allConnected")
+          : t("health.needsAttention"),
     },
     {
+      id: "apiCalls",
       icon: Zap,
       color: "var(--info)",
       bg: "var(--info-bg)",
-      label: "API Calls",
       value: `${auditCount}`,
-      sub: "total",
+      sub: t("apiCalls.sub"),
     },
   ];
 
   return (
     <div className="grid grid-cols-4 gap-3">
       {stats.map((s) => (
-        <div key={s.label} className="card !p-4 flex items-center gap-3">
+        <div key={s.id} className="card !p-4 flex items-center gap-3">
           <div
             className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
             style={{ backgroundColor: s.bg }}
@@ -150,6 +157,7 @@ function StatRow({
 
 /* ─── Service row ─────────────────────────────────────────── */
 function ServiceRow({ service }: { service: ServiceConnection }) {
+  const { t } = useTranslation("dashboard", { keyPrefix: "serviceRow" });
   const meta = getServiceMeta(service.service_type);
   return (
     <Link
@@ -167,7 +175,7 @@ function ServiceRow({ service }: { service: ServiceConnection }) {
         </div>
       </div>
       <div className="flex items-center gap-4">
-        <Badge variant="brand">{service.tool_count} tools</Badge>
+        <Badge variant="brand">{t("toolsCount", { count: service.tool_count })}</Badge>
         <StatusDot status={service.health_status} />
         <ArrowRight
           size={15}
@@ -190,6 +198,7 @@ const GRID_SERVICES: ServiceType[] = [
 ];
 
 function ServiceGrid() {
+  const { t } = useTranslation("dashboard", { keyPrefix: "serviceGrid" });
   const navigate = useNavigate();
   return (
     <div className="flex flex-wrap gap-2">
@@ -220,7 +229,9 @@ function ServiceGrid() {
         className="flex items-center gap-2 px-3 py-2 rounded-xl border-2 border-dashed border-line-strong hover:border-terra transition-all cursor-pointer"
       >
         <Plus size={14} className="text-ink-tertiary" />
-        <span className="text-xs font-semibold text-ink-tertiary">More</span>
+        <span className="text-xs font-semibold text-ink-tertiary">
+          {t("more")}
+        </span>
       </button>
     </div>
   );
@@ -228,6 +239,8 @@ function ServiceGrid() {
 
 /* ─── How it works ─────────────────────────────────────────── */
 function HowItWorks({ onDismiss }: { onDismiss: () => void }) {
+  const { t } = useTranslation("dashboard", { keyPrefix: "howItWorks" });
+
   return (
     <div className="relative card !p-5">
       <button
@@ -237,33 +250,36 @@ function HowItWorks({ onDismiss }: { onDismiss: () => void }) {
         <X size={14} />
       </button>
       <p className="text-xs font-bold uppercase tracking-wider text-ink-tertiary mb-3">
-        How it works
+        {t("title")}
       </p>
       <div className="space-y-3">
         {[
           {
+            id: "connect",
             icon: Server,
             color: "var(--terra)",
             bg: "var(--terra-bg)",
-            title: "Connect",
-            desc: "Add services with an API token",
+            title: t("steps.connect.title"),
+            desc: t("steps.connect.description"),
           },
           {
+            id: "configure",
             icon: Wrench,
             color: "var(--sage)",
             bg: "var(--sage-bg)",
-            title: "Configure",
-            desc: "Choose which tools agents can use",
+            title: t("steps.configure.title"),
+            desc: t("steps.configure.description"),
           },
           {
+            id: "use",
             icon: Bot,
             color: "var(--coral)",
             bg: "var(--coral-bg)",
-            title: "Use",
-            desc: "Point any MCP client here",
+            title: t("steps.use.title"),
+            desc: t("steps.use.description"),
           },
         ].map((step) => (
-          <div key={step.title} className="flex items-center gap-3">
+          <div key={step.id} className="flex items-center gap-3">
             <div
               className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
               style={{ backgroundColor: step.bg }}
@@ -283,6 +299,7 @@ function HowItWorks({ onDismiss }: { onDismiss: () => void }) {
 
 /* ─── Welcome view ─────────────────────────────────────────── */
 function WelcomeView() {
+  const { t } = useTranslation("dashboard", { keyPrefix: "welcomeView" });
   const [heroHidden, setHeroHidden] = useState(isDismissed("hero"));
   const [howHidden, setHowHidden] = useState(isDismissed("howitworks"));
 
@@ -318,7 +335,7 @@ function WelcomeView() {
       )}
 
       <div>
-        <h2 className="section-label mb-3">Supported services</h2>
+        <h2 className="section-label mb-3">{t("supportedServices")}</h2>
         <ServiceGrid />
       </div>
     </div>
@@ -344,6 +361,7 @@ function DashboardView({
       }[]
     | undefined;
 }) {
+  const { t } = useTranslation("dashboard", { keyPrefix: "dashboardView" });
   const [heroHidden, setHeroHidden] = useState(isDismissed("hero"));
 
   return (
@@ -367,7 +385,7 @@ function DashboardView({
 
       <div className="grid grid-cols-12 gap-5">
         <div className="col-span-7">
-          <h2 className="section-label mb-3">Your services</h2>
+          <h2 className="section-label mb-3">{t("yourServices")}</h2>
           <div className="space-y-2.5">
             {services.map((svc) => (
               <ServiceRow key={svc.id} service={svc} />
@@ -377,7 +395,7 @@ function DashboardView({
             to="/services"
             className="flex items-center gap-1.5 text-sm font-semibold text-terra hover:text-terra-light transition-colors mt-3"
           >
-            Manage all <ArrowRight size={14} />
+            {t("manageAll")} <ArrowRight size={14} />
           </Link>
         </div>
 
@@ -385,12 +403,12 @@ function DashboardView({
           {audit && audit.length > 0 && (
             <div>
               <div className="flex items-center justify-between mb-2.5">
-                <h3 className="section-label">Recent activity</h3>
+                <h3 className="section-label">{t("recentActivity.title")}</h3>
                 <Link
                   to="/logs"
                   className="text-xs text-terra hover:text-terra-light transition-colors"
                 >
-                  View all
+                  {t("recentActivity.viewAll")}
                 </Link>
               </div>
               <div className="card !p-3.5 space-y-2">
@@ -405,7 +423,9 @@ function DashboardView({
                           entry.status === "success" ? "positive" : "critical"
                         }
                       >
-                        {entry.status === "success" ? "ok" : "err"}
+                        {entry.status === "success"
+                          ? t("recentActivity.statusOk")
+                          : t("recentActivity.statusError")}
                       </Badge>
                       <span className="text-xs text-ink font-mono truncate">
                         {entry.tool_name}
@@ -421,36 +441,39 @@ function DashboardView({
           )}
 
           <div>
-            <h3 className="section-label mb-2.5">Quick actions</h3>
+            <h3 className="section-label mb-2.5">{t("quickActions.title")}</h3>
             <div className="space-y-2">
               {[
                 {
+                  id: "agents",
                   to: "/agents",
                   icon: Bot,
                   color: "var(--terra)",
                   bg: "var(--terra-bg)",
-                  label: "Setup AI Agents",
-                  desc: "Connection guides",
+                  label: t("quickActions.items.setupAgents.label"),
+                  desc: t("quickActions.items.setupAgents.description"),
                 },
                 {
+                  id: "services",
                   to: "/services",
                   icon: Plus,
                   color: "var(--sage)",
                   bg: "var(--sage-bg)",
-                  label: "Connect Service",
-                  desc: "Add a new service",
+                  label: t("quickActions.items.connectService.label"),
+                  desc: t("quickActions.items.connectService.description"),
                 },
                 {
+                  id: "tools",
                   to: "/tools",
                   icon: Wrench,
                   color: "var(--info)",
                   bg: "var(--info-bg)",
-                  label: "Manage Tools",
-                  desc: "Permissions & profiles",
+                  label: t("quickActions.items.manageTools.label"),
+                  desc: t("quickActions.items.manageTools.description"),
                 },
               ].map((a) => (
                 <Link
-                  key={a.to}
+                  key={a.id}
                   to={a.to}
                   className="card flex items-center gap-3 !p-3.5 group transition-all duration-200"
                 >
@@ -484,6 +507,7 @@ function DashboardView({
 
 /* ─── Main ────────────────────────────────────────────────── */
 export function Dashboard() {
+  const { t } = useTranslation("dashboard", { keyPrefix: "query" });
   const { data: services, isLoading, isError, error } = useServices();
   const { data: tools } = useTools();
   useHealth();
@@ -494,8 +518,8 @@ export function Dashboard() {
       isLoading={isLoading}
       isError={isError}
       error={error instanceof Error ? error : null}
-      loadingMessage="Connecting\u2026"
-      errorMessage="Cannot reach the backend."
+      loadingMessage={t("loading")}
+      errorMessage={t("error")}
     >
       {services && services.length > 0 ? (
         <DashboardView

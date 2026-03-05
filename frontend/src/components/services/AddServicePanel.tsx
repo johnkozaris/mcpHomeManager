@@ -13,10 +13,12 @@ import {
   SERVICE_META,
   getServiceMeta,
 } from "@/lib/service-meta";
+import { parseApiError } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { useNavigate } from "@tanstack/react-router";
 import type { ServiceType, DiscoveredService } from "@/lib/types";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   open: boolean;
@@ -64,12 +66,15 @@ function ScanSection({
   onSelectService: (svc: DiscoveredService) => void;
 }) {
   const discoverServices = useDiscoverServices();
+  const { t } = useTranslation("components", {
+    keyPrefix: "services.addServicePanel",
+  });
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <p className="text-sm text-ink-secondary">
-          Scan your network for running services.
+          {t("scanDescription")}
         </p>
         <Button
           variant="secondary"
@@ -78,7 +83,7 @@ function ScanSection({
           disabled={discoverServices.isPending}
         >
           <Search size={14} />
-          {discoverServices.isPending ? "Scanning…" : "Scan"}
+          {discoverServices.isPending ? t("scanning") : t("scan")}
         </Button>
       </div>
 
@@ -110,7 +115,7 @@ function ScanSection({
 
       {discoverServices.data && discoverServices.data.length === 0 && (
         <p className="text-sm text-ink-tertiary text-center py-6">
-          No known service containers found.
+          {t("noKnownServices")}
         </p>
       )}
     </div>
@@ -120,6 +125,9 @@ function ScanSection({
 /* ─── Modal ─────────────────────────────────────────────────── */
 
 export function AddServicePanel({ open, onClose }: Props) {
+  const { t } = useTranslation("components", {
+    keyPrefix: "services.addServicePanel",
+  });
   const [selectedType, setSelectedType] = useState<ServiceType | null>(null);
   const [prefill, setPrefill] = useState<PrefillData | null>(null);
   const createService = useCreateService();
@@ -171,8 +179,8 @@ export function AddServicePanel({ open, onClose }: Props) {
   if (!open) return null;
 
   const headerLabel = selectedType
-    ? `Connect ${getServiceMeta(selectedType).label}`
-    : "Connect a Service";
+    ? t("connectWithLabel", { label: getServiceMeta(selectedType).label })
+    : t("connectService");
   const headerId = "add-service-title";
 
   return (
@@ -207,7 +215,7 @@ export function AddServicePanel({ open, onClose }: Props) {
           <button
             onClick={handleClose}
             className="text-ink-tertiary hover:text-ink transition-colors"
-            aria-label="Close dialog"
+            aria-label={t("closeDialog")}
           >
             <X size={18} />
           </button>
@@ -224,7 +232,7 @@ export function AddServicePanel({ open, onClose }: Props) {
                 className="text-xs text-rust hover:underline"
                 onClick={() => setMutationError(null)}
               >
-                dismiss
+                {t("dismiss")}
               </button>
             </div>
           )}
@@ -246,9 +254,7 @@ export function AddServicePanel({ open, onClose }: Props) {
                   },
                   onError: (err) =>
                     setMutationError(
-                      err instanceof Error
-                        ? err.message
-                        : "Failed to connect service",
+                      parseApiError(err, t("failedConnectService")),
                     ),
                 });
               }}
@@ -257,18 +263,18 @@ export function AddServicePanel({ open, onClose }: Props) {
           ) : (
             <>
               <div>
-                <h3 className="section-label mb-3">Choose a service</h3>
+                <h3 className="section-label mb-3">{t("chooseService")}</h3>
                 <CatalogGrid onSelect={handleSelectFromCatalog} />
               </div>
 
               <div className="flex items-center gap-3">
                 <div className="flex-1 border-t border-line" />
-                <span className="text-2xs text-ink-tertiary">or</span>
+                <span className="text-2xs text-ink-tertiary">{t("or")}</span>
                 <div className="flex-1 border-t border-line" />
               </div>
 
               <div>
-                <h3 className="section-label mb-3">Auto-detect</h3>
+                <h3 className="section-label mb-3">{t("autoDetect")}</h3>
                 <ScanSection onSelectService={handleSelectFromScan} />
               </div>
             </>

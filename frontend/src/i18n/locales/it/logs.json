@@ -1,0 +1,47 @@
+{
+  "page": {
+    "title": "Log",
+    "description": "Consulta le chiamate recenti agli strumenti MCP, gli esiti e la latenza.",
+    "stats": {
+      "totalCalls": "Chiamate totali",
+      "successRate": "Tasso di successo",
+      "errors": "Errori",
+      "avgLatency": "Latenza media"
+    },
+    "chart": {
+      "callsOverTime": "Chiamate nel tempo"
+    },
+    "filters": {
+      "searchPlaceholder": "Cerca per nome dello strumento",
+      "allServices": "Tutti i servizi",
+      "status": {
+        "all": "Tutti",
+        "success": "Successo",
+        "error": "Errore"
+      }
+    },
+    "query": {
+      "loading": "Caricamento log…"
+    },
+    "table": {
+      "headers": {
+        "status": "Stato",
+        "tool": "Strumento",
+        "service": "Servizio",
+        "client": "Client",
+        "latency": "Latenza",
+        "time": "Ora"
+      }
+    },
+    "pagination": {
+      "totalEntries": "{count, plural, one {# entry} other {# entries}}",
+      "page": "Pagina {current} di {total}"
+    },
+    "empty": {
+      "filteredTitle": "Nessuna voce di log corrispondente",
+      "filteredDescription": "Prova a modificare i filtri.",
+      "defaultTitle": "Nessuna voce di log per ora",
+      "defaultDescription": "L'attività degli strumenti comparirà qui quando gli agenti inizieranno a effettuare chiamate."
+    }
+  }
+}

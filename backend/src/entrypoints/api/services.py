@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from domain.entities.service_connection import ServiceConnection, ServiceType
 from domain.ports.encryption import IEncryptionPort
+from entrypoints.api.message_codes import ApiMessageCode, exception_extra
 from entrypoints.api.schemas import (
     ApplyProfileRequest,
     ApplyProfileResponse,
@@ -100,7 +101,11 @@ class ServiceController(Controller):
     ) -> ServiceResponse:
         ctx: AuthContext = request.user
         if not ctx.is_admin:
-            raise ClientException("Admin access required to create services", status_code=403)
+            raise ClientException(
+                "Admin access required to create services",
+                status_code=403,
+                extra=exception_extra(ApiMessageCode.SERVICES_ADMIN_REQUIRED_CREATE),
+            )
         try:
             svc = await service_manager.create_connection(
                 name=data.name,
@@ -111,7 +116,10 @@ class ServiceController(Controller):
                 config=data.config,
             )
         except ValueError as e:
-            raise ClientException(str(e)) from e
+            raise ClientException(
+                str(e),
+                extra=exception_extra(ApiMessageCode.SERVICES_VALIDATION_ERROR),
+            ) from e
         await db_session.commit()
         await tool_registry.refresh()
         return _to_response(svc)
@@ -195,7 +203,10 @@ class ServiceController(Controller):
                 config=data.config,
             )
         except ValueError as e:
-            raise ClientException(str(e)) from e
+            raise ClientException(
+                str(e),
+                extra=exception_extra(ApiMessageCode.SERVICES_VALIDATION_ERROR),
+            ) from e
         await db_session.commit()
         await tool_registry.refresh()
         return _to_response(svc)
@@ -247,7 +258,11 @@ class ServiceController(Controller):
     ) -> ImportResult:
         ctx: AuthContext = request.user
         if not ctx.is_admin:
-            raise ClientException("Admin access required to import services", status_code=403)
+            raise ClientException(
+                "Admin access required to import services",
+                status_code=403,
+                extra=exception_extra(ApiMessageCode.SERVICES_ADMIN_REQUIRED_IMPORT),
+            )
         exporter = ConfigExporter()
         try:
             specs = exporter.parse_import(data.yaml_content)
@@ -328,10 +343,16 @@ class ServiceController(Controller):
         profiles = PROFILES.get(svc.service_type, [])
         profile = next((p for p in profiles if p.name == data.profile_name), None)
         if profile is None:
-            raise NotFoundException(f"Profile '{data.profile_name}' not found")
+            raise NotFoundException(
+                f"Profile '{data.profile_name}' not found",
+                extra=exception_extra(ApiMessageCode.SERVICES_PROFILE_NOT_FOUND),
+            )
 
         if svc.id is None:
-            raise NotFoundException("Service has no ID")
+            raise NotFoundException(
+                "Service has no ID",
+                extra=exception_extra(ApiMessageCode.HTTP_NOT_FOUND),
+            )
         permissions = ToolPermissionService(ToolPermissionRepository(db_session))
         for tool_name, enabled in profile.tool_states.items():
             await permissions.set_permission(
@@ -342,7 +363,11 @@ class ServiceController(Controller):
         await db_session.commit()
         await tool_registry.refresh()
 
-        return ApplyProfileResponse(status="applied", profile=profile.name)
+        return ApplyProfileResponse(
+            status="applied",
+            profile=profile.name,
+            message_code=ApiMessageCode.SERVICES_PROFILE_APPLIED.value,
+        )
 
     @post("/{service_id:uuid}/test")
     async def test_connection(
@@ -360,7 +385,15 @@ class ServiceController(Controller):
         await db_session.commit()
         if success:
             await tool_registry.refresh()
-        return TestResult(success=success, message=message)
+        return TestResult(
+            success=success,
+            message=message,
+            message_code=(
+                ApiMessageCode.SERVICES_CONNECTION_TEST_SUCCESS.value
+                if success
+                else ApiMessageCode.SERVICES_CONNECTION_TEST_FAILED.value
+            ),
+        )
 
     @post("/{service_id:uuid}/tools")
     async def create_generic_tool(
@@ -388,12 +421,25 @@ class ServiceController(Controller):
                 params_schema=data.params_schema,
             )
         except GenericToolConflictError as exc:
-            raise ClientException(detail=str(exc), status_code=409) from exc
+            raise ClientException(
+                detail=str(exc),
+                status_code=409,
+                extra=exception_extra(ApiMessageCode.SERVICES_GENERIC_TOOL_CONFLICT),
+            ) from exc
         except GenericToolValidationError as exc:
-            raise ClientException(detail=str(exc), status_code=400) from exc
+            raise ClientException(
+                detail=str(exc),
+                status_code=400,
+                extra=exception_extra(ApiMessageCode.SERVICES_GENERIC_TOOL_VALIDATION_ERROR),
+            ) from exc
         await db_session.commit()
         await tool_registry.refresh()
-        return GenericToolResult(status="created", tool_name=row.tool_name, tools_count=1)
+        return GenericToolResult(
+            status="created",
+            tool_name=row.tool_name,
+            tools_count=1,
+            message_code=ApiMessageCode.SERVICES_GENERIC_TOOL_CREATED.value,
+        )
 
     @patch("/{service_id:uuid}/tools/{tool_name:str}")
     async def update_generic_tool(
@@ -421,12 +467,24 @@ class ServiceController(Controller):
                 params_schema=data.params_schema,
             )
         except GenericToolNotFoundError as exc:
-            raise NotFoundException(str(exc)) from exc
+            raise NotFoundException(
+                str(exc),
+                extra=exception_extra(ApiMessageCode.SERVICES_GENERIC_TOOL_NOT_FOUND),
+            ) from exc
         except GenericToolValidationError as exc:
-            raise ClientException(detail=str(exc), status_code=400) from exc
+            raise ClientException(
+                detail=str(exc),
+                status_code=400,
+                extra=exception_extra(ApiMessageCode.SERVICES_GENERIC_TOOL_VALIDATION_ERROR),
+            ) from exc
         await db_session.commit()
         await tool_registry.refresh()
-        return GenericToolResult(status="updated", tool_name=row.tool_name, tools_count=1)
+        return GenericToolResult(
+            status="updated",
+            tool_name=row.tool_name,
+            tools_count=1,
+            message_code=ApiMessageCode.SERVICES_GENERIC_TOOL_UPDATED.value,
+        )
 
     @delete("/{service_id:uuid}/tools/{tool_name:str}")
     async def delete_generic_tool(
@@ -446,7 +504,10 @@ class ServiceController(Controller):
         try:
             await service.delete_tool(service_id, tool_name)
         except GenericToolNotFoundError as exc:
-            raise NotFoundException(str(exc)) from exc
+            raise NotFoundException(
+                str(exc),
+                extra=exception_extra(ApiMessageCode.SERVICES_GENERIC_TOOL_NOT_FOUND),
+            ) from exc
         await db_session.commit()
         await tool_registry.refresh()
 
@@ -468,7 +529,10 @@ class ServiceController(Controller):
         try:
             tool = await tool_service.get_tool(service_id, tool_name)
         except GenericToolNotFoundError as exc:
-            raise NotFoundException(str(exc)) from exc
+            raise NotFoundException(
+                str(exc),
+                extra=exception_extra(ApiMessageCode.SERVICES_GENERIC_TOOL_NOT_FOUND),
+            ) from exc
 
         path = re.sub(r"\{[^}]+\}", "test", tool.path_template)
 
@@ -480,7 +544,11 @@ class ServiceController(Controller):
         try:
             await validate_base_url(svc.base_url)
         except ValueError as e:
-            return TestResult(success=False, message=f"URL validation failed: {e}")
+            return TestResult(
+                success=False,
+                message=f"URL validation failed: {e}",
+                message_code=ApiMessageCode.SERVICES_GENERIC_TOOL_TEST_URL_VALIDATION_FAILED.value,
+            )
 
         try:
             token = encryption.decrypt(svc.api_token_encrypted)
@@ -505,14 +573,20 @@ class ServiceController(Controller):
                     result = TestResult(
                         success=True,
                         message=f"Endpoint reachable (HTTP {resp.status_code})",
+                        message_code=ApiMessageCode.SERVICES_GENERIC_TOOL_TEST_SUCCESS.value,
                     )
                 else:
                     result = TestResult(
                         success=False,
                         message=f"Server error: HTTP {resp.status_code}",
+                        message_code=ApiMessageCode.SERVICES_GENERIC_TOOL_TEST_SERVER_ERROR.value,
                     )
         except httpx.ConnectError as e:
-            result = TestResult(success=False, message=f"Connection failed: {str(e)[:200]}")
+            result = TestResult(
+                success=False,
+                message=f"Connection failed: {str(e)[:200]}",
+                message_code=ApiMessageCode.SERVICES_GENERIC_TOOL_TEST_CONNECTION_FAILED.value,
+            )
         except Exception as e:
             structlog.get_logger().warning(
                 "tool_test_probe_failed",
@@ -520,7 +594,11 @@ class ServiceController(Controller):
                 tool_name=tool_name,
                 error=str(e),
             )
-            result = TestResult(success=False, message=f"Error: {type(e).__name__}: {str(e)[:200]}")
+            result = TestResult(
+                success=False,
+                message=f"Error: {type(e).__name__}: {str(e)[:200]}",
+                message_code=ApiMessageCode.SERVICES_GENERIC_TOOL_TEST_ERROR.value,
+            )
 
         audit = AuditService(repository=AuditRepository(db_session))
         try:
@@ -565,7 +643,11 @@ class ServiceController(Controller):
         try:
             created, skipped = await service.import_openapi(service_id, data.spec)
         except (ValueError, GenericToolValidationError) as exc:
-            raise ClientException(detail=str(exc), status_code=400) from exc
+            raise ClientException(
+                detail=str(exc),
+                status_code=400,
+                extra=exception_extra(ApiMessageCode.SERVICES_OPENAPI_IMPORT_INVALID),
+            ) from exc
 
         await db_session.commit()
         await tool_registry.refresh()
@@ -574,4 +656,5 @@ class ServiceController(Controller):
             imported=created,
             skipped=skipped,
             tools_count=len(created),
+            message_code=ApiMessageCode.SERVICES_OPENAPI_IMPORTED.value,
         )

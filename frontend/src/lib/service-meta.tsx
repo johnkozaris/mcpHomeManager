@@ -19,6 +19,7 @@ import {
   Puzzle,
   type LucideIcon,
 } from "lucide-react";
+import { translateText } from "@/i18n/translate";
 import type { BuiltinServiceType, ServiceType } from "./types";
 
 interface ServiceMeta {
@@ -28,116 +29,162 @@ interface ServiceMeta {
   color: string;
 }
 
+function createServiceMeta(
+  type: BuiltinServiceType,
+  icon: LucideIcon,
+  color: string,
+  fallbackLabel: string,
+  fallbackDescription: string,
+): ServiceMeta {
+  return {
+    icon,
+    color,
+    get label() {
+      return translateText(`serviceMeta:services.${type}.label`, fallbackLabel);
+    },
+    get description() {
+      return translateText(
+        `serviceMeta:services.${type}.description`,
+        fallbackDescription,
+      );
+    },
+  };
+}
+
 export const SERVICE_META: Record<BuiltinServiceType, ServiceMeta> = {
-  forgejo: {
-    icon: GitBranch,
-    label: "Forgejo",
-    description: "Git hosting & CI/CD",
-    color: "var(--brand-forgejo)",
-  },
-  homeassistant: {
-    icon: Home,
-    label: "Home Assistant",
-    description: "Smart home automation",
-    color: "var(--brand-homeassistant)",
-  },
-  paperless: {
-    icon: FileText,
-    label: "Paperless-ngx",
-    description: "Document management",
-    color: "var(--brand-paperless)",
-  },
-  immich: {
-    icon: Camera,
-    label: "Immich",
-    description: "Photo & video management",
-    color: "var(--brand-immich)",
-  },
-  nextcloud: {
-    icon: Cloud,
-    label: "Nextcloud",
-    description: "Cloud storage & sync",
-    color: "var(--brand-nextcloud)",
-  },
-  uptimekuma: {
-    icon: Activity,
-    label: "Uptime Kuma",
-    description: "Uptime monitoring",
-    color: "var(--brand-uptimekuma)",
-  },
-  adguard: {
-    icon: Shield,
-    label: "AdGuard Home",
-    description: "DNS filtering & ad blocking",
-    color: "var(--brand-adguard)",
-  },
-  nginxproxymanager: {
-    icon: Network,
-    label: "Nginx Proxy Manager",
-    description: "Reverse proxy & SSL",
-    color: "var(--brand-nginxproxymanager)",
-  },
-  portainer: {
-    icon: Container,
-    label: "Portainer",
-    description: "Container management",
-    color: "var(--brand-portainer)",
-  },
-  freshrss: {
-    icon: Rss,
-    label: "FreshRSS",
-    description: "RSS feed reader",
-    color: "var(--brand-freshrss)",
-  },
-  wallabag: {
-    icon: Bookmark,
-    label: "Wallabag",
-    description: "Read-it-later articles",
-    color: "var(--brand-wallabag)",
-  },
-  stirlingpdf: {
-    icon: FileScan,
-    label: "Stirling PDF",
-    description: "PDF processing tools",
-    color: "var(--brand-stirlingpdf)",
-  },
-  wikijs: {
-    icon: BookOpen,
-    label: "Wiki.js",
-    description: "Team knowledge base",
-    color: "var(--brand-wikijs)",
-  },
-  calibreweb: {
-    icon: Library,
-    label: "Calibre-Web",
-    description: "E-book library management",
-    color: "var(--brand-calibreweb)",
-  },
-  cloudflare: {
-    icon: CloudCog,
-    label: "Cloudflare",
-    description: "DNS, tunnels, and zero trust management",
-    color: "var(--brand-cloudflare)",
-  },
-  tailscale: {
-    icon: Waypoints,
-    label: "Tailscale",
-    description: "VPN mesh network and device management",
-    color: "var(--brand-tailscale)",
-  },
-  generic_rest: {
-    icon: Globe,
-    label: "Generic REST",
-    description: "Custom REST API service",
-    color: "var(--brand-generic-rest)",
-  },
+  forgejo: createServiceMeta(
+    "forgejo",
+    GitBranch,
+    "var(--brand-forgejo)",
+    "Forgejo",
+    "Git hosting & CI/CD",
+  ),
+  homeassistant: createServiceMeta(
+    "homeassistant",
+    Home,
+    "var(--brand-homeassistant)",
+    "Home Assistant",
+    "Smart home automation",
+  ),
+  paperless: createServiceMeta(
+    "paperless",
+    FileText,
+    "var(--brand-paperless)",
+    "Paperless-ngx",
+    "Document management",
+  ),
+  immich: createServiceMeta(
+    "immich",
+    Camera,
+    "var(--brand-immich)",
+    "Immich",
+    "Photo & video management",
+  ),
+  nextcloud: createServiceMeta(
+    "nextcloud",
+    Cloud,
+    "var(--brand-nextcloud)",
+    "Nextcloud",
+    "Cloud storage & sync",
+  ),
+  uptimekuma: createServiceMeta(
+    "uptimekuma",
+    Activity,
+    "var(--brand-uptimekuma)",
+    "Uptime Kuma",
+    "Uptime monitoring",
+  ),
+  adguard: createServiceMeta(
+    "adguard",
+    Shield,
+    "var(--brand-adguard)",
+    "AdGuard Home",
+    "DNS filtering & ad blocking",
+  ),
+  nginxproxymanager: createServiceMeta(
+    "nginxproxymanager",
+    Network,
+    "var(--brand-nginxproxymanager)",
+    "Nginx Proxy Manager",
+    "Reverse proxy & SSL",
+  ),
+  portainer: createServiceMeta(
+    "portainer",
+    Container,
+    "var(--brand-portainer)",
+    "Portainer",
+    "Container management",
+  ),
+  freshrss: createServiceMeta(
+    "freshrss",
+    Rss,
+    "var(--brand-freshrss)",
+    "FreshRSS",
+    "RSS feed reader",
+  ),
+  wallabag: createServiceMeta(
+    "wallabag",
+    Bookmark,
+    "var(--brand-wallabag)",
+    "Wallabag",
+    "Read-it-later articles",
+  ),
+  stirlingpdf: createServiceMeta(
+    "stirlingpdf",
+    FileScan,
+    "var(--brand-stirlingpdf)",
+    "Stirling PDF",
+    "PDF processing tools",
+  ),
+  wikijs: createServiceMeta(
+    "wikijs",
+    BookOpen,
+    "var(--brand-wikijs)",
+    "Wiki.js",
+    "Team knowledge base",
+  ),
+  calibreweb: createServiceMeta(
+    "calibreweb",
+    Library,
+    "var(--brand-calibreweb)",
+    "Calibre-Web",
+    "E-book library management",
+  ),
+  cloudflare: createServiceMeta(
+    "cloudflare",
+    CloudCog,
+    "var(--brand-cloudflare)",
+    "Cloudflare",
+    "DNS, tunnels, and zero trust management",
+  ),
+  tailscale: createServiceMeta(
+    "tailscale",
+    Waypoints,
+    "var(--brand-tailscale)",
+    "Tailscale",
+    "VPN mesh network and device management",
+  ),
+  generic_rest: createServiceMeta(
+    "generic_rest",
+    Globe,
+    "var(--brand-generic-rest)",
+    "Generic REST",
+    "Custom REST API service",
+  ),
 };
 
 const _fallbackMeta: ServiceMeta = {
   icon: Puzzle,
-  label: "Unknown",
-  description: "Unknown service type",
   color: "var(--ink-tertiary)",
+  get label() {
+    return translateText("serviceMeta:fallback.label", "Unknown");
+  },
+  get description() {
+    return translateText(
+      "serviceMeta:fallback.description",
+      "Unknown service type",
+    );
+  },
 };
 
 export function getServiceMeta(type: ServiceType): ServiceMeta {

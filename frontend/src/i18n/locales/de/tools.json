@@ -1,0 +1,30 @@
+{
+  "page": {
+    "title": "Tools",
+    "description": {
+      "withCounts": "{toolsCount} Tools in {serviceCount} Services • {enabledCount} aktiviert",
+      "empty": "Verwalte, welche Tools MCP-Clients zur Verfügung stehen."
+    },
+    "filters": {
+      "searchPlaceholder": "Tools suchen",
+      "allServices": "Alle Services",
+      "status": {
+        "all": "Alle ({count})",
+        "enabled": "Aktiviert ({count})",
+        "disabled": "Deaktiviert ({count})"
+      }
+    },
+    "errors": {
+      "missingService": "\"{toolName}\" kann nicht aktualisiert werden, da dieses Tool keinem Service zugeordnet ist."
+    },
+    "query": {
+      "loading": "Tools werden geladen…"
+    },
+    "empty": {
+      "searchTitle": "Keine Tools passen zu deiner Suche",
+      "searchDescription": "Versuch es mit einem anderen Suchbegriff oder Filter.",
+      "noToolsTitle": "Noch keine Tools",
+      "noToolsDescription": "Verbinde einen Service, um Tools nutzen zu können."
+    }
+  }
+}

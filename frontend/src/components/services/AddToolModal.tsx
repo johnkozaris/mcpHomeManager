@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { MonacoEditor } from "@/components/ui/MonacoEditor";
 import type { GenericToolDefinition } from "@/lib/types";
+import { parseApiError } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   open: boolean;
@@ -18,6 +20,9 @@ interface Props {
 }
 
 export function AddToolModal({ open, onClose, serviceId, editTool }: Props) {
+  const { t } = useTranslation("components", {
+    keyPrefix: "services.addToolModal",
+  });
   const isEditMode = !!editTool;
   const [toolName, setToolName] = useState(editTool?.tool_name ?? "");
   const [description, setDescription] = useState(editTool?.description ?? "");
@@ -53,13 +58,14 @@ export function AddToolModal({ open, onClose, serviceId, editTool }: Props) {
   }, [open, onClose]);
 
   if (!open) return null;
+  const mutationErrorFallback = isEditMode ? t("failedUpdate") : t("failedCreate");
 
   const handleSubmit = () => {
     let parsed: Record<string, unknown>;
     try {
       parsed = JSON.parse(paramsSchema);
     } catch {
-      setJsonError("Invalid JSON in parameters schema");
+      setJsonError(t("invalidJson"));
       return;
     }
     setJsonError(null);
@@ -120,12 +126,12 @@ export function AddToolModal({ open, onClose, serviceId, editTool }: Props) {
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-line">
           <h2 id="add-tool-title" className="text-lg font-semibold text-ink">
-            {isEditMode ? "Edit Tool Definition" : "Add Tool"}
+            {isEditMode ? t("titleEdit") : t("titleAdd")}
           </h2>
           <button
             onClick={onClose}
             aria-label={
-              isEditMode ? "Close edit tool dialog" : "Close add tool dialog"
+              isEditMode ? t("closeEditDialog") : t("closeAddDialog")
             }
             className="text-ink-tertiary hover:text-ink transition-colors"
           >
@@ -134,26 +140,20 @@ export function AddToolModal({ open, onClose, serviceId, editTool }: Props) {
         </div>
         <div className="p-6 space-y-3">
           <p id="add-tool-desc" className="sr-only">
-            {isEditMode
-              ? "Edit the definition of this MCP tool."
-              : "Create a new MCP tool for this generic REST service."}
+            {isEditMode ? t("descriptionEdit") : t("descriptionAdd")}
           </p>
           <Input
-            label="Tool Name"
-            placeholder="e.g. list_items"
+            label={t("toolNameLabel")}
+            placeholder={t("toolNamePlaceholder")}
             value={toolName}
             onChange={(e) => setToolName(e.target.value)}
             required
             disabled={isEditMode}
-            error={
-              !toolNameValid
-                ? "Must start with a letter; only letters, numbers, and underscores"
-                : undefined
-            }
+            error={!toolNameValid ? t("toolNameValidation") : undefined}
           />
           <Input
-            label="Description"
-            placeholder="List all items"
+            label={t("descriptionLabel")}
+            placeholder={t("descriptionPlaceholder")}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
@@ -164,7 +164,7 @@ export function AddToolModal({ open, onClose, serviceId, editTool }: Props) {
                 htmlFor="http-method"
                 className="block text-sm font-medium text-ink-secondary"
               >
-                HTTP Method
+                {t("httpMethodLabel")}
               </label>
               <select
                 id="http-method"
@@ -180,15 +180,15 @@ export function AddToolModal({ open, onClose, serviceId, editTool }: Props) {
               </select>
             </div>
             <Input
-              label="Path Template"
-              placeholder="/api/v1/items"
+              label={t("pathTemplateLabel")}
+              placeholder={t("pathTemplatePlaceholder")}
               value={pathTemplate}
               onChange={(e) => setPathTemplate(e.target.value)}
               required
             />
           </div>
           <div>
-            <p className="section-label mb-2">Parameters Schema (JSON)</p>
+            <p className="section-label mb-2">{t("parametersSchemaLabel")}</p>
             <MonacoEditor
               value={paramsSchema}
               onChange={setParamsSchema}
@@ -199,16 +199,12 @@ export function AddToolModal({ open, onClose, serviceId, editTool }: Props) {
           {(mutation.isError || jsonError) && (
             <p className="text-xs text-rust">
               {jsonError ??
-                (mutation.error instanceof Error
-                  ? mutation.error.message
-                  : isEditMode
-                    ? "Failed to update tool"
-                    : "Failed to create tool")}
+                parseApiError(mutation.error, mutationErrorFallback)}
             </p>
           )}
           <div className="flex justify-end gap-2">
             <Button variant="secondary" onClick={onClose}>
-              Cancel
+              {t("cancel")}
             </Button>
             <Button
               onClick={handleSubmit}
@@ -221,11 +217,11 @@ export function AddToolModal({ open, onClose, serviceId, editTool }: Props) {
             >
               {mutation.isPending
                 ? isEditMode
-                  ? "Saving\u2026"
-                  : "Creating\u2026"
+                  ? t("saving")
+                  : t("creating")
                 : isEditMode
-                  ? "Save Changes"
-                  : "Create Tool"}
+                  ? t("saveChanges")
+                  : t("createTool")}
             </Button>
           </div>
         </div>

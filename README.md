@@ -73,6 +73,26 @@ pnpm exec tsc -b
 pnpm exec eslint .
 ```
 
+## Localization (i18n) workflow
+
+Frontend strings are localized with `i18next` + `react-i18next`.
+
+- Locale files live in: `frontend/src/i18n/locales/<locale>/`
+- Source language is `en`
+- Namespaces are split by feature (`auth`, `dashboard`, `services`, `settings`, `components`, `errors`, `backendErrors`, etc.)
+
+### Supported locales
+
+`en`, `es`, `pt-BR`, `pt-PT`, `zh-CN`, `ja`, `ko`, `el`, `de`, `fr`, `th`, `it`
+
+### Translator guidance
+
+- Keep the same filename/key structure as `en` for every locale.
+- Preserve placeholders/ICU syntax exactly (`{count}`, `{appName}`, ICU plural blocks).
+- Translate with a native-speaker voice for each locale (modern product tone, not literal word-by-word).
+- Keep technical loanwords (API, token, JSON, URL, MCP) when that is what native users naturally say.
+- Prefer natural local phrasing over formal/stiff wording.
+
 ## Open-source docs
 
 - Contributing guide: [CONTRIBUTING.md](CONTRIBUTING.md)

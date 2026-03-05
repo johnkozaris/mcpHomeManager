@@ -1,0 +1,146 @@
+{
+  "page": {
+    "title": "连接 AI 智能体",
+    "description": "将你的 MCP endpoint 添加到下方任意 AI 客户端。连接后，你的 homelab 工具会自动被发现。",
+    "placeholders": {
+      "apiKey": "YOUR_API_KEY"
+    },
+    "cards": {
+      "claudeDesktop": {
+        "name": "Claude Desktop",
+        "badge": "推荐",
+        "steps": {
+          "step1": {
+            "before": "前往",
+            "settings": "Settings（设置）",
+            "middle": "（齿轮图标）→",
+            "developer": "Developer（开发者）",
+            "and": "→",
+            "editConfig": "Edit Config（编辑配置）"
+          },
+          "step2": {
+            "beforeFile": "这会打开",
+            "afterFile": "。如果文件中已有其他 MCP servers，请在现有",
+            "afterHomelab": "对象中添加",
+            "afterMcpServers": "条目。否则请将文件内容替换为："
+          },
+          "step3": {
+            "before": "保存文件并",
+            "emphasis": "彻底退出",
+            "after": "Claude Desktop（不只是关闭窗口——请从菜单栏或系统托盘退出），然后重新打开"
+          },
+          "step4": "你应该会在聊天输入框看到锤子图标——点击它以确认 homelab 工具已加载",
+          "step5": {
+            "prefix": "试试：",
+            "exampleRepos": "\"我在 Forgejo 上有哪些仓库？\"",
+            "or": "或",
+            "examplePaperless": "\"在我的 Paperless 文档中搜索发票\""
+          }
+        },
+        "configPath": "配置路径 — macOS：~/Library/Application Support/Claude/ · Windows：%APPDATA%\\Claude\\"
+      },
+      "claudeCode": {
+        "name": "Claude Code",
+        "terminalLabel": "终端",
+        "steps": {
+          "step1": "使用下面的命令全局注册你的 homelab MCP server（所有项目可用）：",
+          "step2": {
+            "before": "使用",
+            "after": "验证——你应在输出中看到“homelab”"
+          },
+          "step3": "你的 homelab 工具现在会在每个会话中自动可用"
+        },
+        "removePrefix": "如需稍后移除："
+      },
+      "cursor": {
+        "name": "Cursor",
+        "steps": {
+          "step1": {
+            "before": "在项目根目录创建",
+            "after": "，内容如下："
+          },
+          "step2": "重启 Cursor（Cmd+Q / 关闭并重新打开）。你的工具应显示在 AI 面板（Cmd+L / Ctrl+L）的“Available Tools（可用工具）”下",
+          "step3": "如果工具未显示，请检查底部状态栏中的 MCP 状态指示器"
+        }
+      },
+      "chatgpt": {
+        "name": "ChatGPT",
+        "steps": {
+          "step1": {
+            "before": "前往",
+            "settings": "Settings（设置）",
+            "middle": "→",
+            "appsAndConnectors": "Apps & Connectors（应用与连接器）",
+            "after": "→ 启用",
+            "developerMode": "Developer mode（开发者模式）",
+            "suffix": "（位于“Advanced settings（高级设置）”中）"
+          },
+          "step2": {
+            "before": "回到“Apps & Connectors”，点击",
+            "create": "Create（创建）",
+            "and": "→ 选择",
+            "mcpServer": "MCP Server"
+          },
+          "step3": {
+            "before": "输入类似“My Homelab”的名称，并粘贴你的 endpoint："
+          },
+          "step4": {
+            "before": "点击",
+            "create": "Create（创建）",
+            "after": "。新会话会自动发现你的 homelab 工具"
+          }
+        },
+        "note": {
+          "label": "注意：",
+          "body": "ChatGPT 需要公网可访问的 endpoint。如果你的服务器只能在本地访问，请使用内置 Caddy 配置或 Cloudflare Tunnel 等隧道服务。"
+        }
+      },
+      "openWebui": {
+        "name": "Open WebUI",
+        "steps": {
+          "step1": {
+            "before": "前往",
+            "adminPanel": "Admin Panel（管理面板）",
+            "and": "→",
+            "settings": "Settings（设置）",
+            "then": "→",
+            "tools": "Tools（工具）"
+          },
+          "step2": {
+            "before": "点击",
+            "addMcpConnection": "Add MCP Connection（添加 MCP 连接）",
+            "after": "，输入名称并粘贴你的 endpoint："
+          },
+          "step3": "如果使用 API key 认证，请在认证字段输入你的 key",
+          "step4": {
+            "before": "点击",
+            "save": "Save（保存）",
+            "after": "— Open WebUI 会测试连接并发现你的工具。此后所有用户在任意 LLM 中都可使用这些工具"
+          }
+        }
+      },
+      "otherClients": {
+        "name": "其他 MCP 客户端",
+        "description": "如果你的 MCP 客户端需要特定连接信息：",
+        "details": {
+          "transport": {
+            "label": "传输方式",
+            "value": "Streamable HTTP"
+          },
+          "auth": {
+            "label": "认证",
+            "value": "Authorization: Bearer"
+          },
+          "discovery": {
+            "label": "发现",
+            "value": "自动"
+          }
+        },
+        "sse": {
+          "before": "对于仅支持 SSE 的客户端，请在 endpoint URL 后追加",
+          "after": "。AI 客户端需要能访问到这个 Base URL。"
+        }
+      }
+    }
+  }
+}

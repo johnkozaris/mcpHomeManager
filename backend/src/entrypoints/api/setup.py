@@ -15,6 +15,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from entrypoints.api.auth import apply_session_cookie, create_session
+from entrypoints.api.message_codes import ApiMessageCode, exception_extra
 from infrastructure.persistence.user_repository import UserRepository
 from services.user_service import UserService
 
@@ -64,12 +65,16 @@ class SetupController(Controller):
             raise ClientException(
                 "Setup already completed. An admin account already exists.",
                 status_code=409,
+                extra=exception_extra(ApiMessageCode.SETUP_ALREADY_COMPLETED),
             )
 
         if data.email:
             parts = data.email.split("@")
             if len(parts) != 2 or not parts[0] or not parts[1] or "." not in parts[1]:
-                raise ClientException("Invalid email address.")
+                raise ClientException(
+                    "Invalid email address.",
+                    extra=exception_extra(ApiMessageCode.SETUP_INVALID_EMAIL),
+                )
 
         try:
             user = await user_service.create_user(
@@ -83,6 +88,7 @@ class SetupController(Controller):
             raise ClientException(
                 "Setup already completed. An admin account already exists.",
                 status_code=409,
+                extra=exception_extra(ApiMessageCode.SETUP_ALREADY_COMPLETED),
             ) from e
 
         if user.id is None:

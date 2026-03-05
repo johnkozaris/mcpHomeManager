@@ -1,0 +1,11 @@
+{
+  "api": {
+    "generic": "Si è verificato un errore"
+  },
+  "queryState": {
+    "loading": "Caricamento…",
+    "authRequired": "Autenticazione richiesta: accedi di nuovo per continuare.",
+    "networkUnreachable": "Impossibile raggiungere il server. Verifica che sia in esecuzione.",
+    "generic": "Qualcosa è andato storto"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "actions": {
+    "signOut": "Terminar sessão"
+  },
+  "mcp": {
+    "placeholders": {
+      "apiKey": "YOUR_API_KEY"
+    }
+  }
+}

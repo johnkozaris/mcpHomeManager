@@ -1,0 +1,84 @@
+{
+  "page": {
+    "profileChips": {
+      "label": "Profili"
+    },
+    "invalidServiceId": "ID servizio non valido",
+    "query": {
+      "loading": "Caricamento dettagli del servizio…",
+      "error": "Impossibile caricare questo servizio"
+    },
+    "errors": {
+      "invalidJson": "JSON non valido"
+    },
+    "actions": {
+      "save": "Salva",
+      "edit": "Modifica",
+      "testing": "Test in corso…",
+      "testConnection": "Testa la connessione"
+    },
+    "editConnection": {
+      "title": "Modifica la connessione",
+      "fields": {
+        "displayName": "Nome da visualizzare",
+        "baseUrl": "Base URL",
+        "apiToken": "API token",
+        "apiTokenPlaceholder": "Lascia vuoto per mantenere il token esistente",
+        "configuration": "Configurazione"
+      }
+    },
+    "stats": {
+      "health": {
+        "label": "Stato"
+      },
+      "tools": {
+        "label": "Strumenti",
+        "sub": "{count, plural, one {# enabled} other {# enabled}}"
+      },
+      "lastTested": {
+        "label": "Ultimo test",
+        "never": "Mai"
+      }
+    },
+    "state": {
+      "label": "Stato",
+      "active": "Attivo",
+      "disabled": "Disabilitato"
+    },
+    "apps": {
+      "title": "App ({count})"
+    },
+    "appPreview": {
+      "title": "Anteprima dell'app",
+      "close": "Chiudi l'anteprima"
+    },
+    "tools": {
+      "title": "Strumenti MCP ({count})",
+      "actions": {
+        "importOpenApi": "Importa OpenAPI",
+        "addTool": "Aggiungi strumento"
+      },
+      "errors": {
+        "requestFailed": "Richiesta non riuscita"
+      }
+    },
+    "dialogs": {
+      "deleteTool": {
+        "title": "Elimina strumento",
+        "description": "Questo eliminerà in modo definitivo lo strumento \"{toolName}\" da questo servizio.",
+        "confirm": "Elimina"
+      },
+      "deleteService": {
+        "title": "Elimina servizio",
+        "description": "Questo eliminerà in modo definitivo il servizio e tutti i suoi strumenti registrati da MCP.",
+        "confirm": "Elimina"
+      }
+    },
+    "removeService": {
+      "title": "Elimina il servizio",
+      "description": "Questo eliminerà in modo definitivo il servizio e tutti i suoi strumenti registrati da MCP.",
+      "action": "Elimina servizio"
+    },
+    "notFound": "Servizio non trovato."
+  }
+}

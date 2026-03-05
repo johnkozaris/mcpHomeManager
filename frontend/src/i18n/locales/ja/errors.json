@@ -1,0 +1,11 @@
+{
+  "api": {
+    "generic": "問題が発生しました"
+  },
+  "queryState": {
+    "loading": "読み込み中…",
+    "authRequired": "認証が必要です。続行するには再度ログインしてください。",
+    "networkUnreachable": "サーバーに接続できませんでした。バックエンドは起動していますか？",
+    "generic": "問題が発生しました"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "page": {
+    "profileChips": {
+      "label": "Perfis"
+    },
+    "invalidServiceId": "ID de serviço inválido",
+    "query": {
+      "loading": "A carregar detalhes do serviço…",
+      "error": "Não foi possível carregar este serviço"
+    },
+    "errors": {
+      "invalidJson": "JSON inválido"
+    },
+    "actions": {
+      "save": "Guardar",
+      "edit": "Editar",
+      "testing": "A testar…",
+      "testConnection": "Testar ligação"
+    },
+    "editConnection": {
+      "title": "Editar ligação",
+      "fields": {
+        "displayName": "Nome a apresentar",
+        "baseUrl": "URL base",
+        "apiToken": "Token de API",
+        "apiTokenPlaceholder": "Deixe em branco para manter o token atual",
+        "configuration": "Configuração"
+      }
+    },
+    "stats": {
+      "health": {
+        "label": "Estado"
+      },
+      "tools": {
+        "label": "Ferramentas",
+        "sub": "{count, plural, one {# ativada} other {# ativadas}}"
+      },
+      "lastTested": {
+        "label": "Último teste",
+        "never": "Nunca"
+      }
+    },
+    "state": {
+      "label": "Estado",
+      "active": "Ativo",
+      "disabled": "Desativado"
+    },
+    "apps": {
+      "title": "Aplicações ({count})"
+    },
+    "appPreview": {
+      "title": "Pré-visualização da app",
+      "close": "Fechar pré-visualização"
+    },
+    "tools": {
+      "title": "Ferramentas MCP ({count})",
+      "actions": {
+        "importOpenApi": "Importar OpenAPI",
+        "addTool": "Adicionar ferramenta"
+      },
+      "errors": {
+        "requestFailed": "O pedido falhou"
+      }
+    },
+    "dialogs": {
+      "deleteTool": {
+        "title": "Eliminar ferramenta",
+        "description": "Isto remove permanentemente a ferramenta \"{toolName}\" deste serviço.",
+        "confirm": "Eliminar"
+      },
+      "deleteService": {
+        "title": "Eliminar serviço",
+        "description": "Isto remove permanentemente o serviço e todas as ferramentas registadas no MCP.",
+        "confirm": "Eliminar"
+      }
+    },
+    "removeService": {
+      "title": "Remover serviço",
+      "description": "Isto remove permanentemente o serviço e todas as ferramentas registadas no MCP.",
+      "action": "Eliminar serviço"
+    },
+    "notFound": "Serviço não encontrado."
+  }
+}

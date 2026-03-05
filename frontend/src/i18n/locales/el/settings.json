@@ -1,0 +1,111 @@
+{
+  "page": {
+    "title": "Ρυθμίσεις",
+    "description": "Εμφάνιση, endpoints και πληροφορίες συστήματος",
+    "appearance": {
+      "title": "Εμφάνιση",
+      "light": "Φωτεινό",
+      "dark": "Σκοτεινό"
+    },
+    "language": {
+      "title": "Γλώσσα",
+      "description": "Επίλεξε τη γλώσσα σου. Η εφαρμογή θα θυμάται την επιλογή σου."
+    },
+    "security": {
+      "title": "Ασφάλεια",
+      "enabled": "Ενεργοποιημένο",
+      "disabled": "Απενεργοποιημένο",
+      "signedInAs": "Συνδεδεμένος ως",
+      "currentUserFallback": "admin",
+      "selfMcp": {
+        "title": "Εργαλεία Self-MCP",
+        "description": "Όταν είναι ενεργό, οι Βοηθοί AI μπορούν να διαχειρίζονται αυτήν την πύλη μέσω του ίδιου του MCP — να βλέπουν υπηρεσίες, να ενεργοποιούν ή να απενεργοποιούν εργαλεία, να προσθέτουν συνδέσεις και να βλέπουν καταγραφές χωρίς το web UI.",
+        "accessPrefix": "Η πρόσβαση δίνεται ανά χρήστη στη",
+        "userManagementLink": "Διαχείριση χρηστών",
+        "accessSuffix": ".",
+        "defaultsPrefix": "Προεπιλογή από",
+        "defaultsSuffix": "env var κατά την επανεκκίνηση."
+      }
+    },
+    "apiKey": {
+      "title": "MCP API Key",
+      "status": {
+        "active": "Ενεργό",
+        "notSet": "Δεν έχει οριστεί"
+      },
+      "description": "Οι Βοηθοί AI (Claude, Cursor, ChatGPT) χρησιμοποιούν αυτό το κλειδί για να συνδεθούν στο MCP endpoint σου.",
+      "revealedTitle": "Το API key σου",
+      "actions": {
+        "regenerate": "Ανανέωση κλειδιού",
+        "generate": "Δημιουργία κλειδιού",
+        "reveal": "Εμφάνιση κλειδιού",
+        "revoke": "Ανάκληση"
+      },
+      "errors": {
+        "revealFailed": "Δεν ήταν δυνατή η εμφάνιση του κλειδιού. Δοκίμασε ανανέωση."
+      }
+    },
+    "about": {
+      "title": "Σχετικά",
+      "versionLabel": "Έκδοση",
+      "serverLabel": "Server",
+      "serverFallback": "MCP Home Manager"
+    },
+    "endpoint": {
+      "title": "MCP Endpoint",
+      "description": "Οι Βοηθοί AI σου συνδέονται σε αυτό το URL",
+      "agentGuide": "Οδηγός ρύθμισης Βοηθών AI"
+    },
+    "systemHealth": {
+      "title": "Υγεία συστήματος",
+      "checking": "έλεγχος",
+      "rows": {
+        "database": "Βάση δεδομένων",
+        "mcpServer": "MCP Server",
+        "services": "Υπηρεσίες"
+      },
+      "servicesConnected": "{healthy} / {total} συνδεδεμένες"
+    },
+    "smtp": {
+      "title": "Email (SMTP)",
+      "description": "Ρύθμιση SMTP για email επαναφοράς κωδικού. Άφησέ το κενό για απενεργοποίηση.",
+      "testFailed": "Η δοκιμή απέτυχε",
+      "fields": {
+        "host": "Host",
+        "port": "Port",
+        "username": "Όνομα χρήστη",
+        "password": "Κωδικός",
+        "passwordHint": "(ορισμένος — άφησέ το κενό για να μη αλλάξει)",
+        "fromEmail": "Email αποστολέα"
+      },
+      "placeholders": {
+        "host": "smtp.gmail.com",
+        "username": "user@example.com",
+        "passwordMasked": "••••••••",
+        "password": "App password",
+        "fromEmail": "noreply@example.com"
+      },
+      "toggles": {
+        "useTls": "Χρήση TLS (STARTTLS)",
+        "enabled": "Ενεργοποιημένο"
+      },
+      "errors": {
+        "saveFailed": "Η αποθήκευση ρυθμίσεων SMTP απέτυχε"
+      },
+      "actions": {
+        "saved": "Αποθηκεύτηκε",
+        "saving": "Αποθήκευση…",
+        "save": "Αποθήκευση",
+        "sending": "Αποστολή…",
+        "sendTestEmail": "Αποστολή δοκιμαστικού email"
+      }
+    },
+    "dialogs": {
+      "revokeKey": {
+        "title": "Ανάκληση API Key",
+        "description": "Αυτό θα αποσυνδέσει άμεσα τυχόν Βοηθούς AI που χρησιμοποιούν αυτό το κλειδί. Μετά μπορείς να δημιουργήσεις νέο κλειδί.",
+        "confirm": "Ανάκληση κλειδιού"
+      }
+    }
+  }
+}

@@ -3,8 +3,10 @@ import { Link } from "@tanstack/react-router";
 import { api } from "@/lib/api";
 import { parseApiError } from "@/lib/utils";
 import { Home, ArrowLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export function ForgotPassword() {
+  const { t } = useTranslation("auth", { keyPrefix: "forgotPassword" });
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -19,7 +21,7 @@ export function ForgotPassword() {
       await api.auth.forgotPassword(email);
       setSent(true);
     } catch (err) {
-      setError(parseApiError(err, "Failed to send reset email"));
+      setError(parseApiError(err, t("errors.sendResetEmail")));
     } finally {
       setLoading(false);
     }
@@ -32,26 +34,21 @@ export function ForgotPassword() {
           <div className="w-12 h-12 rounded-xl bg-terra-bg flex items-center justify-center mb-4">
             <Home className="w-6 h-6 text-terra" />
           </div>
-          <h1 className="text-xl font-semibold text-ink">Reset Password</h1>
+          <h1 className="text-xl font-semibold text-ink">{t("title")}</h1>
           <p className="text-sm text-ink-muted mt-1">
-            {sent
-              ? "Check your email"
-              : "Enter your email to receive a reset link"}
+            {sent ? t("subtitle.sent") : t("subtitle.default")}
           </p>
         </div>
 
         <div className="bg-surface rounded-xl border border-line p-6 space-y-4">
           {sent ? (
             <div className="text-center space-y-3">
-              <p className="text-sm text-ink-secondary">
-                If an account with that email exists, a password reset link has
-                been sent. The link expires in 1 hour.
-              </p>
+              <p className="text-sm text-ink-secondary">{t("sentDescription")}</p>
               <Link
                 to="/login"
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-terra hover:text-terra-light transition-colors"
               >
-                <ArrowLeft size={14} /> Back to sign in
+                <ArrowLeft size={14} /> {t("backToSignIn")}
               </Link>
             </div>
           ) : (
@@ -68,7 +65,7 @@ export function ForgotPassword() {
                   htmlFor="email"
                   className="block text-sm font-medium text-ink mb-1.5"
                 >
-                  Email Address
+                  {t("emailLabel")}
                 </label>
                 <input
                   id="email"
@@ -81,7 +78,7 @@ export function ForgotPassword() {
                   className="w-full px-3 py-2 rounded-lg border border-line bg-canvas text-ink text-sm
                              placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
                              transition-colors"
-                  placeholder="you@example.com"
+                  placeholder={t("emailPlaceholder")}
                 />
               </div>
 
@@ -92,7 +89,7 @@ export function ForgotPassword() {
                            hover:bg-terra-hover active:scale-[0.98] transition-all
                            disabled:opacity-50 disabled:pointer-events-none"
               >
-                {loading ? "Sending…" : "Send Reset Link"}
+                {loading ? t("actions.sending") : t("actions.sendResetLink")}
               </button>
 
               <div className="text-center">
@@ -100,7 +97,7 @@ export function ForgotPassword() {
                   to="/login"
                   className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-ink transition-colors"
                 >
-                  <ArrowLeft size={14} /> Back to sign in
+                  <ArrowLeft size={14} /> {t("backToSignIn")}
                 </Link>
               </div>
             </form>

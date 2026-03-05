@@ -1,6 +1,7 @@
 import { Eye } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import type { AppDefinition } from "@/lib/types";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   app: AppDefinition;
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export function AppCard({ app, onPreview }: Props) {
+  const { t } = useTranslation("components", { keyPrefix: "services.appCard" });
+
   return (
     <div className="flex items-center justify-between p-3 rounded-xl border border-line">
       <div className="min-w-0">
@@ -16,7 +19,7 @@ export function AppCard({ app, onPreview }: Props) {
       </div>
       <Button variant="secondary" size="sm" onClick={() => onPreview(app)}>
         <Eye size={14} />
-        Preview
+        {t("preview")}
       </Button>
     </div>
   );

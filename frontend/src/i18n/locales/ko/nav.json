@@ -1,0 +1,23 @@
+{
+  "items": {
+    "home": "홈",
+    "services": "서비스",
+    "tools": "도구",
+    "agents": "에이전트",
+    "logs": "로그",
+    "users": "사용자",
+    "settings": "설정"
+  },
+  "actions": {
+    "collapseSidebar": "사이드바 접기",
+    "expandSidebar": "사이드바 펼치기",
+    "collapse": "접기",
+    "expand": "펼치기",
+    "switchToDarkMode": "다크 모드",
+    "switchToLightMode": "라이트 모드"
+  },
+  "theme": {
+    "dark": "다크",
+    "light": "라이트"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "services": {
+    "forgejo": {
+      "label": "Forgejo",
+      "description": "Alojamiento Git y CI/CD"
+    },
+    "homeassistant": {
+      "label": "Home Assistant",
+      "description": "Automatización inteligente del hogar"
+    },
+    "paperless": {
+      "label": "Paperless-ngx",
+      "description": "Gestión de documentos"
+    },
+    "immich": {
+      "label": "Immich",
+      "description": "Gestión de fotos y vídeos"
+    },
+    "nextcloud": {
+      "label": "Nextcloud",
+      "description": "Almacenamiento y sincronización en la nube"
+    },
+    "uptimekuma": {
+      "label": "Uptime Kuma",
+      "description": "Monitoreo de disponibilidad"
+    },
+    "adguard": {
+      "label": "AdGuard Home",
+      "description": "Filtrado DNS y bloqueo de publicidad"
+    },
+    "nginxproxymanager": {
+      "label": "Nginx Proxy Manager",
+      "description": "Proxy inverso y SSL"
+    },
+    "portainer": {
+      "label": "Portainer",
+      "description": "Gestión de contenedores"
+    },
+    "freshrss": {
+      "label": "FreshRSS",
+      "description": "Lector de feeds RSS"
+    },
+    "wallabag": {
+      "label": "Wallabag",
+      "description": "Artículos para leer más tarde"
+    },
+    "stirlingpdf": {
+      "label": "Stirling PDF",
+      "description": "Herramientas de procesamiento PDF"
+    },
+    "wikijs": {
+      "label": "Wiki.js",
+      "description": "Base de conocimientos del equipo"
+    },
+    "calibreweb": {
+      "label": "Calibre-Web",
+      "description": "Gestión de biblioteca de e-books"
+    },
+    "cloudflare": {
+      "label": "Cloudflare",
+      "description": "DNS, túneles y gestión de confianza cero"
+    },
+    "tailscale": {
+      "label": "Tailscale",
+      "description": "Mesh VPN y gestión de dispositivos"
+    },
+    "generic_rest": {
+      "label": "REST genérico",
+      "description": "Servicio API REST personalizado"
+    }
+  },
+  "fallback": {
+    "label": "Desconocido",
+    "description": "Tipo de servicio desconocido"
+  }
+}

@@ -85,6 +85,7 @@ class ServiceDetailResponse(msgspec.Struct):
 class TestResult(msgspec.Struct):
     success: bool
     message: str
+    message_code: str | None = None
 
 
 # --- Audit schemas ---
@@ -138,6 +139,7 @@ class ApplyProfileRequest(msgspec.Struct):
 class ApplyProfileResponse(msgspec.Struct):
     status: str
     profile: str
+    message_code: str | None = None
 
 
 # --- Health ---
@@ -202,6 +204,7 @@ class GenericToolResult(msgspec.Struct):
     status: str
     tool_name: str
     tools_count: int
+    message_code: str | None = None
 
 
 class UpdateGenericToolRequest(msgspec.Struct):
@@ -220,6 +223,7 @@ class ImportOpenAPIResult(msgspec.Struct):
     imported: list[str]
     tools_count: int
     skipped: list[str] = []
+    message_code: str | None = None
 
 
 # --- MCP Apps ---

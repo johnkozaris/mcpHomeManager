@@ -1,0 +1,25 @@
+{
+  "listPage": {
+    "title": "서비스",
+    "description": "서비스를 연결하고 상태, 도구, 설정을 관리하세요.",
+    "actions": {
+      "export": "내보내기",
+      "import": "가져오기",
+      "connectService": "서비스 연결"
+    },
+    "errors": {
+      "exportFailed": "서비스 내보내기에 실패했습니다"
+    },
+    "query": {
+      "loading": "서비스를 불러오는 중…",
+      "error": "서비스를 불러올 수 없습니다"
+    },
+    "cards": {
+      "connectDescription": "다른 서비스 연결"
+    },
+    "empty": {
+      "title": "연결된 서비스가 없습니다",
+      "description": "첫 서비스를 연결해 MCP 클라이언트에 도구를 노출하세요."
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "heroBanner": {
+    "title": "Conecta tu homelab con la IA",
+    "description": "Conecta servicios una vez y luego usa sus herramientas desde Claude, ChatGPT, Cursor y más.",
+    "actions": {
+      "connectService": "Conectar servicio",
+      "setupGuide": "Guía de configuración"
+    }
+  },
+  "stats": {
+    "services": {
+      "sub": "{count} habilitados"
+    },
+    "tools": {
+      "sub": "Herramientas disponibles"
+    },
+    "health": {
+      "ok": "En buen estado",
+      "allConnected": "Todos los servicios conectados",
+      "needsAttention": "Requiere atención"
+    },
+    "apiCalls": {
+      "sub": "Llamadas API recientes"
+    }
+  },
+  "serviceRow": {
+    "toolsCount": "{count, plural, one {# tool} other {# tools}}"
+  },
+  "serviceGrid": {
+    "more": "Más"
+  },
+  "howItWorks": {
+    "title": "Cómo funciona",
+    "steps": {
+      "connect": {
+        "title": "Conectar servicios",
+        "description": "Vincula tus apps de homelab con URL base y token API."
+      },
+      "configure": {
+        "title": "Configurar herramientas",
+        "description": "Elige qué herramientas se habilitan y ajusta sus descripciones."
+      },
+      "use": {
+        "title": "Usar con agentes",
+        "description": "Usa herramientas desde tu cliente de IA a través de MCP."
+      }
+    }
+  },
+  "welcomeView": {
+    "supportedServices": "Servicios compatibles"
+  },
+  "dashboardView": {
+    "yourServices": "Tus servicios",
+    "manageAll": "Gestionar todos los servicios",
+    "recentActivity": {
+      "title": "Actividad reciente",
+      "viewAll": "Ver todo",
+      "statusOk": "OK",
+      "statusError": "Error"
+    },
+    "quickActions": {
+      "title": "Acciones rápidas",
+      "items": {
+        "setupAgents": {
+          "label": "Configurar agentes",
+          "description": "Conecta Claude, ChatGPT, Cursor y más"
+        },
+        "connectService": {
+          "label": "Conectar un servicio",
+          "description": "Conecta otra app a tu gateway MCP"
+        },
+        "manageTools": {
+          "label": "Administrar herramientas",
+          "description": "Habilita, deshabilita y ajusta el comportamiento de las herramientas"
+        }
+      }
+    }
+  },
+  "query": {
+    "loading": "Cargando panel…",
+    "error": "No se pudo cargar el panel"
+  }
+}

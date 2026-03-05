@@ -1,0 +1,8 @@
+{
+  "relative": {
+    "justNow": "เมื่อสักครู่",
+    "minutesAgo": "{count} นาทีที่แล้ว",
+    "hoursAgo": "{count} ชม.ที่แล้ว",
+    "daysAgo": "{count} วันที่แล้ว"
+  }
+}

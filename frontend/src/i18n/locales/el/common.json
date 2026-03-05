@@ -1,0 +1,10 @@
+{
+  "actions": {
+    "signOut": "Αποσύνδεση"
+  },
+  "mcp": {
+    "placeholders": {
+      "apiKey": "YOUR_API_KEY"
+    }
+  }
+}

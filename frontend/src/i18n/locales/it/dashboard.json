@@ -1,0 +1,83 @@
+{
+  "heroBanner": {
+    "title": "Connetti il tuo homelab all'AI",
+    "description": "Connetti i servizi una volta e usa i loro strumenti da Claude, ChatGPT, Cursor e altri client.",
+    "actions": {
+      "connectService": "Connetti un servizio",
+      "setupGuide": "Guida alla configurazione"
+    }
+  },
+  "stats": {
+    "services": {
+      "sub": "{count} attivi"
+    },
+    "tools": {
+      "sub": "Strumenti disponibili"
+    },
+    "health": {
+      "ok": "Operativo",
+      "allConnected": "Tutti i servizi collegati",
+      "needsAttention": "Richiede attenzione"
+    },
+    "apiCalls": {
+      "sub": "Chiamate API recenti"
+    }
+  },
+  "serviceRow": {
+    "toolsCount": "{count, plural, one {# tool} other {# tools}}"
+  },
+  "serviceGrid": {
+    "more": "Altro"
+  },
+  "howItWorks": {
+    "title": "Come funziona",
+    "steps": {
+      "connect": {
+        "title": "Connetti i servizi",
+        "description": "Collega le app del tuo homelab con URL di base e API token."
+      },
+      "configure": {
+        "title": "Configura gli strumenti",
+        "description": "Scegli quali strumenti abilitare e ottimizza le descrizioni."
+      },
+      "use": {
+        "title": "Usa con gli agenti",
+        "description": "Chiama gli strumenti dal tuo client AI tramite MCP."
+      }
+    }
+  },
+  "welcomeView": {
+    "supportedServices": "Servizi supportati"
+  },
+  "dashboardView": {
+    "yourServices": "I tuoi servizi",
+    "manageAll": "Gestisci tutti i servizi",
+    "recentActivity": {
+      "title": "Attività recente",
+      "viewAll": "Vedi tutto",
+      "statusOk": "OK",
+      "statusError": "Errore"
+    },
+    "quickActions": {
+      "title": "Azioni rapide",
+      "items": {
+        "setupAgents": {
+          "label": "Configura gli agenti",
+          "description": "Connetti Claude, ChatGPT, Cursor e altri client"
+        },
+        "connectService": {
+          "label": "Connetti un servizio",
+          "description": "Connetti un'altra app al tuo gateway MCP"
+        },
+        "manageTools": {
+          "label": "Gestisci gli strumenti",
+          "description": "Abilita, disabilita e ottimizza il comportamento degli strumenti"
+        }
+      }
+    }
+  },
+  "query": {
+    "loading": "Caricamento della dashboard…",
+    "error": "Impossibile caricare la dashboard"
+  }
+}

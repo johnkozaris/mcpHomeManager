@@ -20,6 +20,7 @@ from sqlalchemy import delete as sa_delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from config import settings
+from entrypoints.api.message_codes import ApiMessageCode, exception_extra
 from infrastructure.persistence.orm_models import SessionTokenModel
 from infrastructure.persistence.reset_token_repository import ResetTokenRepository
 from infrastructure.persistence.smtp_repository import SmtpConfigRepository
@@ -128,7 +129,10 @@ class AuthController(Controller):
 
         if user is None:
             logger.warning("login_failed", username=data.username)
-            raise NotAuthorizedException("Invalid username or password.")
+            raise NotAuthorizedException(
+                "Invalid username or password.",
+                extra=exception_extra(ApiMessageCode.AUTH_INVALID_CREDENTIALS),
+            )
 
         token = await create_session(
             db_session,
@@ -178,12 +182,18 @@ class AuthController(Controller):
         """Generate a new MCP API key for the current user. Replaces any existing key."""
         ctx: AuthContext = request.user
         if not ctx.user_id:
-            raise NotAuthorizedException("A user account is required for API key management.")
+            raise NotAuthorizedException(
+                "A user account is required for API key management.",
+                extra=exception_extra(ApiMessageCode.AUTH_API_KEY_USER_REQUIRED),
+            )
 
         try:
             _, api_key = await user_service.generate_api_key(UUID(ctx.user_id))
         except ValueError as e:
-            raise NotAuthorizedException(str(e)) from e
+            raise NotAuthorizedException(
+                str(e),
+                extra=exception_extra(ApiMessageCode.AUTH_API_KEY_OPERATION_FORBIDDEN),
+            ) from e
         await db_session.commit()
         logger.info("api_key_generated", username=ctx.username)
         return ApiKeyResponse(api_key=api_key)
@@ -197,12 +207,19 @@ class AuthController(Controller):
         """Reveal the current user's MCP API key (decrypted from storage)."""
         ctx: AuthContext = request.user
         if not ctx.user_id:
-            raise NotAuthorizedException("A user account is required for API key management.")
+            raise NotAuthorizedException(
+                "A user account is required for API key management.",
+                extra=exception_extra(ApiMessageCode.AUTH_API_KEY_USER_REQUIRED),
+            )
 
         try:
             plaintext = await user_service.reveal_api_key(UUID(ctx.user_id))
         except ValueError as e:
-            raise ClientException(str(e), status_code=404) from e
+            raise ClientException(
+                str(e),
+                status_code=404,
+                extra=exception_extra(ApiMessageCode.AUTH_API_KEY_NOT_FOUND),
+            ) from e
         return ApiKeyResponse(api_key=plaintext)
 
     @delete("/api-key")
@@ -215,12 +232,18 @@ class AuthController(Controller):
         """Revoke the current user's MCP API key."""
         ctx: AuthContext = request.user
         if not ctx.user_id:
-            raise NotAuthorizedException("A user account is required for API key management.")
+            raise NotAuthorizedException(
+                "A user account is required for API key management.",
+                extra=exception_extra(ApiMessageCode.AUTH_API_KEY_USER_REQUIRED),
+            )
 
         try:
             await user_service.revoke_api_key(UUID(ctx.user_id))
         except ValueError as e:
-            raise NotAuthorizedException(str(e)) from e
+            raise NotAuthorizedException(
+                str(e),
+                extra=exception_extra(ApiMessageCode.AUTH_API_KEY_OPERATION_FORBIDDEN),
+            ) from e
         await db_session.commit()
         logger.info("api_key_revoked", username=ctx.username)
 
@@ -283,7 +306,10 @@ class AuthController(Controller):
                 except Exception:
                     logger.exception("password_reset_email_failed")
 
-        return {"status": "ok"}
+        return {
+            "status": "ok",
+            "message_code": ApiMessageCode.AUTH_RESET_REQUEST_ACCEPTED.value,
+        }
 
     @post("/reset-password", exclude_from_auth=True)
     async def reset_password(
@@ -294,20 +320,31 @@ class AuthController(Controller):
     ) -> dict[str, str]:
         """Reset password using a token from email."""
         if len(data.password) < 8:
-            raise ClientException("Password must be at least 8 characters.")
+            raise ClientException(
+                "Password must be at least 8 characters.",
+                extra=exception_extra(ApiMessageCode.AUTH_PASSWORD_TOO_SHORT),
+            )
 
         token_hash = hashlib.sha256(data.token.encode()).hexdigest()
         reset_repo = ResetTokenRepository(db_session)
         result = await reset_repo.get_user_id_by_hash(token_hash)
 
         if result is None:
-            raise ClientException("Invalid or expired reset token.", status_code=400)
+            raise ClientException(
+                "Invalid or expired reset token.",
+                status_code=400,
+                extra=exception_extra(ApiMessageCode.AUTH_RESET_TOKEN_INVALID),
+            )
 
         user_id, expires_at = result
         if expires_at < datetime.now(UTC):
             await reset_repo.delete_by_hash(token_hash)
             await db_session.commit()
-            raise ClientException("This reset link has expired.", status_code=400)
+            raise ClientException(
+                "This reset link has expired.",
+                status_code=400,
+                extra=exception_extra(ApiMessageCode.AUTH_RESET_TOKEN_EXPIRED),
+            )
 
         await user_service.set_password(user_id, data.password)
 
@@ -315,4 +352,7 @@ class AuthController(Controller):
         await db_session.commit()
 
         logger.info("password_reset_success", user_id=str(user_id))
-        return {"status": "ok"}
+        return {
+            "status": "ok",
+            "message_code": ApiMessageCode.AUTH_PASSWORD_RESET_COMPLETED.value,
+        }

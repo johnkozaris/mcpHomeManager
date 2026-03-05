@@ -1,0 +1,111 @@
+{
+  "page": {
+    "title": "Paramètres",
+    "description": "Apparence, endpoints et informations système",
+    "appearance": {
+      "title": "Apparence",
+      "light": "Clair",
+      "dark": "Sombre"
+    },
+    "language": {
+      "title": "Langue",
+      "description": "Choisis ta langue. L'appli retiendra ton choix."
+    },
+    "security": {
+      "title": "Sécurité",
+      "enabled": "Activé",
+      "disabled": "Désactivé",
+      "signedInAs": "Connecté en tant que",
+      "currentUserFallback": "admin",
+      "selfMcp": {
+        "title": "Outils Self-MCP",
+        "description": "Quand ils sont activés, les agents IA peuvent gérer cette passerelle directement via MCP : lister les services, activer ou désactiver des outils, ajouter des connexions et consulter les journaux sans passer par l'interface web.",
+        "accessPrefix": "L'accès se configure par utilisateur dans",
+        "userManagementLink": "Gestion des utilisateurs",
+        "accessSuffix": ".",
+        "defaultsPrefix": "Valeurs par défaut issues de la variable d’environnement",
+        "defaultsSuffix": " au redémarrage."
+      }
+    },
+    "apiKey": {
+      "title": "Clé API MCP",
+      "status": {
+        "active": "Active",
+        "notSet": "Non définie"
+      },
+      "description": "Les agents IA (Claude, Cursor, ChatGPT) utilisent cette clé pour se connecter à ton endpoint MCP.",
+      "revealedTitle": "Ta clé API",
+      "actions": {
+        "regenerate": "Régénérer la clé",
+        "generate": "Générer une clé",
+        "reveal": "Afficher la clé",
+        "revoke": "Révoquer"
+      },
+      "errors": {
+        "revealFailed": "Impossible d'afficher la clé. Essaie plutôt de la régénérer."
+      }
+    },
+    "about": {
+      "title": "À propos",
+      "versionLabel": "Version",
+      "serverLabel": "Serveur",
+      "serverFallback": "MCP Manager"
+    },
+    "endpoint": {
+      "title": "Endpoint MCP",
+      "description": "Tes agents IA se connectent à cette URL.",
+      "agentGuide": "Guide de configuration des agents"
+    },
+    "systemHealth": {
+      "title": "État du système",
+      "checking": "Vérification…",
+      "rows": {
+        "database": "Base de données",
+        "mcpServer": "Serveur MCP",
+        "services": "Services"
+      },
+      "servicesConnected": "{healthy} / {total} connectés"
+    },
+    "smtp": {
+      "title": "E-mail (SMTP)",
+      "description": "Configure SMTP pour les e-mails de réinitialisation de mot de passe. Laisse vide pour désactiver.",
+      "testFailed": "Échec du test",
+      "fields": {
+        "host": "Serveur",
+        "port": "Port",
+        "username": "Nom d’utilisateur",
+        "password": "Mot de passe",
+        "passwordHint": "(déjà défini — laisse vide pour le conserver)",
+        "fromEmail": "E-mail d’envoi"
+      },
+      "placeholders": {
+        "host": "smtp.gmail.com",
+        "username": "utilisateur@example.com",
+        "passwordMasked": "••••••••",
+        "password": "Mot de passe d’application",
+        "fromEmail": "noreply@example.com"
+      },
+      "toggles": {
+        "useTls": "Utiliser TLS (STARTTLS)",
+        "enabled": "Activé"
+      },
+      "errors": {
+        "saveFailed": "Échec de l’enregistrement de la configuration SMTP"
+      },
+      "actions": {
+        "saved": "Enregistré",
+        "saving": "Enregistrement…",
+        "save": "Enregistrer",
+        "sending": "Envoi…",
+        "sendTestEmail": "Envoyer un e-mail de test"
+      }
+    },
+    "dialogs": {
+      "revokeKey": {
+        "title": "Révoquer la clé API",
+        "description": "Ça déconnectera immédiatement tous les agents IA qui utilisent cette clé. Tu pourras ensuite en générer une nouvelle.",
+        "confirm": "Révoquer la clé"
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "page": {
+    "title": "เครื่องมือ",
+    "description": {
+      "withCounts": "{toolsCount} เครื่องมือจาก {serviceCount} บริการ • เปิดใช้งาน {enabledCount}",
+      "empty": "จัดการว่าเครื่องมือใดจะถูกเปิดให้ MCP clients ใช้งาน"
+    },
+    "filters": {
+      "searchPlaceholder": "ค้นหาเครื่องมือ",
+      "allServices": "ทุกบริการ",
+      "status": {
+        "all": "ทั้งหมด ({count})",
+        "enabled": "เปิดใช้งาน ({count})",
+        "disabled": "ปิดใช้งาน ({count})"
+      }
+    },
+    "errors": {
+      "missingService": "อัปเดต \"{toolName}\" ไม่ได้ เพราะเครื่องมือนี้ไม่ได้เชื่อมกับบริการใด"
+    },
+    "query": {
+      "loading": "กำลังโหลดเครื่องมือ…"
+    },
+    "empty": {
+      "searchTitle": "ไม่พบเครื่องมือที่ตรงกับคำค้น",
+      "searchDescription": "ลองเปลี่ยนคำค้นหาหรือฟิลเตอร์",
+      "noToolsTitle": "ยังไม่มีเครื่องมือ",
+      "noToolsDescription": "เชื่อมต่อบริการเพื่อเริ่มใช้งานเครื่องมือ"
+    }
+  }
+}

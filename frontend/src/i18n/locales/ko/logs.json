@@ -1,0 +1,47 @@
+{
+  "page": {
+    "title": "로그",
+    "description": "최근 MCP 도구 호출, 결과, 지연 시간을 확인하세요.",
+    "stats": {
+      "totalCalls": "총 호출 수",
+      "successRate": "성공률",
+      "errors": "오류",
+      "avgLatency": "평균 지연 시간"
+    },
+    "chart": {
+      "callsOverTime": "시간대별 호출"
+    },
+    "filters": {
+      "searchPlaceholder": "도구 이름으로 검색",
+      "allServices": "모든 서비스",
+      "status": {
+        "all": "전체",
+        "success": "성공",
+        "error": "오류"
+      }
+    },
+    "query": {
+      "loading": "로그를 불러오는 중…"
+    },
+    "table": {
+      "headers": {
+        "status": "상태",
+        "tool": "도구",
+        "service": "서비스",
+        "client": "클라이언트",
+        "latency": "지연 시간",
+        "time": "시간"
+      }
+    },
+    "pagination": {
+      "totalEntries": "{count, plural, one {항목 #개} other {항목 #개}}",
+      "page": "페이지 {current} / {total}"
+    },
+    "empty": {
+      "filteredTitle": "일치하는 로그 항목이 없습니다",
+      "filteredDescription": "필터를 조정해 보세요.",
+      "defaultTitle": "아직 로그 항목이 없습니다",
+      "defaultDescription": "에이전트가 도구를 호출하면 사용 기록이 여기에 표시됩니다."
+    }
+  }
+}

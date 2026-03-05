@@ -1,0 +1,30 @@
+{
+  "page": {
+    "title": "Tools",
+    "description": {
+      "withCounts": "{toolsCount} tools across {serviceCount} services • {enabledCount} enabled",
+      "empty": "Manage which tools are exposed to MCP clients."
+    },
+    "filters": {
+      "searchPlaceholder": "Search tools",
+      "allServices": "All services",
+      "status": {
+        "all": "All ({count})",
+        "enabled": "Enabled ({count})",
+        "disabled": "Disabled ({count})"
+      }
+    },
+    "errors": {
+      "missingService": "Cannot update \"{toolName}\" because this tool has no linked service."
+    },
+    "query": {
+      "loading": "Loading tools…"
+    },
+    "empty": {
+      "searchTitle": "No tools match your search",
+      "searchDescription": "Try a different search term or filter.",
+      "noToolsTitle": "No tools yet",
+      "noToolsDescription": "Connect a service to start using tools."
+    }
+  }
+}

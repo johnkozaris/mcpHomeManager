@@ -1,0 +1,75 @@
+{
+  "page": {
+    "title": "ผู้ใช้",
+    "description": "จัดการว่าใครเข้าถึงเกตเวย์นี้ได้ และใช้บริการใดได้บ้าง",
+    "actions": {
+      "cancel": "ยกเลิก",
+      "createUser": "สร้างผู้ใช้",
+      "creating": "กำลังสร้าง…",
+      "create": "สร้าง"
+    },
+    "form": {
+      "title": "สร้างผู้ใช้",
+      "fields": {
+        "username": {
+          "label": "ชื่อผู้ใช้",
+          "placeholder": "jane",
+          "errors": {
+            "minLength": "ชื่อผู้ใช้ต้องมีอย่างน้อย 2 ตัวอักษร",
+            "maxLength": "ชื่อผู้ใช้ต้องไม่เกิน 100 ตัวอักษร"
+          }
+        },
+        "email": {
+          "label": "อีเมล",
+          "placeholder": "jane@example.com"
+        },
+        "password": {
+          "label": "รหัสผ่าน",
+          "placeholder": "เว้นว่างไว้เพื่อตั้งภายหลัง",
+          "errors": {
+            "minLength": "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร (ตอนนี้มี {current})"
+          }
+        }
+      },
+      "passwordHelp": "ไม่จำเป็นต้องตั้งรหัสผ่านตอนสร้าง แต่ถ้าตั้งต้องยาวอย่างน้อย 8 ตัวอักษร",
+      "toggles": {
+        "admin": "สิทธิ์ผู้ดูแล",
+        "selfMcp": "อนุญาตเครื่องมือ Self-MCP"
+      },
+      "allowedServices": "บริการที่อนุญาต"
+    },
+    "errors": {
+      "createUserFailed": "สร้างผู้ใช้ไม่สำเร็จ",
+      "updateUserFailed": "อัปเดตผู้ใช้ไม่สำเร็จ"
+    },
+    "query": {
+      "loading": "กำลังโหลดผู้ใช้…"
+    },
+    "list": {
+      "count": "{count, plural, one {# ผู้ใช้} other {# ผู้ใช้}}",
+      "badges": {
+        "admin": "ผู้ดูแล",
+        "mcp": "Self-MCP"
+      },
+      "toggles": {
+        "admin": "ผู้ดูแล",
+        "mcp": "Self-MCP"
+      },
+      "access": {
+        "allServices": "ทุกบริการ",
+        "serviceCount": "{count, plural, one {# บริการ} other {# บริการ}}"
+      }
+    },
+    "empty": {
+      "title": "ยังไม่มีผู้ใช้",
+      "description": "สร้างผู้ใช้คนแรกเพื่อกำหนดสิทธิ์การเข้าถึง"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "ลบผู้ใช้",
+        "description": "บัญชีผู้ใช้นี้จะถูกลบอย่างถาวร",
+        "confirm": "ลบ"
+      }
+    }
+  }
+}

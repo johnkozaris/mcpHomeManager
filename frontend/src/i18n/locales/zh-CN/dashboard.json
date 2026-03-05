@@ -1,0 +1,83 @@
+{
+  "heroBanner": {
+    "title": "将你的 homelab 连接到 AI",
+    "description": "只需连接一次，就能在 Claude、ChatGPT、Cursor 等客户端中直接使用。",
+    "actions": {
+      "connectService": "连接服务",
+      "setupGuide": "设置指南"
+    }
+  },
+  "stats": {
+    "services": {
+      "sub": "{count} 个已启用"
+    },
+    "tools": {
+      "sub": "可用工具"
+    },
+    "health": {
+      "ok": "正常",
+      "allConnected": "所有服务均已连接",
+      "needsAttention": "需要关注"
+    },
+    "apiCalls": {
+      "sub": "最近 API 调用"
+    }
+  },
+  "serviceRow": {
+    "toolsCount": "{count, plural, one {# 个工具} other {# 个工具}}"
+  },
+  "serviceGrid": {
+    "more": "更多"
+  },
+  "howItWorks": {
+    "title": "工作原理",
+    "steps": {
+      "connect": {
+        "title": "连接服务",
+        "description": "通过 base URL 和 API token 关联你的 homelab 应用。"
+      },
+      "configure": {
+        "title": "配置工具",
+        "description": "选择要启用的工具，调整描述信息。"
+      },
+      "use": {
+        "title": "在 AI 客户端中使用",
+        "description": "在 AI 客户端中通过 MCP 调用工具。"
+      }
+    }
+  },
+  "welcomeView": {
+    "supportedServices": "支持的服务"
+  },
+  "dashboardView": {
+    "yourServices": "你的服务",
+    "manageAll": "管理所有服务",
+    "recentActivity": {
+      "title": "最近活动",
+      "viewAll": "查看全部",
+      "statusOk": "正常",
+      "statusError": "错误"
+    },
+    "quickActions": {
+      "title": "快捷操作",
+      "items": {
+        "setupAgents": {
+          "label": "设置智能体",
+          "description": "连接 Claude、ChatGPT、Cursor 等"
+        },
+        "connectService": {
+          "label": "连接服务",
+          "description": "把新应用接入 MCP 网关"
+        },
+        "manageTools": {
+          "label": "管理工具",
+          "description": "启用、禁用或调整工具设置"
+        }
+      }
+    }
+  },
+  "query": {
+    "loading": "正在加载仪表盘…",
+    "error": "无法加载仪表盘"
+  }
+}

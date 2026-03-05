@@ -1,0 +1,182 @@
+{
+  "errorBoundary": {
+    "title": "Κάτι πήγε στραβά",
+    "fallbackMessage": "Παρουσιάστηκε απροσδόκητο σφάλμα.",
+    "reload": "Φόρτωσε ξανά"
+  },
+  "routeErrorFallback": {
+    "title": "Κάτι πήγε στραβά",
+    "fallbackMessage": "Παρουσιάστηκε απροσδόκητο σφάλμα.",
+    "tryAgain": "Δοκίμασε ξανά",
+    "goHome": "Πίσω στην αρχική"
+  },
+  "logs": {
+    "logEntryDetail": {
+      "error": "Σφάλμα",
+      "input": "Είσοδος",
+      "duration": "Διάρκεια:",
+      "durationUnit": "ms",
+      "client": "Client:",
+      "time": "Ώρα:",
+      "viewService": "Προβολή υπηρεσίας"
+    }
+  },
+  "services": {
+    "addServicePanel": {
+      "scanDescription": "Σάρωσε το δίκτυό σου για υπηρεσίες που τρέχουν.",
+      "scan": "Σάρωση",
+      "scanning": "Σάρωση…",
+      "noKnownServices": "Δεν βρέθηκαν γνωστά containers υπηρεσιών.",
+      "connectWithLabel": "Σύνδεση {label}",
+      "connectService": "Σύνδεση υπηρεσίας",
+      "closeDialog": "Κλείσιμο",
+      "dismiss": "Παράβλεψη",
+      "failedConnectService": "Η σύνδεση της υπηρεσίας απέτυχε",
+      "chooseService": "Επίλεξε υπηρεσία",
+      "or": "ή",
+      "autoDetect": "Αυτόματος εντοπισμός"
+    },
+    "addToolModal": {
+      "invalidJson": "Μη έγκυρο JSON στο σχήμα παραμέτρων",
+      "titleEdit": "Επεξεργασία εργαλείου",
+      "titleAdd": "Προσθήκη εργαλείου",
+      "closeEditDialog": "Κλείσιμο επεξεργασίας εργαλείου",
+      "closeAddDialog": "Κλείσιμο προσθήκης εργαλείου",
+      "descriptionEdit": "Επεξεργάσου τον ορισμό αυτού του MCP εργαλείου.",
+      "descriptionAdd": "Δημιούργησε ένα νέο MCP εργαλείο για αυτήν την generic REST υπηρεσία.",
+      "toolNameLabel": "Όνομα εργαλείου",
+      "toolNamePlaceholder": "π.χ. list_items",
+      "toolNameValidation": "Πρέπει να ξεκινά με γράμμα. Μόνο γράμματα, αριθμοί και κάτω παύλες.",
+      "descriptionLabel": "Περιγραφή",
+      "descriptionPlaceholder": "π.χ. Εμφάνιση λίστας στοιχείων",
+      "httpMethodLabel": "HTTP μέθοδος",
+      "pathTemplateLabel": "Πρότυπο διαδρομής",
+      "pathTemplatePlaceholder": "/api/v1/items",
+      "parametersSchemaLabel": "Σχήμα παραμέτρων (JSON)",
+      "failedUpdate": "Η ενημέρωση του εργαλείου απέτυχε",
+      "failedCreate": "Η δημιουργία του εργαλείου απέτυχε",
+      "cancel": "Ακύρωση",
+      "saving": "Αποθήκευση…",
+      "creating": "Δημιουργία…",
+      "saveChanges": "Αποθήκευση",
+      "createTool": "Δημιουργία εργαλείου"
+    },
+    "appCard": {
+      "preview": "Προεπισκόπηση"
+    },
+    "importOpenApiModal": {
+      "title": "Εισαγωγή OpenAPI spec",
+      "closeDialog": "Κλείσιμο εισαγωγής OpenAPI",
+      "importedSummary": "{count, plural, one {Imported # tool} other {Imported # tools}}",
+      "partialSummary": "{importedCount, plural, one {Imported # tool} other {Imported # tools}}, {skippedCount} παραλείφθηκαν (υπάρχουν ήδη)",
+      "allSkippedSummary": "{count, plural, one {All # tool already exists — nothing imported} other {All # tools already exist — nothing imported}}",
+      "ok": "OK",
+      "description": "Επικόλλησε το OpenAPI 3.x spec παρακάτω (JSON ή YAML). Κάθε operation θα εισαχθεί ως MCP εργαλείο.",
+      "importFailed": "Η εισαγωγή απέτυχε",
+      "cancel": "Ακύρωση",
+      "importing": "Εισαγωγή…",
+      "import": "Εισαγωγή"
+    },
+    "importServiceModal": {
+      "title": "Εισαγωγή υπηρεσιών",
+      "closeDialog": "Κλείσιμο",
+      "yamlConfigFile": "Αρχείο ρυθμίσεων YAML",
+      "fileLoaded": "Το αρχείο φορτώθηκε",
+      "chooseFile": "Επίλεξε αρχείο .yml",
+      "servicesFound": "Βρέθηκαν υπηρεσίες ({count})",
+      "apiTokenLabel": "API Token",
+      "apiTokenPlaceholder": "Βάλε το API token για αυτήν την υπηρεσία",
+      "createdPrefix": "Δημιουργήθηκαν:",
+      "skippedPrefix": "Παραλείφθηκαν:",
+      "errorsPrefix": "Σφάλματα:",
+      "importFailed": "Η εισαγωγή απέτυχε",
+      "cancel": "Ακύρωση",
+      "importing": "Εισαγωγή…",
+      "import": "Εισαγωγή"
+    },
+    "serviceCard": {
+      "paused": "σε παύση",
+      "toolsCount": "{count, plural, one {# tool} other {# tools}}"
+    },
+    "serviceConfig": {
+      "identifierLabel": "Αναγνωριστικό",
+      "identifierPlaceholder": "forgejo",
+      "displayNameLabel": "Εμφανιζόμενο όνομα",
+      "displayNamePlaceholder": "Forgejo",
+      "serviceTypeLabel": "Τύπος υπηρεσίας",
+      "baseUrlLabel": "Base URL",
+      "baseUrlPlaceholder": "https://service.example.com",
+      "apiTokenLabel": "API Token",
+      "apiTokenPlaceholder": "Επικόλλησε το API token",
+      "tokenGuideHide": "Απόκρυψη οδηγού για {label} token",
+      "tokenGuideShow": "Πώς να βρεις ένα {label} token",
+      "connecting": "Σύνδεση…",
+      "connectService": "Σύνδεση υπηρεσίας"
+    },
+    "toolCard": {
+      "noParameters": "Χωρίς παραμέτρους",
+      "required": "υποχρεωτικό",
+      "optional": "προαιρετικό",
+      "parameterDescriptionPlaceholder": "Περιγραφή παραμέτρου (τι βλέπει το AI)…",
+      "customized": "προσαρμοσμένο",
+      "hintLabel": "Υπόδειξη:",
+      "customizedParenthetical": "(προσαρμοσμένο)",
+      "paramsCount": "{count, plural, one {# param} other {# params}}",
+      "noParams": "Χωρίς παραμέτρους",
+      "testEndpointReachability": "Δοκιμή προσβασιμότητας endpoint",
+      "testEndpointAria": "Δοκιμή endpoint {toolName}",
+      "testing": "Δοκιμή…",
+      "test": "Δοκιμή",
+      "editToolDefinition": "Επεξεργασία ορισμού εργαλείου (μέθοδος, διαδρομή, σχήμα)",
+      "editToolDefinitionAria": "Επεξεργασία ορισμού {toolName}",
+      "deleteTool": "Διαγραφή εργαλείου",
+      "deleteToolAria": "Διαγραφή {toolName}",
+      "edit": "Επεξεργασία",
+      "enabled": "ενεργοποιημένο",
+      "disabled": "απενεργοποιημένο",
+      "toolDescriptionLabel": "Περιγραφή εργαλείου",
+      "toolDescriptionPlaceholder": "Περίγραψε τι κάνει αυτό το εργαλείο (αυτό διαβάζει το AI)…",
+      "aiHintLabel": "Υπόδειξη AI",
+      "optionalParenthetical": "(προαιρετικό)",
+      "aiHintPlaceholder": "π.χ. Κάλεσε πρώτα το ha_list_entities για να βρεις έγκυρα entity IDs",
+      "aiHintHelpText": "Προστίθεται στην περιγραφή, ώστε το AI να ξέρει πότε και πώς να χρησιμοποιήσει αυτό το εργαλείο.",
+      "endpointLabel": "Endpoint",
+      "endpointPathPlaceholder": "/api/v1/endpoint",
+      "endpointHelpPrefix": "Χρησιμοποίησε",
+      "endpointHelpSuffix": "για παραμέτρους διαδρομής. Οι αλλαγές αντικαθιστούν το προεπιλεγμένο endpoint.",
+      "parameterDescriptionsLabel": "Περιγραφές παραμέτρων",
+      "save": "Αποθήκευση",
+      "cancel": "Ακύρωση",
+      "resetToOriginal": "Επαναφορά στο αρχικό"
+    },
+    "toolList": {
+      "toolsJson": "tools.json",
+      "emptyTitle": "Δεν έχουν καταχωρηθεί εργαλεία",
+      "emptyDescription": "Τα εργαλεία θα εμφανιστούν εδώ μόλις συνδεθεί μια υπηρεσία.",
+      "cardView": "Προβολή καρτών",
+      "jsonView": "Προβολή JSON",
+      "manageAccess": "Διαχείριση πρόσβασης εργαλείων στη σελίδα Εργαλεία"
+    }
+  },
+  "ui": {
+    "confirmDialog": {
+      "confirm": "Επιβεβαίωση",
+      "cancel": "Ακύρωση",
+      "working": "Περίμενε…"
+    },
+    "mcpEndpointBar": {
+      "label": "MCP Endpoint",
+      "copied": "Αντιγράφηκε!",
+      "copyUrl": "Αντιγραφή URL",
+      "copyJson": "Αντιγραφή JSON"
+    },
+    "monacoEditor": {
+      "loading": "Φόρτωση επεξεργαστή…"
+    },
+    "terminalBlock": {
+      "copyToClipboard": "Αντιγραφή στο πρόχειρο",
+      "copied": "Αντιγράφηκε",
+      "copy": "Αντιγραφή"
+    }
+  }
+}

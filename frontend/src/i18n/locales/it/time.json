@@ -1,0 +1,8 @@
+{
+  "relative": {
+    "justNow": "proprio ora",
+    "minutesAgo": "{count}m fa",
+    "hoursAgo": "{count}h fa",
+    "daysAgo": "{count}d fa"
+  }
+}

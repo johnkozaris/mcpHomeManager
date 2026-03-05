@@ -11,10 +11,12 @@ import { ToolList } from "@/components/services/ToolList";
 import { getServiceMeta } from "@/lib/service-meta";
 import { Wrench } from "lucide-react";
 import type { ServiceType } from "@/lib/types";
+import { useTranslation } from "react-i18next";
 
 type StatusFilter = "all" | "enabled" | "disabled";
 
 export function Tools() {
+  const { t } = useTranslation("tools", { keyPrefix: "page" });
   const { data: tools, isLoading, isError, error } = useTools();
   const updateToolPermission = useUpdateToolPermission();
   const [search, setSearch] = useState("");
@@ -29,42 +31,48 @@ export function Tools() {
       return serviceId;
     }
     setActionError(
-      `Tool "${toolName}" is missing a linked service and cannot be updated.`,
+      t("errors.missingService", { toolName }),
     );
     return null;
   };
 
-  const filtered = tools?.filter((t) => {
-    if (filterType !== "all" && t.service_type !== filterType) return false;
-    if (filterStatus === "enabled" && !t.is_enabled) return false;
-    if (filterStatus === "disabled" && t.is_enabled) return false;
+  const filtered = tools?.filter((tool) => {
+    if (filterType !== "all" && tool.service_type !== filterType) return false;
+    if (filterStatus === "enabled" && !tool.is_enabled) return false;
+    if (filterStatus === "disabled" && tool.is_enabled) return false;
     if (!debouncedSearch) return true;
     const q = debouncedSearch.toLowerCase();
     return (
-      t.name.toLowerCase().includes(q) ||
-      t.description.toLowerCase().includes(q)
+      tool.name.toLowerCase().includes(q) ||
+      tool.description.toLowerCase().includes(q)
     );
   });
 
-  const serviceTypes = [...new Set(tools?.map((t) => t.service_type) ?? [])];
-  const enabledCount = tools?.filter((t) => t.is_enabled).length ?? 0;
+  const serviceTypes = [
+    ...new Set(tools?.map((tool) => tool.service_type) ?? []),
+  ];
+  const enabledCount = tools?.filter((tool) => tool.is_enabled).length ?? 0;
   const disabledCount = (tools?.length ?? 0) - enabledCount;
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="page-header">Tools</h1>
+        <h1 className="page-header">{t("title")}</h1>
         <p className="page-description">
           {tools && tools.length > 0
-            ? `${tools.length} tools across ${serviceTypes.length} service${serviceTypes.length !== 1 ? "s" : ""} · ${enabledCount} enabled for agents`
-            : "MCP tools that AI agents can call on your behalf"}
+            ? t("description.withCounts", {
+                toolsCount: tools.length,
+                serviceCount: serviceTypes.length,
+                enabledCount,
+              })
+            : t("description.empty")}
         </p>
       </div>
 
       <div className="flex items-center gap-3 flex-wrap">
         <div className="w-full sm:w-72">
           <Input
-            placeholder="Search tools…"
+            placeholder={t("filters.searchPlaceholder")}
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
@@ -83,10 +91,10 @@ export function Tools() {
               className={`chip ${filterStatus === status ? "chip-active" : "chip-inactive"}`}
             >
               {status === "all"
-                ? `All (${tools?.length ?? 0})`
+                ? t("filters.status.all", { count: tools?.length ?? 0 })
                 : status === "enabled"
-                  ? `Enabled (${enabledCount})`
-                  : `Disabled (${disabledCount})`}
+                  ? t("filters.status.enabled", { count: enabledCount })
+                  : t("filters.status.disabled", { count: disabledCount })}
             </button>
           ))}
           <div className="w-px h-5 bg-line-strong mx-1" />
@@ -97,7 +105,7 @@ export function Tools() {
             }}
             className={`chip ${filterType === "all" ? "chip-active" : "chip-inactive"}`}
           >
-            All services
+            {t("filters.allServices")}
           </button>
           {serviceTypes.map((type) => {
             const meta = getServiceMeta(type);
@@ -121,7 +129,7 @@ export function Tools() {
         isLoading={isLoading}
         isError={isError}
         error={error instanceof Error ? error : null}
-        loadingMessage="Loading tools…"
+        loadingMessage={t("query.loading")}
       >
         {actionError && (
           <div className="mb-3 flex items-center gap-2 py-2 px-3 rounded-lg bg-rust-bg border border-rust">
@@ -163,11 +171,13 @@ export function Tools() {
         ) : (
           <EmptyState
             icon={Wrench}
-            title={search ? "No tools match" : "No tools registered yet"}
+            title={
+              search ? t("empty.searchTitle") : t("empty.noToolsTitle")
+            }
             description={
               search
-                ? "Try a different search term."
-                : "Connect a service first — each one comes with AI-callable tools."
+                ? t("empty.searchDescription")
+                : t("empty.noToolsDescription")
             }
           />
         )}

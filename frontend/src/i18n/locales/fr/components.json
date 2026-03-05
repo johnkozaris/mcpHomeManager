@@ -1,0 +1,182 @@
+{
+  "errorBoundary": {
+    "title": "Un problème est survenu",
+    "fallbackMessage": "Une erreur inattendue est survenue.",
+    "reload": "Recharger"
+  },
+  "routeErrorFallback": {
+    "title": "Un problème est survenu",
+    "fallbackMessage": "Une erreur inattendue est survenue.",
+    "tryAgain": "Réessayer",
+    "goHome": "Retour à l’accueil"
+  },
+  "logs": {
+    "logEntryDetail": {
+      "error": "Erreur",
+      "input": "Entrée",
+      "duration": "Durée :",
+      "durationUnit": "ms",
+      "client": "Client :",
+      "time": "Heure :",
+      "viewService": "Voir le service"
+    }
+  },
+  "services": {
+    "addServicePanel": {
+      "scanDescription": "Analyse ton réseau pour détecter les services qui tournent.",
+      "scan": "Analyser",
+      "scanning": "Analyse en cours…",
+      "noKnownServices": "Aucun service connu détecté.",
+      "connectWithLabel": "Connecter {label}",
+      "connectService": "Connecter un service",
+      "closeDialog": "Fermer la boîte de dialogue",
+      "dismiss": "Ignorer",
+      "failedConnectService": "Échec de la connexion au service",
+      "chooseService": "Choisir un service",
+      "or": "ou",
+      "autoDetect": "Détection automatique"
+    },
+    "addToolModal": {
+      "invalidJson": "JSON invalide dans le schéma des paramètres",
+      "titleEdit": "Modifier la définition de l’outil",
+      "titleAdd": "Ajouter un outil",
+      "closeEditDialog": "Fermer la boîte de dialogue de modification d’outil",
+      "closeAddDialog": "Fermer la boîte de dialogue d’ajout d’outil",
+      "descriptionEdit": "Modifie la définition de cet outil MCP.",
+      "descriptionAdd": "Crée un nouvel outil MCP pour ce service REST générique.",
+      "toolNameLabel": "Nom de l’outil",
+      "toolNamePlaceholder": "ex. list_items",
+      "toolNameValidation": "Doit commencer par une lettre ; seuls les lettres, chiffres et underscores sont autorisés",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Lister tous les éléments",
+      "httpMethodLabel": "Méthode HTTP",
+      "pathTemplateLabel": "Modèle de chemin",
+      "pathTemplatePlaceholder": "/api/v1/items",
+      "parametersSchemaLabel": "Schéma des paramètres (JSON)",
+      "failedUpdate": "Échec de la mise à jour de l’outil",
+      "failedCreate": "Échec de la création de l’outil",
+      "cancel": "Annuler",
+      "saving": "Enregistrement…",
+      "creating": "Création…",
+      "saveChanges": "Enregistrer les modifications",
+      "createTool": "Créer l’outil"
+    },
+    "appCard": {
+      "preview": "Aperçu"
+    },
+    "importOpenApiModal": {
+      "title": "Importer une spécification OpenAPI",
+      "closeDialog": "Fermer la boîte de dialogue d’import OpenAPI",
+      "importedSummary": "{count, plural, one {Imported # tool} other {Imported # tools}}",
+      "partialSummary": "{importedCount, plural, one {Imported # tool} other {Imported # tools}}, {skippedCount} ignorés (déjà existants)",
+      "allSkippedSummary": "{count, plural, one {All # tool already exists — nothing imported} other {All # tools already exist — nothing imported}}",
+      "ok": "OK",
+      "description": "Colle ta spécification OpenAPI 3.x ci-dessous (JSON ou YAML). Chaque opération sera importée comme outil MCP.",
+      "importFailed": "Échec de l’import",
+      "cancel": "Annuler",
+      "importing": "Importation…",
+      "import": "Importer"
+    },
+    "importServiceModal": {
+      "title": "Importer des services",
+      "closeDialog": "Fermer la boîte de dialogue",
+      "yamlConfigFile": "Fichier de configuration YAML",
+      "fileLoaded": "Fichier chargé",
+      "chooseFile": "Choisir un fichier .yml",
+      "servicesFound": "Services trouvés ({count})",
+      "apiTokenLabel": "Token API",
+      "apiTokenPlaceholder": "Saisis le token API pour ce service",
+      "createdPrefix": "Créés :",
+      "skippedPrefix": "Ignorés :",
+      "errorsPrefix": "Erreurs :",
+      "importFailed": "Échec de l’import",
+      "cancel": "Annuler",
+      "importing": "Importation…",
+      "import": "Importer"
+    },
+    "serviceCard": {
+      "paused": "en pause",
+      "toolsCount": "{count, plural, one {# tool} other {# tools}}"
+    },
+    "serviceConfig": {
+      "identifierLabel": "Identifiant",
+      "identifierPlaceholder": "forgejo",
+      "displayNameLabel": "Nom d’affichage",
+      "displayNamePlaceholder": "Forgejo",
+      "serviceTypeLabel": "Type de service",
+      "baseUrlLabel": "URL de base",
+      "baseUrlPlaceholder": "https://service.example.com",
+      "apiTokenLabel": "Token API",
+      "apiTokenPlaceholder": "Colle ton token API",
+      "tokenGuideHide": "Masquer le guide du token {label}",
+      "tokenGuideShow": "Comment obtenir un token {label}",
+      "connecting": "Connexion…",
+      "connectService": "Connecter un service"
+    },
+    "toolCard": {
+      "noParameters": "Aucun paramètre",
+      "required": "obligatoire",
+      "optional": "facultatif",
+      "parameterDescriptionPlaceholder": "Description du paramètre (ce que voit l'IA)…",
+      "customized": "personnalisé",
+      "hintLabel": "Astuce :",
+      "customizedParenthetical": "(personnalisé)",
+      "paramsCount": "{count, plural, one {# param} other {# params}}",
+      "noParams": "Aucun paramètre",
+      "testEndpointReachability": "Tester l’accessibilité de l’endpoint",
+      "testEndpointAria": "Tester l’endpoint {toolName}",
+      "testing": "Test en cours…",
+      "test": "Tester",
+      "editToolDefinition": "Modifier la définition de l’outil (méthode, chemin, schéma)",
+      "editToolDefinitionAria": "Modifier la définition de {toolName}",
+      "deleteTool": "Supprimer l’outil",
+      "deleteToolAria": "Supprimer {toolName}",
+      "edit": "Modifier",
+      "enabled": "activé",
+      "disabled": "désactivé",
+      "toolDescriptionLabel": "Description de l’outil",
+      "toolDescriptionPlaceholder": "Décris ce que fait cet outil (ce que lit l'IA)…",
+      "aiHintLabel": "Conseil IA",
+      "optionalParenthetical": "(facultatif)",
+      "aiHintPlaceholder": "ex. Appelle d'abord ha_list_entities pour découvrir les identifiants d'entité valides",
+      "aiHintHelpText": "Ajouté à la description pour que l'IA sache quand et comment utiliser cet outil.",
+      "endpointLabel": "Endpoint",
+      "endpointPathPlaceholder": "/api/v1/endpoint",
+      "endpointHelpPrefix": "Utilise",
+      "endpointHelpSuffix": "pour les paramètres de chemin. Les modifications remplacent l'endpoint par défaut.",
+      "parameterDescriptionsLabel": "Descriptions des paramètres",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "resetToOriginal": "Rétablir la version d’origine"
+    },
+    "toolList": {
+      "toolsJson": "tools.json",
+      "emptyTitle": "Aucun outil enregistré",
+      "emptyDescription": "Les outils apparaîtront ici quand un service sera connecté.",
+      "cardView": "Vue en cartes",
+      "jsonView": "Vue JSON",
+      "manageAccess": "Gérer l’accès aux outils depuis la page Outils"
+    }
+  },
+  "ui": {
+    "confirmDialog": {
+      "confirm": "Confirmer",
+      "cancel": "Annuler",
+      "working": "Traitement…"
+    },
+    "mcpEndpointBar": {
+      "label": "Endpoint MCP",
+      "copied": "Copié !",
+      "copyUrl": "Copier l’URL",
+      "copyJson": "Copier le JSON"
+    },
+    "monacoEditor": {
+      "loading": "Chargement de l’éditeur…"
+    },
+    "terminalBlock": {
+      "copyToClipboard": "Copier dans le presse-papiers",
+      "copied": "Copié !",
+      "copy": "Copier"
+    }
+  }
+}

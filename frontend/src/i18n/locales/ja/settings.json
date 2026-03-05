@@ -1,0 +1,111 @@
+{
+  "page": {
+    "title": "設定",
+    "description": "表示、endpoint、システム情報",
+    "appearance": {
+      "title": "表示",
+      "light": "ライト",
+      "dark": "ダーク"
+    },
+    "language": {
+      "title": "言語",
+      "description": "言語を選んでください。設定は自動で保存されます。"
+    },
+    "security": {
+      "title": "セキュリティ",
+      "enabled": "有効",
+      "disabled": "無効",
+      "signedInAs": "ログイン中:",
+      "currentUserFallback": "admin",
+      "selfMcp": {
+        "title": "Self-MCPツール",
+        "description": "有効にすると、AIエージェントはMCP経由でこのgatewayを管理できます。Web UIを使わずに、サービス一覧、ツールの切り替え、接続追加、ログ確認が可能です。",
+        "accessPrefix": "アクセス権はユーザーごとに",
+        "userManagementLink": "ユーザー管理",
+        "accessSuffix": "で設定します。",
+        "defaultsPrefix": "デフォルトは",
+        "defaultsSuffix": "環境変数から読み込まれ、再起動時に適用されます。"
+      }
+    },
+    "apiKey": {
+      "title": "MCP API key",
+      "status": {
+        "active": "有効",
+        "notSet": "未設定"
+      },
+      "description": "AIエージェント（Claude、Cursor、ChatGPT）はこのkeyを使ってMCP endpointに接続します。",
+      "revealedTitle": "現在のAPI key",
+      "actions": {
+        "regenerate": "keyを再生成",
+        "generate": "keyを生成",
+        "reveal": "keyを表示",
+        "revoke": "無効化"
+      },
+      "errors": {
+        "revealFailed": "keyを表示できませんでした。代わりに再生成をお試しください。"
+      }
+    },
+    "about": {
+      "title": "About",
+      "versionLabel": "バージョン",
+      "serverLabel": "サーバー",
+      "serverFallback": "MCP Manager"
+    },
+    "endpoint": {
+      "title": "MCP endpoint",
+      "description": "AIエージェントはこのURLに接続します",
+      "agentGuide": "エージェント設定ガイド"
+    },
+    "systemHealth": {
+      "title": "システムヘルス",
+      "checking": "確認中",
+      "rows": {
+        "database": "データベース",
+        "mcpServer": "MCPサーバー",
+        "services": "サービス"
+      },
+      "servicesConnected": "{healthy} / {total} 接続済み"
+    },
+    "smtp": {
+      "title": "メール（SMTP）",
+      "description": "パスワードリセットメール用にSMTPを設定します。使用しない場合は空欄のままにしてください。",
+      "testFailed": "テストに失敗しました",
+      "fields": {
+        "host": "ホスト",
+        "port": "ポート",
+        "username": "ユーザー名",
+        "password": "パスワード",
+        "passwordHint": "（設定済み — 変更しない場合は空欄）",
+        "fromEmail": "送信元メール"
+      },
+      "placeholders": {
+        "host": "smtp.gmail.com",
+        "username": "user@example.com",
+        "passwordMasked": "••••••••",
+        "password": "アプリパスワード",
+        "fromEmail": "noreply@example.com"
+      },
+      "toggles": {
+        "useTls": "TLSを使用（STARTTLS）",
+        "enabled": "有効"
+      },
+      "errors": {
+        "saveFailed": "SMTP設定の保存に失敗しました"
+      },
+      "actions": {
+        "saved": "保存しました",
+        "saving": "保存中…",
+        "save": "保存",
+        "sending": "送信中…",
+        "sendTestEmail": "テストメールを送信"
+      }
+    },
+    "dialogs": {
+      "revokeKey": {
+        "title": "API keyを無効化",
+        "description": "このkeyを使っているAIエージェントは即座に切断されます。その後で新しいkeyを生成できます。",
+        "confirm": "keyを無効化"
+      }
+    }
+  }
+}

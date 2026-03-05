@@ -1,0 +1,11 @@
+{
+  "api": {
+    "generic": "문제가 발생했습니다"
+  },
+  "queryState": {
+    "loading": "불러오는 중…",
+    "authRequired": "로그인이 필요합니다 — 계속하려면 다시 로그인해 주세요.",
+    "networkUnreachable": "서버에 연결할 수 없습니다. 백엔드가 실행 중인지 확인하세요.",
+    "generic": "문제가 발생했습니다"
+  }
+}

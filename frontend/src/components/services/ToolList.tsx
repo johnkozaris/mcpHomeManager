@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import type { ToolDefinition } from "@/lib/types";
+import type { TestResult, ToolDefinition } from "@/lib/types";
 import { ToolCard } from "@/components/services/ToolCard";
 import { LayoutGrid, ArrowRight, Code2, Wrench } from "lucide-react";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   tools: ToolDefinition[];
@@ -22,18 +23,19 @@ interface Props {
   onDelete?: (toolName: string) => void;
   onEditDefinition?: (toolName: string) => void;
   onTestTool?: (toolName: string) => void;
-  testResults?: Record<string, { success: boolean; message: string }>;
+  testResults?: Record<string, TestResult>;
   testingTool?: string | null;
 }
 
 function JsonView({ tools }: { tools: ToolDefinition[] }) {
-  const json = tools.map((t) => ({
-    name: t.name,
-    description: t.description,
-    parameters: t.parameters_schema,
-    enabled: t.is_enabled,
-    ...(t.description_override
-      ? { description_override: t.description_override }
+  const { t } = useTranslation("components", { keyPrefix: "services.toolList" });
+  const json = tools.map((tool) => ({
+    name: tool.name,
+    description: tool.description,
+    parameters: tool.parameters_schema,
+    enabled: tool.is_enabled,
+    ...(tool.description_override
+      ? { description_override: tool.description_override }
       : {}),
   }));
 
@@ -42,7 +44,7 @@ function JsonView({ tools }: { tools: ToolDefinition[] }) {
       <div className="flex items-center gap-2 px-4 py-2.5 bg-[var(--terminal-title)] border-b border-[var(--terminal-border)]">
         <Code2 size={13} className="text-[var(--terminal-label)]" />
         <span className="text-xs font-medium text-[var(--terminal-label)]">
-          tools.json
+          {t("toolsJson")}
         </span>
       </div>
       <pre className="p-4 text-xs font-mono text-[var(--terminal-text)] overflow-x-auto max-h-[600px] overflow-y-auto leading-relaxed">
@@ -65,6 +67,7 @@ export function ToolList({
   testResults,
   testingTool,
 }: Props) {
+  const { t } = useTranslation("components", { keyPrefix: "services.toolList" });
   const [viewMode, setViewMode] = useState<"cards" | "json">("cards");
   const displayTools = allTools ?? tools;
 
@@ -72,8 +75,8 @@ export function ToolList({
     return (
       <EmptyState
         icon={Wrench}
-        title="No tools registered"
-        description="Tools will appear here once a service is connected."
+        title={t("emptyTitle")}
+        description={t("emptyDescription")}
       />
     );
   }
@@ -84,19 +87,19 @@ export function ToolList({
         <div className="flex items-center">
           <div className="inline-flex rounded-lg border border-line-strong overflow-hidden">
             <button
-              onClick={() => setViewMode("cards")}
-              className={`p-2 transition-all ${viewMode === "cards" ? "bg-terra text-white" : "bg-surface text-ink-tertiary hover:text-ink hover:bg-surface-hover"}`}
-              title="Card view"
-            >
-              <LayoutGrid size={14} />
-            </button>
+                onClick={() => setViewMode("cards")}
+                className={`p-2 transition-all ${viewMode === "cards" ? "bg-terra text-white" : "bg-surface text-ink-tertiary hover:text-ink hover:bg-surface-hover"}`}
+                title={t("cardView")}
+              >
+                <LayoutGrid size={14} />
+              </button>
             <button
-              onClick={() => setViewMode("json")}
-              className={`p-2 border-l border-line-strong transition-all ${viewMode === "json" ? "bg-terra text-white" : "bg-surface text-ink-tertiary hover:text-ink hover:bg-surface-hover"}`}
-              title="JSON view"
-            >
-              <Code2 size={14} />
-            </button>
+                onClick={() => setViewMode("json")}
+                className={`p-2 border-l border-line-strong transition-all ${viewMode === "json" ? "bg-terra text-white" : "bg-surface text-ink-tertiary hover:text-ink hover:bg-surface-hover"}`}
+                title={t("jsonView")}
+              >
+                <Code2 size={14} />
+              </button>
           </div>
         </div>
       )}
@@ -128,7 +131,7 @@ export function ToolList({
                 to="/tools"
                 className="flex items-center gap-1.5 text-xs text-terra hover:text-terra-light transition-colors"
               >
-                Manage tool access on the Tools page
+                {t("manageAccess")}
                 <ArrowRight size={12} />
               </Link>
             </div>

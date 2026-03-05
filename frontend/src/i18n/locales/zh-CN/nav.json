@@ -1,0 +1,23 @@
+{
+  "items": {
+    "home": "首页",
+    "services": "服务",
+    "tools": "工具",
+    "agents": "智能体",
+    "logs": "日志",
+    "users": "用户",
+    "settings": "设置"
+  },
+  "actions": {
+    "collapseSidebar": "收起侧边栏",
+    "expandSidebar": "展开侧边栏",
+    "collapse": "收起",
+    "expand": "展开",
+    "switchToDarkMode": "深色模式",
+    "switchToLightMode": "浅色模式"
+  },
+  "theme": {
+    "dark": "深色",
+    "light": "浅色"
+  }
+}

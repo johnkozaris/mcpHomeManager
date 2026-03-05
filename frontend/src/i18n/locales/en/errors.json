@@ -1,0 +1,11 @@
+{
+  "api": {
+    "generic": "Something went wrong"
+  },
+  "queryState": {
+    "loading": "Loading…",
+    "authRequired": "Authentication required — sign in again to continue.",
+    "networkUnreachable": "Could not reach the server. Is the backend running?",
+    "generic": "Something went wrong"
+  }
+}

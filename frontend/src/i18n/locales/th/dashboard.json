@@ -1,0 +1,83 @@
+{
+  "heroBanner": {
+    "title": "เชื่อมต่อ homelab ของคุณกับ AI",
+    "description": "เชื่อมต่อบริการครั้งเดียว แล้วใช้งานเครื่องมือผ่าน Claude, ChatGPT, Cursor และอื่น ๆ",
+    "actions": {
+      "connectService": "เชื่อมต่อบริการ",
+      "setupGuide": "คู่มือตั้งค่า"
+    }
+  },
+  "stats": {
+    "services": {
+      "sub": "{count} ที่เปิดใช้งาน"
+    },
+    "tools": {
+      "sub": "เครื่องมือที่พร้อมใช้งาน"
+    },
+    "health": {
+      "ok": "ปกติ",
+      "allConnected": "เชื่อมต่อครบทุกบริการ",
+      "needsAttention": "ต้องตรวจสอบ"
+    },
+    "apiCalls": {
+      "sub": "การเรียก API ล่าสุด"
+    }
+  },
+  "serviceRow": {
+    "toolsCount": "{count, plural, one {# เครื่องมือ} other {# เครื่องมือ}}"
+  },
+  "serviceGrid": {
+    "more": "เพิ่มเติม"
+  },
+  "howItWorks": {
+    "title": "วิธีการทำงาน",
+    "steps": {
+      "connect": {
+        "title": "เชื่อมต่อบริการ",
+        "description": "เชื่อมแอป homelab ด้วย Base URL และ API token"
+      },
+      "configure": {
+        "title": "ตั้งค่าเครื่องมือ",
+        "description": "เลือกเครื่องมือที่เปิดใช้งานและปรับคำอธิบาย"
+      },
+      "use": {
+        "title": "ใช้งานกับเอเจนต์",
+        "description": "เรียกใช้เครื่องมือจาก AI client ของคุณผ่าน MCP"
+      }
+    }
+  },
+  "welcomeView": {
+    "supportedServices": "บริการที่รองรับ"
+  },
+  "dashboardView": {
+    "yourServices": "บริการของคุณ",
+    "manageAll": "จัดการบริการทั้งหมด",
+    "recentActivity": {
+      "title": "กิจกรรมล่าสุด",
+      "viewAll": "ดูทั้งหมด",
+      "statusOk": "ปกติ",
+      "statusError": "ผิดพลาด"
+    },
+    "quickActions": {
+      "title": "การดำเนินการด่วน",
+      "items": {
+        "setupAgents": {
+          "label": "ตั้งค่าเอเจนต์",
+          "description": "เชื่อมต่อ Claude, ChatGPT, Cursor และอื่น ๆ"
+        },
+        "connectService": {
+          "label": "เชื่อมต่อบริการ",
+          "description": "เชื่อมต่อแอปเข้า MCP gateway"
+        },
+        "manageTools": {
+          "label": "จัดการเครื่องมือ",
+          "description": "เปิด/ปิด และตั้งค่าเครื่องมือ"
+        }
+      }
+    }
+  },
+  "query": {
+    "loading": "กำลังโหลดแดชบอร์ด…",
+    "error": "โหลดแดชบอร์ดไม่สำเร็จ"
+  }
+}

@@ -40,8 +40,13 @@ import { Toggle } from "@/components/ui/Toggle";
 import { Badge } from "@/components/ui/Badge";
 import { MonacoEditor } from "@/components/ui/MonacoEditor";
 import { ServiceIconBadge, getServiceMeta } from "@/lib/service-meta";
-import { formatRelativeTime } from "@/lib/utils";
+import {
+  formatRelativeTime,
+  parseApiError,
+  resolveBackendMessage,
+} from "@/lib/utils";
 import { useServiceDetailState } from "@/hooks/useServiceDetailState";
+import { useTranslation } from "react-i18next";
 
 function ProfileChips({
   serviceId,
@@ -52,13 +57,14 @@ function ProfileChips({
   onApply: (args: { id: string; profileName: string }) => void;
   isApplying: boolean;
 }) {
+  const { t } = useTranslation("serviceDetail", { keyPrefix: "page.profileChips" });
   const { data: profiles } = useProfiles(serviceId);
   if (!profiles || profiles.length === 0) return null;
 
   return (
     <div className="flex items-center gap-2 mb-4">
       <Shield size={14} className="text-ink-tertiary" />
-      <span className="text-xs text-ink-tertiary font-medium">Profiles:</span>
+      <span className="text-xs text-ink-tertiary font-medium">{t("label")}</span>
       {profiles.map((p) => (
         <button
           key={p.name}
@@ -75,6 +81,7 @@ function ProfileChips({
 }
 
 export function ServiceDetail() {
+  const { t } = useTranslation("serviceDetail", { keyPrefix: "page" });
   const { id } = useParams({ from: "/app/services/$id" });
   const navigate = useNavigate();
   const { data: service, isLoading, isError, error } = useService(id);
@@ -115,27 +122,33 @@ export function ServiceDetail() {
     return () => window.removeEventListener("message", handleIframeMessage);
   }, [appAction, dispatch, state.previewAppName]);
 
-  if (!id) return <div className="text-sm text-rust">Invalid service ID.</div>;
+  if (!id) return <div className="text-sm text-rust">{t("invalidServiceId")}</div>;
 
   return (
     <QueryState
       isLoading={isLoading}
       isError={isError}
       error={error instanceof Error ? error : null}
-      loadingMessage="Loading service\u2026"
-      errorMessage="Service not found or backend unreachable."
+      loadingMessage={t("query.loading")}
+      errorMessage={t("query.error")}
     >
       {service ? (
         (() => {
           const meta = getServiceMeta(service.service_type);
           const lastChecked = service.last_health_check
             ? formatRelativeTime(new Date(service.last_health_check))
-            : "never";
+            : t("stats.lastTested.never");
           const hasCustomTools = service.tools.some(
-            (t) => t.http_method != null,
+            (tool) => tool.http_method != null,
           );
           const showConfigEditor =
             service.service_type === "generic_rest" || hasCustomTools;
+          const connectionTestMessage = testConnection.data
+            ? resolveBackendMessage(testConnection.data, {
+                fallback: testConnection.data.message,
+                includeRawDetail: true,
+              })
+            : null;
 
           return (
             <div className="space-y-6">
@@ -206,13 +219,13 @@ export function ServiceDetail() {
                                   error: null,
                                 });
                               } catch {
-                                dispatch({
-                                  type: "SET_CONFIG_ERROR",
-                                  error:
-                                    "Invalid JSON \u2014 fix the config before saving.",
-                                });
-                                return;
-                              }
+                                  dispatch({
+                                    type: "SET_CONFIG_ERROR",
+                                    error:
+                                      t("errors.invalidJson"),
+                                  });
+                                  return;
+                                }
                             }
                             if (Object.keys(data).length > 0)
                               updateService.mutate(
@@ -226,22 +239,22 @@ export function ServiceDetail() {
                           }
                         : () => dispatch({ type: "START_EDIT", service })
                     }
-                  >
-                    {state.editing ? "Save" : "Edit"}
-                  </Button>
-                  <Button
-                    variant="primary"
+                    >
+                      {state.editing ? t("actions.save") : t("actions.edit")}
+                    </Button>
+                    <Button
+                      variant="primary"
                     size="md"
                     onClick={() => testConnection.mutate(service.id)}
                     disabled={testConnection.isPending}
-                  >
-                    <Zap size={14} />
-                    {testConnection.isPending
-                      ? "Testing\u2026"
-                      : "Test Connection"}
-                  </Button>
+                    >
+                      <Zap size={14} />
+                      {testConnection.isPending
+                        ? t("actions.testing")
+                        : t("actions.testConnection")}
+                    </Button>
+                  </div>
                 </div>
-              </div>
 
               {testConnection.data && (
                 <div
@@ -258,18 +271,18 @@ export function ServiceDetail() {
                       testConnection.data.success ? "bg-sage" : "bg-rust",
                     ].join(" ")}
                   />
-                  {testConnection.data.message}
+                  {connectionTestMessage ?? testConnection.data.message}
                 </div>
               )}
 
               {state.editing ? (
                 <Card>
                   <CardHeader>
-                    <CardTitle>Edit Connection</CardTitle>
+                    <CardTitle>{t("editConnection.title")}</CardTitle>
                   </CardHeader>
                   <div className="space-y-3">
                     <Input
-                      label="Display Name"
+                      label={t("editConnection.fields.displayName")}
                       value={state.editDisplayName}
                       onChange={(e) =>
                         dispatch({
@@ -279,7 +292,7 @@ export function ServiceDetail() {
                       }
                     />
                     <Input
-                      label="Base URL"
+                      label={t("editConnection.fields.baseUrl")}
                       value={state.editUrl}
                       onChange={(e) =>
                         dispatch({
@@ -298,9 +311,9 @@ export function ServiceDetail() {
                       }}
                     />
                     <Input
-                      label="API Token"
+                      label={t("editConnection.fields.apiToken")}
                       type="password"
-                      placeholder="Leave empty to keep current"
+                      placeholder={t("editConnection.fields.apiTokenPlaceholder")}
                       value={state.editToken}
                       onChange={(e) =>
                         dispatch({
@@ -312,7 +325,7 @@ export function ServiceDetail() {
                     {showConfigEditor && (
                       <div>
                         <p className="section-label mb-2">
-                          Configuration (JSON)
+                          {t("editConnection.fields.configuration")}
                         </p>
                         <MonacoEditor
                           value={state.editConfig}
@@ -334,7 +347,7 @@ export function ServiceDetail() {
               ) : (
                 <div className="grid grid-cols-4 gap-4">
                   <StatCard
-                    label="Health"
+                    label={t("stats.health.label")}
                     value={service.health_status}
                     icon={HeartPulse}
                     iconColor={
@@ -344,20 +357,22 @@ export function ServiceDetail() {
                     }
                   />
                   <StatCard
-                    label="Tools"
+                    label={t("stats.tools.label")}
                     value={service.tools.length}
-                    sub={`${service.tools.filter((t) => t.is_enabled).length} enabled`}
+                    sub={t("stats.tools.sub", {
+                      count: service.tools.filter((tool) => tool.is_enabled).length,
+                    })}
                     icon={Wrench}
                     iconColor="var(--info)"
                   />
                   <StatCard
-                    label="Last Tested"
+                    label={t("stats.lastTested.label")}
                     value={lastChecked}
                     icon={Clock}
                     iconColor="var(--clay)"
                   />
                   <Card>
-                    <p className="section-label mb-2">State</p>
+                    <p className="section-label mb-2">{t("state.label")}</p>
                     <Toggle
                       checked={service.is_enabled}
                       onChange={() =>
@@ -366,7 +381,11 @@ export function ServiceDetail() {
                           data: { is_enabled: !service.is_enabled },
                         })
                       }
-                      label={service.is_enabled ? "Active" : "Disabled"}
+                      label={
+                        service.is_enabled
+                          ? t("state.active")
+                          : t("state.disabled")
+                      }
                     />
                   </Card>
                 </div>
@@ -379,7 +398,9 @@ export function ServiceDetail() {
                 return (
                   <Card>
                     <CardHeader>
-                      <CardTitle>MCP Apps ({serviceApps.length})</CardTitle>
+                      <CardTitle>
+                        {t("apps.title", { count: serviceApps.length })}
+                      </CardTitle>
                     </CardHeader>
                     <div className="space-y-2">
                       {serviceApps.map((app) => (
@@ -434,7 +455,7 @@ export function ServiceDetail() {
                         id="app-preview-title"
                         className="text-sm font-semibold text-ink"
                       >
-                        App Preview
+                        {t("appPreview.title")}
                       </h2>
                       <button
                         onClick={() =>
@@ -445,7 +466,7 @@ export function ServiceDetail() {
                           })
                         }
                         className="text-ink-tertiary hover:text-ink transition-colors"
-                        aria-label="Close preview"
+                        aria-label={t("appPreview.close")}
                       >
                         &times;
                       </button>
@@ -454,7 +475,7 @@ export function ServiceDetail() {
                       srcDoc={state.appPreviewHtml}
                       sandbox="allow-scripts"
                       className="flex-1 w-full border-0"
-                      title="App Preview"
+                      title={t("appPreview.title")}
                     />
                   </div>
                 </div>
@@ -463,7 +484,7 @@ export function ServiceDetail() {
               <Card>
                 <CardHeader>
                   <div className="flex items-center justify-between w-full">
-                    <CardTitle>MCP Tools ({service.tools.length})</CardTitle>
+                    <CardTitle>{t("tools.title", { count: service.tools.length })}</CardTitle>
                     <div className="flex items-center gap-2">
                       <Button
                         variant="secondary"
@@ -473,7 +494,7 @@ export function ServiceDetail() {
                         }
                       >
                         <Upload size={14} />
-                        Import OpenAPI
+                        {t("tools.actions.importOpenApi")}
                       </Button>
                       <Button
                         variant="secondary"
@@ -483,7 +504,7 @@ export function ServiceDetail() {
                         }
                       >
                         <Plus size={14} />
-                        Add Tool
+                        {t("tools.actions.addTool")}
                       </Button>
                     </div>
                   </div>
@@ -522,7 +543,9 @@ export function ServiceDetail() {
                     dispatch({ type: "SET_DELETE_TOOL_NAME", name: toolName })
                   }
                   onEditDefinition={(toolName) => {
-                    const tool = service.tools.find((t) => t.name === toolName);
+                    const tool = service.tools.find(
+                      (candidateTool) => candidateTool.name === toolName,
+                    );
                     if (tool) {
                       dispatch({
                         type: "SET_EDIT_TOOL_DEF",
@@ -548,13 +571,16 @@ export function ServiceDetail() {
                             result,
                           });
                         },
-                        onError: () => {
+                        onError: (err) => {
                           dispatch({
                             type: "SET_TEST_TOOL_RESULT",
                             toolName,
                             result: {
                               success: false,
-                              message: "Request failed",
+                              message: parseApiError(
+                                err,
+                                t("tools.errors.requestFailed"),
+                              ),
                             },
                           });
                         },
@@ -598,9 +624,11 @@ export function ServiceDetail() {
               />
               <ConfirmDialog
                 open={!!state.deleteToolName}
-                title="Delete tool"
-                description={`This will permanently remove the tool "${state.deleteToolName ?? ""}" from this service.`}
-                confirmText="Delete"
+                title={t("dialogs.deleteTool.title")}
+                description={t("dialogs.deleteTool.description", {
+                  toolName: state.deleteToolName ?? "",
+                })}
+                confirmText={t("dialogs.deleteTool.confirm")}
                 variant="danger"
                 onConfirm={() => {
                   if (state.deleteToolName) {
@@ -627,11 +655,10 @@ export function ServiceDetail() {
 
               <div className="rounded-xl border border-rust p-5">
                 <h3 className="text-sm font-semibold text-rust mb-1">
-                  Remove service
+                  {t("removeService.title")}
                 </h3>
                 <p className="text-xs text-ink-secondary mb-4">
-                  This will permanently remove the service and all its
-                  registered tools from MCP.
+                  {t("removeService.description")}
                 </p>
                 <Button
                   variant="danger"
@@ -641,13 +668,13 @@ export function ServiceDetail() {
                   }
                 >
                   <Trash2 size={14} />
-                  Delete Service
+                  {t("removeService.action")}
                 </Button>
                 <ConfirmDialog
                   open={state.deleteOpen}
-                  title="Delete service"
-                  description="This will permanently remove the service and all its registered tools from MCP."
-                  confirmText="Delete"
+                  title={t("dialogs.deleteService.title")}
+                  description={t("dialogs.deleteService.description")}
+                  confirmText={t("dialogs.deleteService.confirm")}
                   variant="danger"
                   onConfirm={() =>
                     deleteService.mutate(service.id, {
@@ -664,7 +691,7 @@ export function ServiceDetail() {
           );
         })()
       ) : (
-        <div className="text-sm text-ink-tertiary">Service not found.</div>
+        <div className="text-sm text-ink-tertiary">{t("notFound")}</div>
       )}
     </QueryState>
   );

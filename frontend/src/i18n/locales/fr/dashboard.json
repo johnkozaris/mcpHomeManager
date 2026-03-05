@@ -1,0 +1,83 @@
+{
+  "heroBanner": {
+    "title": "Connecte ton homelab à l'IA",
+    "description": "Connecte tes services une seule fois, puis utilise leurs outils dans Claude, ChatGPT, Cursor et d'autres clients.",
+    "actions": {
+      "connectService": "Connecter un service",
+      "setupGuide": "Guide de configuration"
+    }
+  },
+  "stats": {
+    "services": {
+      "sub": "{count} activés"
+    },
+    "tools": {
+      "sub": "Outils disponibles"
+    },
+    "health": {
+      "ok": "Opérationnel",
+      "allConnected": "Tous les services connectés",
+      "needsAttention": "À vérifier"
+    },
+    "apiCalls": {
+      "sub": "Appels API récents"
+    }
+  },
+  "serviceRow": {
+    "toolsCount": "{count, plural, one {# tool} other {# tools}}"
+  },
+  "serviceGrid": {
+    "more": "Voir plus"
+  },
+  "howItWorks": {
+    "title": "Comment ça marche",
+    "steps": {
+      "connect": {
+        "title": "Connecter des services",
+        "description": "Connecte tes apps homelab avec une URL de base et un token API."
+      },
+      "configure": {
+        "title": "Configurer les outils",
+        "description": "Choisis quels outils sont activés et ajuste leurs descriptions."
+      },
+      "use": {
+        "title": "Utiliser avec des agents",
+        "description": "Appelle les outils depuis ton client IA via MCP."
+      }
+    }
+  },
+  "welcomeView": {
+    "supportedServices": "Services pris en charge"
+  },
+  "dashboardView": {
+    "yourServices": "Tes services",
+    "manageAll": "Gérer tous les services",
+    "recentActivity": {
+      "title": "Activité récente",
+      "viewAll": "Tout afficher",
+      "statusOk": "OK",
+      "statusError": "Erreur"
+    },
+    "quickActions": {
+      "title": "Actions rapides",
+      "items": {
+        "setupAgents": {
+          "label": "Configurer les agents",
+          "description": "Connecte Claude, ChatGPT, Cursor et d'autres clients"
+        },
+        "connectService": {
+          "label": "Connecter un service",
+          "description": "Connecte une autre app à ta passerelle MCP"
+        },
+        "manageTools": {
+          "label": "Gérer les outils",
+          "description": "Activer, désactiver et ajuster le comportement des outils"
+        }
+      }
+    }
+  },
+  "query": {
+    "loading": "Chargement du tableau de bord…",
+    "error": "Impossible de charger le tableau de bord"
+  }
+}

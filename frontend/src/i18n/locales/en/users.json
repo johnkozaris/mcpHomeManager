@@ -1,0 +1,75 @@
+{
+  "page": {
+    "title": "Users",
+    "description": "Manage who can access this gateway and which services they can use.",
+    "actions": {
+      "cancel": "Cancel",
+      "createUser": "Create user",
+      "creating": "Creating…",
+      "create": "Create"
+    },
+    "form": {
+      "title": "Create user",
+      "fields": {
+        "username": {
+          "label": "Username",
+          "placeholder": "jane",
+          "errors": {
+            "minLength": "Username must be at least 2 characters",
+            "maxLength": "Username must be 100 characters or fewer"
+          }
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "jane@example.com"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Leave blank to set later",
+          "errors": {
+            "minLength": "Password must be at least 8 characters (currently {current})"
+          }
+        }
+      },
+      "passwordHelp": "Password is optional at creation, but must be at least 8 characters if provided.",
+      "toggles": {
+        "admin": "Admin access",
+        "selfMcp": "Allow self-MCP tools"
+      },
+      "allowedServices": "Allowed services"
+    },
+    "errors": {
+      "createUserFailed": "Failed to create user",
+      "updateUserFailed": "Failed to update user"
+    },
+    "query": {
+      "loading": "Loading users…"
+    },
+    "list": {
+      "count": "{count, plural, one {# user} other {# users}}",
+      "badges": {
+        "admin": "Admin",
+        "mcp": "Self-MCP"
+      },
+      "toggles": {
+        "admin": "Admin",
+        "mcp": "Self-MCP"
+      },
+      "access": {
+        "allServices": "All services",
+        "serviceCount": "{count, plural, one {# service} other {# services}}"
+      }
+    },
+    "empty": {
+      "title": "No users yet",
+      "description": "Create your first user to grant access."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete user",
+        "description": "This will permanently remove the user account.",
+        "confirm": "Delete"
+      }
+    }
+  }
+}

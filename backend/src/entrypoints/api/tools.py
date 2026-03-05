@@ -7,6 +7,7 @@ from litestar.enums import MediaType
 from litestar.exceptions import ClientException
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from entrypoints.api.message_codes import ApiMessageCode, exception_extra
 from entrypoints.api.schemas import (
     AppActionRequest,
     AppResponse,
@@ -83,7 +84,10 @@ class ToolController(Controller):
                 path_template_override=data.path_template_override or None,
             )
         except ValueError as exc:
-            raise ClientException(str(exc)) from exc
+            raise ClientException(
+                str(exc),
+                extra=exception_extra(ApiMessageCode.HTTP_BAD_REQUEST),
+            ) from exc
         await db_session.commit()
 
         # Rebuild tools so the change takes effect (reads committed data)

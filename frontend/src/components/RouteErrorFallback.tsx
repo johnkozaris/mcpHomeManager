@@ -5,12 +5,16 @@ import {
 } from "@tanstack/react-router";
 import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { parseApiError } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 export function RouteErrorFallback({ error }: ErrorComponentProps) {
   const router = useRouter();
+  const { t } = useTranslation("components", {
+    keyPrefix: "routeErrorFallback",
+  });
 
-  const message =
-    error instanceof Error ? error.message : "An unexpected error occurred.";
+  const message = parseApiError(error, t("fallbackMessage"));
 
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
@@ -18,7 +22,7 @@ export function RouteErrorFallback({ error }: ErrorComponentProps) {
         <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rust-bg">
           <AlertTriangle className="h-6 w-6 text-rust" />
         </div>
-        <h2 className="text-lg font-semibold text-ink">Something went wrong</h2>
+        <h2 className="text-lg font-semibold text-ink">{t("title")}</h2>
         <p className="text-sm text-ink-secondary">{message}</p>
         <div className="flex items-center justify-center gap-3 pt-2">
           <Button
@@ -26,11 +30,11 @@ export function RouteErrorFallback({ error }: ErrorComponentProps) {
             size="sm"
             onClick={() => router.invalidate()}
           >
-            Try again
+            {t("tryAgain")}
           </Button>
           <Link to="/">
             <Button variant="secondary" size="sm" type="button">
-              Go home
+              {t("goHome")}
             </Button>
           </Link>
         </div>

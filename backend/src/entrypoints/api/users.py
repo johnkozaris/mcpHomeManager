@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from domain.entities.user import User
 from entrypoints.api.guards import require_admin
+from entrypoints.api.message_codes import ApiMessageCode, exception_extra
 from entrypoints.api.schemas import CreateUserRequest, UpdateUserRequest, UserResponse
 from services.user_service import UserService
 
@@ -53,7 +54,10 @@ class UserController(Controller):
                 self_mcp_enabled=data.self_mcp_enabled,
             )
         except ValueError as e:
-            raise ClientException(str(e)) from e
+            raise ClientException(
+                str(e),
+                extra=exception_extra(ApiMessageCode.HTTP_BAD_REQUEST),
+            ) from e
         await db_session.commit()
         return _to_response(user)
 
@@ -65,7 +69,10 @@ class UserController(Controller):
     ) -> UserResponse:
         user = await user_service.get_by_id(user_id)
         if user is None:
-            raise NotFoundException("User not found")
+            raise NotFoundException(
+                "User not found",
+                extra=exception_extra(ApiMessageCode.HTTP_NOT_FOUND),
+            )
         return _to_response(user)
 
     @patch("/{user_id:uuid}")
@@ -86,7 +93,10 @@ class UserController(Controller):
                 kwargs["self_mcp_enabled"] = data.self_mcp_enabled
             user = await user_service.update_user(user_id, **kwargs)
         except ValueError as e:
-            raise NotFoundException(str(e)) from e
+            raise NotFoundException(
+                str(e),
+                extra=exception_extra(ApiMessageCode.HTTP_NOT_FOUND),
+            ) from e
         await db_session.commit()
         return _to_response(user)
 

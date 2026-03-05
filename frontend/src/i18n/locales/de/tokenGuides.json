@@ -1,0 +1,168 @@
+{
+  "guides": {
+    "forgejo": {
+      "steps": [
+        "Öffne deine Forgejo-Instanz und melde dich an",
+        "Klicke oben rechts auf deinen Profil-Avatar und wähle „Einstellungen“",
+        "Klicke in der linken Seitenleiste auf „Anwendungen“",
+        "Gib unter „Access Tokens verwalten“ einen Namen für deinen Token ein (z. B. \"{appName}\").",
+        "Wähle die Berechtigungen aus, die dein Token braucht – für vollen Zugriff alle Bereiche aktivieren. Du brauchst mindestens: read:organization, read:repository, read:issue, write:issue",
+        "Klicke auf „Token generieren“ und kopiere den Token sofort – er wird nicht mehr angezeigt",
+        "Füge den Token in das Feld oben ein"
+      ]
+    },
+    "homeassistant": {
+      "steps": [
+        "Öffne deine Home Assistant-Instanz und melde dich an",
+        "Klicke unten in der linken Seitenleiste auf deinen Benutzernamen/dein Profil",
+        "Scrolle nach unten zum Abschnitt „Long-Lived Access Tokens“ am Ende der Seite",
+        "Klicke auf „Token erstellen“",
+        "Gib einen Namen wie \"{appName}\" ein und klicke auf OK",
+        "Kopiere den im Dialog angezeigten Token – er wird nur einmal angezeigt",
+        "Füge den Token in das Feld oben ein"
+      ],
+      "note": "Home-Assistant-Token beginnen mit eyJ…"
+    },
+    "paperless": {
+      "steps": [
+        "Öffne deine Paperless-ngx-Instanz und melde dich als Admin an",
+        "Klicke auf das Zahnradsymbol oder navigiere in der oberen Navigation zu Einstellungen",
+        "Scrolle nach unten oder suche nach dem Abschnitt „API“.",
+        "Dein API-Token wird hier angezeigt – klicke auf das Kopiersymbol, um ihn zu kopieren",
+        "Wenn noch kein Token vorhanden ist, klicke auf „Generieren“, um einen zu erstellen",
+        "Füge den Token in das Feld oben ein"
+      ]
+    },
+    "immich": {
+      "steps": [
+        "Öffne deine Immich-Instanz und melde dich an",
+        "Klicke oben rechts auf deinen Profil-Avatar",
+        "Wähle im Dropdown-Menü „Kontoeinstellungen“ aus",
+        "Scrolle nach unten zu „API Keys“",
+        "Klicke auf „New API Key“ und gib einen Namen wie \"{appName}\" ein.",
+        "Kopiere den generierten Schlüssel sofort – er wird nicht mehr angezeigt",
+        "Füge den Schlüssel in das Feld oben ein"
+      ]
+    },
+    "nextcloud": {
+      "steps": [
+        "Öffne deine Nextcloud-Instanz und melde dich an",
+        "Klicke oben rechts auf deinen Profil-Avatar und wähle „Einstellungen“ (oder „Persönliche Einstellungen“).",
+        "Klicke in der linken Seitenleiste auf „Sicherheit“.",
+        "Scrolle nach unten zum Abschnitt „Geräte & Sitzungen“.",
+        "Gib \"{appName}\" als App-Namen in das Textfeld unten ein",
+        "Klicke auf „Neues App-Passwort erstellen“",
+        "Kopiere das generierte Passwort – das ist dein API-Token",
+        "Füge es in das Feld oben ein"
+      ],
+      "note": "Format: Benutzername:App-Passwort (z. B. Admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx)"
+    },
+    "uptimekuma": {
+      "steps": [
+        "Öffne deine Uptime Kuma-Instanz und melde dich an",
+        "Klicke in der linken Seitenleiste auf „Einstellungen“.",
+        "Navigiere zur Registerkarte „API Keys“.",
+        "Klicke auf „API-Schlüssel hinzufügen“ und gib einen Namen wie \"{appName}\" ein.",
+        "Leg ein Ablaufdatum fest oder lass das Feld leer für unbegrenzten Zugriff",
+        "Klicke auf „Erstellen“ und kopiere den generierten API-Schlüssel",
+        "Füge den Schlüssel in das Feld oben ein"
+      ]
+    },
+    "adguard": {
+      "steps": [
+        "AdGuard Home verwendet Basisauthentifizierung (Benutzername und Passwort) statt API-Token",
+        "Verwende denselben Benutzernamen und dasselbe Passwort, mit denen du dich bei der AdGuard-Weboberfläche anmeldest",
+        "Gib sie in das Feld oben im Format ein: Benutzername:Passwort"
+      ],
+      "note": "Wenn dein Login z. B. „admin“ und dein Passwort „mypass“ lautet, gib admin:mypass ein"
+    },
+    "nginxproxymanager": {
+      "steps": [
+        "Nginx Proxy Manager verwendet deine Anmeldedaten für den API-Zugriff.",
+        "Gib deine E-Mail-Adresse und dein Passwort im Format E-Mail:Passwort ein",
+        "Das sind dieselben Anmeldedaten, mit denen du dich bei der NPM-Weboberfläche anmeldest"
+      ],
+      "note": "Format: E-Mail:Passwort (z. B. admin@example.com:changeme)"
+    },
+    "portainer": {
+      "steps": [
+        "Portainer verwendet deine Anmeldedaten für den API-Zugriff.",
+        "Gib deinen Benutzernamen und dein Passwort im Format Benutzername:Passwort ein",
+        "Das sind dieselben Anmeldedaten, mit denen du dich bei der Portainer-Weboberfläche anmeldest"
+      ],
+      "note": "Format: Benutzername:Passwort (z. B. admin:meinpasswort)"
+    },
+    "freshrss": {
+      "steps": [
+        "FreshRSS verwendet ein separates API-Passwort für den API-Zugriff",
+        "Gehe in FreshRSS zu Einstellungen → Profil → API-Verwaltung",
+        "Aktiviere die Option „API-Zugriff zulassen“, falls sie noch nicht aktiv ist",
+        "Leg ein API-Passwort fest (das ist ein anderes als dein Login-Passwort)",
+        "Gib deinen FreshRSS-Benutzernamen und dein API-Passwort im Format ein: Benutzername:api_password"
+      ],
+      "note": "Format: Benutzername:api_password – das API-Passwort wird separat in den FreshRSS-Einstellungen festgelegt, nicht dein Anmeldepasswort"
+    },
+    "wallabag": {
+      "steps": [
+        "Öffne deine Wallabag-Instanz und melde dich an",
+        "Gehe zur API-Client-Verwaltung (Abschnitt „Entwickler“ in den Einstellungen).",
+        "Klicke auf „Neuen Client erstellen“ und notiere dir die Client-ID und das Client-Secret",
+        "Gib alle vier Werte im Format client_id:client_secret:username:password ein"
+      ],
+      "note": "Format: client_id:client_secret:username:password (4 durch Doppelpunkte getrennte Teile)"
+    },
+    "stirlingpdf": {
+      "steps": [
+        "Öffne deine Stirling PDF-Instanz und melde dich als Admin an",
+        "Klicke oben rechts auf das Einstellungszahnrad (⚙️), um die Kontoeinstellungen zu öffnen",
+        "Suche oder generiere deinen persönlichen API-Schlüssel im Einstellungsbereich",
+        "Alternativ kannst du den globalen API-Schlüssel verwenden, der über die Umgebungsvariable SECURITY_CUSTOMGLOBALAPIKEY gesetzt wird",
+        "Füge den API-Schlüssel in das Feld oben ein"
+      ],
+      "note": "Verwendet den X-API-KEY-Header. Login muss in Stirling PDF aktiviert sein, damit die API-Schlüssel-Authentifizierung funktioniert"
+    },
+    "wikijs": {
+      "steps": [
+        "Öffne deine Wiki.js-Instanz und melde dich als Admin an",
+        "Navigiere zu Verwaltung → API-Zugriff",
+        "Klicke auf „API-Schlüssel erstellen“ und gib einen Namen ein (z. B. \"{appName}\").",
+        "Wähle die passende Berechtigungsgruppe aus (Vollzugriff empfohlen)",
+        "Leg ein Ablaufdatum fest oder lass es leer für unbegrenzten Zugriff",
+        "Kopiere den generierten API-Schlüssel und füge ihn in das Feld oben ein"
+      ]
+    },
+    "tailscale": {
+      "steps": [
+        "Öffne die Tailscale-Administratorkonsole unter https://login.tailscale.com/admin",
+        "Navigiere zu Settings → Keys",
+        "Klicke unter „API access tokens“ auf „Generate access token...“",
+        "Leg ein Ablaufdatum für den Token fest oder behalte die Standardeinstellung",
+        "Klicke auf „Generieren“ und kopiere den Token sofort – er wird nicht mehr angezeigt",
+        "Füge den Token in das Feld oben ein"
+      ],
+      "note": "Tailscale-API-Schlüssel beginnen mit tskey-api-... und authentifizieren sich gegenüber der Tailscale-API (api.tailscale.com/api/v2)"
+    },
+    "calibreweb": {
+      "steps": [
+        "Calibre-Web verwendet deine Anmeldedaten für den API-Zugriff.",
+        "Gib deinen Calibre-Web-Benutzernamen und dein Passwort im Format ein: Benutzername:Passwort",
+        "Das sind dieselben Anmeldedaten, mit denen du dich bei der Calibre-Web-Oberfläche anmeldest"
+      ],
+      "note": "Die Standard-Anmeldedaten sind admin/admin123 – ändere sie, bevor du eine Verbindung herstellst. Format: Benutzername:Passwort"
+    },
+    "cloudflare": {
+      "steps": [
+        "Öffne das Cloudflare-Dashboard unter https://dash.cloudflare.com",
+        "Klicke oben rechts auf dein Profilsymbol und wähle „Mein Profil“.",
+        "Klicke in der linken Seitenleiste auf „API Tokens“",
+        "Klicke auf „Token erstellen“",
+        "Verwende eine benutzerdefinierte Token-Vorlage mit folgenden Berechtigungen: Zone:DNS:Edit, Zone:Zone:Read, Account:Cloudflare Tunnel:Edit",
+        "Optional: Schränke den Token auf bestimmte Zonen oder Konten ein",
+        "Klicke auf „Weiter zur Zusammenfassung“ und dann auf „Token erstellen“.",
+        "Kopiere den Token sofort – er wird nicht mehr angezeigt",
+        "Füge den Token in das Feld oben ein"
+      ],
+      "note": "Verwende https://api.cloudflare.com als Basis-URL. Der Token authentifiziert sich über den Bearer-Header."
+    }
+  }
+}

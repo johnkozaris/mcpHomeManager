@@ -1,0 +1,10 @@
+{
+  "actions": {
+    "signOut": "ออกจากระบบ"
+  },
+  "mcp": {
+    "placeholders": {
+      "apiKey": "YOUR_API_KEY"
+    }
+  }
+}

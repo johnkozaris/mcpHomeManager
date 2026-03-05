@@ -1,0 +1,111 @@
+{
+  "page": {
+    "title": "Einstellungen",
+    "description": "Darstellung, Endpoints und Systeminformationen",
+    "appearance": {
+      "title": "Darstellung",
+      "light": "Hell",
+      "dark": "Dunkel"
+    },
+    "language": {
+      "title": "Sprache",
+      "description": "Wähle deine Sprache. Die App merkt sich deine Auswahl."
+    },
+    "security": {
+      "title": "Sicherheit",
+      "enabled": "Aktiv",
+      "disabled": "Deaktiviert",
+      "signedInAs": "Angemeldet als",
+      "currentUserFallback": "admin",
+      "selfMcp": {
+        "title": "Self-MCP-Tools",
+        "description": "Wenn aktiviert, können AI-Agenten dieses Gateway über MCP selbst verwalten – Services auflisten, Tools umschalten, Verbindungen hinzufügen und Logs ansehen, ohne die Weboberfläche zu nutzen.",
+        "accessPrefix": "Der Zugriff wird pro Benutzer in der",
+        "userManagementLink": "Benutzerverwaltung",
+        "accessSuffix": " konfiguriert.",
+        "defaultsPrefix": "Standardwerte aus der",
+        "defaultsSuffix": " Umgebungsvariable beim Neustart."
+      }
+    },
+    "apiKey": {
+      "title": "MCP-API-Schlüssel",
+      "status": {
+        "active": "Aktiv",
+        "notSet": "Nicht gesetzt"
+      },
+      "description": "AI-Agenten (Claude, Cursor, ChatGPT) verwenden diesen Schlüssel, um sich mit deinem MCP-Endpoint zu verbinden.",
+      "revealedTitle": "Dein API-Schlüssel",
+      "actions": {
+        "regenerate": "Schlüssel neu generieren",
+        "generate": "Schlüssel generieren",
+        "reveal": "Schlüssel anzeigen",
+        "revoke": "Widerrufen"
+      },
+      "errors": {
+        "revealFailed": "Schlüssel konnte nicht angezeigt werden. Versuch stattdessen, ihn neu zu generieren."
+      }
+    },
+    "about": {
+      "title": "Info",
+      "versionLabel": "Version",
+      "serverLabel": "Server",
+      "serverFallback": "MCP Manager"
+    },
+    "endpoint": {
+      "title": "MCP-Endpoint",
+      "description": "Deine AI-Agenten verbinden sich mit dieser URL.",
+      "agentGuide": "Anleitung zur Agenteneinrichtung"
+    },
+    "systemHealth": {
+      "title": "Systemstatus",
+      "checking": "Wird geprüft…",
+      "rows": {
+        "database": "Datenbank",
+        "mcpServer": "MCP-Server",
+        "services": "Services"
+      },
+      "servicesConnected": "{healthy} / {total} verbunden"
+    },
+    "smtp": {
+      "title": "E-Mail (SMTP)",
+      "description": "SMTP für Passwort-Reset-E-Mails konfigurieren. Leer lassen, um SMTP zu deaktivieren.",
+      "testFailed": "Test fehlgeschlagen",
+      "fields": {
+        "host": "Host",
+        "port": "Port",
+        "username": "Benutzername",
+        "password": "Passwort",
+        "passwordHint": "(gesetzt – leer lassen, um zu behalten)",
+        "fromEmail": "Absenderadresse"
+      },
+      "placeholders": {
+        "host": "smtp.gmail.com",
+        "username": "user@example.com",
+        "passwordMasked": "••••••••",
+        "password": "App-Passwort",
+        "fromEmail": "noreply@example.com"
+      },
+      "toggles": {
+        "useTls": "TLS verwenden (STARTTLS)",
+        "enabled": "Aktiv"
+      },
+      "errors": {
+        "saveFailed": "SMTP-Konfiguration konnte nicht gespeichert werden"
+      },
+      "actions": {
+        "saved": "Gespeichert",
+        "saving": "Wird gespeichert…",
+        "save": "Speichern",
+        "sending": "Wird gesendet…",
+        "sendTestEmail": "Test-E-Mail senden"
+      }
+    },
+    "dialogs": {
+      "revokeKey": {
+        "title": "API-Schlüssel widerrufen",
+        "description": "Dadurch werden alle AI-Agenten, die diesen Schlüssel verwenden, sofort getrennt. Danach kannst du einen neuen Schlüssel generieren.",
+        "confirm": "Schlüssel widerrufen"
+      }
+    }
+  }
+}

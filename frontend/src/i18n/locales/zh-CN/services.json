@@ -1,0 +1,25 @@
+{
+  "listPage": {
+    "title": "服务",
+    "description": "连接服务并管理其健康状态、工具和配置。",
+    "actions": {
+      "export": "导出",
+      "import": "导入",
+      "connectService": "连接服务"
+    },
+    "errors": {
+      "exportFailed": "导出服务失败"
+    },
+    "query": {
+      "loading": "正在加载服务…",
+      "error": "无法加载服务"
+    },
+    "cards": {
+      "connectDescription": "连接另一个服务"
+    },
+    "empty": {
+      "title": "尚未连接任何服务",
+      "description": "连接你的第一个服务，开始向 MCP 客户端开放工具。"
+    }
+  }
+}

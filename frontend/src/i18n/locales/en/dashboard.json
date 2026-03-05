@@ -1,0 +1,83 @@
+{
+  "heroBanner": {
+    "title": "Connect your homelab to AI",
+    "description": "Connect services once, then use their tools from Claude, ChatGPT, Cursor, and more.",
+    "actions": {
+      "connectService": "Connect Service",
+      "setupGuide": "Setup guide"
+    }
+  },
+  "stats": {
+    "services": {
+      "sub": "{count} enabled"
+    },
+    "tools": {
+      "sub": "Available tools"
+    },
+    "health": {
+      "ok": "Healthy",
+      "allConnected": "All services connected",
+      "needsAttention": "Needs attention"
+    },
+    "apiCalls": {
+      "sub": "Recent API calls"
+    }
+  },
+  "serviceRow": {
+    "toolsCount": "{count, plural, one {# tool} other {# tools}}"
+  },
+  "serviceGrid": {
+    "more": "More"
+  },
+  "howItWorks": {
+    "title": "How it works",
+    "steps": {
+      "connect": {
+        "title": "Connect services",
+        "description": "Link your homelab apps with base URL and API token."
+      },
+      "configure": {
+        "title": "Configure tools",
+        "description": "Choose which tools are enabled and tune descriptions."
+      },
+      "use": {
+        "title": "Use with agents",
+        "description": "Call tools from your AI client through MCP."
+      }
+    }
+  },
+  "welcomeView": {
+    "supportedServices": "Supported services"
+  },
+  "dashboardView": {
+    "yourServices": "Your services",
+    "manageAll": "Manage all services",
+    "recentActivity": {
+      "title": "Recent activity",
+      "viewAll": "View all",
+      "statusOk": "OK",
+      "statusError": "Error"
+    },
+    "quickActions": {
+      "title": "Quick actions",
+      "items": {
+        "setupAgents": {
+          "label": "Set up agents",
+          "description": "Connect Claude, ChatGPT, Cursor, and more"
+        },
+        "connectService": {
+          "label": "Connect a service",
+          "description": "Add another app to your MCP gateway"
+        },
+        "manageTools": {
+          "label": "Manage tools",
+          "description": "Enable, disable, and tune tool behavior"
+        }
+      }
+    }
+  },
+  "query": {
+    "loading": "Loading dashboard…",
+    "error": "Could not load dashboard"
+  }
+}

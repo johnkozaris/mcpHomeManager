@@ -1,0 +1,76 @@
+{
+  "services": {
+    "forgejo": {
+      "label": "Forgejo",
+      "description": "Hosting Git e CI/CD"
+    },
+    "homeassistant": {
+      "label": "Home Assistant",
+      "description": "Automazione smart home"
+    },
+    "paperless": {
+      "label": "Paperless-ngx",
+      "description": "Gestione dei documenti"
+    },
+    "immich": {
+      "label": "Immich",
+      "description": "Gestione foto e video"
+    },
+    "nextcloud": {
+      "label": "Nextcloud",
+      "description": "Archiviazione e sincronizzazione nel cloud"
+    },
+    "uptimekuma": {
+      "label": "Uptime Kuma",
+      "description": "Monitoraggio uptime"
+    },
+    "adguard": {
+      "label": "AdGuard Home",
+      "description": "Filtro DNS e blocco delle pubblicità"
+    },
+    "nginxproxymanager": {
+      "label": "Nginx Proxy Manager",
+      "description": "Reverse proxy e SSL"
+    },
+    "portainer": {
+      "label": "Portainer",
+      "description": "Gestione container"
+    },
+    "freshrss": {
+      "label": "FreshRSS",
+      "description": "Lettore di feed RSS"
+    },
+    "wallabag": {
+      "label": "Wallabag",
+      "description": "Articoli da leggere dopo"
+    },
+    "stirlingpdf": {
+      "label": "Stirling PDF",
+      "description": "Strumenti di elaborazione PDF"
+    },
+    "wikijs": {
+      "label": "Wiki.js",
+      "description": "Knowledge base del team"
+    },
+    "calibreweb": {
+      "label": "Calibre-Web",
+      "description": "Gestione della libreria e-book"
+    },
+    "cloudflare": {
+      "label": "Cloudflare",
+      "description": "DNS, tunnel e gestione Zero Trust"
+    },
+    "tailscale": {
+      "label": "Tailscale",
+      "description": "Rete VPN mesh e gestione dispositivi"
+    },
+    "generic_rest": {
+      "label": "Generic REST",
+      "description": "Servizio API REST personalizzato"
+    }
+  },
+  "fallback": {
+    "label": "Sconosciuto",
+    "description": "Tipo di servizio sconosciuto"
+  }
+}

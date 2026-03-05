@@ -1,0 +1,76 @@
+{
+  "services": {
+    "forgejo": {
+      "label": "Forgejo",
+      "description": "Git 托管与 CI/CD"
+    },
+    "homeassistant": {
+      "label": "Home Assistant",
+      "description": "智能家居自动化"
+    },
+    "paperless": {
+      "label": "Paperless-ngx",
+      "description": "文档管理"
+    },
+    "immich": {
+      "label": "Immich",
+      "description": "照片与视频管理"
+    },
+    "nextcloud": {
+      "label": "Nextcloud",
+      "description": "云存储与同步"
+    },
+    "uptimekuma": {
+      "label": "Uptime Kuma",
+      "description": "可用性监控"
+    },
+    "adguard": {
+      "label": "AdGuard Home",
+      "description": "DNS 过滤与广告拦截"
+    },
+    "nginxproxymanager": {
+      "label": "Nginx Proxy Manager",
+      "description": "反向代理与 SSL"
+    },
+    "portainer": {
+      "label": "Portainer",
+      "description": "容器管理"
+    },
+    "freshrss": {
+      "label": "FreshRSS",
+      "description": "RSS 订阅阅读"
+    },
+    "wallabag": {
+      "label": "Wallabag",
+      "description": "稍后阅读"
+    },
+    "stirlingpdf": {
+      "label": "Stirling PDF",
+      "description": "PDF 处理工具"
+    },
+    "wikijs": {
+      "label": "Wiki.js",
+      "description": "团队知识库"
+    },
+    "calibreweb": {
+      "label": "Calibre-Web",
+      "description": "电子书库管理"
+    },
+    "cloudflare": {
+      "label": "Cloudflare",
+      "description": "DNS、隧道和 Zero Trust 管理"
+    },
+    "tailscale": {
+      "label": "Tailscale",
+      "description": "VPN 组网与设备管理"
+    },
+    "generic_rest": {
+      "label": "Generic REST",
+      "description": "自定义 REST API 服务"
+    }
+  },
+  "fallback": {
+    "label": "未知",
+    "description": "未知服务类型"
+  }
+}

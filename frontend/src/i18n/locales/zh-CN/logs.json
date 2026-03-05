@@ -1,0 +1,47 @@
+{
+  "page": {
+    "title": "日志",
+    "description": "查看最近的 MCP 工具调用、结果和延迟。",
+    "stats": {
+      "totalCalls": "总调用次数",
+      "successRate": "成功率",
+      "errors": "错误",
+      "avgLatency": "平均延迟"
+    },
+    "chart": {
+      "callsOverTime": "调用趋势"
+    },
+    "filters": {
+      "searchPlaceholder": "按工具名称搜索",
+      "allServices": "全部服务",
+      "status": {
+        "all": "全部",
+        "success": "成功",
+        "error": "错误"
+      }
+    },
+    "query": {
+      "loading": "正在加载日志…"
+    },
+    "table": {
+      "headers": {
+        "status": "状态",
+        "tool": "工具",
+        "service": "服务",
+        "client": "客户端",
+        "latency": "延迟",
+        "time": "时间"
+      }
+    },
+    "pagination": {
+      "totalEntries": "{count, plural, one {# 条记录} other {# 条记录}}",
+      "page": "第 {current} / {total} 页"
+    },
+    "empty": {
+      "filteredTitle": "没有匹配的日志记录",
+      "filteredDescription": "请尝试调整筛选条件。",
+      "defaultTitle": "暂无日志记录",
+      "defaultDescription": "等 AI 开始调用工具后，这里会显示调用记录。"
+    }
+  }
+}

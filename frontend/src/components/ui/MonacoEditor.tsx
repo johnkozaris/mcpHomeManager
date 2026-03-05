@@ -1,5 +1,6 @@
 import { lazy, Suspense, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
+import { useTranslation } from "react-i18next";
 
 const Editor = lazy(() =>
   import("@monaco-editor/react")
@@ -37,6 +38,7 @@ export function MonacoEditor({
   height = "300px",
   readOnly = false,
 }: Props) {
+  const { t } = useTranslation("components", { keyPrefix: "ui.monacoEditor" });
   const { theme } = useTheme();
   const [errors, setErrors] = useState<string[]>([]);
   const [loadFailed, setLoadFailed] = useState(false);
@@ -63,7 +65,7 @@ export function MonacoEditor({
           className="flex items-center justify-center rounded-xl border border-line bg-canvas-tertiary text-sm text-ink-tertiary"
           style={{ height }}
         >
-          Loading editor...
+          {t("loading")}
         </div>
       }
     >

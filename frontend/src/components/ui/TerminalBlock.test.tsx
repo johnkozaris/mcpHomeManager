@@ -1,9 +1,17 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
+import { i18n } from "@/i18n/init";
 import { TerminalBlock } from "./TerminalBlock";
 
 describe("TerminalBlock", () => {
+  const getCopyLabel = () =>
+    i18n.t("ui.terminalBlock.copy", { ns: "components" });
+  const getCopiedLabel = () =>
+    i18n.t("ui.terminalBlock.copied", { ns: "components" });
+  const getCopyToClipboardLabel = () =>
+    i18n.t("ui.terminalBlock.copyToClipboard", { ns: "components" });
+
   it("renders code content", () => {
     render(<TerminalBlock code="echo hello" />);
     expect(screen.getByText("echo hello")).toBeDefined();
@@ -22,7 +30,10 @@ describe("TerminalBlock", () => {
 
   it("shows copy button", () => {
     render(<TerminalBlock code="test" />);
-    expect(screen.getByText("Copy")).toBeDefined();
+    expect(
+      screen.getByRole("button", { name: getCopyToClipboardLabel() }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(getCopyLabel())).toBeInTheDocument();
   });
 
   it("changes to Copied after click", async () => {
@@ -36,8 +47,10 @@ describe("TerminalBlock", () => {
     });
 
     render(<TerminalBlock code="test" />);
-    await user.click(screen.getByText("Copy"));
-    expect(screen.getByText("Copied")).toBeDefined();
+    await user.click(
+      screen.getByRole("button", { name: getCopyToClipboardLabel() }),
+    );
+    expect(screen.getByText(getCopiedLabel())).toBeInTheDocument();
     expect(writeText).toHaveBeenCalledWith("test");
   });
 });

@@ -1,0 +1,11 @@
+{
+  "api": {
+    "generic": "Algo salió mal"
+  },
+  "queryState": {
+    "loading": "Cargando…",
+    "authRequired": "Tu sesión expiró — inicia sesión de nuevo para continuar.",
+    "networkUnreachable": "No se pudo conectar con el servidor. ¿Está en ejecución el backend?",
+    "generic": "Algo salió mal"
+  }
+}

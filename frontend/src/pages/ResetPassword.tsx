@@ -3,8 +3,10 @@ import { Link, useSearch } from "@tanstack/react-router";
 import { api } from "@/lib/api";
 import { parseApiError } from "@/lib/utils";
 import { Home, ArrowLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export function ResetPassword() {
+  const { t } = useTranslation("auth", { keyPrefix: "resetPassword" });
   const { token } = useSearch({ from: "/reset-password" });
 
   const [password, setPassword] = useState("");
@@ -27,7 +29,7 @@ export function ResetPassword() {
       await api.auth.resetPassword(token, password);
       setSuccess(true);
     } catch (err) {
-      setError(parseApiError(err, "Password reset failed"));
+      setError(parseApiError(err, t("errors.resetFailed")));
     } finally {
       setLoading(false);
     }
@@ -38,13 +40,13 @@ export function ResetPassword() {
       <div className="min-h-screen bg-canvas flex items-center justify-center px-4">
         <div className="w-full max-w-sm text-center">
           <p className="text-sm text-rust mb-4">
-            Invalid or missing reset token.
+            {t("invalidToken")}
           </p>
           <Link
             to="/login"
             className="text-sm font-medium text-terra hover:text-terra-light transition-colors"
           >
-            Back to sign in
+            {t("backToSignIn")}
           </Link>
         </div>
       </div>
@@ -59,7 +61,7 @@ export function ResetPassword() {
             <Home className="w-6 h-6 text-terra" />
           </div>
           <h1 className="text-xl font-semibold text-ink">
-            {success ? "Password Reset" : "Set New Password"}
+            {success ? t("title.success") : t("title.default")}
           </h1>
         </div>
 
@@ -67,14 +69,13 @@ export function ResetPassword() {
           {success ? (
             <div className="text-center space-y-3">
               <p className="text-sm text-ink-secondary">
-                Your password has been reset successfully. You can now sign in
-                with your new password.
+                {t("successDescription")}
               </p>
               <Link
                 to="/login"
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-terra hover:text-terra-light transition-colors"
               >
-                <ArrowLeft size={14} /> Sign in
+                <ArrowLeft size={14} /> {t("actions.signIn")}
               </Link>
             </div>
           ) : (
@@ -91,7 +92,7 @@ export function ResetPassword() {
                   htmlFor="password"
                   className="block text-sm font-medium text-ink mb-1.5"
                 >
-                  New Password
+                  {t("fields.password.label")}
                 </label>
                 <input
                   id="password"
@@ -105,7 +106,7 @@ export function ResetPassword() {
                   className="w-full px-3 py-2 rounded-lg border border-line bg-canvas text-ink text-sm
                              placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
                              transition-colors"
-                  placeholder="Min. 8 characters"
+                  placeholder={t("fields.password.placeholder")}
                 />
               </div>
 
@@ -114,7 +115,7 @@ export function ResetPassword() {
                   htmlFor="confirmPassword"
                   className="block text-sm font-medium text-ink mb-1.5"
                 >
-                  Confirm Password
+                  {t("fields.confirmPassword.label")}
                 </label>
                 <input
                   id="confirmPassword"
@@ -123,14 +124,14 @@ export function ResetPassword() {
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className={`w-full px-3 py-2 rounded-lg border bg-canvas text-ink text-sm
-                             placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
-                             transition-colors ${confirmPassword && !passwordsMatch ? "border-rust" : "border-line"}`}
-                  placeholder="Re-enter password"
-                />
+                   className={`w-full px-3 py-2 rounded-lg border bg-canvas text-ink text-sm
+                              placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
+                              transition-colors ${confirmPassword && !passwordsMatch ? "border-rust" : "border-line"}`}
+                   placeholder={t("fields.confirmPassword.placeholder")}
+                 />
                 {confirmPassword && !passwordsMatch && (
                   <p className="text-xs text-rust mt-1">
-                    Passwords do not match
+                    {t("fields.confirmPassword.mismatch")}
                   </p>
                 )}
               </div>
@@ -142,7 +143,7 @@ export function ResetPassword() {
                            hover:bg-terra-hover active:scale-[0.98] transition-all
                            disabled:opacity-50 disabled:pointer-events-none"
               >
-                {loading ? "Resetting…" : "Reset Password"}
+                {loading ? t("actions.resetting") : t("actions.resetPassword")}
               </button>
             </form>
           )}

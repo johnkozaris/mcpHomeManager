@@ -1,0 +1,182 @@
+{
+  "errorBoundary": {
+    "title": "문제가 발생했습니다",
+    "fallbackMessage": "예기치 않은 오류가 발생했습니다.",
+    "reload": "새로고침"
+  },
+  "routeErrorFallback": {
+    "title": "문제가 발생했습니다",
+    "fallbackMessage": "예기치 않은 오류가 발생했습니다.",
+    "tryAgain": "다시 시도",
+    "goHome": "홈으로 이동"
+  },
+  "logs": {
+    "logEntryDetail": {
+      "error": "오류",
+      "input": "입력",
+      "duration": "소요 시간:",
+      "durationUnit": "ms",
+      "client": "클라이언트:",
+      "time": "시간:",
+      "viewService": "서비스 보기"
+    }
+  },
+  "services": {
+    "addServicePanel": {
+      "scanDescription": "네트워크에서 실행 중인 서비스를 스캔합니다.",
+      "scan": "스캔",
+      "scanning": "스캔 중…",
+      "noKnownServices": "알려진 서비스 컨테이너를 찾지 못했습니다.",
+      "connectWithLabel": "{label} 연결",
+      "connectService": "서비스 연결",
+      "closeDialog": "대화상자 닫기",
+      "dismiss": "닫기",
+      "failedConnectService": "서비스 연결에 실패했습니다",
+      "chooseService": "서비스 선택",
+      "or": "또는",
+      "autoDetect": "자동 감지"
+    },
+    "addToolModal": {
+      "invalidJson": "파라미터 스키마의 JSON이 올바르지 않습니다",
+      "titleEdit": "도구 정의 수정",
+      "titleAdd": "도구 추가",
+      "closeEditDialog": "도구 수정 대화상자 닫기",
+      "closeAddDialog": "도구 추가 대화상자 닫기",
+      "descriptionEdit": "이 MCP 도구의 정의를 수정합니다.",
+      "descriptionAdd": "이 Generic REST 서비스용 새 MCP 도구를 생성합니다.",
+      "toolNameLabel": "도구 이름",
+      "toolNamePlaceholder": "예: list_items",
+      "toolNameValidation": "영문자로 시작해야 하며 영문자, 숫자, 밑줄(_)만 사용할 수 있습니다",
+      "descriptionLabel": "설명",
+      "descriptionPlaceholder": "모든 항목 나열",
+      "httpMethodLabel": "HTTP 메서드",
+      "pathTemplateLabel": "경로 템플릿",
+      "pathTemplatePlaceholder": "/api/v1/items",
+      "parametersSchemaLabel": "파라미터 스키마 (JSON)",
+      "failedUpdate": "도구 업데이트에 실패했습니다",
+      "failedCreate": "도구 생성에 실패했습니다",
+      "cancel": "취소",
+      "saving": "저장 중…",
+      "creating": "생성 중…",
+      "saveChanges": "저장",
+      "createTool": "도구 생성"
+    },
+    "appCard": {
+      "preview": "미리보기"
+    },
+    "importOpenApiModal": {
+      "title": "OpenAPI 스펙 가져오기",
+      "closeDialog": "OpenAPI 가져오기 대화상자 닫기",
+      "importedSummary": "{count, plural, one {도구 #개를 가져왔습니다} other {도구 #개를 가져왔습니다}}",
+      "partialSummary": "{importedCount, plural, one {도구 #개를 가져왔습니다} other {도구 #개를 가져왔습니다}}, {skippedCount}개 건너뜀 (이미 존재)",
+      "allSkippedSummary": "{count, plural, one {도구 #개가 이미 존재하여 가져올 항목이 없습니다} other {도구 #개가 이미 존재하여 가져올 항목이 없습니다}}",
+      "ok": "확인",
+      "description": "아래에 OpenAPI 3.x 스펙(JSON 또는 YAML)을 붙여넣으세요. 각 operation이 MCP 도구로 가져와집니다.",
+      "importFailed": "가져오기에 실패했습니다",
+      "cancel": "취소",
+      "importing": "가져오는 중…",
+      "import": "가져오기"
+    },
+    "importServiceModal": {
+      "title": "서비스 가져오기",
+      "closeDialog": "대화상자 닫기",
+      "yamlConfigFile": "YAML 설정 파일",
+      "fileLoaded": "파일 로드됨",
+      "chooseFile": ".yml 파일 선택",
+      "servicesFound": "찾은 서비스 ({count})",
+      "apiTokenLabel": "API 토큰",
+      "apiTokenPlaceholder": "이 서비스의 API 토큰을 입력하세요",
+      "createdPrefix": "생성됨:",
+      "skippedPrefix": "건너뜀:",
+      "errorsPrefix": "오류:",
+      "importFailed": "가져오기에 실패했습니다",
+      "cancel": "취소",
+      "importing": "가져오는 중…",
+      "import": "가져오기"
+    },
+    "serviceCard": {
+      "paused": "일시중지됨",
+      "toolsCount": "{count, plural, one {도구 #개} other {도구 #개}}"
+    },
+    "serviceConfig": {
+      "identifierLabel": "식별자",
+      "identifierPlaceholder": "forgejo",
+      "displayNameLabel": "표시 이름",
+      "displayNamePlaceholder": "Forgejo",
+      "serviceTypeLabel": "서비스 타입",
+      "baseUrlLabel": "기본 URL",
+      "baseUrlPlaceholder": "https://service.example.com",
+      "apiTokenLabel": "API 토큰",
+      "apiTokenPlaceholder": "API 토큰을 붙여넣으세요",
+      "tokenGuideHide": "{label} 토큰 가이드 숨기기",
+      "tokenGuideShow": "{label} 토큰 받는 방법",
+      "connecting": "연결 중…",
+      "connectService": "서비스 연결"
+    },
+    "toolCard": {
+      "noParameters": "파라미터 없음",
+      "required": "필수",
+      "optional": "선택",
+      "parameterDescriptionPlaceholder": "파라미터 설명 (AI가 보는 내용)…",
+      "customized": "커스텀됨",
+      "hintLabel": "힌트:",
+      "customizedParenthetical": "(커스텀됨)",
+      "paramsCount": "{count, plural, one {파라미터 #개} other {파라미터 #개}}",
+      "noParams": "파라미터 없음",
+      "testEndpointReachability": "엔드포인트 연결 가능 여부 테스트",
+      "testEndpointAria": "{toolName} 엔드포인트 테스트",
+      "testing": "테스트 중…",
+      "test": "테스트",
+      "editToolDefinition": "도구 정의 수정 (메서드, 경로, 스키마)",
+      "editToolDefinitionAria": "{toolName} 정의 수정",
+      "deleteTool": "도구 삭제",
+      "deleteToolAria": "{toolName} 삭제",
+      "edit": "수정",
+      "enabled": "활성화됨",
+      "disabled": "비활성화됨",
+      "toolDescriptionLabel": "도구 설명",
+      "toolDescriptionPlaceholder": "이 도구가 하는 일을 설명하세요 (AI가 참고하는 내용입니다)…",
+      "aiHintLabel": "AI 힌트",
+      "optionalParenthetical": "(선택)",
+      "aiHintPlaceholder": "예: 먼저 ha_list_entities를 호출해 유효한 entity ID를 찾으세요",
+      "aiHintHelpText": "AI가 이 도구를 언제, 어떻게 써야 하는지 알 수 있도록 설명 끝에 추가됩니다.",
+      "endpointLabel": "엔드포인트",
+      "endpointPathPlaceholder": "/api/v1/endpoint",
+      "endpointHelpPrefix": "경로 파라미터에는",
+      "endpointHelpSuffix": "를 사용하세요. 수정하면 기본 엔드포인트가 변경됩니다.",
+      "parameterDescriptionsLabel": "파라미터 설명",
+      "save": "저장",
+      "cancel": "취소",
+      "resetToOriginal": "원래대로 재설정"
+    },
+    "toolList": {
+      "toolsJson": "tools.json",
+      "emptyTitle": "등록된 도구가 없습니다",
+      "emptyDescription": "서비스를 연결하면 여기에 도구가 표시됩니다.",
+      "cardView": "카드 보기",
+      "jsonView": "JSON 보기",
+      "manageAccess": "도구 접근 권한은 도구 페이지에서 관리하세요"
+    }
+  },
+  "ui": {
+    "confirmDialog": {
+      "confirm": "확인",
+      "cancel": "취소",
+      "working": "처리 중…"
+    },
+    "mcpEndpointBar": {
+      "label": "MCP 엔드포인트",
+      "copied": "복사 완료",
+      "copyUrl": "URL 복사",
+      "copyJson": "JSON 복사"
+    },
+    "monacoEditor": {
+      "loading": "에디터를 불러오는 중…"
+    },
+    "terminalBlock": {
+      "copyToClipboard": "클립보드에 복사",
+      "copied": "복사 완료",
+      "copy": "복사"
+    }
+  }
+}

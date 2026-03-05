@@ -1,0 +1,75 @@
+{
+  "page": {
+    "title": "사용자",
+    "description": "누가 이 게이트웨이에 접근할 수 있고 어떤 서비스를 사용할 수 있는지 관리하세요.",
+    "actions": {
+      "cancel": "취소",
+      "createUser": "사용자 생성",
+      "creating": "생성 중…",
+      "create": "생성"
+    },
+    "form": {
+      "title": "사용자 생성",
+      "fields": {
+        "username": {
+          "label": "사용자 이름",
+          "placeholder": "jane",
+          "errors": {
+            "minLength": "사용자 이름은 최소 2자여야 합니다",
+            "maxLength": "사용자 이름은 100자 이하여야 합니다"
+          }
+        },
+        "email": {
+          "label": "이메일",
+          "placeholder": "jane@example.com"
+        },
+        "password": {
+          "label": "비밀번호",
+          "placeholder": "나중에 설정하려면 비워 두세요",
+          "errors": {
+            "minLength": "비밀번호는 최소 8자여야 합니다 (현재 {current})"
+          }
+        }
+      },
+      "passwordHelp": "생성 시 비밀번호는 선택 사항이지만, 입력하면 최소 8자여야 합니다.",
+      "toggles": {
+        "admin": "관리자 권한",
+        "selfMcp": "셀프 MCP 도구 허용"
+      },
+      "allowedServices": "허용 서비스"
+    },
+    "errors": {
+      "createUserFailed": "사용자 생성에 실패했습니다",
+      "updateUserFailed": "사용자 업데이트에 실패했습니다"
+    },
+    "query": {
+      "loading": "사용자를 불러오는 중…"
+    },
+    "list": {
+      "count": "{count, plural, one {사용자 #명} other {사용자 #명}}",
+      "badges": {
+        "admin": "관리자",
+        "mcp": "셀프 MCP"
+      },
+      "toggles": {
+        "admin": "관리자",
+        "mcp": "셀프 MCP"
+      },
+      "access": {
+        "allServices": "모든 서비스",
+        "serviceCount": "{count, plural, one {서비스 #개} other {서비스 #개}}"
+      }
+    },
+    "empty": {
+      "title": "아직 사용자가 없습니다",
+      "description": "접근 권한을 부여할 첫 사용자를 생성하세요."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "사용자 삭제",
+        "description": "이 사용자 계정이 영구적으로 삭제됩니다.",
+        "confirm": "삭제"
+      }
+    }
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "page": {
+    "title": "Σύνδεση Βοηθών AI",
+    "description": "Πρόσθεσε το MCP endpoint σου σε οποιοδήποτε AI Client παρακάτω. Μόλις συνδεθεί, τα εργαλεία του homelab σου θα εντοπιστούν αυτόματα.",
+    "placeholders": {
+      "apiKey": "YOUR_API_KEY"
+    },
+    "cards": {
+      "claudeDesktop": {
+        "name": "Claude Desktop",
+        "badge": "Προτεινόμενο",
+        "steps": {
+          "step1": {
+            "before": "Πήγαινε στο",
+            "settings": "Settings",
+            "middle": "(εικονίδιο γραναζιού) →",
+            "developer": "Developer",
+            "and": "→",
+            "editConfig": "Edit Config"
+          },
+          "step2": {
+            "beforeFile": "Αυτό ανοίγει το",
+            "afterFile": ". Αν το αρχείο έχει ήδη άλλους MCP servers, πρόσθεσε την καταχώριση",
+            "afterHomelab": "μέσα στο υπάρχον",
+            "afterMcpServers": "object. Αλλιώς, αντικατάστησε τα περιεχόμενα του αρχείου με:"
+          },
+          "step3": {
+            "before": "Αποθήκευσε το αρχείο και",
+            "emphasis": "κλείσε εντελώς",
+            "after": "το Claude Desktop (όχι απλά το παράθυρο — κλείσε από τη γραμμή μενού ή το system tray) και μετά άνοιξέ το ξανά"
+          },
+          "step4": "Θα πρέπει να δεις ένα εικονίδιο σφυριού στο πεδίο συνομιλίας — κάνε κλικ για να επιβεβαιώσεις ότι τα homelab εργαλεία φορτώθηκαν",
+          "step5": {
+            "prefix": "Δοκίμασε:",
+            "exampleRepos": "\"Τι repos έχω στο Forgejo;\"",
+            "or": "ή",
+            "examplePaperless": "\"Ψάξε στα Paperless έγγραφά μου για τιμολόγια\""
+          }
+        },
+        "configPath": "Διαδρομή config — macOS: ~/Library/Application Support/Claude/ · Windows: %APPDATA%\\Claude\\"
+      },
+      "claudeCode": {
+        "name": "Claude Code",
+        "terminalLabel": "Terminal",
+        "steps": {
+          "step1": "Καταχώρισε τον homelab MCP server καθολικά με την παρακάτω εντολή (διαθέσιμη σε όλα τα projects):",
+          "step2": {
+            "before": "Επιβεβαίωσε με",
+            "after": "— θα πρέπει να δεις το \"homelab\" στην έξοδο"
+          },
+          "step3": "Τα εργαλεία του homelab σου είναι πλέον διαθέσιμα αυτόματα σε κάθε session"
+        },
+        "removePrefix": "Για αφαίρεση αργότερα:"
+      },
+      "cursor": {
+        "name": "Cursor",
+        "steps": {
+          "step1": {
+            "before": "Δημιούργησε το",
+            "after": "στη ρίζα του project σου με το εξής περιεχόμενο:"
+          },
+          "step2": "Κάνε επανεκκίνηση του Cursor (Cmd+Q / κλείσε και άνοιξε ξανά). Τα εργαλεία σου θα πρέπει να εμφανιστούν στο AI panel (Cmd+L / Ctrl+L) κάτω από το \"Available Tools\"",
+          "step3": "Αν τα εργαλεία δεν εμφανίζονται, έλεγξε την ένδειξη κατάστασης MCP στην κάτω μπάρα κατάστασης"
+        }
+      },
+      "chatgpt": {
+        "name": "ChatGPT",
+        "steps": {
+          "step1": {
+            "before": "Πήγαινε στο",
+            "settings": "Settings",
+            "middle": "→",
+            "appsAndConnectors": "Apps & Connectors",
+            "after": "→ ενεργοποίησε",
+            "developerMode": "Developer Mode",
+            "suffix": "στην ενότητα \"Advanced settings\""
+          },
+          "step2": {
+            "before": "Πίσω στο \"Apps & Connectors\", κάνε κλικ",
+            "create": "Create",
+            "and": "→ επίλεξε",
+            "mcpServer": "MCP Server"
+          },
+          "step3": {
+            "before": "Βάλε ένα όνομα όπως \"My Homelab\" και επικόλλησε το endpoint σου:"
+          },
+          "step4": {
+            "before": "Κάνε κλικ",
+            "create": "Create",
+            "after": ". Οι νέες συνομιλίες θα ανακαλύψουν αυτόματα τα homelab εργαλεία σου"
+          }
+        },
+        "note": {
+          "label": "Σημείωση:",
+          "body": "Το ChatGPT απαιτεί δημόσια προσβάσιμο endpoint. Χρησιμοποίησε το παρεχόμενο Caddy config ή μια υπηρεσία tunnel όπως το Cloudflare Tunnel αν ο server σου είναι μόνο τοπικός."
+        }
+      },
+      "openWebui": {
+        "name": "Open WebUI",
+        "steps": {
+          "step1": {
+            "before": "Πήγαινε στο",
+            "adminPanel": "Admin Panel",
+            "and": "→",
+            "settings": "Settings",
+            "then": "→",
+            "tools": "Tools"
+          },
+          "step2": {
+            "before": "Κάνε κλικ",
+            "addMcpConnection": "Add MCP Connection",
+            "after": ", βάλε ένα όνομα και επικόλλησε το endpoint σου:"
+          },
+          "step3": "Αν χρησιμοποιείς API key auth, βάλε το κλειδί σου στο πεδίο authentication",
+          "step4": {
+            "before": "Κάνε κλικ",
+            "save": "Save",
+            "after": "— Το Open WebUI θα δοκιμάσει τη σύνδεση και θα ανακαλύψει τα εργαλεία σου. Είναι πλέον διαθέσιμα σε όλους τους χρήστες με οποιοδήποτε LLM"
+          }
+        }
+      },
+      "otherClients": {
+        "name": "Άλλοι MCP Clients",
+        "description": "Αν ο MCP Client σου ζητά συγκεκριμένα στοιχεία σύνδεσης:",
+        "details": {
+          "transport": {
+            "label": "Transport",
+            "value": "Streamable HTTP"
+          },
+          "auth": {
+            "label": "Auth",
+            "value": "Authorization: Bearer"
+          },
+          "discovery": {
+            "label": "Discovery",
+            "value": "Αυτόματο"
+          }
+        },
+        "sse": {
+          "before": "Για Clients που υποστηρίζουν μόνο SSE, πρόσθεσε",
+          "after": "στο endpoint URL. Το base URL πρέπει να είναι προσβάσιμο από το σημείο όπου εκτελείται ο AI Client σου."
+        }
+      }
+    }
+  }
+}

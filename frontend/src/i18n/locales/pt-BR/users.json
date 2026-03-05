@@ -1,0 +1,75 @@
+{
+  "page": {
+    "title": "Usuários",
+    "description": "Gerencie quem pode acessar este gateway e quais serviços cada pessoa pode usar.",
+    "actions": {
+      "cancel": "Cancelar",
+      "createUser": "Criar usuário",
+      "creating": "Criando…",
+      "create": "Criar"
+    },
+    "form": {
+      "title": "Criar usuário",
+      "fields": {
+        "username": {
+          "label": "Nome de usuário",
+          "placeholder": "jane",
+          "errors": {
+            "minLength": "O nome de usuário deve ter pelo menos 2 caracteres",
+            "maxLength": "O nome de usuário deve ter 100 caracteres ou menos"
+          }
+        },
+        "email": {
+          "label": "E-mail",
+          "placeholder": "jane@exemplo.com"
+        },
+        "password": {
+          "label": "Senha",
+          "placeholder": "Deixe em branco para definir mais tarde",
+          "errors": {
+            "minLength": "A senha deve ter pelo menos 8 caracteres (atualmente {current})"
+          }
+        }
+      },
+      "passwordHelp": "A senha é opcional na criação, mas deve ter pelo menos 8 caracteres, se fornecida.",
+      "toggles": {
+        "admin": "Acesso de administrador",
+        "selfMcp": "Permitir ferramentas self-MCP"
+      },
+      "allowedServices": "Serviços permitidos"
+    },
+    "errors": {
+      "createUserFailed": "Não foi possível criar o usuário",
+      "updateUserFailed": "Não foi possível atualizar o usuário"
+    },
+    "query": {
+      "loading": "Carregando usuários…"
+    },
+    "list": {
+      "count": "{count, plural, one {# usuário} other {# usuários}}",
+      "badges": {
+        "admin": "Administrador",
+        "mcp": "Self-MCP"
+      },
+      "toggles": {
+        "admin": "Administrador",
+        "mcp": "Self-MCP"
+      },
+      "access": {
+        "allServices": "Todos os serviços",
+        "serviceCount": "{count, plural, one {# serviço} other {# serviços}}"
+      }
+    },
+    "empty": {
+      "title": "Ainda não há usuários",
+      "description": "Crie seu primeiro usuário para conceder acesso."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Excluir usuário",
+        "description": "Isso removerá permanentemente a conta do usuário.",
+        "confirm": "Excluir"
+      }
+    }
+  }
+}

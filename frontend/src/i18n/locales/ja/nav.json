@@ -1,0 +1,23 @@
+{
+  "items": {
+    "home": "ホーム",
+    "services": "サービス",
+    "tools": "ツール",
+    "agents": "エージェント",
+    "logs": "ログ",
+    "users": "ユーザー",
+    "settings": "設定"
+  },
+  "actions": {
+    "collapseSidebar": "サイドバーを折りたたむ",
+    "expandSidebar": "サイドバーを展開",
+    "collapse": "折りたたむ",
+    "expand": "展開",
+    "switchToDarkMode": "ダークモード",
+    "switchToLightMode": "ライトモード"
+  },
+  "theme": {
+    "dark": "ダーク",
+    "light": "ライト"
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "errorBoundary": {
+    "title": "問題が発生しました",
+    "fallbackMessage": "予期しないエラーが発生しました。",
+    "reload": "再読み込み"
+  },
+  "routeErrorFallback": {
+    "title": "問題が発生しました",
+    "fallbackMessage": "予期しないエラーが発生しました。",
+    "tryAgain": "再試行",
+    "goHome": "ホームへ"
+  },
+  "logs": {
+    "logEntryDetail": {
+      "error": "エラー",
+      "input": "入力",
+      "duration": "所要時間:",
+      "durationUnit": "ms",
+      "client": "クライアント:",
+      "time": "時刻:",
+      "viewService": "サービスを表示"
+    }
+  },
+  "services": {
+    "addServicePanel": {
+      "scanDescription": "ネットワークをスキャンして稼働中のサービスを検出します。",
+      "scan": "スキャン",
+      "scanning": "スキャン中…",
+      "noKnownServices": "既知のサービスコンテナは見つかりませんでした。",
+      "connectWithLabel": "{label} を接続",
+      "connectService": "サービスを接続",
+      "closeDialog": "ダイアログを閉じる",
+      "dismiss": "閉じる",
+      "failedConnectService": "サービスの接続に失敗しました",
+      "chooseService": "サービスを選択",
+      "or": "または",
+      "autoDetect": "自動検出"
+    },
+    "addToolModal": {
+      "invalidJson": "parameters schema のJSONが不正です",
+      "titleEdit": "ツール定義を編集",
+      "titleAdd": "ツールを追加",
+      "closeEditDialog": "ツール編集ダイアログを閉じる",
+      "closeAddDialog": "ツール追加ダイアログを閉じる",
+      "descriptionEdit": "このMCPツールの定義を編集します。",
+      "descriptionAdd": "このGeneric RESTサービス用の新しいMCPツールを作成します。",
+      "toolNameLabel": "ツール名",
+      "toolNamePlaceholder": "例: list_items",
+      "toolNameValidation": "先頭は英字、使用できるのは英数字とアンダースコアのみ",
+      "descriptionLabel": "説明",
+      "descriptionPlaceholder": "すべての項目を一覧表示",
+      "httpMethodLabel": "HTTPメソッド",
+      "pathTemplateLabel": "パステンプレート",
+      "pathTemplatePlaceholder": "/api/v1/items",
+      "parametersSchemaLabel": "parameters schema (JSON)",
+      "failedUpdate": "ツールの更新に失敗しました",
+      "failedCreate": "ツールの作成に失敗しました",
+      "cancel": "キャンセル",
+      "saving": "保存中…",
+      "creating": "作成中…",
+      "saveChanges": "変更を保存",
+      "createTool": "ツールを作成"
+    },
+    "appCard": {
+      "preview": "プレビュー"
+    },
+    "importOpenApiModal": {
+      "title": "OpenAPI Specをインポート",
+      "closeDialog": "OpenAPIインポートダイアログを閉じる",
+      "importedSummary": "{count, plural, one {# 個のツールをインポートしました} other {# 個のツールをインポートしました}}",
+      "partialSummary": "{importedCount, plural, one {# 個のツールをインポートしました} other {# 個のツールをインポートしました}}、{skippedCount} 件をスキップ（すでに存在）",
+      "allSkippedSummary": "{count, plural, one {# 件のツールはすでに登録済みのため、インポートしませんでした} other {# 件のツールはすべて登録済みのため、インポートしませんでした}}",
+      "ok": "OK",
+      "description": "OpenAPI 3.x spec（JSONまたはYAML）を貼り付けてください。各operationがMCPツールとしてインポートされます。",
+      "importFailed": "インポートに失敗しました",
+      "cancel": "キャンセル",
+      "importing": "インポート中…",
+      "import": "インポート"
+    },
+    "importServiceModal": {
+      "title": "サービスをインポート",
+      "closeDialog": "ダイアログを閉じる",
+      "yamlConfigFile": "YAML設定ファイル",
+      "fileLoaded": "ファイルを読み込みました",
+      "chooseFile": ".yml ファイルを選択",
+      "servicesFound": "サービスが見つかりました（{count}）",
+      "apiTokenLabel": "API token",
+      "apiTokenPlaceholder": "このサービスのAPI tokenを入力",
+      "createdPrefix": "作成:",
+      "skippedPrefix": "スキップ:",
+      "errorsPrefix": "エラー:",
+      "importFailed": "インポートに失敗しました",
+      "cancel": "キャンセル",
+      "importing": "インポート中…",
+      "import": "インポート"
+    },
+    "serviceCard": {
+      "paused": "停止中",
+      "toolsCount": "{count, plural, one {# 個のツール} other {# 個のツール}}"
+    },
+    "serviceConfig": {
+      "identifierLabel": "識別子",
+      "identifierPlaceholder": "forgejo",
+      "displayNameLabel": "表示名",
+      "displayNamePlaceholder": "Forgejo",
+      "serviceTypeLabel": "サービスタイプ",
+      "baseUrlLabel": "Base URL",
+      "baseUrlPlaceholder": "https://service.example.com",
+      "apiTokenLabel": "API token",
+      "apiTokenPlaceholder": "API tokenを貼り付け",
+      "tokenGuideHide": "{label} token の取得方法を隠す",
+      "tokenGuideShow": "{label} token の取得方法",
+      "connecting": "接続中…",
+      "connectService": "サービスを接続"
+    },
+    "toolCard": {
+      "noParameters": "パラメータなし",
+      "required": "必須",
+      "optional": "任意",
+      "parameterDescriptionPlaceholder": "パラメータの説明（AIに表示されます）…",
+      "customized": "カスタマイズ済み",
+      "hintLabel": "ヒント:",
+      "customizedParenthetical": "（カスタマイズ済み）",
+      "paramsCount": "{count, plural, one {# 個のパラメータ} other {# 個のパラメータ}}",
+      "noParams": "パラメータなし",
+      "testEndpointReachability": "endpointの到達性をテスト",
+      "testEndpointAria": "{toolName} endpointをテスト",
+      "testing": "テスト中…",
+      "test": "テスト",
+      "editToolDefinition": "ツール定義を編集（method、path、schema）",
+      "editToolDefinitionAria": "{toolName} 定義を編集",
+      "deleteTool": "ツールを削除",
+      "deleteToolAria": "{toolName} を削除",
+      "edit": "編集",
+      "enabled": "有効",
+      "disabled": "無効",
+      "toolDescriptionLabel": "ツール説明",
+      "toolDescriptionPlaceholder": "このツールの動作を説明してください（AIが参照します）…",
+      "aiHintLabel": "AIヒント",
+      "optionalParenthetical": "（任意）",
+      "aiHintPlaceholder": "例: まず ha_list_entities を呼び出して有効なentity IDを取得する",
+      "aiHintHelpText": "説明文に追記され、AIがこのツールを使うタイミングと方法を理解しやすくなります。",
+      "endpointLabel": "endpoint",
+      "endpointPathPlaceholder": "/api/v1/endpoint",
+      "endpointHelpPrefix": "パスパラメータには",
+      "endpointHelpSuffix": "を使用します。変更するとデフォルトのendpointを上書きします。",
+      "parameterDescriptionsLabel": "パラメータ説明",
+      "save": "保存",
+      "cancel": "キャンセル",
+      "resetToOriginal": "元に戻す"
+    },
+    "toolList": {
+      "toolsJson": "tools.json",
+      "emptyTitle": "登録されたツールはありません",
+      "emptyDescription": "サービスを接続するとここにツールが表示されます。",
+      "cardView": "カード表示",
+      "jsonView": "JSON表示",
+      "manageAccess": "ツールへのアクセス権はツールページで管理できます"
+    }
+  },
+  "ui": {
+    "confirmDialog": {
+      "confirm": "確認",
+      "cancel": "キャンセル",
+      "working": "処理中…"
+    },
+    "mcpEndpointBar": {
+      "label": "MCP endpoint",
+      "copied": "コピーしました",
+      "copyUrl": "URLをコピー",
+      "copyJson": "JSONをコピー"
+    },
+    "monacoEditor": {
+      "loading": "エディタを読み込み中…"
+    },
+    "terminalBlock": {
+      "copyToClipboard": "クリップボードにコピー",
+      "copied": "コピーしました",
+      "copy": "コピー"
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "page": {
+    "title": "Utilizadores",
+    "description": "Gere quem pode aceder a este gateway e quais os serviços que pode usar.",
+    "actions": {
+      "cancel": "Cancelar",
+      "createUser": "Criar utilizador",
+      "creating": "A criar…",
+      "create": "Criar"
+    },
+    "form": {
+      "title": "Criar utilizador",
+      "fields": {
+        "username": {
+          "label": "Nome de utilizador",
+          "placeholder": "jane",
+          "errors": {
+            "minLength": "O nome de utilizador deve ter pelo menos 2 caracteres",
+            "maxLength": "O nome de utilizador deve ter 100 caracteres ou menos"
+          }
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "jane@example.com"
+        },
+        "password": {
+          "label": "Palavra-passe",
+          "placeholder": "Deixe em branco para definir mais tarde",
+          "errors": {
+            "minLength": "A palavra-passe deve ter pelo menos 8 caracteres (atualmente {current})"
+          }
+        }
+      },
+      "passwordHelp": "A palavra-passe é opcional na criação, mas se for fornecida deve ter pelo menos 8 caracteres.",
+      "toggles": {
+        "admin": "Acesso de administrador",
+        "selfMcp": "Permitir ferramentas Self-MCP"
+      },
+      "allowedServices": "Serviços permitidos"
+    },
+    "errors": {
+      "createUserFailed": "Não foi possível criar utilizador",
+      "updateUserFailed": "Não foi possível atualizar utilizador"
+    },
+    "query": {
+      "loading": "A carregar utilizadores…"
+    },
+    "list": {
+      "count": "{count, plural, one {# utilizador} other {# utilizadores}}",
+      "badges": {
+        "admin": "Administrador",
+        "mcp": "Self-MCP"
+      },
+      "toggles": {
+        "admin": "Administrador",
+        "mcp": "Self-MCP"
+      },
+      "access": {
+        "allServices": "Todos os serviços",
+        "serviceCount": "{count, plural, one {# serviço} other {# serviços}}"
+      }
+    },
+    "empty": {
+      "title": "Ainda não existem utilizadores",
+      "description": "Crie o primeiro utilizador para conceder acesso."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar utilizador",
+        "description": "Isto remove permanentemente a conta de utilizador.",
+        "confirm": "Eliminar"
+      }
+    }
+  }
+}

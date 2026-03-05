@@ -1,0 +1,25 @@
+{
+  "listPage": {
+    "title": "Services",
+    "description": "Connecte des services et gère leur état, leurs outils et leur configuration.",
+    "actions": {
+      "export": "Exporter",
+      "import": "Importer",
+      "connectService": "Connecter un service"
+    },
+    "errors": {
+      "exportFailed": "Échec de l’export des services"
+    },
+    "query": {
+      "loading": "Chargement des services…",
+      "error": "Impossible de charger les services"
+    },
+    "cards": {
+      "connectDescription": "Connecter un autre service"
+    },
+    "empty": {
+      "title": "Aucun service connecté",
+      "description": "Connecte ton premier service pour commencer à exposer des outils aux clients MCP."
+    }
+  }
+}

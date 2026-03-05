@@ -1,0 +1,76 @@
+{
+  "services": {
+    "forgejo": {
+      "label": "Forgejo",
+      "description": "Git hosting & CI/CD"
+    },
+    "homeassistant": {
+      "label": "Home Assistant",
+      "description": "Έξυπνος αυτοματισμός σπιτιού"
+    },
+    "paperless": {
+      "label": "Paperless-ngx",
+      "description": "Διαχείριση εγγράφων"
+    },
+    "immich": {
+      "label": "Immich",
+      "description": "Διαχείριση φωτογραφιών & βίντεο"
+    },
+    "nextcloud": {
+      "label": "Nextcloud",
+      "description": "Cloud αποθήκευση & συγχρονισμός"
+    },
+    "uptimekuma": {
+      "label": "Uptime Kuma",
+      "description": "Παρακολούθηση uptime"
+    },
+    "adguard": {
+      "label": "AdGuard Home",
+      "description": "DNS filtering & ad blocking"
+    },
+    "nginxproxymanager": {
+      "label": "Nginx Proxy Manager",
+      "description": "Reverse proxy & SSL"
+    },
+    "portainer": {
+      "label": "Portainer",
+      "description": "Διαχείριση containers"
+    },
+    "freshrss": {
+      "label": "FreshRSS",
+      "description": "RSS reader"
+    },
+    "wallabag": {
+      "label": "Wallabag",
+      "description": "Αποθήκευση άρθρων για αργότερα"
+    },
+    "stirlingpdf": {
+      "label": "Stirling PDF",
+      "description": "Εργαλεία PDF"
+    },
+    "wikijs": {
+      "label": "Wiki.js",
+      "description": "Wiki ομάδας"
+    },
+    "calibreweb": {
+      "label": "Calibre-Web",
+      "description": "Διαχείριση βιβλιοθήκης e-book"
+    },
+    "cloudflare": {
+      "label": "Cloudflare",
+      "description": "DNS, tunnels & zero-trust"
+    },
+    "tailscale": {
+      "label": "Tailscale",
+      "description": "Mesh VPN & διαχείριση συσκευών"
+    },
+    "generic_rest": {
+      "label": "Generic REST",
+      "description": "Προσαρμοσμένη REST API υπηρεσία"
+    }
+  },
+  "fallback": {
+    "label": "Άγνωστο",
+    "description": "Άγνωστος τύπος υπηρεσίας"
+  }
+}

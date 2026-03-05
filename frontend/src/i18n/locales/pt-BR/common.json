@@ -1,0 +1,10 @@
+{
+  "actions": {
+    "signOut": "Sair"
+  },
+  "mcp": {
+    "placeholders": {
+      "apiKey": "YOUR_API_KEY"
+    }
+  }
+}

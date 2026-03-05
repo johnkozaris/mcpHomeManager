@@ -1,0 +1,23 @@
+{
+  "items": {
+    "home": "Home",
+    "services": "Services",
+    "tools": "Tools",
+    "agents": "Agents",
+    "logs": "Logs",
+    "users": "Users",
+    "settings": "Settings"
+  },
+  "actions": {
+    "collapseSidebar": "Collapse sidebar",
+    "expandSidebar": "Expand sidebar",
+    "collapse": "Collapse",
+    "expand": "Expand",
+    "switchToDarkMode": "Dark mode",
+    "switchToLightMode": "Light mode"
+  },
+  "theme": {
+    "dark": "Dark",
+    "light": "Light"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "page": {
+    "title": "도구",
+    "description": {
+      "withCounts": "{serviceCount}개 서비스의 도구 {toolsCount}개 • 활성화 {enabledCount}개",
+      "empty": "MCP 클라이언트에 노출할 도구를 관리하세요."
+    },
+    "filters": {
+      "searchPlaceholder": "도구 검색",
+      "allServices": "모든 서비스",
+      "status": {
+        "all": "전체 ({count})",
+        "enabled": "활성화 ({count})",
+        "disabled": "비활성화 ({count})"
+      }
+    },
+    "errors": {
+      "missingService": "\"{toolName}\" 도구에 연결된 서비스가 없어 업데이트할 수 없습니다."
+    },
+    "query": {
+      "loading": "도구를 불러오는 중…"
+    },
+    "empty": {
+      "searchTitle": "검색 조건에 맞는 도구가 없습니다",
+      "searchDescription": "다른 검색어 또는 필터를 시도해 보세요.",
+      "noToolsTitle": "아직 도구가 없습니다",
+      "noToolsDescription": "서비스를 연결하면 도구를 사용할 수 있습니다."
+    }
+  }
+}

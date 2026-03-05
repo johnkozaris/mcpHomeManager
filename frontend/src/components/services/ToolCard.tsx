@@ -1,8 +1,10 @@
 import { useState } from "react";
-import type { ToolDefinition } from "@/lib/types";
+import type { TestResult, ToolDefinition } from "@/lib/types";
 import { Toggle } from "@/components/ui/Toggle";
 import { Badge } from "@/components/ui/Badge";
 import { ServiceIconBadge } from "@/lib/service-meta";
+import { resolveBackendMessage } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 import {
   ChevronDown,
   Pencil,
@@ -21,13 +23,18 @@ interface SchemaProperty {
 }
 
 function ParameterSchema({ schema }: { schema: Record<string, unknown> }) {
+  const { t } = useTranslation("components", {
+    keyPrefix: "services.toolCard",
+  });
   const properties = schema.properties as
     | Record<string, SchemaProperty>
     | undefined;
   const required = (schema.required as string[]) ?? [];
 
   if (!properties || Object.keys(properties).length === 0) {
-    return <p className="text-xs text-ink-tertiary italic">No parameters</p>;
+    return (
+      <p className="text-xs text-ink-tertiary italic">{t("noParameters")}</p>
+    );
   }
 
   return (
@@ -41,9 +48,9 @@ function ParameterSchema({ schema }: { schema: Record<string, unknown> }) {
               <span className="text-ink-tertiary shrink-0">{prop.type}</span>
             )}
             {isRequired ? (
-              <Badge variant="brand">required</Badge>
+              <Badge variant="brand">{t("required")}</Badge>
             ) : (
-              <Badge variant="default">optional</Badge>
+              <Badge variant="default">{t("optional")}</Badge>
             )}
             {prop.default !== undefined && (
               <span className="text-ink-tertiary shrink-0">
@@ -76,13 +83,18 @@ function EditableParameterSchema({
   descriptions: Record<string, string>;
   onDescriptionChange: (paramName: string, value: string) => void;
 }) {
+  const { t } = useTranslation("components", {
+    keyPrefix: "services.toolCard",
+  });
   const properties = schema.properties as
     | Record<string, SchemaProperty>
     | undefined;
   const required = (schema.required as string[]) ?? [];
 
   if (!properties || Object.keys(properties).length === 0) {
-    return <p className="text-xs text-ink-tertiary italic">No parameters</p>;
+    return (
+      <p className="text-xs text-ink-tertiary italic">{t("noParameters")}</p>
+    );
   }
 
   return (
@@ -97,16 +109,16 @@ function EditableParameterSchema({
                 <span className="text-ink-tertiary shrink-0">{prop.type}</span>
               )}
               {isRequired ? (
-                <Badge variant="brand">required</Badge>
+                <Badge variant="brand">{t("required")}</Badge>
               ) : (
-                <Badge variant="default">optional</Badge>
+                <Badge variant="default">{t("optional")}</Badge>
               )}
             </div>
             <input
               type="text"
               value={descriptions[name] ?? prop.description ?? ""}
               onChange={(e) => onDescriptionChange(name, e.target.value)}
-              placeholder="Parameter description (what the AI sees)…"
+              placeholder={t("parameterDescriptionPlaceholder")}
               className="w-full text-xs px-2.5 py-1.5 rounded-lg bg-surface border border-line-strong text-ink placeholder:text-ink-faint focus:outline-none focus:shadow-focus focus:border-transparent transition-all"
             />
           </div>
@@ -130,7 +142,7 @@ interface ToolCardProps {
   onDelete?: (toolName: string) => void;
   onEditDefinition?: (toolName: string) => void;
   onTestTool?: (toolName: string) => void;
-  testResult?: { success: boolean; message: string } | null;
+  testResult?: TestResult | null;
   testingTool?: string | null;
   /** True when this is a user-created generic tool (not a built-in) */
   isGenericTool?: boolean;
@@ -165,6 +177,9 @@ export function ToolCard({
   testingTool,
   isGenericTool,
 }: ToolCardProps) {
+  const { t } = useTranslation("components", {
+    keyPrefix: "services.toolCard",
+  });
   // A tool is user-defined if the prop is set or the tool's own flag says so
   const isCustomTool = isGenericTool ?? tool.is_user_defined ?? false;
   const [expanded, setExpanded] = useState(false);
@@ -183,6 +198,12 @@ export function ToolCard({
     typeof schemaProps === "object" &&
     Object.keys(schemaProps as object).length > 0;
   const paramCount = hasParams ? Object.keys(schemaProps as object).length : 0;
+  const resolvedTestMessage = testResult
+    ? resolveBackendMessage(testResult, {
+        fallback: testResult.message,
+        includeRawDetail: true,
+      })
+    : null;
 
   const startEditing = () => {
     const { desc, hint } = splitHint(tool.description);
@@ -260,7 +281,7 @@ export function ToolCard({
             {tool.name}
           </code>
           {tool.description_override && (
-            <Badge variant="brand">customized</Badge>
+            <Badge variant="brand">{t("customized")}</Badge>
           )}
         </div>
 
@@ -274,7 +295,8 @@ export function ToolCard({
                 </p>
                 {hint && (
                   <p className="text-2xs text-clay mt-1.5 flex items-center gap-1">
-                    <span className="font-semibold">Hint:</span> {hint}
+                    <span className="font-semibold">{t("hintLabel")}</span>{" "}
+                    {hint}
                   </p>
                 )}
               </div>
@@ -290,7 +312,9 @@ export function ToolCard({
               {tool.path_template_override ?? tool.path_template}
             </code>
             {(tool.http_method_override || tool.path_template_override) && (
-              <span className="text-2xs text-clay">(customized)</span>
+              <span className="text-2xs text-clay">
+                {t("customizedParenthetical")}
+              </span>
             )}
           </div>
         )}
@@ -308,11 +332,11 @@ export function ToolCard({
                     size={11}
                     className={`transition-transform ${expanded ? "rotate-180" : ""}`}
                   />
-                  {paramCount} param{paramCount !== 1 ? "s" : ""}
+                  {t("paramsCount", { count: paramCount })}
                 </button>
               )}
               {!hasParams && (
-                <span className="text-2xs text-ink-faint">No params</span>
+                <span className="text-2xs text-ink-faint">{t("noParams")}</span>
               )}
             </div>
 
@@ -324,18 +348,18 @@ export function ToolCard({
                     onClick={() => onTestTool(tool.name)}
                     disabled={testingTool === tool.name}
                     className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-medium text-ink-secondary border border-line-strong hover:border-terra/50 hover:text-terra transition-all disabled:opacity-40"
-                    title="Test endpoint reachability"
-                    aria-label={`Test ${tool.name} endpoint`}
+                    title={t("testEndpointReachability")}
+                    aria-label={t("testEndpointAria", { toolName: tool.name })}
                   >
                     <Zap size={11} />
-                    {testingTool === tool.name ? "Testing…" : "Test"}
+                    {testingTool === tool.name ? t("testing") : t("test")}
                   </button>
                   {testResult && (
                     <span
                       className={`w-2 h-2 rounded-full ${testResult.success ? "bg-sage" : "bg-rust"}`}
-                      title={testResult.message}
+                      title={resolvedTestMessage ?? testResult.message}
                       role="status"
-                      aria-label={testResult.message}
+                      aria-label={resolvedTestMessage ?? testResult.message}
                     />
                   )}
                 </span>
@@ -345,8 +369,10 @@ export function ToolCard({
                   type="button"
                   onClick={() => onEditDefinition(tool.name)}
                   className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-medium text-ink-secondary border border-line-strong hover:border-terra/50 hover:text-terra transition-all"
-                  title="Edit tool definition (method, path, schema)"
-                  aria-label={`Edit ${tool.name} definition`}
+                  title={t("editToolDefinition")}
+                  aria-label={t("editToolDefinitionAria", {
+                    toolName: tool.name,
+                  })}
                 >
                   <Settings2 size={11} />
                 </button>
@@ -356,8 +382,8 @@ export function ToolCard({
                   type="button"
                   onClick={() => onDelete(tool.name)}
                   className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-medium text-ink-secondary border border-line-strong hover:border-rust/50 hover:text-rust transition-all"
-                  title="Delete tool"
-                  aria-label={`Delete ${tool.name}`}
+                  title={t("deleteTool")}
+                  aria-label={t("deleteToolAria", { toolName: tool.name })}
                 >
                   <Trash2 size={11} />
                 </button>
@@ -367,10 +393,10 @@ export function ToolCard({
                   type="button"
                   onClick={startEditing}
                   className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-terra border border-terra/30 hover:bg-terra-bg hover:border-terra/50 transition-all"
-                  title="Edit"
+                  title={t("edit")}
                 >
                   <Pencil size={11} />
-                  Edit
+                  {t("edit")}
                 </button>
               )}
               {onToggle ? (
@@ -380,7 +406,7 @@ export function ToolCard({
                 />
               ) : (
                 <Badge variant={tool.is_enabled ? "positive" : "default"}>
-                  {tool.is_enabled ? "enabled" : "disabled"}
+                  {tool.is_enabled ? t("enabled") : t("disabled")}
                 </Badge>
               )}
             </div>
@@ -395,7 +421,7 @@ export function ToolCard({
               htmlFor={`desc-${tool.name}`}
               className="text-2xs font-semibold text-ink-tertiary uppercase tracking-wider block mb-1"
             >
-              Tool description
+              {t("toolDescriptionLabel")}
             </label>
             <textarea
               id={`desc-${tool.name}`}
@@ -403,7 +429,7 @@ export function ToolCard({
               onChange={(e) => setEditDesc(e.target.value)}
               rows={3}
               className="w-full text-xs px-3 py-2 rounded-lg bg-canvas border border-line-strong text-ink placeholder:text-ink-faint focus:outline-none focus:shadow-focus focus:border-transparent transition-all resize-y"
-              placeholder="Describe what this tool does (this is what the AI reads)…"
+              placeholder={t("toolDescriptionPlaceholder")}
             />
           </div>
           <div>
@@ -411,9 +437,9 @@ export function ToolCard({
               htmlFor={`hint-${tool.name}`}
               className="text-2xs font-semibold text-ink-tertiary uppercase tracking-wider block mb-1"
             >
-              AI hint{" "}
+              {t("aiHintLabel")}{" "}
               <span className="font-normal normal-case tracking-normal">
-                (optional)
+                {t("optionalParenthetical")}
               </span>
             </label>
             <input
@@ -422,17 +448,16 @@ export function ToolCard({
               value={editHint}
               onChange={(e) => setEditHint(e.target.value)}
               className="w-full text-xs px-3 py-2 rounded-lg bg-canvas border border-line-strong text-ink placeholder:text-ink-faint focus:outline-none focus:shadow-focus focus:border-transparent transition-all"
-              placeholder="e.g. Call ha_list_entities first to discover valid entity IDs"
+              placeholder={t("aiHintPlaceholder")}
             />
             <p className="text-2xs text-ink-faint mt-1">
-              Appended to the description so the AI knows when and how to use
-              this tool.
+              {t("aiHintHelpText")}
             </p>
           </div>
           {tool.http_method && (
             <div>
               <span className="text-2xs font-semibold text-ink-tertiary uppercase tracking-wider block mb-1.5">
-                Endpoint
+                {t("endpointLabel")}
               </span>
               <div className="flex gap-2">
                 <select
@@ -449,18 +474,20 @@ export function ToolCard({
                   value={editPath}
                   onChange={(e) => setEditPath(e.target.value)}
                   className="flex-1 text-xs font-mono px-3 py-2 rounded-lg bg-canvas border border-line-strong text-ink placeholder:text-ink-faint focus:outline-none focus:shadow-focus focus:border-transparent transition-all"
-                  placeholder="/api/v1/endpoint"
+                  placeholder={t("endpointPathPlaceholder")}
                 />
               </div>
               <p className="text-2xs text-ink-faint mt-1">
-                Use <code className="text-terra">{"{param}"}</code> for path parameters. Changes override the default endpoint.
+                {t("endpointHelpPrefix")}{" "}
+                <code className="text-terra">{"{param}"}</code>{" "}
+                {t("endpointHelpSuffix")}
               </p>
             </div>
           )}
           {hasParams && (
             <div>
               <span className="text-2xs font-semibold text-ink-tertiary uppercase tracking-wider block mb-1.5">
-                Parameter descriptions
+                {t("parameterDescriptionsLabel")}
               </span>
               <EditableParameterSchema
                 schema={tool.parameters_schema}
@@ -477,14 +504,14 @@ export function ToolCard({
               onClick={saveEditing}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-terra text-white hover:opacity-90 transition-opacity"
             >
-              <Check size={12} /> Save
+              <Check size={12} /> {t("save")}
             </button>
             <button
               type="button"
               onClick={cancelEditing}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-ink-secondary hover:text-ink hover:bg-canvas-tertiary transition-all"
             >
-              <X size={12} /> Cancel
+              <X size={12} /> {t("cancel")}
             </button>
             {(tool.description_override || tool.parameters_schema_override || tool.http_method_override || tool.path_template_override) && (
                 <button
@@ -495,7 +522,7 @@ export function ToolCard({
                   }}
                   className="ml-auto text-2xs text-ink-tertiary hover:text-rust transition-colors"
                 >
-                Reset to original
+                {t("resetToOriginal")}
               </button>
             )}
           </div>

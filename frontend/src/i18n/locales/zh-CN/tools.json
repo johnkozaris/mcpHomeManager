@@ -1,0 +1,30 @@
+{
+  "page": {
+    "title": "工具",
+    "description": {
+      "withCounts": "{toolsCount} 个工具，来自 {serviceCount} 个服务 • 已启用 {enabledCount} 个",
+      "empty": "管理哪些工具对 MCP 客户端可用。"
+    },
+    "filters": {
+      "searchPlaceholder": "搜索工具",
+      "allServices": "全部服务",
+      "status": {
+        "all": "全部 ({count})",
+        "enabled": "已启用 ({count})",
+        "disabled": "已禁用 ({count})"
+      }
+    },
+    "errors": {
+      "missingService": "无法更新“{toolName}”，因为该工具未关联任何服务。"
+    },
+    "query": {
+      "loading": "正在加载工具…"
+    },
+    "empty": {
+      "searchTitle": "没有工具匹配你的搜索",
+      "searchDescription": "请尝试其他搜索词或筛选条件。",
+      "noToolsTitle": "还没有工具",
+      "noToolsDescription": "连接一个服务后即可开始使用工具。"
+    }
+  }
+}

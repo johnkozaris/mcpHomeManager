@@ -109,7 +109,12 @@ export interface UpdateServiceRequest {
   config?: Record<string, unknown>;
 }
 
-export interface TestResult {
+export interface BackendMessageCodeFields {
+  code?: string | null;
+  message_code?: string | null;
+}
+
+export interface TestResult extends BackendMessageCodeFields {
   success: boolean;
   message: string;
 }
@@ -136,6 +141,11 @@ export interface PermissionProfile {
   label: string;
   description: string;
   tool_states: Record<string, boolean>;
+}
+
+export interface ApplyProfileResult extends BackendMessageCodeFields {
+  status: string;
+  profile: string;
 }
 
 export interface ImportResult {
@@ -181,6 +191,15 @@ export interface SmtpConfigResponse {
   is_enabled: boolean;
 }
 
+export interface SmtpTestResult extends BackendMessageCodeFields {
+  success: boolean;
+  message: string;
+}
+
+export interface AuthStatusResponse extends BackendMessageCodeFields {
+  status: string;
+}
+
 export interface SetupResponse {
   token: string;
   username: string;
@@ -196,7 +215,13 @@ export interface GenericToolDefinition {
   params_schema: Record<string, unknown>;
 }
 
-export interface OpenAPIImportResult {
+export interface GenericToolResult extends BackendMessageCodeFields {
+  status: string;
+  tool_name: string;
+  tools_count: number;
+}
+
+export interface OpenAPIImportResult extends BackendMessageCodeFields {
   status: string;
   imported: string[];
   skipped: string[];

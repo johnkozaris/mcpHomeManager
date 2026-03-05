@@ -1,0 +1,75 @@
+{
+  "page": {
+    "title": "用户",
+    "description": "管理谁可以访问网关，以及能使用哪些服务。",
+    "actions": {
+      "cancel": "取消",
+      "createUser": "创建用户",
+      "creating": "创建中…",
+      "create": "创建"
+    },
+    "form": {
+      "title": "创建用户",
+      "fields": {
+        "username": {
+          "label": "用户名",
+          "placeholder": "jane",
+          "errors": {
+            "minLength": "用户名至少需要 2 个字符",
+            "maxLength": "用户名不能超过 100 个字符"
+          }
+        },
+        "email": {
+          "label": "邮箱",
+          "placeholder": "jane@example.com"
+        },
+        "password": {
+          "label": "密码",
+          "placeholder": "留空可稍后设置",
+          "errors": {
+            "minLength": "密码至少需要 8 个字符（当前 {current}）"
+          }
+        }
+      },
+      "passwordHelp": "创建时密码可选，但填写的话至少需要 8 个字符。",
+      "toggles": {
+        "admin": "管理员权限",
+        "selfMcp": "允许 self-MCP 工具"
+      },
+      "allowedServices": "允许的服务"
+    },
+    "errors": {
+      "createUserFailed": "创建用户失败",
+      "updateUserFailed": "更新用户失败"
+    },
+    "query": {
+      "loading": "正在加载用户…"
+    },
+    "list": {
+      "count": "{count, plural, one {# 个用户} other {# 个用户}}",
+      "badges": {
+        "admin": "管理员",
+        "mcp": "Self-MCP"
+      },
+      "toggles": {
+        "admin": "管理员",
+        "mcp": "Self-MCP"
+      },
+      "access": {
+        "allServices": "所有服务",
+        "serviceCount": "{count, plural, one {# 个服务} other {# 个服务}}"
+      }
+    },
+    "empty": {
+      "title": "还没有用户",
+      "description": "创建第一个用户来分配访问权限。"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "删除用户",
+        "description": "这将永久删除该用户账号。",
+        "confirm": "删除"
+      }
+    }
+  }
+}

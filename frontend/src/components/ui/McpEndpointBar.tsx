@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Terminal, Copy, Check, Braces } from "lucide-react";
 import { buildMcpJsonConfig, getMcpEndpoint } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 export function McpEndpointBar({ apiKey }: { apiKey?: string | null } = {}) {
+  const { t } = useTranslation("components", { keyPrefix: "ui.mcpEndpointBar" });
   const mcpEndpoint = getMcpEndpoint();
   const [copiedUrl, setCopiedUrl] = useState(false);
   const [copiedJson, setCopiedJson] = useState(false);
@@ -36,7 +38,7 @@ export function McpEndpointBar({ apiKey }: { apiKey?: string | null } = {}) {
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-2xs font-bold uppercase tracking-wider text-ink-tertiary">
-          MCP Endpoint
+          {t("label")}
         </p>
         <code className="text-sm font-mono text-ink truncate block">
           {mcpEndpoint}
@@ -48,14 +50,14 @@ export function McpEndpointBar({ apiKey }: { apiKey?: string | null } = {}) {
           className="px-3 py-2 rounded-xl text-xs font-bold text-white bg-[var(--coral)] hover:opacity-90 transition-opacity flex items-center gap-1.5"
         >
           {copiedUrl ? <Check size={13} /> : <Copy size={13} />}
-          {copiedUrl ? "Copied!" : "Copy URL"}
+          {copiedUrl ? t("copied") : t("copyUrl")}
         </button>
         <button
           onClick={copyJson}
           className="px-3 py-2 rounded-xl text-xs font-bold text-ink border border-line-strong hover:border-terra hover:text-terra transition-all flex items-center gap-1.5"
         >
           {copiedJson ? <Check size={13} /> : <Braces size={13} />}
-          {copiedJson ? "Copied!" : "Copy JSON"}
+          {copiedJson ? t("copied") : t("copyJson")}
         </button>
       </div>
     </div>

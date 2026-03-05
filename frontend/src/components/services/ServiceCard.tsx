@@ -6,8 +6,12 @@ import { queryKeys } from "@/lib/query-keys";
 import { Badge } from "@/components/ui/Badge";
 import { StatusDot } from "@/components/ui/StatusDot";
 import { ServiceIconBadge, getServiceMeta } from "@/lib/service-meta";
+import { useTranslation } from "react-i18next";
 
 export function ServiceCard({ service }: { service: ServiceConnection }) {
+  const { t } = useTranslation("components", {
+    keyPrefix: "services.serviceCard",
+  });
   const meta = getServiceMeta(service.service_type);
   const qc = useQueryClient();
 
@@ -41,9 +45,9 @@ export function ServiceCard({ service }: { service: ServiceConnection }) {
       <div className="flex items-center justify-between mt-auto">
         <div className="flex items-center gap-2">
           <StatusDot status={service.health_status} />
-          {!service.is_enabled && <Badge variant="caution">paused</Badge>}
+          {!service.is_enabled && <Badge variant="caution">{t("paused")}</Badge>}
         </div>
-        <Badge variant="brand">{service.tool_count} tools</Badge>
+        <Badge variant="brand">{t("toolsCount", { count: service.tool_count })}</Badge>
       </div>
       <p className="text-xs text-ink-faint font-mono truncate">
         {service.base_url}

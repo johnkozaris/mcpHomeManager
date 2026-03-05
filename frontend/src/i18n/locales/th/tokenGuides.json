@@ -1,0 +1,168 @@
+{
+  "guides": {
+    "forgejo": {
+      "steps": [
+        "เปิดอินสแตนซ์ Forgejo ของคุณแล้วเข้าสู่ระบบ",
+        "คลิกอวาตาร์โปรไฟล์มุมขวาบน แล้วเลือก \"Settings\"",
+        "ในแถบด้านซ้าย คลิก \"Applications\"",
+        "ใต้ \"Manage Access Tokens\" ให้ใส่ชื่อ token (เช่น \"{appName}\")",
+        "เลือกสิทธิ์ที่ token ต้องใช้ — ถ้าต้องการสิทธิ์เต็มให้ติ๊กทุก scope อย่างน้อยต้องมี: read:organization, read:repository, read:issue, write:issue",
+        "คลิก \"Generate Token\" แล้วคัดลอก token ทันที — จะไม่แสดงอีกครั้ง",
+        "วาง token ลงในช่องด้านบน"
+      ]
+    },
+    "homeassistant": {
+      "steps": [
+        "เปิดอินสแตนซ์ Home Assistant แล้วเข้าสู่ระบบ",
+        "คลิกชื่อผู้ใช้/โปรไฟล์ของคุณที่ด้านล่างของแถบด้านซ้าย",
+        "เลื่อนลงไปที่ส่วน \"Long-Lived Access Tokens\" ด้านล่างสุดของหน้า",
+        "คลิก \"Create Token\"",
+        "ตั้งชื่อเช่น \"{appName}\" แล้วคลิก OK",
+        "คัดลอก token ที่แสดงในไดอะล็อก — จะแสดงเพียงครั้งเดียว",
+        "วาง token ลงในช่องด้านบน"
+      ],
+      "note": "Home Assistant tokens มักขึ้นต้นด้วย eyJ…"
+    },
+    "paperless": {
+      "steps": [
+        "เปิดอินสแตนซ์ Paperless-ngx แล้วเข้าสู่ระบบด้วยบัญชีผู้ดูแล",
+        "คลิกไอคอนเฟืองหรือไปที่ Settings ในเมนูด้านบน",
+        "เลื่อนลงหรือมองหาส่วน \"API\"",
+        "API token ของคุณจะแสดงที่นี่ — คลิกไอคอนคัดลอกเพื่อคัดลอก",
+        "หากยังไม่มี token ให้คลิก \"Generate\" เพื่อสร้าง",
+        "วาง token ลงในช่องด้านบน"
+      ]
+    },
+    "immich": {
+      "steps": [
+        "เปิดอินสแตนซ์ Immich แล้วเข้าสู่ระบบ",
+        "คลิกอวาตาร์โปรไฟล์มุมขวาบน",
+        "เลือก \"Account Settings\" จากเมนูดรอปดาวน์",
+        "เลื่อนลงไปที่ \"API Keys\"",
+        "คลิก \"New API Key\" แล้วตั้งชื่อเช่น \"{appName}\"",
+        "คัดลอก key ที่สร้างขึ้นทันที — จะไม่แสดงอีกครั้ง",
+        "วาง key ลงในช่องด้านบน"
+      ]
+    },
+    "nextcloud": {
+      "steps": [
+        "เปิดอินสแตนซ์ Nextcloud แล้วเข้าสู่ระบบ",
+        "คลิกอวาตาร์โปรไฟล์มุมขวาบน แล้วเลือก \"Settings\" (หรือ \"Personal settings\")",
+        "ในแถบด้านซ้าย คลิก \"Security\"",
+        "เลื่อนลงไปที่ส่วน \"Devices & sessions\"",
+        "ใส่ \"{appName}\" เป็นชื่อแอปในช่องข้อความด้านล่าง",
+        "คลิก \"Create new app password\"",
+        "คัดลอกรหัสผ่านที่สร้างขึ้น — นี่คือ API token ของคุณ",
+        "วางลงในช่องด้านบน"
+      ],
+      "note": "รูปแบบ: username:app-password (เช่น admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx)"
+    },
+    "uptimekuma": {
+      "steps": [
+        "เปิดอินสแตนซ์ Uptime Kuma แล้วเข้าสู่ระบบ",
+        "คลิก \"Settings\" ที่แถบด้านซ้าย",
+        "ไปที่แท็บ \"API Keys\"",
+        "คลิก \"Add API Key\" แล้วตั้งชื่อเช่น \"{appName}\"",
+        "ตั้งวันหมดอายุหรือปล่อยว่างหากไม่ต้องการหมดอายุ",
+        "คลิก \"Create\" แล้วคัดลอก API key ที่สร้าง",
+        "วาง key ลงในช่องด้านบน"
+      ]
+    },
+    "adguard": {
+      "steps": [
+        "AdGuard Home ใช้การยืนยันตัวตนแบบ basic (username และ password) แทน API token",
+        "ใช้ username และ password เดียวกับที่ใช้เข้าสู่เว็บอินเทอร์เฟซ AdGuard",
+        "กรอกในช่องด้านบนด้วยรูปแบบ: username:password"
+      ],
+      "note": "ตัวอย่าง หากล็อกอินเป็น \"admin\" และรหัสผ่านคือ \"mypass\" ให้กรอก admin:mypass"
+    },
+    "nginxproxymanager": {
+      "steps": [
+        "Nginx Proxy Manager ใช้ชื่อผู้ใช้และรหัสผ่านของคุณสำหรับการเข้าถึง API",
+        "กรอกอีเมลและรหัสผ่านในรูปแบบ: email:password",
+        "นี่คือข้อมูลเดียวกับที่ใช้เข้าสู่เว็บอินเทอร์เฟซ NPM"
+      ],
+      "note": "รูปแบบ: email:password (เช่น admin@example.com:changeme)"
+    },
+    "portainer": {
+      "steps": [
+        "Portainer ใช้ชื่อผู้ใช้และรหัสผ่านของคุณสำหรับการเข้าถึง API",
+        "กรอก username และ password ในรูปแบบ: username:password",
+        "นี่คือข้อมูลเดียวกับที่ใช้เข้าสู่เว็บอินเทอร์เฟซ Portainer"
+      ],
+      "note": "รูปแบบ: username:password (เช่น admin:mypassword)"
+    },
+    "freshrss": {
+      "steps": [
+        "FreshRSS ใช้ API password แยกต่างหากสำหรับการเข้าถึงแบบโปรแกรม",
+        "ใน FreshRSS ไปที่ Settings → Profile → API Management",
+        "เปิดตัวเลือก “Allow API access” หากยังไม่เปิด",
+        "ตั้ง API password (ต่างจากรหัสผ่านที่ใช้เข้าสู่ระบบ)",
+        "กรอก username FreshRSS และ API password ในรูปแบบ: username:api_password"
+      ],
+      "note": "รูปแบบ: username:api_password — API password ตั้งแยกใน FreshRSS settings ไม่ใช่รหัสผ่านที่ใช้เข้าสู่ระบบ"
+    },
+    "wallabag": {
+      "steps": [
+        "เปิดอินสแตนซ์ Wallabag แล้วเข้าสู่ระบบ",
+        "ไปที่หน้าจัดการ API clients (ส่วน Developer ใน settings)",
+        "คลิก \"Create a new client\" และจด client ID กับ client secret",
+        "กรอกทั้ง 4 ค่าในรูปแบบ: client_id:client_secret:username:password"
+      ],
+      "note": "รูปแบบ: client_id:client_secret:username:password (4 ส่วนคั่นด้วยเครื่องหมายโคลอน)"
+    },
+    "stirlingpdf": {
+      "steps": [
+        "เปิดอินสแตนซ์ Stirling PDF แล้วเข้าสู่ระบบด้วยบัญชีผู้ดูแล",
+        "คลิกเฟืองตั้งค่า (⚙️) มุมขวาบนเพื่อเปิด Account Settings",
+        "ค้นหาหรือสร้าง personal API key ของคุณในแผงตั้งค่า",
+        "หรือใช้ global API key ที่ตั้งผ่านตัวแปรแวดล้อม SECURITY_CUSTOMGLOBALAPIKEY",
+        "วาง API key ลงในช่องด้านบน"
+      ],
+      "note": "ใช้ header ชื่อ X-API-KEY ต้องเปิดการล็อกอินใน Stirling PDF เพื่อให้ API key auth ใช้งานได้"
+    },
+    "wikijs": {
+      "steps": [
+        "เปิดอินสแตนซ์ Wiki.js แล้วล็อกอินด้วยบัญชีผู้ดูแล",
+        "ไปที่ Administration → API Access",
+        "คลิก \"Create API Key\" แล้วตั้งชื่อ (เช่น \"{appName}\")",
+        "เลือก permission group ที่เหมาะสม (แนะนำ Full Access)",
+        "ตั้งวันหมดอายุหรือปล่อยว่างหากไม่ต้องการหมดอายุ",
+        "คัดลอก API key ที่สร้างแล้ววางลงในช่องด้านบน"
+      ]
+    },
+    "tailscale": {
+      "steps": [
+        "เปิด Tailscale admin console ที่ https://login.tailscale.com/admin",
+        "ไปที่ Settings → Keys",
+        "ใต้ \"API access tokens\" คลิก \"Generate access token...\"",
+        "กำหนดวันหมดอายุของ token หรือใช้ค่าเริ่มต้น",
+        "คลิก \"Generate\" แล้วคัดลอก token ทันที — จะไม่แสดงอีกครั้ง",
+        "วาง token ลงในช่องด้านบน"
+      ],
+      "note": "Tailscale API keys ขึ้นต้นด้วย tskey-api-... และใช้ยืนยันตัวตนกับ Tailscale API (api.tailscale.com/api/v2)"
+    },
+    "calibreweb": {
+      "steps": [
+        "Calibre-Web ใช้ชื่อผู้ใช้และรหัสผ่านของคุณสำหรับการเข้าถึง API",
+        "กรอก username และ password ของ Calibre-Web ในรูปแบบ: username:password",
+        "นี่คือข้อมูลเดียวกับที่ใช้เข้าสู่เว็บอินเทอร์เฟซ Calibre-Web"
+      ],
+      "note": "ค่าเริ่มต้นคือ admin/admin123 — ควรเปลี่ยนก่อนเชื่อมต่อ รูปแบบ: username:password"
+    },
+    "cloudflare": {
+      "steps": [
+        "เปิด Cloudflare dashboard ที่ https://dash.cloudflare.com",
+        "คลิกไอคอนโปรไฟล์มุมขวาบน แล้วเลือก \"My Profile\"",
+        "ในแถบด้านซ้าย คลิก \"API Tokens\"",
+        "คลิก \"Create Token\"",
+        "ใช้ custom token template และตั้งสิทธิ์ดังนี้: Zone:DNS:Edit, Zone:Zone:Read, Account:Cloudflare Tunnel:Edit",
+        "เลือกจำกัด token เฉพาะบาง zone หรือ account ได้ตามต้องการ",
+        "คลิก \"Continue to summary\" แล้ว \"Create Token\"",
+        "คัดลอก token ทันที — จะไม่แสดงอีกครั้ง",
+        "วาง token ลงในช่องด้านบน"
+      ],
+      "note": "ใช้ https://api.cloudflare.com เป็น Base URL และ token จะยืนยันตัวตนผ่าน Bearer header"
+    }
+  }
+}

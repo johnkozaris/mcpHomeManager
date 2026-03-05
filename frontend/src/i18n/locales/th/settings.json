@@ -1,0 +1,111 @@
+{
+  "page": {
+    "title": "ตั้งค่า",
+    "description": "ตั้งค่ารูปลักษณ์, endpoint และข้อมูลระบบ",
+    "appearance": {
+      "title": "รูปลักษณ์",
+      "light": "สว่าง",
+      "dark": "มืด"
+    },
+    "language": {
+      "title": "ภาษา",
+      "description": "เลือกภาษาที่ต้องการ แอปจะจำการเลือกของคุณไว้"
+    },
+    "security": {
+      "title": "ความปลอดภัย",
+      "enabled": "เปิดใช้งาน",
+      "disabled": "ปิดใช้งาน",
+      "signedInAs": "เข้าสู่ระบบเป็น",
+      "currentUserFallback": "admin",
+      "selfMcp": {
+        "title": "เครื่องมือ Self-MCP",
+        "description": "เมื่อเปิดใช้งาน AI agents จะสามารถจัดการเกตเวย์นี้ผ่าน MCP ได้โดยตรง — ดูรายการบริการ สลับเปิด/ปิดเครื่องมือ เพิ่มการเชื่อมต่อ และดูบันทึก โดยไม่ต้องใช้เว็บ UI",
+        "accessPrefix": "กำหนดสิทธิ์เป็นรายผู้ใช้ได้ใน",
+        "userManagementLink": "การจัดการผู้ใช้",
+        "accessSuffix": ".",
+        "defaultsPrefix": "ค่าเริ่มต้นจากตัวแปร env",
+        "defaultsSuffix": "เมื่อรีสตาร์ต"
+      }
+    },
+    "apiKey": {
+      "title": "MCP API Key",
+      "status": {
+        "active": "ใช้งานอยู่",
+        "notSet": "ยังไม่ได้ตั้งค่า"
+      },
+      "description": "AI agents (Claude, Cursor, ChatGPT) ใช้คีย์นี้เพื่อเชื่อมต่อกับ MCP endpoint ของคุณ",
+      "revealedTitle": "API key ของคุณ",
+      "actions": {
+        "regenerate": "สร้างคีย์ใหม่",
+        "generate": "สร้างคีย์",
+        "reveal": "แสดงคีย์",
+        "revoke": "เพิกถอน"
+      },
+      "errors": {
+        "revealFailed": "ไม่สามารถแสดงคีย์ได้ ลองสร้างคีย์ใหม่แทน"
+      }
+    },
+    "about": {
+      "title": "เกี่ยวกับ",
+      "versionLabel": "เวอร์ชัน",
+      "serverLabel": "เซิร์ฟเวอร์",
+      "serverFallback": "MCP Manager"
+    },
+    "endpoint": {
+      "title": "MCP Endpoint",
+      "description": "AI agents ของคุณจะเชื่อมต่อผ่าน URL นี้",
+      "agentGuide": "คู่มือตั้งค่าเอเจนต์"
+    },
+    "systemHealth": {
+      "title": "สถานะระบบ",
+      "checking": "กำลังตรวจสอบ…",
+      "rows": {
+        "database": "ฐานข้อมูล",
+        "mcpServer": "MCP Server",
+        "services": "บริการ"
+      },
+      "servicesConnected": "{healthy} / {total} เชื่อมต่ออยู่"
+    },
+    "smtp": {
+      "title": "อีเมล (SMTP)",
+      "description": "ตั้งค่า SMTP สำหรับอีเมลรีเซ็ตรหัสผ่าน เว้นว่างไว้เพื่อปิดการใช้งาน",
+      "testFailed": "ทดสอบไม่สำเร็จ",
+      "fields": {
+        "host": "โฮสต์",
+        "port": "พอร์ต",
+        "username": "ชื่อผู้ใช้",
+        "password": "รหัสผ่าน",
+        "passwordHint": "(ตั้งค่าแล้ว — เว้นว่างไว้เพื่อคงค่าเดิม)",
+        "fromEmail": "อีเมลผู้ส่ง"
+      },
+      "placeholders": {
+        "host": "smtp.gmail.com",
+        "username": "user@example.com",
+        "passwordMasked": "••••••••",
+        "password": "App password",
+        "fromEmail": "noreply@example.com"
+      },
+      "toggles": {
+        "useTls": "ใช้ TLS (STARTTLS)",
+        "enabled": "เปิดใช้งาน"
+      },
+      "errors": {
+        "saveFailed": "บันทึกการตั้งค่า SMTP ไม่สำเร็จ"
+      },
+      "actions": {
+        "saved": "บันทึกแล้ว",
+        "saving": "กำลังบันทึก…",
+        "save": "บันทึก",
+        "sending": "กำลังส่ง…",
+        "sendTestEmail": "ส่งอีเมลทดสอบ"
+      }
+    },
+    "dialogs": {
+      "revokeKey": {
+        "title": "เพิกถอน API Key",
+        "description": "AI agents ที่ใช้คีย์นี้จะถูกตัดการเชื่อมต่อทันที สร้างคีย์ใหม่ได้ภายหลัง",
+        "confirm": "เพิกถอนคีย์"
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "page": {
+    "profileChips": {
+      "label": "Profile"
+    },
+    "invalidServiceId": "Ungültige Service-ID",
+    "query": {
+      "loading": "Service-Details werden geladen…",
+      "error": "Dieser Service konnte nicht geladen werden"
+    },
+    "errors": {
+      "invalidJson": "Ungültiges JSON"
+    },
+    "actions": {
+      "save": "Speichern",
+      "edit": "Bearbeiten",
+      "testing": "Wird getestet…",
+      "testConnection": "Verbindung testen"
+    },
+    "editConnection": {
+      "title": "Verbindung bearbeiten",
+      "fields": {
+        "displayName": "Anzeigename",
+        "baseUrl": "Basis-URL",
+        "apiToken": "API-Token",
+        "apiTokenPlaceholder": "Leer lassen, um den vorhandenen Token beizubehalten.",
+        "configuration": "Konfiguration"
+      }
+    },
+    "stats": {
+      "health": {
+        "label": "Status"
+      },
+      "tools": {
+        "label": "Tools",
+        "sub": "{count, plural, one {# enabled} other {# enabled}}"
+      },
+      "lastTested": {
+        "label": "Zuletzt getestet",
+        "never": "Nie"
+      }
+    },
+    "state": {
+      "label": "Zustand",
+      "active": "Aktiv",
+      "disabled": "Deaktiviert"
+    },
+    "apps": {
+      "title": "Apps ({count})"
+    },
+    "appPreview": {
+      "title": "App-Vorschau",
+      "close": "Vorschau schließen"
+    },
+    "tools": {
+      "title": "MCP-Tools ({count})",
+      "actions": {
+        "importOpenApi": "OpenAPI importieren",
+        "addTool": "Tool hinzufügen"
+      },
+      "errors": {
+        "requestFailed": "Die Anfrage ist fehlgeschlagen"
+      }
+    },
+    "dialogs": {
+      "deleteTool": {
+        "title": "Tool löschen",
+        "description": "Dadurch wird das Tool \"{toolName}\" dauerhaft aus diesem Service entfernt.",
+        "confirm": "Löschen"
+      },
+      "deleteService": {
+        "title": "Service löschen",
+        "description": "Dadurch werden der Service und alle seine registrierten Tools dauerhaft von MCP entfernt.",
+        "confirm": "Löschen"
+      }
+    },
+    "removeService": {
+      "title": "Service entfernen",
+      "description": "Dadurch werden der Service und alle seine registrierten Tools dauerhaft von MCP entfernt.",
+      "action": "Service löschen"
+    },
+    "notFound": "Service nicht gefunden."
+  }
+}

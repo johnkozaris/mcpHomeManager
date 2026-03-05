@@ -1,0 +1,76 @@
+{
+  "services": {
+    "forgejo": {
+      "label": "Forgejo",
+      "description": "Hospedagem Git e CI/CD"
+    },
+    "homeassistant": {
+      "label": "Home Assistant",
+      "description": "Automação residencial inteligente"
+    },
+    "paperless": {
+      "label": "Paperless-ngx",
+      "description": "Gestão de documentos"
+    },
+    "immich": {
+      "label": "Immich",
+      "description": "Gerenciamento de fotos e vídeos"
+    },
+    "nextcloud": {
+      "label": "Nextcloud",
+      "description": "Armazenamento e sincronização em nuvem"
+    },
+    "uptimekuma": {
+      "label": "Uptime Kuma",
+      "description": "Monitoramento de uptime"
+    },
+    "adguard": {
+      "label": "AdGuard Home",
+      "description": "Filtragem DNS e bloqueio de anúncios"
+    },
+    "nginxproxymanager": {
+      "label": "Nginx Proxy Manager",
+      "description": "Proxy reverso e SSL"
+    },
+    "portainer": {
+      "label": "Portainer",
+      "description": "Gerenciamento de containers"
+    },
+    "freshrss": {
+      "label": "FreshRSS",
+      "description": "Leitor de feeds RSS"
+    },
+    "wallabag": {
+      "label": "Wallabag",
+      "description": "Artigos para ler mais tarde"
+    },
+    "stirlingpdf": {
+      "label": "Stirling PDF",
+      "description": "Ferramentas de processamento de PDF"
+    },
+    "wikijs": {
+      "label": "Wiki.js",
+      "description": "Base de conhecimento da equipe"
+    },
+    "calibreweb": {
+      "label": "Calibre-Web",
+      "description": "Gerenciamento de biblioteca de e-books"
+    },
+    "cloudflare": {
+      "label": "Cloudflare",
+      "description": "DNS, túneis e gerenciamento de Zero Trust"
+    },
+    "tailscale": {
+      "label": "Tailscale",
+      "description": "Rede mesh VPN e gerenciamento de dispositivos"
+    },
+    "generic_rest": {
+      "label": "REST genérico",
+      "description": "Serviço de API REST personalizada"
+    }
+  },
+  "fallback": {
+    "label": "Desconhecido",
+    "description": "Tipo de serviço desconhecido"
+  }
+}

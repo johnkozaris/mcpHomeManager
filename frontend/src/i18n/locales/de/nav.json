@@ -1,0 +1,23 @@
+{
+  "items": {
+    "home": "Startseite",
+    "services": "Services",
+    "tools": "Tools",
+    "agents": "Agenten",
+    "logs": "Protokolle",
+    "users": "Benutzer",
+    "settings": "Einstellungen"
+  },
+  "actions": {
+    "collapseSidebar": "Seitenleiste einklappen",
+    "expandSidebar": "Seitenleiste ausklappen",
+    "collapse": "Einklappen",
+    "expand": "Ausklappen",
+    "switchToDarkMode": "Zum dunklen Modus wechseln",
+    "switchToLightMode": "Zum hellen Modus wechseln"
+  },
+  "theme": {
+    "dark": "Dunkel",
+    "light": "Hell"
+  }
+}

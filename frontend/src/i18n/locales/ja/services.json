@@ -1,0 +1,25 @@
+{
+  "listPage": {
+    "title": "サービス",
+    "description": "サービスを接続し、ヘルス、ツール、設定を管理します。",
+    "actions": {
+      "export": "エクスポート",
+      "import": "インポート",
+      "connectService": "サービスを接続"
+    },
+    "errors": {
+      "exportFailed": "サービスのエクスポートに失敗しました"
+    },
+    "query": {
+      "loading": "サービスを読み込み中…",
+      "error": "サービスを読み込めませんでした"
+    },
+    "cards": {
+      "connectDescription": "別のサービスを接続"
+    },
+    "empty": {
+      "title": "接続済みサービスはありません",
+      "description": "最初のサービスを接続して、MCPクライアントにツールを公開しましょう。"
+    }
+  }
+}

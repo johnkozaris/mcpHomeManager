@@ -1,0 +1,23 @@
+{
+  "items": {
+    "home": "หน้าหลัก",
+    "services": "บริการ",
+    "tools": "เครื่องมือ",
+    "agents": "เอเจนต์",
+    "logs": "ประวัติ",
+    "users": "ผู้ใช้",
+    "settings": "ตั้งค่า"
+  },
+  "actions": {
+    "collapseSidebar": "ย่อแถบด้านข้าง",
+    "expandSidebar": "ขยายแถบด้านข้าง",
+    "collapse": "ย่อ",
+    "expand": "ขยาย",
+    "switchToDarkMode": "โหมดมืด",
+    "switchToLightMode": "โหมดสว่าง"
+  },
+  "theme": {
+    "dark": "มืด",
+    "light": "สว่าง"
+  }
+}

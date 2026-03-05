@@ -1,0 +1,83 @@
+{
+  "heroBanner": {
+    "title": "Σύνδεσε το homelab σου με AI",
+    "description": "Σύνδεσε τις υπηρεσίες σου μία φορά και μετά χρησιμοποίησε τα εργαλεία τους από Claude, ChatGPT, Cursor κ.ά.",
+    "actions": {
+      "connectService": "Σύνδεση υπηρεσίας",
+      "setupGuide": "Οδηγός ρύθμισης"
+    }
+  },
+  "stats": {
+    "services": {
+      "sub": "{count} ενεργές"
+    },
+    "tools": {
+      "sub": "Διαθέσιμα εργαλεία"
+    },
+    "health": {
+      "ok": "Υγιές",
+      "allConnected": "Όλες οι υπηρεσίες συνδεδεμένες",
+      "needsAttention": "Χρειάζεται προσοχή"
+    },
+    "apiCalls": {
+      "sub": "Πρόσφατες κλήσεις API"
+    }
+  },
+  "serviceRow": {
+    "toolsCount": "{count, plural, one {# tool} other {# tools}}"
+  },
+  "serviceGrid": {
+    "more": "Περισσότερα"
+  },
+  "howItWorks": {
+    "title": "Πώς λειτουργεί",
+    "steps": {
+      "connect": {
+        "title": "Σύνδεση υπηρεσιών",
+        "description": "Σύνδεσε τις homelab εφαρμογές σου με Base URL και API token."
+      },
+      "configure": {
+        "title": "Ρύθμιση εργαλείων",
+        "description": "Επίλεξε ποια εργαλεία θα είναι ενεργά και προσάρμοσε τις περιγραφές τους."
+      },
+      "use": {
+        "title": "Χρήση με Βοηθούς AI",
+        "description": "Κάλεσε εργαλεία από τον AI Client σου μέσω MCP."
+      }
+    }
+  },
+  "welcomeView": {
+    "supportedServices": "Υποστηριζόμενες υπηρεσίες"
+  },
+  "dashboardView": {
+    "yourServices": "Οι υπηρεσίες σου",
+    "manageAll": "Διαχείριση όλων",
+    "recentActivity": {
+      "title": "Πρόσφατη δραστηριότητα",
+      "viewAll": "Προβολή όλων",
+      "statusOk": "OK",
+      "statusError": "Σφάλμα"
+    },
+    "quickActions": {
+      "title": "Γρήγορες ενέργειες",
+      "items": {
+        "setupAgents": {
+          "label": "Ρύθμιση Βοηθών AI",
+          "description": "Σύνδεσε Claude, ChatGPT, Cursor κ.ά."
+        },
+        "connectService": {
+          "label": "Σύνδεση υπηρεσίας",
+          "description": "Σύνδεσε μία ακόμη εφαρμογή στην MCP πύλη σου"
+        },
+        "manageTools": {
+          "label": "Διαχείριση εργαλείων",
+          "description": "Ενεργοποίηση, απενεργοποίηση και ρύθμιση συμπεριφοράς εργαλείων"
+        }
+      }
+    }
+  },
+  "query": {
+    "loading": "Φόρτωση dashboard…",
+    "error": "Δεν ήταν δυνατή η φόρτωση του dashboard"
+  }
+}

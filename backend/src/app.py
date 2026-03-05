@@ -24,6 +24,7 @@ from advanced_alchemy.extensions.litestar import SQLAlchemyAsyncConfig, SQLAlche
 from litestar import Litestar, Request, Response, asgi
 from litestar.datastructures import State
 from litestar.di import Provide
+from litestar.exceptions import ClientException
 from litestar.middleware.base import DefineMiddleware
 from litestar.middleware.rate_limit import RateLimitConfig
 from litestar.plugins.prometheus import PrometheusConfig, PrometheusController
@@ -46,6 +47,12 @@ from entrypoints.api.audit import AuditController
 from entrypoints.api.auth import AuthController
 from entrypoints.api.discovery import DiscoveryController
 from entrypoints.api.health import HealthController
+from entrypoints.api.message_codes import (
+    ApiMessageCode,
+    default_client_error_code,
+    error_response_content,
+    extract_message_code,
+)
 from entrypoints.api.services import ServiceController
 from entrypoints.api.setup import SetupController
 from entrypoints.api.tools import ToolController
@@ -70,7 +77,13 @@ logger = structlog.get_logger()
 
 
 def _not_found_handler(_: Request, exc: ServiceNotFoundError) -> Response:
-    return Response(content={"detail": f"Service not found: {exc.identifier}"}, status_code=404)
+    return Response(
+        content=error_response_content(
+            detail=f"Service not found: {exc.identifier}",
+            code=ApiMessageCode.SERVICE_NOT_FOUND,
+        ),
+        status_code=404,
+    )
 
 
 def _client_error_handler(
@@ -81,18 +94,46 @@ def _client_error_handler(
     match exc:
         case ServiceConnectionError():
             detail = f"Connection to '{exc.service_name}' failed"
+            code = ApiMessageCode.SERVICE_CONNECTION_FAILED
         case UnsupportedServiceError():
             detail = f"Unsupported service type: {exc.service_type}"
+            code = ApiMessageCode.SERVICE_TYPE_UNSUPPORTED
         case ToolExecutionError():
             detail = f"Tool '{exc.tool_name}' failed"
+            code = ApiMessageCode.TOOL_EXECUTION_FAILED
         case _:
             detail = "Request failed"
-    return Response(content={"detail": detail}, status_code=400)
+            code = ApiMessageCode.HTTP_BAD_REQUEST
+    return Response(
+        content=error_response_content(detail=detail, code=code),
+        status_code=400,
+    )
 
 
 def _encryption_error_handler(_: Request, exc: EncryptionError) -> Response:
     logger.error("encryption_error", error=str(exc))
-    return Response(content={"detail": "Internal error"}, status_code=500)
+    return Response(
+        content=error_response_content(
+            detail="Internal error",
+            code=ApiMessageCode.INTERNAL_ENCRYPTION_ERROR,
+        ),
+        status_code=500,
+    )
+
+
+def _client_exception_handler(_: Request, exc: ClientException) -> Response:
+    status_code = exc.status_code if exc.status_code is not None else 400
+    code = extract_message_code(exc.extra) or default_client_error_code(status_code)
+    return Response(
+        content=error_response_content(
+            detail=exc.detail,
+            code=code,
+            status_code=status_code,
+            extra=exc.extra,
+        ),
+        status_code=status_code,
+        headers=exc.headers,
+    )
 
 
 async def provide_encryption(state: State) -> IEncryptionPort:
@@ -307,6 +348,7 @@ def create_app() -> Litestar:
             UnsupportedServiceError: _client_error_handler,
             ToolExecutionError: _client_error_handler,
             EncryptionError: _encryption_error_handler,
+            ClientException: _client_exception_handler,
         },
         lifespan=[app_lifespan],
         openapi_config=None,

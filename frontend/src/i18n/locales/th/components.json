@@ -1,0 +1,182 @@
+{
+  "errorBoundary": {
+    "title": "เกิดข้อผิดพลาด",
+    "fallbackMessage": "เกิดข้อผิดพลาดที่ไม่คาดคิด",
+    "reload": "โหลดใหม่"
+  },
+  "routeErrorFallback": {
+    "title": "เกิดข้อผิดพลาด",
+    "fallbackMessage": "เกิดข้อผิดพลาดที่ไม่คาดคิด",
+    "tryAgain": "ลองอีกครั้ง",
+    "goHome": "กลับหน้าหลัก"
+  },
+  "logs": {
+    "logEntryDetail": {
+      "error": "ข้อผิดพลาด",
+      "input": "อินพุต",
+      "duration": "ระยะเวลา:",
+      "durationUnit": "ms",
+      "client": "ไคลเอนต์:",
+      "time": "เวลา:",
+      "viewService": "ดูบริการ"
+    }
+  },
+  "services": {
+    "addServicePanel": {
+      "scanDescription": "สแกนเครือข่ายเพื่อหาบริการที่รันอยู่",
+      "scan": "สแกน",
+      "scanning": "กำลังสแกน…",
+      "noKnownServices": "ไม่พบบริการคอนเทนเนอร์ที่รู้จัก",
+      "connectWithLabel": "เชื่อมต่อ {label}",
+      "connectService": "เชื่อมต่อบริการ",
+      "closeDialog": "ปิดไดอะล็อก",
+      "dismiss": "ปิด",
+      "failedConnectService": "เชื่อมต่อบริการไม่สำเร็จ",
+      "chooseService": "เลือกบริการ",
+      "or": "หรือ",
+      "autoDetect": "ตรวจหาอัตโนมัติ"
+    },
+    "addToolModal": {
+      "invalidJson": "JSON ใน parameters schema ไม่ถูกต้อง",
+      "titleEdit": "แก้ไข Tool Definition",
+      "titleAdd": "เพิ่มเครื่องมือ",
+      "closeEditDialog": "ปิดไดอะล็อกแก้ไขเครื่องมือ",
+      "closeAddDialog": "ปิดไดอะล็อกเพิ่มเครื่องมือ",
+      "descriptionEdit": "แก้ไข definition ของ MCP tool นี้",
+      "descriptionAdd": "สร้าง MCP tool ใหม่สำหรับบริการ Generic REST นี้",
+      "toolNameLabel": "ชื่อเครื่องมือ",
+      "toolNamePlaceholder": "เช่น list_items",
+      "toolNameValidation": "ต้องขึ้นต้นด้วยตัวอักษร และใช้ได้เฉพาะตัวอักษร ตัวเลข และขีดล่าง",
+      "descriptionLabel": "คำอธิบาย",
+      "descriptionPlaceholder": "แสดงรายการทั้งหมด",
+      "httpMethodLabel": "HTTP Method",
+      "pathTemplateLabel": "Path Template",
+      "pathTemplatePlaceholder": "/api/v1/items",
+      "parametersSchemaLabel": "Parameters Schema (JSON)",
+      "failedUpdate": "อัปเดตเครื่องมือไม่สำเร็จ",
+      "failedCreate": "สร้างเครื่องมือไม่สำเร็จ",
+      "cancel": "ยกเลิก",
+      "saving": "กำลังบันทึก…",
+      "creating": "กำลังสร้าง…",
+      "saveChanges": "บันทึก",
+      "createTool": "สร้างเครื่องมือ"
+    },
+    "appCard": {
+      "preview": "ดูตัวอย่าง"
+    },
+    "importOpenApiModal": {
+      "title": "นำเข้า OpenAPI Spec",
+      "closeDialog": "ปิดไดอะล็อกนำเข้า OpenAPI",
+      "importedSummary": "{count, plural, one {นำเข้า # เครื่องมือแล้ว} other {นำเข้า # เครื่องมือแล้ว}}",
+      "partialSummary": "{importedCount, plural, one {นำเข้า # เครื่องมือแล้ว} other {นำเข้า # เครื่องมือแล้ว}}, ข้ามไป {skippedCount} รายการ (มีอยู่แล้ว)",
+      "allSkippedSummary": "{count, plural, one {ข้ามทั้งหมด # เครื่องมือที่มีอยู่แล้ว — ไม่มีการนำเข้า} other {ข้ามทั้งหมด # เครื่องมือที่มีอยู่แล้ว — ไม่มีการนำเข้า}}",
+      "ok": "ตกลง",
+      "description": "วาง OpenAPI 3.x spec ของคุณด้านล่าง (JSON หรือ YAML) แต่ละ operation จะถูกนำเข้าเป็น MCP tool",
+      "importFailed": "นำเข้าไม่สำเร็จ",
+      "cancel": "ยกเลิก",
+      "importing": "กำลังนำเข้า…",
+      "import": "นำเข้า"
+    },
+    "importServiceModal": {
+      "title": "นำเข้าบริการ",
+      "closeDialog": "ปิดไดอะล็อก",
+      "yamlConfigFile": "ไฟล์คอนฟิก YAML",
+      "fileLoaded": "โหลดไฟล์แล้ว",
+      "chooseFile": "เลือกไฟล์ .yml",
+      "servicesFound": "พบบริการ ({count})",
+      "apiTokenLabel": "API Token",
+      "apiTokenPlaceholder": "ใส่ API token สำหรับบริการนี้",
+      "createdPrefix": "สร้างแล้ว:",
+      "skippedPrefix": "ข้าม:",
+      "errorsPrefix": "ข้อผิดพลาด:",
+      "importFailed": "นำเข้าไม่สำเร็จ",
+      "cancel": "ยกเลิก",
+      "importing": "กำลังนำเข้า…",
+      "import": "นำเข้า"
+    },
+    "serviceCard": {
+      "paused": "หยุดชั่วคราว",
+      "toolsCount": "{count, plural, one {# เครื่องมือ} other {# เครื่องมือ}}"
+    },
+    "serviceConfig": {
+      "identifierLabel": "Identifier",
+      "identifierPlaceholder": "forgejo",
+      "displayNameLabel": "ชื่อที่แสดง",
+      "displayNamePlaceholder": "Forgejo",
+      "serviceTypeLabel": "ประเภทบริการ",
+      "baseUrlLabel": "Base URL",
+      "baseUrlPlaceholder": "https://service.example.com",
+      "apiTokenLabel": "API Token",
+      "apiTokenPlaceholder": "วาง API token ของคุณ",
+      "tokenGuideHide": "ซ่อนวิธีรับ token ของ {label}",
+      "tokenGuideShow": "วิธีรับ token ของ {label}",
+      "connecting": "กำลังเชื่อมต่อ…",
+      "connectService": "เชื่อมต่อบริการ"
+    },
+    "toolCard": {
+      "noParameters": "ไม่มีพารามิเตอร์",
+      "required": "จำเป็น",
+      "optional": "ไม่บังคับ",
+      "parameterDescriptionPlaceholder": "คำอธิบายพารามิเตอร์ (สิ่งที่ AI จะเห็น)…",
+      "customized": "ปรับแต่งแล้ว",
+      "hintLabel": "คำแนะนำ:",
+      "customizedParenthetical": "(ปรับแต่งแล้ว)",
+      "paramsCount": "{count, plural, one {# พารามิเตอร์} other {# พารามิเตอร์}}",
+      "noParams": "ไม่มีพารามิเตอร์",
+      "testEndpointReachability": "ทดสอบการเข้าถึง endpoint",
+      "testEndpointAria": "ทดสอบ endpoint ของ {toolName}",
+      "testing": "กำลังทดสอบ…",
+      "test": "ทดสอบ",
+      "editToolDefinition": "แก้ไข tool definition (method, path, schema)",
+      "editToolDefinitionAria": "แก้ไข definition ของ {toolName}",
+      "deleteTool": "ลบเครื่องมือ",
+      "deleteToolAria": "ลบ {toolName}",
+      "edit": "แก้ไข",
+      "enabled": "เปิดใช้งาน",
+      "disabled": "ปิดใช้งาน",
+      "toolDescriptionLabel": "คำอธิบายเครื่องมือ",
+      "toolDescriptionPlaceholder": "อธิบายว่าเครื่องมือนี้ทำอะไร (AI จะอ่านตรงนี้)…",
+      "aiHintLabel": "AI hint",
+      "optionalParenthetical": "(ไม่บังคับ)",
+      "aiHintPlaceholder": "เช่น เรียก ha_list_entities ก่อนเพื่อค้นหา entity ID ที่ถูกต้อง",
+      "aiHintHelpText": "จะถูกเพิ่มต่อท้ายคำอธิบาย ช่วยให้ AI รู้ว่าควรใช้เครื่องมือนี้ตอนไหนและอย่างไร",
+      "endpointLabel": "Endpoint",
+      "endpointPathPlaceholder": "/api/v1/endpoint",
+      "endpointHelpPrefix": "ใช้",
+      "endpointHelpSuffix": "สำหรับ path parameters การแก้ไขจะแทนที่ endpoint เดิม",
+      "parameterDescriptionsLabel": "คำอธิบายพารามิเตอร์",
+      "save": "บันทึก",
+      "cancel": "ยกเลิก",
+      "resetToOriginal": "รีเซ็ตเป็นค่าเดิม"
+    },
+    "toolList": {
+      "toolsJson": "tools.json",
+      "emptyTitle": "ยังไม่มีเครื่องมือที่ลงทะเบียน",
+      "emptyDescription": "เครื่องมือจะแสดงที่นี่เมื่อเชื่อมต่อบริการแล้ว",
+      "cardView": "มุมมองการ์ด",
+      "jsonView": "มุมมอง JSON",
+      "manageAccess": "จัดการสิทธิ์เข้าถึงเครื่องมือได้ในหน้า Tools"
+    }
+  },
+  "ui": {
+    "confirmDialog": {
+      "confirm": "ยืนยัน",
+      "cancel": "ยกเลิก",
+      "working": "กำลังดำเนินการ…"
+    },
+    "mcpEndpointBar": {
+      "label": "MCP Endpoint",
+      "copied": "คัดลอกแล้ว",
+      "copyUrl": "คัดลอก URL",
+      "copyJson": "คัดลอก JSON"
+    },
+    "monacoEditor": {
+      "loading": "กำลังโหลด Editor…"
+    },
+    "terminalBlock": {
+      "copyToClipboard": "คัดลอกไปคลิปบอร์ด",
+      "copied": "คัดลอกแล้ว",
+      "copy": "คัดลอก"
+    }
+  }
+}

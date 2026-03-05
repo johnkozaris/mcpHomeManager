@@ -1,0 +1,83 @@
+{
+  "heroBanner": {
+    "title": "Verbinde dein Homelab mit AI",
+    "description": "Verbinde Services einmal und nutze deren Tools dann in Claude, ChatGPT, Cursor und mehr.",
+    "actions": {
+      "connectService": "Service verbinden",
+      "setupGuide": "Einrichtungsanleitung"
+    }
+  },
+  "stats": {
+    "services": {
+      "sub": "{count} aktiv"
+    },
+    "tools": {
+      "sub": "Verfügbare Tools"
+    },
+    "health": {
+      "ok": "Stabil",
+      "allConnected": "Alle Services verbunden",
+      "needsAttention": "Handlungsbedarf"
+    },
+    "apiCalls": {
+      "sub": "Neueste API-Aufrufe"
+    }
+  },
+  "serviceRow": {
+    "toolsCount": "{count, plural, one {# tool} other {# tools}}"
+  },
+  "serviceGrid": {
+    "more": "Mehr"
+  },
+  "howItWorks": {
+    "title": "So funktioniert es",
+    "steps": {
+      "connect": {
+        "title": "Services verbinden",
+        "description": "Verbinde deine Homelab-Apps mit Basis-URL und API-Token."
+      },
+      "configure": {
+        "title": "Tools konfigurieren",
+        "description": "Wähle, welche Tools aktiv sind, und passe ihre Beschreibungen an."
+      },
+      "use": {
+        "title": "Mit Agenten nutzen",
+        "description": "Ruf Tools über MCP direkt in deinem AI-Client auf."
+      }
+    }
+  },
+  "welcomeView": {
+    "supportedServices": "Unterstützte Services"
+  },
+  "dashboardView": {
+    "yourServices": "Deine Services",
+    "manageAll": "Alle Services verwalten",
+    "recentActivity": {
+      "title": "Letzte Aktivität",
+      "viewAll": "Alle anzeigen",
+      "statusOk": "OK",
+      "statusError": "Fehler"
+    },
+    "quickActions": {
+      "title": "Schnellaktionen",
+      "items": {
+        "setupAgents": {
+          "label": "Agenten einrichten",
+          "description": "Claude, ChatGPT, Cursor und mehr verbinden"
+        },
+        "connectService": {
+          "label": "Service verbinden",
+          "description": "Weitere App mit deinem MCP-Gateway verbinden"
+        },
+        "manageTools": {
+          "label": "Tools verwalten",
+          "description": "Tools aktivieren, deaktivieren und ihr Verhalten anpassen"
+        }
+      }
+    }
+  },
+  "query": {
+    "loading": "Dashboard wird geladen…",
+    "error": "Dashboard konnte nicht geladen werden"
+  }
+}

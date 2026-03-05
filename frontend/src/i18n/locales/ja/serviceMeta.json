@@ -1,0 +1,76 @@
+{
+  "services": {
+    "forgejo": {
+      "label": "Forgejo",
+      "description": "GitホスティングとCI/CD"
+    },
+    "homeassistant": {
+      "label": "Home Assistant",
+      "description": "スマートホーム自動化"
+    },
+    "paperless": {
+      "label": "Paperless-ngx",
+      "description": "ドキュメント管理"
+    },
+    "immich": {
+      "label": "Immich",
+      "description": "写真・動画管理"
+    },
+    "nextcloud": {
+      "label": "Nextcloud",
+      "description": "クラウドストレージと同期"
+    },
+    "uptimekuma": {
+      "label": "Uptime Kuma",
+      "description": "稼働監視"
+    },
+    "adguard": {
+      "label": "AdGuard Home",
+      "description": "DNSフィルタリングと広告ブロック"
+    },
+    "nginxproxymanager": {
+      "label": "Nginx Proxy Manager",
+      "description": "リバースプロキシとSSL"
+    },
+    "portainer": {
+      "label": "Portainer",
+      "description": "コンテナ管理"
+    },
+    "freshrss": {
+      "label": "FreshRSS",
+      "description": "RSSフィードリーダー"
+    },
+    "wallabag": {
+      "label": "Wallabag",
+      "description": "あとで読む記事管理"
+    },
+    "stirlingpdf": {
+      "label": "Stirling PDF",
+      "description": "PDF処理ツール"
+    },
+    "wikijs": {
+      "label": "Wiki.js",
+      "description": "チーム向けナレッジベース"
+    },
+    "calibreweb": {
+      "label": "Calibre-Web",
+      "description": "電子書籍ライブラリ管理"
+    },
+    "cloudflare": {
+      "label": "Cloudflare",
+      "description": "DNS、Tunnel、Zero Trust管理"
+    },
+    "tailscale": {
+      "label": "Tailscale",
+      "description": "VPNメッシュネットワークとデバイス管理"
+    },
+    "generic_rest": {
+      "label": "Generic REST",
+      "description": "カスタムREST APIサービス"
+    }
+  },
+  "fallback": {
+    "label": "不明",
+    "description": "不明なサービスタイプ"
+  }
+}

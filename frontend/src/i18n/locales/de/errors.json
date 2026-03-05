@@ -1,0 +1,11 @@
+{
+  "api": {
+    "generic": "Da ist etwas schiefgelaufen"
+  },
+  "queryState": {
+    "loading": "Wird geladen…",
+    "authRequired": "Authentifizierung erforderlich – melde dich erneut an, um fortzufahren.",
+    "networkUnreachable": "Der Server konnte nicht erreicht werden. Läuft das Backend?",
+    "generic": "Da ist etwas schiefgelaufen"
+  }
+}

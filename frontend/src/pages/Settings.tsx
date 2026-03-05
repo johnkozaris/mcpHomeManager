@@ -5,7 +5,8 @@ import { api } from "@/lib/api";
 import { queryKeys } from "@/lib/query-keys";
 import { useTheme } from "@/hooks/useTheme";
 import { useCurrentUser } from "@/hooks/useAuth";
-import { getMcpEndpoint } from "@/lib/utils";
+import { getMcpEndpoint, parseApiError, resolveBackendMessage } from "@/lib/utils";
+import type { SmtpTestResult } from "@/lib/types";
 import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -30,11 +31,19 @@ import {
   Key,
   Trash2,
   Eye,
+  Globe,
 } from "lucide-react";
 import { useState, useEffect } from "react";
-import { parseApiError } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
+import {
+  SUPPORTED_LOCALES,
+  LOCALE_DISPLAY_NAMES,
+  type SupportedLocale,
+} from "@/i18n/config";
 
 export function Settings() {
+  const { t, i18n } = useTranslation("settings", { keyPrefix: "page" });
+  const currentLocale = (i18n.language ?? "en") as SupportedLocale;
   const { data: health } = useHealth();
   const { data: config } = useQuery({
     queryKey: queryKeys.config(),
@@ -99,10 +108,15 @@ export function Settings() {
   const [smtpEnabled, setSmtpEnabled] = useState(true);
   const [smtpSynced, setSmtpSynced] = useState<typeof smtpConfig>(undefined);
   const [smtpSaved, setSmtpSaved] = useState(false);
-  const [smtpTestResult, setSmtpTestResult] = useState<{
-    success: boolean;
-    message: string;
-  } | null>(null);
+  const [smtpTestResult, setSmtpTestResult] = useState<SmtpTestResult | null>(
+    null,
+  );
+  const smtpTestMessage = smtpTestResult
+    ? resolveBackendMessage(smtpTestResult, {
+        fallback: smtpTestResult.message,
+        includeRawDetail: true,
+      })
+    : null;
 
   // Sync server data into form state (adjusting state during render)
   if (smtpConfig && smtpConfig !== smtpSynced) {
@@ -142,17 +156,15 @@ export function Settings() {
     onError: (err) =>
       setSmtpTestResult({
         success: false,
-        message: parseApiError(err, "Test failed"),
+        message: parseApiError(err, t("smtp.testFailed")),
       }),
   });
 
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="page-header">Settings</h1>
-        <p className="page-description">
-          Appearance, endpoints, and system info
-        </p>
+        <h1 className="page-header">{t("title")}</h1>
+        <p className="page-description">{t("description")}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -163,7 +175,7 @@ export function Settings() {
                 <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-clay-bg">
                   <Palette size={16} className="text-clay" />
                 </div>
-                <CardTitle>Appearance</CardTitle>
+                <CardTitle>{t("appearance.title")}</CardTitle>
               </div>
             </CardHeader>
             <div className="mt-3 grid grid-cols-2 gap-3">
@@ -172,15 +184,52 @@ export function Settings() {
                 className={`p-4 rounded-xl border-2 transition-all text-center ${theme === "light" ? "border-terra bg-terra-bg" : "border-line hover:border-line-strong"}`}
               >
                 <Sun size={20} className="mx-auto mb-2 text-clay" />
-                <p className="text-sm font-semibold text-ink">Light</p>
+                <p className="text-sm font-semibold text-ink">
+                  {t("appearance.light")}
+                </p>
               </button>
               <button
                 onClick={() => theme === "light" && toggle()}
                 className={`p-4 rounded-xl border-2 transition-all text-center ${theme === "dark" ? "border-terra bg-terra-bg" : "border-line hover:border-line-strong"}`}
               >
                 <Moon size={20} className="mx-auto mb-2 text-info" />
-                <p className="text-sm font-semibold text-ink">Dark</p>
+                <p className="text-sm font-semibold text-ink">
+                  {t("appearance.dark")}
+                </p>
               </button>
+            </div>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-terra-bg">
+                  <Globe size={16} className="text-terra" />
+                </div>
+                <CardTitle>{t("language.title")}</CardTitle>
+              </div>
+            </CardHeader>
+            <p className="text-2xs text-ink-tertiary mt-1 mb-3">
+              {t("language.description")}
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              {SUPPORTED_LOCALES.map((locale) => (
+                <button
+                  key={locale}
+                  onClick={() => i18n.changeLanguage(locale)}
+                  className={`px-3 py-2.5 rounded-xl border-2 transition-all text-left ${
+                    currentLocale === locale
+                      ? "border-terra bg-terra-bg"
+                      : "border-line hover:border-line-strong"
+                  }`}
+                >
+                  <p
+                    className={`text-sm font-medium ${currentLocale === locale ? "text-terra" : "text-ink"}`}
+                  >
+                    {LOCALE_DISPLAY_NAMES[locale]}
+                  </p>
+                </button>
+              ))}
             </div>
           </Card>
 
@@ -190,7 +239,7 @@ export function Settings() {
                 <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-sage-bg">
                   <Shield size={16} className="text-sage" />
                 </div>
-                <CardTitle>Security</CardTitle>
+                <CardTitle>{t("security.title")}</CardTitle>
               </div>
             </CardHeader>
             <div className="mt-3 space-y-0">
@@ -199,7 +248,7 @@ export function Settings() {
                   <div className="flex items-center gap-2.5">
                     <Wrench size={15} className="text-ink-tertiary" />
                     <span className="text-sm font-medium text-ink">
-                      Self-MCP Tools
+                      {t("security.selfMcp.title")}
                     </span>
                   </div>
                   {isAdmin ? (
@@ -218,38 +267,38 @@ export function Settings() {
                         config?.self_mcp_enabled ? "positive" : "default"
                       }
                     >
-                      {config?.self_mcp_enabled ? "Enabled" : "Disabled"}
+                      {config?.self_mcp_enabled
+                        ? t("security.enabled")
+                        : t("security.disabled")}
                     </Badge>
                   )}
                 </div>
                 <p className="text-2xs text-ink-tertiary mt-2 leading-relaxed">
-                  When enabled, AI agents can manage this gateway through MCP
-                  itself — listing services, toggling tools, adding connections,
-                  and viewing logs without using the web UI.
+                  {t("security.selfMcp.description")}
                   {config?.self_mcp_enabled && (
                     <>
                       {" "}
-                      Access is granted per-user in{" "}
+                      {t("security.selfMcp.accessPrefix")}{" "}
                       <Link to="/users" className="text-terra hover:underline">
-                        User Management
+                        {t("security.selfMcp.userManagementLink")}
                       </Link>
-                      .
+                      {t("security.selfMcp.accessSuffix")}
                     </>
                   )}
                 </p>
                 <p className="text-2xs text-ink-faint mt-1">
-                  Defaults from{" "}
-                  <code className="font-mono">SELF_MCP_ENABLED</code> env var on
-                  restart.
+                  {t("security.selfMcp.defaultsPrefix")}{" "}
+                  <code className="font-mono">SELF_MCP_ENABLED</code>
+                  {t("security.selfMcp.defaultsSuffix")}
                 </p>
               </div>
               <div className="flex items-center justify-between py-3">
                 <div className="flex items-center gap-2.5">
                   <User size={15} className="text-ink-tertiary" />
                   <span className="text-sm text-ink-secondary">
-                    Signed in as{" "}
+                    {t("security.signedInAs")}{" "}
                     <span className="font-semibold text-ink">
-                      {currentUser ?? "admin"}
+                      {currentUser ?? t("security.currentUserFallback")}
                     </span>
                   </span>
                 </div>
@@ -261,22 +310,21 @@ export function Settings() {
                 <div className="flex items-center gap-2">
                   <Key size={15} className="text-ink-tertiary" />
                   <span className="text-sm font-medium text-ink">
-                    MCP API Key
+                    {t("apiKey.title")}
                   </span>
                 </div>
                 <Badge variant={hasApiKey ? "positive" : "default"}>
-                  {hasApiKey ? "Active" : "Not set"}
+                  {hasApiKey ? t("apiKey.status.active") : t("apiKey.status.notSet")}
                 </Badge>
               </div>
               <p className="text-2xs text-ink-tertiary mb-3">
-                AI agents (Claude, Cursor, ChatGPT) use this key to connect to
-                your MCP endpoint.
+                {t("apiKey.description")}
               </p>
 
               {newApiKey && (
                 <div className="p-3 rounded-xl border border-sage bg-sage-bg space-y-2 mb-3">
                   <p className="text-xs font-semibold text-sage">
-                    Your API key
+                    {t("apiKey.revealedTitle")}
                   </p>
                   <div className="flex items-center gap-2">
                     <code className="flex-1 p-2 rounded-lg bg-canvas-tertiary border border-line font-mono text-xs select-all text-ink break-all">
@@ -315,7 +363,9 @@ export function Settings() {
                   disabled={generateKey.isPending}
                 >
                   <Key size={13} />
-                  {hasApiKey ? "Regenerate Key" : "Generate Key"}
+                  {hasApiKey
+                    ? t("apiKey.actions.regenerate")
+                    : t("apiKey.actions.generate")}
                 </Button>
                 {hasApiKey && !newApiKey && canReveal && (
                   <Button
@@ -330,14 +380,14 @@ export function Settings() {
                         setRevealError(
                           parseApiError(
                             err,
-                            "Could not reveal key. Try regenerating instead.",
+                            t("apiKey.errors.revealFailed"),
                           ),
                         );
                       }
                     }}
                   >
                     <Eye size={13} />
-                    Reveal Key
+                    {t("apiKey.actions.reveal")}
                   </Button>
                 )}
                 {hasApiKey && (
@@ -348,7 +398,7 @@ export function Settings() {
                     disabled={revokeKey.isPending}
                   >
                     <Trash2 size={13} />
-                    Revoke
+                    {t("apiKey.actions.revoke")}
                   </Button>
                 )}
               </div>
@@ -361,18 +411,18 @@ export function Settings() {
                 <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-info-bg">
                   <Info size={16} className="text-info" />
                 </div>
-                <CardTitle>About</CardTitle>
+                <CardTitle>{t("about.title")}</CardTitle>
               </div>
             </CardHeader>
             <div className="mt-3 space-y-2 text-sm text-ink-secondary">
               <div className="flex justify-between">
-                <span>Version</span>
+                <span>{t("about.versionLabel")}</span>
                 <span className="text-ink font-mono font-bold">0.1.0</span>
               </div>
               <div className="flex justify-between">
-                <span>Server</span>
+                <span>{t("about.serverLabel")}</span>
                 <span className="text-ink-tertiary">
-                  {config?.mcp_server_name ?? "MCP Manager"}
+                  {config?.mcp_server_name ?? t("about.serverFallback")}
                 </span>
               </div>
             </div>
@@ -386,11 +436,11 @@ export function Settings() {
                 <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-terra-bg">
                   <Terminal size={16} className="text-terra" />
                 </div>
-                <CardTitle>MCP Endpoint</CardTitle>
+                <CardTitle>{t("endpoint.title")}</CardTitle>
               </div>
             </CardHeader>
             <p className="text-sm text-ink-secondary mt-2 mb-3">
-              Your AI agents connect to this URL
+              {t("endpoint.description")}
             </p>
             <div className="flex items-center gap-2 p-3 rounded-xl bg-canvas">
               <code className="text-sm font-mono text-ink flex-1 truncate">
@@ -407,7 +457,7 @@ export function Settings() {
               to="/agents"
               className="flex items-center gap-1.5 text-sm font-medium text-terra hover:text-terra-light transition-colors mt-4"
             >
-              <Bot size={14} /> Agent setup guide <ArrowRight size={12} />
+              <Bot size={14} /> {t("endpoint.agentGuide")} <ArrowRight size={12} />
             </Link>
           </Card>
 
@@ -417,21 +467,21 @@ export function Settings() {
                 <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-sage-bg">
                   <HeartPulse size={16} className="text-sage" />
                 </div>
-                <CardTitle>System Health</CardTitle>
+                <CardTitle>{t("systemHealth.title")}</CardTitle>
               </div>
             </CardHeader>
             <div className="mt-3 space-y-0">
               {[
                 {
                   icon: Database,
-                  label: "Database",
-                  value: health?.database ?? "checking",
+                  label: t("systemHealth.rows.database"),
+                  value: health?.database ?? t("systemHealth.checking"),
                   ok: health?.database === "connected",
                 },
                 {
                   icon: Server,
-                  label: "MCP Server",
-                  value: health?.mcp_server ?? "checking",
+                  label: t("systemHealth.rows.mcpServer"),
+                  value: health?.mcp_server ?? t("systemHealth.checking"),
                   ok: health?.mcp_server === "running",
                 },
               ].map((row) => (
@@ -453,11 +503,15 @@ export function Settings() {
               <div className="flex items-center justify-between py-3">
                 <div className="flex items-center gap-2.5">
                   <HeartPulse size={15} className="text-ink-tertiary" />
-                  <span className="text-sm text-ink-secondary">Services</span>
+                  <span className="text-sm text-ink-secondary">
+                    {t("systemHealth.rows.services")}
+                  </span>
                 </div>
                 <span className="text-sm text-ink font-semibold">
-                  {health?.services_healthy ?? 0} /{" "}
-                  {health?.services_total ?? 0} connected
+                  {t("systemHealth.servicesConnected", {
+                    healthy: health?.services_healthy ?? 0,
+                    total: health?.services_total ?? 0,
+                  })}
                 </span>
               </div>
             </div>
@@ -466,15 +520,14 @@ export function Settings() {
             <Card>
               <CardHeader>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-terra-bg">
-                    <Mail size={16} className="text-terra" />
-                  </div>
-                  <CardTitle>Email (SMTP)</CardTitle>
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-terra-bg">
+                  <Mail size={16} className="text-terra" />
+                </div>
+                  <CardTitle>{t("smtp.title")}</CardTitle>
                 </div>
               </CardHeader>
               <p className="text-2xs text-ink-tertiary mt-2 mb-3">
-                Configure SMTP for password reset emails. Leave blank to
-                disable.
+                {t("smtp.description")}
               </p>
               <div className="space-y-3">
                 <div className="grid grid-cols-3 gap-3">
@@ -483,7 +536,7 @@ export function Settings() {
                       htmlFor="smtp-host"
                       className="block text-2xs font-medium text-ink-secondary mb-1"
                     >
-                      Host
+                      {t("smtp.fields.host")}
                     </label>
                     <input
                       id="smtp-host"
@@ -491,7 +544,7 @@ export function Settings() {
                       value={smtpHost}
                       onChange={(e) => setSmtpHost(e.target.value)}
                       className="w-full px-2.5 py-1.5 rounded-lg border border-line bg-canvas text-ink text-sm"
-                      placeholder="smtp.gmail.com"
+                      placeholder={t("smtp.placeholders.host")}
                     />
                   </div>
                   <div>
@@ -499,7 +552,7 @@ export function Settings() {
                       htmlFor="smtp-port"
                       className="block text-2xs font-medium text-ink-secondary mb-1"
                     >
-                      Port
+                      {t("smtp.fields.port")}
                     </label>
                     <input
                       id="smtp-port"
@@ -515,7 +568,7 @@ export function Settings() {
                     htmlFor="smtp-username"
                     className="block text-2xs font-medium text-ink-secondary mb-1"
                   >
-                    Username
+                    {t("smtp.fields.username")}
                   </label>
                   <input
                     id="smtp-username"
@@ -523,15 +576,15 @@ export function Settings() {
                     value={smtpUsername}
                     onChange={(e) => setSmtpUsername(e.target.value)}
                     className="w-full px-2.5 py-1.5 rounded-lg border border-line bg-canvas text-ink text-sm"
-                    placeholder="user@example.com"
+                    placeholder={t("smtp.placeholders.username")}
                   />
                 </div>
                 <div>
                   <label className="block text-2xs font-medium text-ink-secondary mb-1">
-                    Password{" "}
+                    {t("smtp.fields.password")}{" "}
                     {smtpConfig?.has_password && (
                       <span className="text-ink-faint">
-                        (set — leave blank to keep)
+                        {t("smtp.fields.passwordHint")}
                       </span>
                     )}
                   </label>
@@ -541,7 +594,9 @@ export function Settings() {
                     onChange={(e) => setSmtpPassword(e.target.value)}
                     className="w-full px-2.5 py-1.5 rounded-lg border border-line bg-canvas text-ink text-sm"
                     placeholder={
-                      smtpConfig?.has_password ? "••••••••" : "App password"
+                      smtpConfig?.has_password
+                        ? t("smtp.placeholders.passwordMasked")
+                        : t("smtp.placeholders.password")
                     }
                   />
                 </div>
@@ -550,7 +605,7 @@ export function Settings() {
                     htmlFor="smtp-from"
                     className="block text-2xs font-medium text-ink-secondary mb-1"
                   >
-                    From Email
+                    {t("smtp.fields.fromEmail")}
                   </label>
                   <input
                     id="smtp-from"
@@ -558,12 +613,12 @@ export function Settings() {
                     value={smtpFrom}
                     onChange={(e) => setSmtpFrom(e.target.value)}
                     className="w-full px-2.5 py-1.5 rounded-lg border border-line bg-canvas text-ink text-sm"
-                    placeholder="noreply@example.com"
+                    placeholder={t("smtp.placeholders.fromEmail")}
                   />
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-ink-secondary">
-                    Use TLS (STARTTLS)
+                    {t("smtp.toggles.useTls")}
                   </span>
                   <button
                     onClick={() => setSmtpTls(!smtpTls)}
@@ -575,7 +630,9 @@ export function Settings() {
                   </button>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-ink-secondary">Enabled</span>
+                  <span className="text-sm text-ink-secondary">
+                    {t("smtp.toggles.enabled")}
+                  </span>
                   <button
                     onClick={() => setSmtpEnabled(!smtpEnabled)}
                     className={`w-10 h-5 rounded-full transition-colors ${smtpEnabled ? "bg-terra" : "bg-line-strong"}`}
@@ -590,7 +647,7 @@ export function Settings() {
                   <div className="p-2.5 rounded-lg text-xs bg-rust-bg text-rust border border-rust">
                     {parseApiError(
                       saveSmtp.error,
-                      "Failed to save SMTP config",
+                      t("smtp.errors.saveFailed"),
                     )}
                   </div>
                 )}
@@ -599,7 +656,7 @@ export function Settings() {
                   <div
                     className={`p-2.5 rounded-lg text-xs ${smtpTestResult.success ? "bg-sage-bg text-sage border border-sage" : "bg-rust-bg text-rust border border-rust"}`}
                   >
-                    {smtpTestResult.message}
+                    {smtpTestMessage ?? smtpTestResult.message}
                   </div>
                 )}
 
@@ -611,12 +668,12 @@ export function Settings() {
                   >
                     {smtpSaved ? (
                       <>
-                        <Check size={13} /> Saved
+                        <Check size={13} /> {t("smtp.actions.saved")}
                       </>
                     ) : saveSmtp.isPending ? (
-                      "Saving…"
+                      t("smtp.actions.saving")
                     ) : (
-                      "Save"
+                      t("smtp.actions.save")
                     )}
                   </Button>
                   <Button
@@ -628,7 +685,9 @@ export function Settings() {
                     }}
                     disabled={testSmtp.isPending || !smtpConfig?.is_enabled}
                   >
-                    {testSmtp.isPending ? "Sending…" : "Send Test Email"}
+                    {testSmtp.isPending
+                      ? t("smtp.actions.sending")
+                      : t("smtp.actions.sendTestEmail")}
                   </Button>
                 </div>
               </div>
@@ -639,9 +698,9 @@ export function Settings() {
 
       <ConfirmDialog
         open={showRevokeConfirm}
-        title="Revoke API Key"
-        description="This will immediately disconnect any AI agents using this key. You can generate a new key afterwards."
-        confirmText="Revoke Key"
+        title={t("dialogs.revokeKey.title")}
+        description={t("dialogs.revokeKey.description")}
+        confirmText={t("dialogs.revokeKey.confirm")}
         onConfirm={() => {
           revokeKey.mutate();
           setShowRevokeConfirm(false);

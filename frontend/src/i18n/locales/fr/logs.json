@@ -1,0 +1,47 @@
+{
+  "page": {
+    "title": "Journaux",
+    "description": "Consulte les derniers appels d'outils MCP, leurs résultats et leur latence.",
+    "stats": {
+      "totalCalls": "Nombre total d’appels",
+      "successRate": "Taux de réussite",
+      "errors": "Erreurs",
+      "avgLatency": "Latence moyenne"
+    },
+    "chart": {
+      "callsOverTime": "Appels au fil du temps"
+    },
+    "filters": {
+      "searchPlaceholder": "Rechercher par nom d’outil",
+      "allServices": "Tous les services",
+      "status": {
+        "all": "Tous",
+        "success": "Succès",
+        "error": "Erreur"
+      }
+    },
+    "query": {
+      "loading": "Chargement des journaux…"
+    },
+    "table": {
+      "headers": {
+        "status": "Statut",
+        "tool": "Outil",
+        "service": "Service",
+        "client": "Client",
+        "latency": "Latence",
+        "time": "Heure"
+      }
+    },
+    "pagination": {
+      "totalEntries": "{count, plural, one {# entry} other {# entries}}",
+      "page": "Page {current} sur {total}"
+    },
+    "empty": {
+      "filteredTitle": "Aucune entrée de journal ne correspond aux filtres",
+      "filteredDescription": "Essaie d'ajuster tes filtres.",
+      "defaultTitle": "Aucune entrée de journal pour l’instant",
+      "defaultDescription": "L'activité des outils apparaîtra ici dès que les agents commenceront à appeler des outils."
+    }
+  }
+}

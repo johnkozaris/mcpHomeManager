@@ -1,0 +1,75 @@
+{
+  "page": {
+    "title": "Utilisateurs",
+    "description": "Gère qui peut accéder à cette passerelle et quels services chaque utilisateur peut utiliser.",
+    "actions": {
+      "cancel": "Annuler",
+      "createUser": "Créer un utilisateur",
+      "creating": "Création…",
+      "create": "Créer"
+    },
+    "form": {
+      "title": "Créer un utilisateur",
+      "fields": {
+        "username": {
+          "label": "Nom d’utilisateur",
+          "placeholder": "jane",
+          "errors": {
+            "minLength": "Le nom d’utilisateur doit contenir au moins 2 caractères",
+            "maxLength": "Le nom d’utilisateur doit contenir au maximum 100 caractères"
+          }
+        },
+        "email": {
+          "label": "Adresse e-mail",
+          "placeholder": "jane@example.com"
+        },
+        "password": {
+          "label": "Mot de passe",
+          "placeholder": "Laisse vide pour le définir plus tard",
+          "errors": {
+            "minLength": "Le mot de passe doit contenir au moins 8 caractères (actuellement {current})"
+          }
+        }
+      },
+      "passwordHelp": "Le mot de passe est facultatif à la création, mais s'il est renseigné il doit faire au moins 8 caractères.",
+      "toggles": {
+        "admin": "Accès administrateur",
+        "selfMcp": "Autoriser les outils Self-MCP"
+      },
+      "allowedServices": "Services autorisés"
+    },
+    "errors": {
+      "createUserFailed": "Échec de la création de l’utilisateur",
+      "updateUserFailed": "Échec de la mise à jour de l’utilisateur"
+    },
+    "query": {
+      "loading": "Chargement des utilisateurs…"
+    },
+    "list": {
+      "count": "{count, plural, one {# user} other {# users}}",
+      "badges": {
+        "admin": "Admin",
+        "mcp": "Self-MCP"
+      },
+      "toggles": {
+        "admin": "Admin",
+        "mcp": "Self-MCP"
+      },
+      "access": {
+        "allServices": "Tous les services",
+        "serviceCount": "{count, plural, one {# service} other {# services}}"
+      }
+    },
+    "empty": {
+      "title": "Aucun utilisateur pour l’instant",
+      "description": "Crée le premier utilisateur pour lui donner accès."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Supprimer l’utilisateur",
+        "description": "Cela supprimera définitivement le compte utilisateur.",
+        "confirm": "Supprimer"
+      }
+    }
+  }
+}

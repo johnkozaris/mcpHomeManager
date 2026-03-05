@@ -1,0 +1,83 @@
+{
+  "heroBanner": {
+    "title": "Conecte seu homelab à IA",
+    "description": "Conecte os serviços uma vez e use as ferramentas no Claude, ChatGPT, Cursor e muito mais.",
+    "actions": {
+      "connectService": "Conectar serviço",
+      "setupGuide": "Guia de configuração"
+    }
+  },
+  "stats": {
+    "services": {
+      "sub": "{count} ativos"
+    },
+    "tools": {
+      "sub": "Ferramentas disponíveis"
+    },
+    "health": {
+      "ok": "Tudo certo",
+      "allConnected": "Todos os serviços conectados",
+      "needsAttention": "Precisa de atenção"
+    },
+    "apiCalls": {
+      "sub": "Chamadas de API recentes"
+    }
+  },
+  "serviceRow": {
+    "toolsCount": "{count, plural, one {# ferramenta} other {# ferramentas}}"
+  },
+  "serviceGrid": {
+    "more": "Mais"
+  },
+  "howItWorks": {
+    "title": "Como funciona",
+    "steps": {
+      "connect": {
+        "title": "Conectar serviços",
+        "description": "Conecte seus apps de homelab com URL base e token de API."
+      },
+      "configure": {
+        "title": "Configurar ferramentas",
+        "description": "Escolha quais ferramentas estão ativas e ajuste as descrições."
+      },
+      "use": {
+        "title": "Usar com agentes",
+        "description": "Chame ferramentas do seu cliente de IA via MCP."
+      }
+    }
+  },
+  "welcomeView": {
+    "supportedServices": "Serviços suportados"
+  },
+  "dashboardView": {
+    "yourServices": "Seus serviços",
+    "manageAll": "Gerenciar todos os serviços",
+    "recentActivity": {
+      "title": "Atividade recente",
+      "viewAll": "Ver tudo",
+      "statusOk": "OK",
+      "statusError": "Erro"
+    },
+    "quickActions": {
+      "title": "Ações rápidas",
+      "items": {
+        "setupAgents": {
+          "label": "Configurar agentes",
+          "description": "Conecte Claude, ChatGPT, Cursor e muito mais"
+        },
+        "connectService": {
+          "label": "Conectar um serviço",
+          "description": "Conecte outro app ao seu gateway MCP"
+        },
+        "manageTools": {
+          "label": "Gerenciar ferramentas",
+          "description": "Habilite, desabilite e ajuste o comportamento das ferramentas"
+        }
+      }
+    }
+  },
+  "query": {
+    "loading": "Carregando painel…",
+    "error": "Não foi possível carregar o painel"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "services": {
+    "forgejo": {
+      "label": "Forgejo",
+      "description": "Hébergement Git et CI/CD"
+    },
+    "homeassistant": {
+      "label": "Home Assistant",
+      "description": "Automatisation domotique"
+    },
+    "paperless": {
+      "label": "Paperless-ngx",
+      "description": "Gestion de documents"
+    },
+    "immich": {
+      "label": "Immich",
+      "description": "Gestion de photos et vidéos"
+    },
+    "nextcloud": {
+      "label": "Nextcloud",
+      "description": "Stockage cloud et synchronisation"
+    },
+    "uptimekuma": {
+      "label": "Uptime Kuma",
+      "description": "Surveillance de disponibilité"
+    },
+    "adguard": {
+      "label": "AdGuard Home",
+      "description": "Filtrage DNS et blocage de publicités"
+    },
+    "nginxproxymanager": {
+      "label": "Nginx Proxy Manager",
+      "description": "Reverse proxy et SSL"
+    },
+    "portainer": {
+      "label": "Portainer",
+      "description": "Gestion de conteneurs"
+    },
+    "freshrss": {
+      "label": "FreshRSS",
+      "description": "Lecteur de flux RSS"
+    },
+    "wallabag": {
+      "label": "Wallabag",
+      "description": "Articles à lire plus tard"
+    },
+    "stirlingpdf": {
+      "label": "Stirling PDF",
+      "description": "Outils de traitement PDF"
+    },
+    "wikijs": {
+      "label": "Wiki.js",
+      "description": "Base de connaissances d’équipe"
+    },
+    "calibreweb": {
+      "label": "Calibre-Web",
+      "description": "Gestion de bibliothèque d’e-books"
+    },
+    "cloudflare": {
+      "label": "Cloudflare",
+      "description": "DNS, tunnels et gestion Zero Trust"
+    },
+    "tailscale": {
+      "label": "Tailscale",
+      "description": "Réseau VPN maillé et gestion des appareils"
+    },
+    "generic_rest": {
+      "label": "REST générique",
+      "description": "Service API REST personnalisé"
+    }
+  },
+  "fallback": {
+    "label": "Inconnu",
+    "description": "Type de service inconnu"
+  }
+}

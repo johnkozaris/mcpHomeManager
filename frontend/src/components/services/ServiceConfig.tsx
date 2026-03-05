@@ -11,6 +11,7 @@ import { SERVICE_META, getServiceMeta } from "@/lib/service-meta";
 import { getTokenGuides } from "@/lib/token-guides";
 import { useAppName } from "@/hooks/useAppName";
 import { HelpCircle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface Prefill {
   name: string;
@@ -32,6 +33,9 @@ export function ServiceConfig({
   initialType,
   prefill,
 }: Props) {
+  const { t } = useTranslation("components", {
+    keyPrefix: "services.serviceConfig",
+  });
   const [name, setName] = useState(prefill?.name ?? initialType ?? "");
   const [displayName, setDisplayName] = useState(
     prefill?.displayName ??
@@ -73,15 +77,15 @@ export function ServiceConfig({
     >
       <div className="grid grid-cols-2 gap-4">
         <Input
-          label="Identifier"
-          placeholder="forgejo"
+          label={t("identifierLabel")}
+          placeholder={t("identifierPlaceholder")}
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
         />
         <Input
-          label="Display Name"
-          placeholder="Forgejo"
+          label={t("displayNameLabel")}
+          placeholder={t("displayNamePlaceholder")}
           value={displayName}
           onChange={(e) => setDisplayName(e.target.value)}
           required
@@ -92,7 +96,7 @@ export function ServiceConfig({
           htmlFor="service-type"
           className="block text-sm font-medium text-ink-secondary"
         >
-          Service Type
+          {t("serviceTypeLabel")}
         </label>
         <select
           id="service-type"
@@ -100,16 +104,19 @@ export function ServiceConfig({
           onChange={(e) => setServiceType(e.target.value as ServiceType)}
           className="input-field"
         >
-          {serviceTypes.map((t) => (
-            <option key={t.value} value={t.value}>
-              {t.label}
+          {serviceTypes.map((serviceTypeOption) => (
+            <option
+              key={serviceTypeOption.value}
+              value={serviceTypeOption.value}
+            >
+              {serviceTypeOption.label}
             </option>
           ))}
         </select>
       </div>
       <Input
-        label="Base URL"
-        placeholder="https://service.example.com"
+        label={t("baseUrlLabel")}
+        placeholder={t("baseUrlPlaceholder")}
         value={baseUrl}
         onChange={(e) => setBaseUrl(e.target.value)}
         onBlur={() => {
@@ -122,9 +129,9 @@ export function ServiceConfig({
       />
       <div>
         <Input
-          label="API Token"
+          label={t("apiTokenLabel")}
           type="password"
-          placeholder="Paste your API token"
+          placeholder={t("apiTokenPlaceholder")}
           value={apiToken}
           onChange={(e) => setApiToken(e.target.value)}
           required
@@ -136,8 +143,9 @@ export function ServiceConfig({
             className="flex items-center gap-1 mt-1.5 text-xs text-terra hover:text-terra-light transition-colors"
           >
             <HelpCircle size={12} />
-            {guideOpen ? "Hide" : "How to get"} a{" "}
-            {getServiceMeta(serviceType).label} token
+            {guideOpen
+              ? t("tokenGuideHide", { label: getServiceMeta(serviceType).label })
+              : t("tokenGuideShow", { label: getServiceMeta(serviceType).label })}
           </button>
         )}
         {guideOpen && guide && (
@@ -155,7 +163,7 @@ export function ServiceConfig({
       </div>
       <div className="flex justify-end pt-2">
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Connecting\u2026" : "Connect Service"}
+          {isLoading ? t("connecting") : t("connectService")}
         </Button>
       </div>
     </form>

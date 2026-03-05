@@ -1,0 +1,30 @@
+{
+  "page": {
+    "title": "Herramientas",
+    "description": {
+      "withCounts": "{toolsCount} herramientas en {serviceCount} servicios • {enabledCount} habilitadas",
+      "empty": "Administra qué herramientas se exponen a los clientes MCP."
+    },
+    "filters": {
+      "searchPlaceholder": "Buscar herramientas",
+      "allServices": "Todos los servicios",
+      "status": {
+        "all": "Todas ({count})",
+        "enabled": "Habilitadas ({count})",
+        "disabled": "Deshabilitadas ({count})"
+      }
+    },
+    "errors": {
+      "missingService": "No se puede actualizar \"{toolName}\" porque esta herramienta no tiene ningún servicio vinculado."
+    },
+    "query": {
+      "loading": "Cargando herramientas…"
+    },
+    "empty": {
+      "searchTitle": "Ninguna herramienta coincide con tu búsqueda",
+      "searchDescription": "Prueba con otro término o filtro.",
+      "noToolsTitle": "Aún no hay herramientas",
+      "noToolsDescription": "Conecta un servicio para empezar a usar herramientas."
+    }
+  }
+}

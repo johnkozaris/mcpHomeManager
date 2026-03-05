@@ -1,0 +1,47 @@
+{
+  "page": {
+    "title": "Καταγραφές",
+    "description": "Δες πρόσφατες κλήσεις MCP εργαλείων, αποτελέσματα και καθυστερήσεις.",
+    "stats": {
+      "totalCalls": "Σύνολο κλήσεων",
+      "successRate": "Ποσοστό επιτυχίας",
+      "errors": "Σφάλματα",
+      "avgLatency": "Μέση καθυστέρηση"
+    },
+    "chart": {
+      "callsOverTime": "Κλήσεις με την πάροδο του χρόνου"
+    },
+    "filters": {
+      "searchPlaceholder": "Αναζήτηση με όνομα εργαλείου",
+      "allServices": "Όλες οι υπηρεσίες",
+      "status": {
+        "all": "Όλα",
+        "success": "Επιτυχία",
+        "error": "Σφάλμα"
+      }
+    },
+    "query": {
+      "loading": "Φόρτωση καταγραφών…"
+    },
+    "table": {
+      "headers": {
+        "status": "Κατάσταση",
+        "tool": "Εργαλείο",
+        "service": "Υπηρεσία",
+        "client": "Client",
+        "latency": "Καθυστέρηση",
+        "time": "Ώρα"
+      }
+    },
+    "pagination": {
+      "totalEntries": "{count, plural, one {# entry} other {# entries}}",
+      "page": "Σελίδα {current} από {total}"
+    },
+    "empty": {
+      "filteredTitle": "Δεν βρέθηκαν αντίστοιχες καταγραφές",
+      "filteredDescription": "Δοκίμασε να αλλάξεις τα φίλτρα.",
+      "defaultTitle": "Δεν υπάρχουν καταγραφές ακόμα",
+      "defaultDescription": "Η δραστηριότητα εργαλείων θα εμφανιστεί εδώ μόλις οι Βοηθοί AI αρχίσουν να κάνουν κλήσεις."
+    }
+  }
+}

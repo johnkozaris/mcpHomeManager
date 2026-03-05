@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { LogEntryDetail } from "./LogEntryDetail";
 import type { AuditEntry } from "@/lib/types";
+import { i18n } from "@/i18n/init";
 
 const baseEntry: AuditEntry = {
   id: "abc-123",
@@ -35,6 +36,11 @@ function renderWithRouter(ui: React.ReactElement) {
 }
 
 describe("LogEntryDetail", () => {
+  const getErrorLabel = () =>
+    i18n.t("logs.logEntryDetail.error", { ns: "components" });
+  const getViewServiceLabel = () =>
+    i18n.t("logs.logEntryDetail.viewService", { ns: "components" });
+
   it("renders duration and timestamp", async () => {
     renderWithRouter(<LogEntryDetail entry={baseEntry} />);
     await waitFor(() => {
@@ -64,14 +70,14 @@ describe("LogEntryDetail", () => {
   it("does not render error section for success entries", async () => {
     renderWithRouter(<LogEntryDetail entry={baseEntry} />);
     await waitFor(() => {
-      expect(screen.queryByText("Error")).not.toBeInTheDocument();
+      expect(screen.queryByText(getErrorLabel())).not.toBeInTheDocument();
     });
   });
 
   it("renders View Service link when serviceId is provided", async () => {
     renderWithRouter(<LogEntryDetail entry={baseEntry} serviceId="svc-456" />);
     await waitFor(() => {
-      const link = screen.getByText("View Service");
+      const link = screen.getByRole("link", { name: getViewServiceLabel() });
       expect(link).toBeInTheDocument();
       expect(link.closest("a")).toHaveAttribute("href", "/services/svc-456");
     });
@@ -80,7 +86,9 @@ describe("LogEntryDetail", () => {
   it("does not render View Service link when serviceId is absent", async () => {
     renderWithRouter(<LogEntryDetail entry={baseEntry} />);
     await waitFor(() => {
-      expect(screen.queryByText("View Service")).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("link", { name: getViewServiceLabel() }),
+      ).not.toBeInTheDocument();
     });
   });
 });

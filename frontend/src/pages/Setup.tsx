@@ -5,8 +5,10 @@ import { api } from "@/lib/api";
 import { queryClient } from "@/lib/queryClient";
 import { parseApiError } from "@/lib/utils";
 import { Home, Copy, Check } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export function Setup() {
+  const { t } = useTranslation("auth", { keyPrefix: "setup" });
   const appName = useAppName();
   const navigate = useNavigate();
   const [username, setUsername] = useState("admin");
@@ -38,7 +40,7 @@ export function Setup() {
       });
       setApiKey(result.api_key);
     } catch (err) {
-      setError(parseApiError(err, "Setup failed"));
+      setError(parseApiError(err, t("errors.setupFailed")));
     } finally {
       setLoading(false);
     }
@@ -52,20 +54,19 @@ export function Setup() {
             <div className="w-12 h-12 rounded-xl bg-sage-bg flex items-center justify-center mb-4">
               <Check className="w-6 h-6 text-sage" />
             </div>
-            <h1 className="text-xl font-semibold text-ink">Setup Complete</h1>
+            <h1 className="text-xl font-semibold text-ink">{t("complete.title")}</h1>
             <p className="text-sm text-ink-muted mt-1">
-              Your admin account has been created
+              {t("complete.description")}
             </p>
           </div>
 
           <div className="bg-surface rounded-xl border border-line p-6 space-y-4">
             <div className="p-4 rounded-xl border border-sage bg-sage-bg space-y-3">
               <p className="text-sm font-semibold text-sage">
-                Save your MCP API Key — it won't be shown again
+                {t("complete.apiKeyTitle")}
               </p>
               <p className="text-xs text-ink-secondary">
-                AI agents (Claude, Cursor, ChatGPT) use this key to connect to
-                your MCP endpoint.
+                {t("complete.apiKeyDescription")}
               </p>
               <div className="flex items-center gap-2">
                 <code className="flex-1 p-2.5 rounded-lg bg-canvas-tertiary border border-line font-mono text-xs select-all text-ink break-all">
@@ -95,7 +96,7 @@ export function Setup() {
               className="w-full py-2.5 rounded-lg bg-terra text-white text-sm font-medium
                          hover:bg-terra-hover active:scale-[0.98] transition-all"
             >
-              Continue to Dashboard
+              {t("complete.continue")}
             </button>
           </div>
         </div>
@@ -111,10 +112,10 @@ export function Setup() {
             <Home className="w-6 h-6 text-terra" />
           </div>
           <h1 className="text-xl font-semibold text-ink">
-            {`Welcome to ${appName}`}
+            {t("welcome.title", { appName })}
           </h1>
           <p className="text-sm text-ink-muted mt-1">
-            Create your admin account to get started
+            {t("welcome.description")}
           </p>
         </div>
 
@@ -134,7 +135,7 @@ export function Setup() {
               htmlFor="username"
               className="block text-sm font-medium text-ink mb-1.5"
             >
-              Username
+              {t("fields.username.label")}
             </label>
             <input
               id="username"
@@ -156,9 +157,9 @@ export function Setup() {
               htmlFor="email"
               className="block text-sm font-medium text-ink mb-1.5"
             >
-              Email{" "}
+              {t("fields.email.label")}{" "}
               <span className="text-ink-faint font-normal">
-                (optional — for password recovery)
+                {t("fields.email.optionalHint")}
               </span>
             </label>
             <input
@@ -170,7 +171,7 @@ export function Setup() {
               className="w-full px-3 py-2 rounded-lg border border-line bg-canvas text-ink text-sm
                          placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
                          transition-colors"
-              placeholder="admin@example.com"
+              placeholder={t("fields.email.placeholder")}
             />
           </div>
 
@@ -179,7 +180,7 @@ export function Setup() {
               htmlFor="password"
               className="block text-sm font-medium text-ink mb-1.5"
             >
-              Password
+              {t("fields.password.label")}
             </label>
             <input
               id="password"
@@ -192,7 +193,7 @@ export function Setup() {
               className="w-full px-3 py-2 rounded-lg border border-line bg-canvas text-ink text-sm
                          placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
                          transition-colors"
-              placeholder="Min. 8 characters"
+              placeholder={t("fields.password.placeholder")}
             />
           </div>
 
@@ -201,7 +202,7 @@ export function Setup() {
               htmlFor="confirmPassword"
               className="block text-sm font-medium text-ink mb-1.5"
             >
-              Confirm Password
+              {t("fields.confirmPassword.label")}
             </label>
             <input
               id="confirmPassword"
@@ -210,24 +211,26 @@ export function Setup() {
               required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className={`w-full px-3 py-2 rounded-lg border bg-canvas text-ink text-sm
-                         placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
-                         transition-colors ${confirmPassword && !passwordsMatch ? "border-rust" : "border-line"}`}
-              placeholder="Re-enter password"
-            />
-            {confirmPassword && !passwordsMatch && (
-              <p className="text-xs text-rust mt-1">Passwords do not match</p>
-            )}
-          </div>
+               className={`w-full px-3 py-2 rounded-lg border bg-canvas text-ink text-sm
+                          placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
+                          transition-colors ${confirmPassword && !passwordsMatch ? "border-rust" : "border-line"}`}
+               placeholder={t("fields.confirmPassword.placeholder")}
+             />
+             {confirmPassword && !passwordsMatch && (
+               <p className="text-xs text-rust mt-1">
+                 {t("fields.confirmPassword.mismatch")}
+               </p>
+             )}
+           </div>
 
           <button
             type="submit"
             disabled={!canSubmit}
-            className="w-full py-2.5 rounded-lg bg-terra text-white text-sm font-medium
+              className="w-full py-2.5 rounded-lg bg-terra text-white text-sm font-medium
                        hover:bg-terra-hover active:scale-[0.98] transition-all
                        disabled:opacity-50 disabled:pointer-events-none"
           >
-            {loading ? "Creating account…" : "Create Admin Account"}
+            {loading ? t("actions.creatingAccount") : t("actions.createAdminAccount")}
           </button>
         </form>
       </div>

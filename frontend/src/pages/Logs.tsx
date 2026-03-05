@@ -30,10 +30,12 @@ import { ServiceIcon } from "@/lib/service-meta";
 import { LogEntryDetail } from "@/components/logs/LogEntryDetail";
 import { formatRelativeTime } from "@/lib/utils";
 import type { ServiceType } from "@/lib/types";
+import { useTranslation } from "react-i18next";
 
 const PAGE_SIZE = 50;
 
 export function Logs() {
+  const { t } = useTranslation("logs", { keyPrefix: "page" });
   const { data: services } = useServices();
   const [filterService, setFilterService] = useState<string>("all");
   const [filterStatus, setFilterStatus] = useState<string>("all");
@@ -101,17 +103,15 @@ export function Logs() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="page-header">Logs</h1>
-        <p className="page-description">
-          What AI agents have been doing with your services
-        </p>
+        <h1 className="page-header">{t("title")}</h1>
+        <p className="page-description">{t("description")}</p>
       </div>
 
       <div
         className={`grid gap-4 ${totalPages <= 1 ? "grid-cols-4" : "grid-cols-1"}`}
       >
         <StatCard
-          label="Total Calls"
+          label={t("stats.totalCalls")}
           value={total}
           icon={Activity}
           iconColor="var(--terra)"
@@ -119,29 +119,29 @@ export function Logs() {
         />
         {totalPages <= 1 && (
           <>
-            <StatCard
-              label="Success Rate"
-              value={
-                total > 0
-                  ? `${Math.round((successes / Math.max(entries.length, 1)) * 100)}%`
+              <StatCard
+                label={t("stats.successRate")}
+                value={
+                  total > 0
+                    ? `${Math.round((successes / Math.max(entries.length, 1)) * 100)}%`
                   : "\u2014"
               }
               icon={CheckCircle2}
               iconColor="var(--sage)"
               iconBg="var(--sage-bg)"
             />
-            <StatCard
-              label="Errors"
-              value={errors_}
-              icon={AlertCircle}
-              iconColor="var(--rust)"
+              <StatCard
+                label={t("stats.errors")}
+                value={errors_}
+                icon={AlertCircle}
+                iconColor="var(--rust)"
               iconBg="var(--rust-bg)"
             />
-            <StatCard
-              label="Avg Latency"
-              value={`${avgMs}ms`}
-              icon={Timer}
-              iconColor="var(--info)"
+              <StatCard
+                label={t("stats.avgLatency")}
+                value={`${avgMs}ms`}
+                icon={Timer}
+                iconColor="var(--info)"
               iconBg="var(--info-bg)"
             />
           </>
@@ -150,7 +150,7 @@ export function Logs() {
 
       {chartData.length > 0 && (
         <Card>
-          <h2 className="section-label mb-4">Calls over time</h2>
+          <h2 className="section-label mb-4">{t("chart.callsOverTime")}</h2>
           <div className="h-48">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData}>
@@ -211,7 +211,7 @@ export function Logs() {
       <div className="flex items-center gap-3 flex-wrap">
         <div className="w-full sm:w-56">
           <Input
-            placeholder="Search tools…"
+            placeholder={t("filters.searchPlaceholder")}
             value={toolSearch}
             onChange={(e) => updateFilter(() => setToolSearch(e.target.value))}
           />
@@ -221,7 +221,7 @@ export function Logs() {
             onClick={() => updateFilter(() => setFilterService("all"))}
             className={`chip ${filterService === "all" ? "chip-active" : "chip-inactive"}`}
           >
-            All services
+            {t("filters.allServices")}
           </button>
           {serviceNames.map((name) => (
             <button
@@ -241,7 +241,11 @@ export function Logs() {
               onClick={() => updateFilter(() => setFilterStatus(status))}
               className={`chip ${filterStatus === status ? "chip-active" : "chip-inactive"}`}
             >
-              {status === "all" ? "All status" : status}
+              {status === "all"
+                ? t("filters.status.all")
+                : status === "success"
+                  ? t("filters.status.success")
+                  : t("filters.status.error")}
             </button>
           ))}
         </div>
@@ -251,19 +255,19 @@ export function Logs() {
         isLoading={isLoading}
         isError={isError}
         error={error instanceof Error ? error : null}
-        loadingMessage="Loading logs…"
+        loadingMessage={t("query.loading")}
       >
         {entries.length > 0 ? (
           <>
             <Card className="!p-0 overflow-hidden">
               <div className="overflow-x-auto">
                 <div className="flex items-center py-2.5 px-5 bg-canvas-secondary text-2xs font-semibold uppercase tracking-wider text-ink-tertiary border-b border-line min-w-[640px]">
-                  <span className="w-18">Status</span>
-                  <span className="flex-1">Tool</span>
-                  <span className="w-28">Service</span>
-                  <span className="w-20">Client</span>
-                  <span className="w-16 text-right">Latency</span>
-                  <span className="w-20 text-right">Time</span>
+                  <span className="w-18">{t("table.headers.status")}</span>
+                  <span className="flex-1">{t("table.headers.tool")}</span>
+                  <span className="w-28">{t("table.headers.service")}</span>
+                  <span className="w-20">{t("table.headers.client")}</span>
+                  <span className="w-16 text-right">{t("table.headers.latency")}</span>
+                  <span className="w-20 text-right">{t("table.headers.time")}</span>
                   <span className="w-6" />
                 </div>
                 <div className="divide-y divide-line">
@@ -351,7 +355,7 @@ export function Logs() {
             {totalPages > 1 && (
               <div className="flex items-center justify-between">
                 <span className="text-sm text-ink-tertiary">
-                  {total} total entries
+                  {t("pagination.totalEntries", { count: total })}
                 </span>
                 <div className="flex items-center gap-2">
                   <button
@@ -362,7 +366,7 @@ export function Logs() {
                     <ChevronLeft size={16} />
                   </button>
                   <span className="text-sm text-ink-secondary tabular-nums">
-                    Page {page + 1} of {totalPages}
+                    {t("pagination.page", { current: page + 1, total: totalPages })}
                   </span>
                   <button
                     onClick={() =>
@@ -384,15 +388,15 @@ export function Logs() {
               debouncedToolSearch ||
               filterService !== "all" ||
               filterStatus !== "all"
-                ? "No matching entries"
-                : "No log entries yet"
+                ? t("empty.filteredTitle")
+                : t("empty.defaultTitle")
             }
             description={
               debouncedToolSearch ||
               filterService !== "all" ||
               filterStatus !== "all"
-                ? "Try adjusting the filters."
-                : "Activity will show up here once AI agents start calling tools through MCP."
+                ? t("empty.filteredDescription")
+                : t("empty.defaultDescription")
             }
           />
         )}

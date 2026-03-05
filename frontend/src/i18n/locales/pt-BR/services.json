@@ -1,0 +1,25 @@
+{
+  "listPage": {
+    "title": "Serviços",
+    "description": "Conecte serviços e gerencie status, ferramentas e configuração.",
+    "actions": {
+      "export": "Exportar",
+      "import": "Importar",
+      "connectService": "Conectar serviço"
+    },
+    "errors": {
+      "exportFailed": "Não foi possível exportar os serviços"
+    },
+    "query": {
+      "loading": "Carregando serviços…",
+      "error": "Não foi possível carregar os serviços"
+    },
+    "cards": {
+      "connectDescription": "Conectar outro serviço"
+    },
+    "empty": {
+      "title": "Nenhum serviço conectado",
+      "description": "Conecte seu primeiro serviço para começar a expor ferramentas para clientes MCP."
+    }
+  }
+}

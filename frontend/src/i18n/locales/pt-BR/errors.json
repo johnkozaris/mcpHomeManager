@@ -1,0 +1,11 @@
+{
+  "api": {
+    "generic": "Algo deu errado"
+  },
+  "queryState": {
+    "loading": "Carregando…",
+    "authRequired": "Sessão expirada — entre novamente para continuar.",
+    "networkUnreachable": "Não foi possível conectar ao servidor. Ele está em execução?",
+    "generic": "Algo deu errado"
+  }
+}

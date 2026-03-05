@@ -15,8 +15,10 @@ import { Input } from "@/components/ui/Input";
 import { Toggle } from "@/components/ui/Toggle";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { QueryState } from "@/components/ui/QueryState";
+import { useTranslation } from "react-i18next";
 
 export function Users() {
+  const { t } = useTranslation("users", { keyPrefix: "page" });
   const { data: users, isLoading, isError, error } = useUsers();
   const { data: services } = useServices();
   const createUser = useCreateUser();
@@ -65,13 +67,11 @@ export function Users() {
   };
 
   return (
-    <div className="space-y-6">
+      <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="page-header">Users</h1>
-          <p className="page-description">
-            Manage user access to your homelab services
-          </p>
+          <h1 className="page-header">{t("title")}</h1>
+          <p className="page-description">{t("description")}</p>
         </div>
         <Button
           variant="primary"
@@ -79,68 +79,69 @@ export function Users() {
           onClick={() => setShowForm(!showForm)}
         >
           <UserPlus size={15} />
-          {showForm ? "Cancel" : "Create User"}
+          {showForm ? t("actions.cancel") : t("actions.createUser")}
         </Button>
       </div>
 
       {showForm && (
         <Card>
           <CardHeader>
-            <CardTitle>Create User</CardTitle>
+            <CardTitle>{t("form.title")}</CardTitle>
           </CardHeader>
           <div className="space-y-4">
             <Input
-              label="Username"
+              label={t("form.fields.username.label")}
               value={username}
               onChange={(e) => setUsername(e.target.value.replace(/\s/g, ""))}
-              placeholder="e.g. alice"
+              placeholder={t("form.fields.username.placeholder")}
               maxLength={100}
               error={
                 username.length > 0 && username.length < 2
-                  ? "Username must be at least 2 characters"
+                  ? t("form.fields.username.errors.minLength")
                   : username.length > 100
-                    ? "Username must be 100 characters or less"
+                    ? t("form.fields.username.errors.maxLength")
                     : undefined
               }
             />
             <Input
-              label="Email (optional — for password recovery)"
+              label={t("form.fields.email.label")}
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="alice@example.com"
+              placeholder={t("form.fields.email.placeholder")}
               maxLength={254}
             />
             <Input
-              label="Password (for web login)"
+              label={t("form.fields.password.label")}
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Min 8 characters"
+              placeholder={t("form.fields.password.placeholder")}
               maxLength={200}
               error={
                 password.length > 0 && password.length < 8
-                  ? `Password must be at least 8 characters (${password.length}/8)`
+                  ? t("form.fields.password.errors.minLength", {
+                      current: password.length,
+                    })
                   : undefined
               }
             />
             <p className="text-xs text-ink-tertiary -mt-2">
-              Password is for web dashboard login. An MCP API key will also be
-              generated automatically.
+              {t("form.passwordHelp")}
             </p>
             <Toggle
               checked={isAdmin}
               onChange={() => setIsAdmin(!isAdmin)}
-              label="Admin (full access to all services)"
+              label={t("form.toggles.admin")}
             />
             <Toggle
               checked={selfMcpEnabled}
               onChange={() => setSelfMcpEnabled(!selfMcpEnabled)}
-              label="Self-MCP access (agent can manage services via MCP)"
+              label={t("form.toggles.selfMcp")}
             />
             {!isAdmin && services && services.length > 0 && (
               <div>
-                <p className="section-label mb-2">Allowed Services</p>
+                <p className="section-label mb-2">{t("form.allowedServices")}</p>
                 <div className="space-y-1.5">
                   {services.map((svc) => (
                     <label
@@ -161,7 +162,7 @@ export function Users() {
             )}
             {createUser.isError && (
               <p className="text-sm text-rust">
-                {parseApiError(createUser.error, "Failed to create user")}
+                {parseApiError(createUser.error, t("errors.createUserFailed"))}
               </p>
             )}
             <Button
@@ -175,7 +176,7 @@ export function Users() {
                 createUser.isPending
               }
             >
-              {createUser.isPending ? "Creating…" : "Create"}
+              {createUser.isPending ? t("actions.creating") : t("actions.create")}
             </Button>
           </div>
         </Card>
@@ -185,14 +186,12 @@ export function Users() {
         isLoading={isLoading}
         isError={isError}
         error={error instanceof Error ? error : null}
-        loadingMessage="Loading users…"
+        loadingMessage={t("query.loading")}
       >
         {users && users.length > 0 ? (
           <Card>
             <CardHeader>
-              <CardTitle>
-                {users.length} User{users.length !== 1 ? "s" : ""}
-              </CardTitle>
+              <CardTitle>{t("list.count", { count: users.length })}</CardTitle>
             </CardHeader>
             <div className="divide-y divide-line">
               {users.map((user) => (
@@ -213,13 +212,13 @@ export function Users() {
                       {user.is_admin && (
                         <Badge variant="brand" className="ml-2">
                           <Shield size={10} />
-                          Admin
+                          {t("list.badges.admin")}
                         </Badge>
                       )}
                       {user.self_mcp_enabled && (
                         <Badge variant="positive" className="ml-1">
                           <Wrench size={10} />
-                          MCP
+                          {t("list.badges.mcp")}
                         </Badge>
                       )}
                     </div>
@@ -233,7 +232,7 @@ export function Users() {
                           data: { is_admin: v },
                         })
                       }
-                      label="Admin"
+                      label={t("list.toggles.admin")}
                     />
                     <Toggle
                       checked={user.self_mcp_enabled}
@@ -243,12 +242,14 @@ export function Users() {
                           data: { self_mcp_enabled: v },
                         })
                       }
-                      label="MCP"
+                      label={t("list.toggles.mcp")}
                     />
                     <span className="text-xs text-ink-tertiary">
                       {user.is_admin
-                        ? "All services"
-                        : `${user.allowed_service_ids.length} service${user.allowed_service_ids.length !== 1 ? "s" : ""}`}
+                        ? t("list.access.allServices")
+                        : t("list.access.serviceCount", {
+                            count: user.allowed_service_ids.length,
+                          })}
                     </span>
                     <Button
                       variant="ghost"
@@ -263,26 +264,24 @@ export function Users() {
             </div>
             {updateUser.isError && (
               <p className="text-sm text-rust px-6 pb-3">
-                {parseApiError(updateUser.error, "Failed to update user")}
+                {parseApiError(updateUser.error, t("errors.updateUserFailed"))}
               </p>
             )}
           </Card>
         ) : (
           <div className="text-center py-12 text-ink-tertiary">
             <UserPlus size={32} className="mx-auto mb-3 opacity-40" />
-            <p className="text-base">No users yet</p>
-            <p className="text-sm mt-1">
-              Create a user to get started with multi-user access control.
-            </p>
+            <p className="text-base">{t("empty.title")}</p>
+            <p className="text-sm mt-1">{t("empty.description")}</p>
           </div>
         )}
       </QueryState>
 
       <ConfirmDialog
         open={!!deleteId}
-        title="Delete user"
-        description="This will permanently remove the user and revoke their API key."
-        confirmText="Delete"
+        title={t("dialogs.delete.title")}
+        description={t("dialogs.delete.description")}
+        confirmText={t("dialogs.delete.confirm")}
         variant="danger"
         onConfirm={() => {
           if (deleteId) {

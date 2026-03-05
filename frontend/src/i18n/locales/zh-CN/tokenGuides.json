@@ -1,0 +1,168 @@
+{
+  "guides": {
+    "forgejo": {
+      "steps": [
+        "打开你的 Forgejo 实例并登录账号",
+        "点击右上角头像，选择“Settings（设置）”",
+        "在左侧边栏点击“Applications（应用）”",
+        "在“Manage Access Tokens”下，为 token 输入一个名称（例如“{appName}”）",
+        "选择 token 所需权限——如果需要完整访问，请勾选所有权限（scopes）。至少需要：read:organization、read:repository、read:issue、write:issue",
+        "点击“Generate Token（生成 token）”并立即复制 token——之后不会再次显示",
+        "将 token 粘贴到上方字段"
+      ]
+    },
+    "homeassistant": {
+      "steps": [
+        "打开你的 Home Assistant 实例并登录",
+        "点击左侧边栏底部的用户名/个人资料",
+        "向下滚动到页面底部的“Long-Lived Access Tokens（长期访问 token）”区域",
+        "点击“Create Token（创建 token）”",
+        "输入类似“{appName}”的名称并点击 OK",
+        "复制弹窗中显示的 token——只会显示一次",
+        "将 token 粘贴到上方字段"
+      ],
+      "note": "Home Assistant token 通常以 eyJ… 开头"
+    },
+    "paperless": {
+      "steps": [
+        "打开你的 Paperless-ngx 实例，并以管理员用户登录",
+        "点击齿轮图标，或在顶部导航进入 Settings（设置）",
+        "向下滚动或查找“API”区域",
+        "这里会显示你的 API token——点击复制图标即可复制",
+        "如果还没有 token，请点击“Generate（生成）”创建",
+        "将 token 粘贴到上方字段"
+      ]
+    },
+    "immich": {
+      "steps": [
+        "打开你的 Immich 实例并登录",
+        "点击右上角头像",
+        "在下拉菜单中选择“Account Settings（账户设置）”",
+        "向下滚动到“API Keys（API 密钥）”",
+        "点击“New API Key（新建 API key）”，输入类似“{appName}”的名称",
+        "立即复制生成的 key——之后不会再次显示",
+        "将 key 粘贴到上方字段"
+      ]
+    },
+    "nextcloud": {
+      "steps": [
+        "打开你的 Nextcloud 实例并登录",
+        "点击右上角头像，选择“Settings（设置）”（或“Personal settings（个人设置）”）",
+        "在左侧边栏点击“Security（安全）”",
+        "滚动到“Devices & sessions（设备与会话）”区域",
+        "在底部文本框中输入“{appName}”作为应用名称",
+        "点击“Create new app password（创建新的应用密码）”",
+        "复制生成的密码——这就是你的 API token",
+        "将其粘贴到上方字段"
+      ],
+      "note": "格式：username:app-password（例如：admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx）"
+    },
+    "uptimekuma": {
+      "steps": [
+        "打开你的 Uptime Kuma 实例并登录",
+        "点击左侧边栏中的“Settings（设置）”",
+        "进入“API Keys（API 密钥）”标签页",
+        "点击“Add API Key（添加 API key）”，输入类似“{appName}”的名称",
+        "设置过期时间，或留空表示不过期",
+        "点击“Create（创建）”并复制生成的 API key",
+        "将 key 粘贴到上方字段"
+      ]
+    },
+    "adguard": {
+      "steps": [
+        "AdGuard Home 使用基础认证（用户名和密码），而不是 API token",
+        "请使用你登录 AdGuard Web 界面的同一组用户名和密码",
+        "按以下格式填写到上方字段：username:password"
+      ],
+      "note": "例如，如果登录名是“admin”、密码是“mypass”，请输入 admin:mypass"
+    },
+    "nginxproxymanager": {
+      "steps": [
+        "Nginx Proxy Manager 使用登录凭据进行 API 访问",
+        "请按格式输入邮箱和密码：email:password",
+        "这与你登录 NPM Web 界面使用的凭据相同"
+      ],
+      "note": "格式：email:password（例如：admin@example.com:changeme）"
+    },
+    "portainer": {
+      "steps": [
+        "Portainer 使用登录凭据进行 API 访问",
+        "请按格式输入用户名和密码：username:password",
+        "这与你登录 Portainer Web 界面使用的凭据相同"
+      ],
+      "note": "格式：username:password（例如：admin:mypassword）"
+    },
+    "freshrss": {
+      "steps": [
+        "FreshRSS 使用独立的 API 密码进行程序化访问",
+        "在 FreshRSS 中，前往 Settings（设置）→ Profile（个人资料）→ API Management（API 管理）",
+        "如果尚未启用，请开启“Allow API access”",
+        "设置一个 API 密码（与登录密码不同）",
+        "按以下格式输入 FreshRSS 用户名和 API 密码：username:api_password"
+      ],
+      "note": "格式：username:api_password — API 密码需要在 FreshRSS 设置中单独配置，不是登录密码"
+    },
+    "wallabag": {
+      "steps": [
+        "打开你的 Wallabag 实例并登录",
+        "进入 API 客户端管理（设置中的 Developer（开发者）区域）",
+        "点击“Create a new client”，并记录 client ID 和 client secret",
+        "按以下格式输入四个值：client_id:client_secret:username:password"
+      ],
+      "note": "格式：client_id:client_secret:username:password（4 段，用冒号分隔）"
+    },
+    "stirlingpdf": {
+      "steps": [
+        "打开你的 Stirling PDF 实例，并以管理员身份登录",
+        "点击右上角设置齿轮（⚙️）打开 Account Settings（账户设置）",
+        "在设置面板中找到或生成你的个人 API key",
+        "也可以使用通过 SECURITY_CUSTOMGLOBALAPIKEY 环境变量设置的全局 API key",
+        "将 API key 粘贴到上方字段"
+      ],
+      "note": "使用 X-API-KEY header。Stirling PDF 必须启用登录，API key 认证才会生效"
+    },
+    "wikijs": {
+      "steps": [
+        "打开你的 Wiki.js 实例，并以管理员身份登录",
+        "进入 Administration（管理）→ API Access（API 访问）",
+        "点击“Create API Key（创建 API key）”并设置名称（例如“{appName}”）",
+        "选择合适的权限组（建议 Full Access（完全访问））",
+        "设置过期时间，或留空表示不过期",
+        "复制生成的 API key，并粘贴到上方字段"
+      ]
+    },
+    "tailscale": {
+      "steps": [
+        "打开 Tailscale 管理控制台：https://login.tailscale.com/admin",
+        "进入 Settings（设置）→ Keys",
+        "在“API access tokens（API 访问 token）”下点击“Generate access token...”",
+        "为 token 设置过期时间，或保持默认值",
+        "点击“Generate（生成）”并立即复制 token——之后不会再次显示",
+        "将 token 粘贴到上方字段"
+      ],
+      "note": "Tailscale API keys 以 tskey-api-... 开头，并用于对 Tailscale API（api.tailscale.com/api/v2）进行认证"
+    },
+    "calibreweb": {
+      "steps": [
+        "Calibre-Web 使用登录凭据进行 API 访问",
+        "请按格式输入 Calibre-Web 用户名和密码：username:password",
+        "这与你登录 Calibre-Web 界面使用的凭据相同"
+      ],
+      "note": "默认凭据为 admin/admin123——连接前请先修改。格式：username:password"
+    },
+    "cloudflare": {
+      "steps": [
+        "打开 Cloudflare 控制台：https://dash.cloudflare.com",
+        "点击右上角头像并选择“My Profile（我的资料）”",
+        "在左侧边栏点击“API Tokens（API token）”",
+        "点击“Create Token（创建 token）”",
+        "使用自定义 token 模板，并设置以下权限：Zone:DNS:Edit、Zone:Zone:Read、Account:Cloudflare Tunnel:Edit",
+        "可选：将 token 限制到特定 zone 或 account",
+        "点击“Continue to summary（继续到摘要）”，然后点击“Create Token（创建 token）”",
+        "立即复制 token——之后不会再次显示",
+        "将 token 粘贴到上方字段"
+      ],
+      "note": "Base URL 请使用 https://api.cloudflare.com。token 通过 Bearer header 认证。"
+    }
+  }
+}

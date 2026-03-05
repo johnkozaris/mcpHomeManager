@@ -1,0 +1,83 @@
+{
+  "heroBanner": {
+    "title": "homelabをAIに接続",
+    "description": "一度サービスを接続すれば、Claude、ChatGPT、Cursor などからツールを使えます。",
+    "actions": {
+      "connectService": "サービスを接続",
+      "setupGuide": "セットアップガイド"
+    }
+  },
+  "stats": {
+    "services": {
+      "sub": "{count} 件有効"
+    },
+    "tools": {
+      "sub": "利用可能なツール"
+    },
+    "health": {
+      "ok": "正常",
+      "allConnected": "すべてのサービスが接続済み",
+      "needsAttention": "要対応"
+    },
+    "apiCalls": {
+      "sub": "最近のAPIコール"
+    }
+  },
+  "serviceRow": {
+    "toolsCount": "{count, plural, one {# 個のツール} other {# 個のツール}}"
+  },
+  "serviceGrid": {
+    "more": "さらに表示"
+  },
+  "howItWorks": {
+    "title": "使い方",
+    "steps": {
+      "connect": {
+        "title": "サービスを接続",
+        "description": "Base URLとAPI tokenでhomelabアプリを連携します。"
+      },
+      "configure": {
+        "title": "ツールを設定",
+        "description": "使いたいツールを選んで、説明文をカスタマイズできます。"
+      },
+      "use": {
+        "title": "エージェントで利用",
+        "description": "AIクライアントからMCP経由でツールを呼び出します。"
+      }
+    }
+  },
+  "welcomeView": {
+    "supportedServices": "対応サービス"
+  },
+  "dashboardView": {
+    "yourServices": "接続中のサービス",
+    "manageAll": "すべてのサービスを管理",
+    "recentActivity": {
+      "title": "最近のアクティビティ",
+      "viewAll": "すべて表示",
+      "statusOk": "OK",
+      "statusError": "エラー"
+    },
+    "quickActions": {
+      "title": "クイックアクション",
+      "items": {
+        "setupAgents": {
+          "label": "エージェントをセットアップ",
+          "description": "Claude、ChatGPT、Cursor などを接続"
+        },
+        "connectService": {
+          "label": "サービスを接続",
+          "description": "MCP gatewayに別のアプリを追加"
+        },
+        "manageTools": {
+          "label": "ツールを管理",
+          "description": "ツールの切り替えや動作を設定"
+        }
+      }
+    }
+  },
+  "query": {
+    "loading": "ダッシュボードを読み込み中…",
+    "error": "ダッシュボードを読み込めませんでした"
+  }
+}

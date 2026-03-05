@@ -1,6 +1,7 @@
 import { type ReactNode, useEffect, useState } from "react";
 import { useAppName } from "@/hooks/useAppName";
 import { Link, useNavigate } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import {
   Home,
   Server,
@@ -22,31 +23,35 @@ import { api } from "@/lib/api";
 import { queryClient } from "@/lib/queryClient";
 import logoSrc from "@/assets/logo.png";
 
-const baseNav: {
+interface NavItem {
   to: string;
-  label: string;
+  labelKey: string;
   icon: LucideIcon;
   exact?: boolean;
-}[] = [
-  { to: "/", label: "Home", icon: Home, exact: true },
-  { to: "/services", label: "Services", icon: Server },
-  { to: "/tools", label: "Tools", icon: Wrench },
-  { to: "/agents", label: "Agents", icon: Bot },
-  { to: "/logs", label: "Logs", icon: ScrollText },
-  { to: "/users", label: "Users", icon: Users },
+}
+
+const baseNav: NavItem[] = [
+  { to: "/", labelKey: "home", icon: Home, exact: true },
+  { to: "/services", labelKey: "services", icon: Server },
+  { to: "/tools", labelKey: "tools", icon: Wrench },
+  { to: "/agents", labelKey: "agents", icon: Bot },
+  { to: "/logs", labelKey: "logs", icon: ScrollText },
+  { to: "/users", labelKey: "users", icon: Users },
 ];
 
-const secondaryNav: { to: string; label: string; icon: LucideIcon }[] = [
-  { to: "/settings", label: "Settings", icon: Settings },
+const secondaryNav: NavItem[] = [
+  { to: "/settings", labelKey: "settings", icon: Settings },
 ];
 
 function SidebarLink({
   item,
   collapsed,
 }: {
-  item: (typeof baseNav)[number];
+  item: NavItem;
   collapsed: boolean;
 }) {
+  const { t } = useTranslation("nav");
+  const label = t(`items.${item.labelKey}`);
   const Icon = item.icon;
   return (
     <Link
@@ -57,10 +62,10 @@ function SidebarLink({
         className:
           "flex items-center gap-3 text-sm transition-all duration-200 sidebar-link-active font-semibold",
       }}
-      title={collapsed ? item.label : undefined}
+      title={collapsed ? label : undefined}
     >
       <Icon size={18} className="shrink-0" />
-      {!collapsed && <span>{item.label}</span>}
+      {!collapsed && <span>{label}</span>}
     </Link>
   );
 }
@@ -126,6 +131,7 @@ function BgShapes({ sidebarWidth }: { sidebarWidth: number }) {
 const COLLAPSED_KEY = "sidebar_collapsed";
 
 export function Shell({ children }: { children: ReactNode }) {
+  const { t } = useTranslation(["common", "nav"]);
   const appName = useAppName();
   const { data: currentUserData } = useCurrentUser();
   const { theme, toggle } = useTheme();
@@ -153,6 +159,14 @@ export function Shell({ children }: { children: ReactNode }) {
   };
 
   const sidebarWidth = collapsed ? 68 : 220;
+  const isLightMode = theme === "light";
+  const themeToggleLabel = isLightMode
+    ? t("actions.switchToDarkMode", { ns: "nav" })
+    : t("actions.switchToLightMode", { ns: "nav" });
+  const themeLabel = isLightMode
+    ? t("theme.dark", { ns: "nav" })
+    : t("theme.light", { ns: "nav" });
+  const signOutLabel = t("actions.signOut", { ns: "common" });
 
   return (
     <div className="flex h-screen overflow-hidden bg-canvas">
@@ -178,8 +192,8 @@ export function Shell({ children }: { children: ReactNode }) {
               <button
                 onClick={toggleCollapsed}
                 className="p-1 rounded-lg text-white/30 hover:text-white/70 hover:bg-white/5 transition-all"
-                aria-label="Collapse sidebar"
-                title="Collapse"
+                aria-label={t("actions.collapseSidebar", { ns: "nav" })}
+                title={t("actions.collapse", { ns: "nav" })}
               >
                 <ChevronLeft size={16} />
               </button>
@@ -189,8 +203,8 @@ export function Shell({ children }: { children: ReactNode }) {
             <button
               onClick={toggleCollapsed}
               className="p-1 rounded-lg text-white/30 hover:text-white/70 hover:bg-white/5 transition-all"
-              aria-label="Expand sidebar"
-              title="Expand"
+              aria-label={t("actions.expandSidebar", { ns: "nav" })}
+              title={t("actions.expand", { ns: "nav" })}
             >
               <ChevronRight size={16} />
             </button>
@@ -235,15 +249,15 @@ export function Shell({ children }: { children: ReactNode }) {
           <button
             onClick={toggle}
             className={`sidebar-link flex items-center gap-3 text-sm font-medium transition-all duration-200 w-full ${collapsed ? "justify-center" : ""}`}
-            aria-label={theme === "light" ? "Dark mode" : "Light mode"}
-            title={theme === "light" ? "Dark mode" : "Light mode"}
+            aria-label={themeToggleLabel}
+            title={themeToggleLabel}
           >
-            {theme === "light" ? (
+            {isLightMode ? (
               <Moon size={18} className="shrink-0" />
             ) : (
               <Sun size={18} className="shrink-0" />
             )}
-            {!collapsed && <span>{theme === "light" ? "Dark" : "Light"}</span>}
+            {!collapsed && <span>{themeLabel}</span>}
           </button>
 
           {currentUser && (
@@ -263,9 +277,9 @@ export function Shell({ children }: { children: ReactNode }) {
                   <button
                     onClick={handleLogout}
                     className="text-2xs text-white/30 hover:text-white/70 transition-colors whitespace-nowrap"
-                    title="Sign out"
+                    title={signOutLabel}
                   >
-                    Sign out
+                    {signOutLabel}
                   </button>
                 </>
               )}
@@ -273,7 +287,7 @@ export function Shell({ children }: { children: ReactNode }) {
                 <button
                   onClick={handleLogout}
                   className="p-1 rounded-lg text-white/30 hover:text-white/70 hover:bg-white/5 transition-all"
-                  title="Sign out"
+                  title={signOutLabel}
                 >
                   <LogOut size={14} />
                 </button>

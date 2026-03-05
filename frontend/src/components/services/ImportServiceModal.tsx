@@ -6,6 +6,8 @@ import { useImportServices } from "@/hooks/useServices";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
+import { parseApiError } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   open: boolean;
@@ -19,7 +21,6 @@ interface ParsedService {
 }
 
 function parseYamlNames(content: string): ParsedService[] {
-  // Simple extraction of service names from YAML — no full parser needed in browser
   const services: ParsedService[] = [];
   const lines = content.split("\n");
   let current: Partial<ParsedService> = {};
@@ -42,6 +43,9 @@ function parseYamlNames(content: string): ParsedService[] {
 }
 
 export function ImportServiceModal({ open, onClose }: Props) {
+  const { t } = useTranslation("components", {
+    keyPrefix: "services.importServiceModal",
+  });
   const [yamlContent, setYamlContent] = useState("");
   const [parsed, setParsed] = useState<ParsedService[]>([]);
   const [tokens, setTokens] = useState<Record<string, string>>({});
@@ -109,12 +113,12 @@ export function ImportServiceModal({ open, onClose }: Props) {
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-line">
           <h2 id="import-title" className="text-lg font-semibold text-ink">
-            Import Services
+            {t("title")}
           </h2>
           <button
             onClick={handleClose}
             className="text-ink-tertiary hover:text-ink transition-colors"
-            aria-label="Close dialog"
+            aria-label={t("closeDialog")}
           >
             <X size={18} />
           </button>
@@ -122,11 +126,11 @@ export function ImportServiceModal({ open, onClose }: Props) {
 
         <div className="p-6 max-h-[70vh] overflow-y-auto space-y-4">
           <div>
-            <span className="section-label mb-2 block">YAML Config File</span>
+            <span className="section-label mb-2 block">{t("yamlConfigFile")}</span>
             <label className="flex items-center gap-3 p-4 rounded-xl border-2 border-dashed border-line hover:border-terra cursor-pointer transition-colors">
               <Upload size={20} className="text-ink-tertiary" />
               <span className="text-sm text-ink-secondary">
-                {yamlContent ? "File loaded" : "Choose a .yml file"}
+                {yamlContent ? t("fileLoaded") : t("chooseFile")}
               </span>
               <input
                 type="file"
@@ -139,7 +143,9 @@ export function ImportServiceModal({ open, onClose }: Props) {
 
           {parsed.length > 0 && (
             <div className="space-y-3">
-              <p className="section-label">Services found ({parsed.length})</p>
+              <p className="section-label">
+                {t("servicesFound", { count: parsed.length })}
+              </p>
               {parsed.map((svc) => (
                 <div
                   key={svc.name}
@@ -156,9 +162,9 @@ export function ImportServiceModal({ open, onClose }: Props) {
                     {svc.base_url}
                   </p>
                   <Input
-                    label="API Token"
+                    label={t("apiTokenLabel")}
                     type="password"
-                    placeholder="Enter API token for this service"
+                    placeholder={t("apiTokenPlaceholder")}
                     value={tokens[svc.name] || ""}
                     onChange={(e) =>
                       setTokens((prev) => ({
@@ -176,17 +182,17 @@ export function ImportServiceModal({ open, onClose }: Props) {
             <div className="space-y-1 text-sm">
               {importServices.data.created.length > 0 && (
                 <p className="text-sage">
-                  Created: {importServices.data.created.join(", ")}
+                  {t("createdPrefix")} {importServices.data.created.join(", ")}
                 </p>
               )}
               {importServices.data.skipped.length > 0 && (
                 <p className="text-clay">
-                  Skipped: {importServices.data.skipped.join(", ")}
+                  {t("skippedPrefix")} {importServices.data.skipped.join(", ")}
                 </p>
               )}
               {importServices.data.errors.length > 0 && (
                 <p className="text-rust">
-                  Errors: {importServices.data.errors.join("; ")}
+                  {t("errorsPrefix")} {importServices.data.errors.join("; ")}
                 </p>
               )}
             </div>
@@ -194,15 +200,13 @@ export function ImportServiceModal({ open, onClose }: Props) {
 
           {importServices.error && (
             <p className="text-sm text-rust">
-              {importServices.error instanceof Error
-                ? importServices.error.message
-                : "Import failed"}
+              {parseApiError(importServices.error, t("importFailed"))}
             </p>
           )}
 
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="secondary" size="sm" onClick={handleClose}>
-              Cancel
+              {t("cancel")}
             </Button>
             <Button
               variant="primary"
@@ -212,7 +216,7 @@ export function ImportServiceModal({ open, onClose }: Props) {
                 !yamlContent || parsed.length === 0 || importServices.isPending
               }
             >
-              {importServices.isPending ? "Importing…" : "Import"}
+              {importServices.isPending ? t("importing") : t("import")}
             </Button>
           </div>
         </div>

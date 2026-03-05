@@ -1,0 +1,75 @@
+{
+  "page": {
+    "title": "Χρήστες",
+    "description": "Διαχείριση πρόσβασης στην πύλη και στις υπηρεσίες ανά χρήστη.",
+    "actions": {
+      "cancel": "Ακύρωση",
+      "createUser": "Δημιουργία χρήστη",
+      "creating": "Δημιουργία…",
+      "create": "Δημιουργία"
+    },
+    "form": {
+      "title": "Δημιουργία χρήστη",
+      "fields": {
+        "username": {
+          "label": "Όνομα χρήστη",
+          "placeholder": "jane",
+          "errors": {
+            "minLength": "Το όνομα χρήστη πρέπει να έχει τουλάχιστον 2 χαρακτήρες",
+            "maxLength": "Το όνομα χρήστη πρέπει να έχει το πολύ 100 χαρακτήρες"
+          }
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "jane@example.com"
+        },
+        "password": {
+          "label": "Κωδικός",
+          "placeholder": "Άφησέ το κενό για να οριστεί αργότερα",
+          "errors": {
+            "minLength": "Ο κωδικός πρέπει να έχει τουλάχιστον 8 χαρακτήρες (τώρα {current})"
+          }
+        }
+      },
+      "passwordHelp": "Ο κωδικός είναι προαιρετικός κατά τη δημιουργία, αλλά αν δοθεί πρέπει να έχει τουλάχιστον 8 χαρακτήρες.",
+      "toggles": {
+        "admin": "Πρόσβαση διαχειριστή",
+        "selfMcp": "Να επιτρέπονται τα Self-MCP εργαλεία"
+      },
+      "allowedServices": "Επιτρεπόμενες υπηρεσίες"
+    },
+    "errors": {
+      "createUserFailed": "Η δημιουργία χρήστη απέτυχε",
+      "updateUserFailed": "Η ενημέρωση χρήστη απέτυχε"
+    },
+    "query": {
+      "loading": "Φόρτωση χρηστών…"
+    },
+    "list": {
+      "count": "{count, plural, one {# user} other {# users}}",
+      "badges": {
+        "admin": "Διαχειριστής",
+        "mcp": "Self-MCP"
+      },
+      "toggles": {
+        "admin": "Διαχειριστής",
+        "mcp": "Self-MCP"
+      },
+      "access": {
+        "allServices": "Όλες οι υπηρεσίες",
+        "serviceCount": "{count, plural, one {# service} other {# services}}"
+      }
+    },
+    "empty": {
+      "title": "Δεν υπάρχουν χρήστες ακόμα",
+      "description": "Δημιούργησε τον πρώτο χρήστη για να δώσεις πρόσβαση."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Διαγραφή χρήστη",
+        "description": "Αυτό θα διαγράψει οριστικά τον λογαριασμό χρήστη.",
+        "confirm": "Διαγραφή"
+      }
+    }
+  }
+}

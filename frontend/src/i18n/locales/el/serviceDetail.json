@@ -1,0 +1,84 @@
+{
+  "page": {
+    "profileChips": {
+      "label": "Προφίλ"
+    },
+    "invalidServiceId": "Μη έγκυρο αναγνωριστικό υπηρεσίας",
+    "query": {
+      "loading": "Φόρτωση λεπτομερειών υπηρεσίας…",
+      "error": "Δεν ήταν δυνατή η φόρτωση αυτής της υπηρεσίας"
+    },
+    "errors": {
+      "invalidJson": "Μη έγκυρο JSON"
+    },
+    "actions": {
+      "save": "Αποθήκευση",
+      "edit": "Επεξεργασία",
+      "testing": "Δοκιμή…",
+      "testConnection": "Δοκιμή σύνδεσης"
+    },
+    "editConnection": {
+      "title": "Επεξεργασία σύνδεσης",
+      "fields": {
+        "displayName": "Εμφανιζόμενο όνομα",
+        "baseUrl": "Base URL",
+        "apiToken": "API token",
+        "apiTokenPlaceholder": "Άφησέ το κενό για να κρατήσεις το υπάρχον token",
+        "configuration": "Ρυθμίσεις"
+      }
+    },
+    "stats": {
+      "health": {
+        "label": "Υγεία"
+      },
+      "tools": {
+        "label": "Εργαλεία",
+        "sub": "{count, plural, one {# enabled} other {# enabled}}"
+      },
+      "lastTested": {
+        "label": "Τελευταία δοκιμή",
+        "never": "Ποτέ"
+      }
+    },
+    "state": {
+      "label": "Κατάσταση",
+      "active": "Ενεργή",
+      "disabled": "Απενεργοποιημένη"
+    },
+    "apps": {
+      "title": "Εφαρμογές ({count})"
+    },
+    "appPreview": {
+      "title": "Προεπισκόπηση εφαρμογής",
+      "close": "Κλείσιμο προεπισκόπησης"
+    },
+    "tools": {
+      "title": "MCP εργαλεία ({count})",
+      "actions": {
+        "importOpenApi": "Εισαγωγή OpenAPI",
+        "addTool": "Προσθήκη εργαλείου"
+      },
+      "errors": {
+        "requestFailed": "Το αίτημα απέτυχε"
+      }
+    },
+    "dialogs": {
+      "deleteTool": {
+        "title": "Διαγραφή εργαλείου",
+        "description": "Αυτό θα αφαιρέσει οριστικά το εργαλείο \"{toolName}\" από αυτήν την υπηρεσία.",
+        "confirm": "Διαγραφή"
+      },
+      "deleteService": {
+        "title": "Διαγραφή υπηρεσίας",
+        "description": "Αυτό θα αφαιρέσει οριστικά την υπηρεσία και όλα τα εργαλεία της από το MCP.",
+        "confirm": "Διαγραφή"
+      }
+    },
+    "removeService": {
+      "title": "Αφαίρεση υπηρεσίας",
+      "description": "Αυτό θα αφαιρέσει οριστικά την υπηρεσία και όλα τα εργαλεία της από το MCP.",
+      "action": "Διαγραφή υπηρεσίας"
+    },
+    "notFound": "Η υπηρεσία δεν βρέθηκε."
+  }
+}

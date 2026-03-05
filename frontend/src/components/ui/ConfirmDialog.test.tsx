@@ -1,9 +1,15 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
+import { i18n } from "@/i18n/init";
 import { ConfirmDialog } from "./ConfirmDialog";
 
 describe("ConfirmDialog", () => {
+  const getCancelLabel = () =>
+    i18n.t("ui.confirmDialog.cancel", { ns: "components" });
+  const getWorkingLabel = () =>
+    i18n.t("ui.confirmDialog.working", { ns: "components" });
+
   it("renders nothing when closed", () => {
     const { container } = render(
       <ConfirmDialog
@@ -60,7 +66,7 @@ describe("ConfirmDialog", () => {
         onCancel={onCancel}
       />,
     );
-    await user.click(screen.getByText("Cancel"));
+    await user.click(screen.getByRole("button", { name: getCancelLabel() }));
     expect(onCancel).toHaveBeenCalledOnce();
   });
 
@@ -91,13 +97,11 @@ describe("ConfirmDialog", () => {
         isLoading={true}
       />,
     );
-    expect(screen.getByText("Working…").closest("button")).toHaveProperty(
-      "disabled",
-      true,
-    );
-    expect(screen.getByText("Cancel").closest("button")).toHaveProperty(
-      "disabled",
-      true,
-    );
+    expect(
+      screen.getByRole("button", { name: getWorkingLabel() }),
+    ).toBeDisabled();
+    expect(
+      screen.getByRole("button", { name: getCancelLabel() }),
+    ).toBeDisabled();
   });
 });

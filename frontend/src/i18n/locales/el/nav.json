@@ -1,0 +1,23 @@
+{
+  "items": {
+    "home": "Αρχική",
+    "services": "Υπηρεσίες",
+    "tools": "Εργαλεία",
+    "agents": "Agents",
+    "logs": "Καταγραφές",
+    "users": "Χρήστες",
+    "settings": "Ρυθμίσεις"
+  },
+  "actions": {
+    "collapseSidebar": "Σύμπτυξη μενού",
+    "expandSidebar": "Ανάπτυξη μενού",
+    "collapse": "Σύμπτυξη",
+    "expand": "Ανάπτυξη",
+    "switchToDarkMode": "Σκοτεινή λειτουργία",
+    "switchToLightMode": "Φωτεινή λειτουργία"
+  },
+  "theme": {
+    "dark": "Σκοτεινό",
+    "light": "Φωτεινό"
+  }
+}

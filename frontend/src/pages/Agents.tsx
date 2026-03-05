@@ -14,6 +14,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 function AgentCard({
   name,
@@ -85,6 +86,7 @@ function Step({ children }: { children: React.ReactNode }) {
 }
 
 export function Agents() {
+  const { t } = useTranslation("agents", { keyPrefix: "page" });
   const mcpEndpoint = getMcpEndpoint();
   const { data: currentUser } = useCurrentUser();
   const [apiKey, setApiKey] = useState<string | null>(null);
@@ -95,16 +97,15 @@ export function Agents() {
     }
   }, [currentUser?.has_api_key]);
 
-  const keyPlaceholder = apiKey ?? "YOUR_API_KEY";
+  const keyPlaceholder = apiKey ?? t("placeholders.apiKey");
   const jsonConfig = buildMcpJsonConfig(mcpEndpoint, apiKey);
 
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="page-header">Connect AI Agents</h1>
+        <h1 className="page-header">{t("title")}</h1>
         <p className="page-description max-w-xl">
-          Add your MCP endpoint to any AI client below. Once connected, your
-          homelab tools will be discovered automatically.
+          {t("description")}
         </p>
       </div>
 
@@ -112,88 +113,88 @@ export function Agents() {
 
       <div className="space-y-3">
         <AgentCard
-          name="Claude Desktop"
+          name={t("cards.claudeDesktop.name")}
           icon={Sparkles}
           color="var(--terra)"
           bg="var(--terra-bg)"
-          badge="Recommended"
+          badge={t("cards.claudeDesktop.badge")}
         >
           <Guide color="var(--terra)">
             <Step>
-              Go to <strong>Settings</strong> (gear icon) →{" "}
-              <strong>Developer</strong> → <strong>Edit Config</strong>
+              {t("cards.claudeDesktop.steps.step1.before")}{" "}
+              <strong>{t("cards.claudeDesktop.steps.step1.settings")}</strong>{" "}
+              {t("cards.claudeDesktop.steps.step1.middle")}{" "}
+              <strong>{t("cards.claudeDesktop.steps.step1.developer")}</strong>{" "}
+              {t("cards.claudeDesktop.steps.step1.and")}{" "}
+              <strong>{t("cards.claudeDesktop.steps.step1.editConfig")}</strong>
             </Step>
             <Step>
-              This opens{" "}
+              {t("cards.claudeDesktop.steps.step2.beforeFile")}{" "}
               <code className="text-xs font-mono text-terra">
                 claude_desktop_config.json
               </code>
-              . If the file already has other MCP servers, add the{" "}
-              <code className="font-mono text-terra">"homelab"</code> entry
-              inside the existing{" "}
-              <code className="font-mono text-terra">"mcpServers"</code> object.
-              Otherwise, replace the file contents with:
+              {t("cards.claudeDesktop.steps.step2.afterFile")}{" "}
+              <code className="font-mono text-terra">"homelab"</code>
+              {t("cards.claudeDesktop.steps.step2.afterHomelab")}{" "}
+              <code className="font-mono text-terra">"mcpServers"</code>
+              {t("cards.claudeDesktop.steps.step2.afterMcpServers")}
             </Step>
           </Guide>
           <TerminalBlock code={jsonConfig} label="claude_desktop_config.json" />
           <Guide color="var(--terra)">
             <Step>
-              Save the file and <strong>completely quit</strong> Claude Desktop
-              (not just close the window — quit from the menu bar/system tray),
-              then reopen it
+              {t("cards.claudeDesktop.steps.step3.before")}{" "}
+              <strong>{t("cards.claudeDesktop.steps.step3.emphasis")}</strong>{" "}
+              {t("cards.claudeDesktop.steps.step3.after")}
             </Step>
             <Step>
-              You should see a hammer icon in the chat input — click it to
-              verify your homelab tools are loaded
+              {t("cards.claudeDesktop.steps.step4")}
             </Step>
             <Step>
-              Try:{" "}
+              {t("cards.claudeDesktop.steps.step5.prefix")}{" "}
               <em className="text-ink-secondary">
-                "What repos do I have on Forgejo?"
+                {t("cards.claudeDesktop.steps.step5.exampleRepos")}
               </em>{" "}
-              or{" "}
+              {t("cards.claudeDesktop.steps.step5.or")}{" "}
               <em className="text-ink-secondary">
-                "Search my Paperless documents for invoices"
+                {t("cards.claudeDesktop.steps.step5.examplePaperless")}
               </em>
             </Step>
           </Guide>
           <p className="text-xs text-ink-tertiary">
-            Config path — macOS: ~/Library/Application Support/Claude/ ·
-            Windows: %APPDATA%\Claude\
+            {t("cards.claudeDesktop.configPath")}
           </p>
         </AgentCard>
 
         <AgentCard
-          name="Claude Code"
+          name={t("cards.claudeCode.name")}
           icon={Terminal}
           color="var(--terra)"
           bg="var(--terra-bg)"
         >
           <Guide color="var(--terra)">
             <Step>
-              Register your homelab MCP server globally with the command below
-              (available in all projects):
+              {t("cards.claudeCode.steps.step1")}
             </Step>
           </Guide>
           <TerminalBlock
             code={`claude mcp add homelab --transport http --header "Authorization: Bearer ${keyPlaceholder}" ${mcpEndpoint}`}
-            label="Terminal"
+            label={t("cards.claudeCode.terminalLabel")}
           />
           <Guide color="var(--terra)">
             <Step>
-              Verify with{" "}
+              {t("cards.claudeCode.steps.step2.before")}{" "}
               <code className="text-xs font-mono text-terra">
                 claude mcp list
               </code>{" "}
-              — you should see "homelab" in the output
+              {t("cards.claudeCode.steps.step2.after")}
             </Step>
             <Step>
-              Your homelab tools are now available in every session
-              automatically
+              {t("cards.claudeCode.steps.step3")}
             </Step>
           </Guide>
           <p className="text-xs text-ink-tertiary">
-            To remove later:{" "}
+            {t("cards.claudeCode.removePrefix")}{" "}
             <code className="font-mono text-terra">
               claude mcp remove homelab
             </code>
@@ -201,113 +202,134 @@ export function Agents() {
         </AgentCard>
 
         <AgentCard
-          name="Cursor"
+          name={t("cards.cursor.name")}
           icon={Code2}
           color="var(--info)"
           bg="var(--info-bg)"
         >
           <Guide color="var(--info)">
             <Step>
-              Create{" "}
+              {t("cards.cursor.steps.step1.before")}{" "}
               <code className="text-xs font-mono text-terra">
                 .cursor/mcp.json
               </code>{" "}
-              in your project root with the following content:
+              {t("cards.cursor.steps.step1.after")}
             </Step>
           </Guide>
           <TerminalBlock code={jsonConfig} label=".cursor/mcp.json" />
           <Guide color="var(--info)">
             <Step>
-              Restart Cursor (Cmd+Q / close and reopen). Your tools should
-              appear in the AI panel (Cmd+L / Ctrl+L) under "Available Tools"
+              {t("cards.cursor.steps.step2")}
             </Step>
             <Step>
-              If tools don't appear, check the MCP status indicator in the
-              bottom status bar
+              {t("cards.cursor.steps.step3")}
             </Step>
           </Guide>
         </AgentCard>
 
         <AgentCard
-          name="ChatGPT"
+          name={t("cards.chatgpt.name")}
           icon={MonitorSmartphone}
           color="var(--sage)"
           bg="var(--sage-bg)"
         >
           <Guide color="var(--sage)">
             <Step>
-              Go to <strong>Settings</strong> →{" "}
-              <strong>Apps & Connectors</strong> → enable{" "}
-              <strong>Developer mode</strong> under "Advanced settings"
+              {t("cards.chatgpt.steps.step1.before")}{" "}
+              <strong>{t("cards.chatgpt.steps.step1.settings")}</strong>{" "}
+              {t("cards.chatgpt.steps.step1.middle")}{" "}
+              <strong>{t("cards.chatgpt.steps.step1.appsAndConnectors")}</strong>{" "}
+              {t("cards.chatgpt.steps.step1.after")}{" "}
+              <strong>{t("cards.chatgpt.steps.step1.developerMode")}</strong>{" "}
+              {t("cards.chatgpt.steps.step1.suffix")}
             </Step>
             <Step>
-              Back in "Apps & Connectors", click <strong>Create</strong> →
-              select <strong>MCP Server</strong>
+              {t("cards.chatgpt.steps.step2.before")}{" "}
+              <strong>{t("cards.chatgpt.steps.step2.create")}</strong>{" "}
+              {t("cards.chatgpt.steps.step2.and")}{" "}
+              <strong>{t("cards.chatgpt.steps.step2.mcpServer")}</strong>
             </Step>
             <Step>
-              Enter a name like "My Homelab" and paste your endpoint:{" "}
+              {t("cards.chatgpt.steps.step3.before")}{" "}
               <code className="text-xs font-mono text-terra">
                 {mcpEndpoint}
               </code>
             </Step>
             <Step>
-              Click <strong>Create</strong>. New conversations will
-              automatically discover your homelab tools
+              {t("cards.chatgpt.steps.step4.before")}{" "}
+              <strong>{t("cards.chatgpt.steps.step4.create")}</strong>
+              {t("cards.chatgpt.steps.step4.after")}
             </Step>
           </Guide>
           <div className="p-3 rounded-lg bg-clay-bg border border-clay text-sm text-clay">
-            <strong>Note:</strong> ChatGPT requires a publicly accessible
-            endpoint. Use the included Caddy config or a tunnel service like
-            Cloudflare Tunnel if your server is local-only.
+            <strong>{t("cards.chatgpt.note.label")}</strong>{" "}
+            {t("cards.chatgpt.note.body")}
           </div>
         </AgentCard>
 
         <AgentCard
-          name="Open WebUI"
+          name={t("cards.openWebui.name")}
           icon={Globe}
           color="var(--clay)"
           bg="var(--clay-bg)"
         >
           <Guide color="var(--clay)">
             <Step>
-              Go to <strong>Admin Panel</strong> → <strong>Settings</strong> →{" "}
-              <strong>Tools</strong>
+              {t("cards.openWebui.steps.step1.before")}{" "}
+              <strong>{t("cards.openWebui.steps.step1.adminPanel")}</strong>{" "}
+              {t("cards.openWebui.steps.step1.and")}{" "}
+              <strong>{t("cards.openWebui.steps.step1.settings")}</strong>{" "}
+              {t("cards.openWebui.steps.step1.then")}{" "}
+              <strong>{t("cards.openWebui.steps.step1.tools")}</strong>
             </Step>
             <Step>
-              Click <strong>Add MCP Connection</strong>, enter a name and paste
-              your endpoint:{" "}
+              {t("cards.openWebui.steps.step2.before")}{" "}
+              <strong>{t("cards.openWebui.steps.step2.addMcpConnection")}</strong>
+              {t("cards.openWebui.steps.step2.after")}{" "}
               <code className="text-xs font-mono text-terra">
                 {mcpEndpoint}
               </code>
             </Step>
             <Step>
-              If using API key auth, enter your key in the authentication field
+              {t("cards.openWebui.steps.step3")}
             </Step>
             <Step>
-              Click <strong>Save</strong> — Open WebUI will test the connection
-              and discover your tools. They're now available to all users with
-              any LLM
+              {t("cards.openWebui.steps.step4.before")}{" "}
+              <strong>{t("cards.openWebui.steps.step4.save")}</strong>
+              {t("cards.openWebui.steps.step4.after")}
             </Step>
           </Guide>
         </AgentCard>
 
         <AgentCard
-          name="Other MCP Clients"
+          name={t("cards.otherClients.name")}
           icon={Puzzle}
           color="var(--stone)"
           bg="var(--stone-bg)"
         >
           <p className="text-sm text-ink-secondary">
-            If your MCP client asks for specific connection details:
+            {t("cards.otherClients.description")}
           </p>
           <div className="grid grid-cols-3 gap-3">
             {[
-              { label: "Transport", value: "Streamable HTTP" },
-              { label: "Auth", value: "Authorization: Bearer" },
-              { label: "Discovery", value: "Automatic" },
+              {
+                id: "transport",
+                label: t("cards.otherClients.details.transport.label"),
+                value: t("cards.otherClients.details.transport.value"),
+              },
+              {
+                id: "auth",
+                label: t("cards.otherClients.details.auth.label"),
+                value: t("cards.otherClients.details.auth.value"),
+              },
+              {
+                id: "discovery",
+                label: t("cards.otherClients.details.discovery.label"),
+                value: t("cards.otherClients.details.discovery.value"),
+              },
             ].map((item) => (
               <div
-                key={item.label}
+                key={item.id}
                 className="p-3 rounded-xl bg-canvas text-center"
               >
                 <p className="text-2xs font-bold uppercase tracking-wider text-ink-tertiary mb-1">
@@ -319,10 +341,9 @@ export function Agents() {
           </div>
           <div className="space-y-1.5 text-sm text-ink-secondary">
             <p>
-              For SSE-only clients, append{" "}
-              <code className="font-mono text-terra">/sse</code> to the endpoint
-              URL. The base URL must be reachable from wherever your AI client
-              runs.
+              {t("cards.otherClients.sse.before")}{" "}
+              <code className="font-mono text-terra">/sse</code>
+              {t("cards.otherClients.sse.after")}
             </p>
           </div>
         </AgentCard>

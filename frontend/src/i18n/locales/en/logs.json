@@ -1,0 +1,47 @@
+{
+  "page": {
+    "title": "Logs",
+    "description": "Review recent MCP tool calls, outcomes, and latency.",
+    "stats": {
+      "totalCalls": "Total calls",
+      "successRate": "Success rate",
+      "errors": "Errors",
+      "avgLatency": "Avg latency"
+    },
+    "chart": {
+      "callsOverTime": "Calls over time"
+    },
+    "filters": {
+      "searchPlaceholder": "Search by tool name",
+      "allServices": "All services",
+      "status": {
+        "all": "All",
+        "success": "Success",
+        "error": "Error"
+      }
+    },
+    "query": {
+      "loading": "Loading logs…"
+    },
+    "table": {
+      "headers": {
+        "status": "Status",
+        "tool": "Tool",
+        "service": "Service",
+        "client": "Client",
+        "latency": "Latency",
+        "time": "Time"
+      }
+    },
+    "pagination": {
+      "totalEntries": "{count, plural, one {# entry} other {# entries}}",
+      "page": "Page {current} of {total}"
+    },
+    "empty": {
+      "filteredTitle": "No matching log entries",
+      "filteredDescription": "Try adjusting your filters.",
+      "defaultTitle": "No log entries yet",
+      "defaultDescription": "Tool activity will appear here once agents start making calls."
+    }
+  }
+}

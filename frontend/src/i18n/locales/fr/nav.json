@@ -1,0 +1,23 @@
+{
+  "items": {
+    "home": "Accueil",
+    "services": "Services",
+    "tools": "Outils",
+    "agents": "Agents",
+    "logs": "Journaux",
+    "users": "Utilisateurs",
+    "settings": "Paramètres"
+  },
+  "actions": {
+    "collapseSidebar": "Réduire la barre latérale",
+    "expandSidebar": "Déplier la barre latérale",
+    "collapse": "Réduire",
+    "expand": "Déplier",
+    "switchToDarkMode": "Mode sombre",
+    "switchToLightMode": "Mode clair"
+  },
+  "theme": {
+    "dark": "Sombre",
+    "light": "Clair"
+  }
+}

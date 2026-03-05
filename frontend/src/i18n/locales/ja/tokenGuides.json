@@ -1,0 +1,168 @@
+{
+  "guides": {
+    "forgejo": {
+      "steps": [
+        "Forgejoインスタンスを開き、アカウントでログインします",
+        "右上のプロフィールアイコンをクリックし、「Settings」を選択します",
+        "左サイドバーで「Applications」をクリックします",
+        "「Manage Access Tokens」でtoken名（例: \"{appName}\"）を入力します",
+        "tokenに必要な権限を選択します。フルアクセスならすべてのscopeを有効化。最低限必要: read:organization、read:repository、read:issue、write:issue",
+        "「Generate Token」をクリックし、表示されたtokenをすぐコピーします（再表示されません）",
+        "上のフィールドにtokenを貼り付けます"
+      ]
+    },
+    "homeassistant": {
+      "steps": [
+        "Home Assistantインスタンスを開いてログインします",
+        "左サイドバー下部のユーザー名 / プロフィールをクリックします",
+        "ページ下部の「Long-Lived Access Tokens」セクションまでスクロールします",
+        "「Create Token」をクリックします",
+        "「{appName}」のような名前を付けてOKをクリックします",
+        "ダイアログに表示されたtokenをコピーします（表示は1回のみです）",
+        "上のフィールドにtokenを貼り付けます"
+      ],
+      "note": "Home Assistantのtokenは eyJ… で始まります"
+    },
+    "paperless": {
+      "steps": [
+        "Paperless-ngxインスタンスを開き、管理者ユーザーでログインします",
+        "歯車アイコンをクリックするか、上部ナビゲーションのSettingsを開きます",
+        "下にスクロールして「API」セクションを探します",
+        "API tokenが表示されるので、コピーアイコンでコピーします",
+        "tokenがない場合は「Generate」をクリックして作成します",
+        "上のフィールドにtokenを貼り付けます"
+      ]
+    },
+    "immich": {
+      "steps": [
+        "Immichインスタンスを開いてログインします",
+        "右上のプロフィールアイコンをクリックします",
+        "ドロップダウンから「Account Settings」を選択します",
+        "「API Keys」までスクロールします",
+        "「New API Key」をクリックし、「{appName}」のような名前を付けます",
+        "生成されたkeyをすぐコピーします（再表示されません）",
+        "上のフィールドにkeyを貼り付けます"
+      ]
+    },
+    "nextcloud": {
+      "steps": [
+        "Nextcloudインスタンスを開いてログインします",
+        "右上のプロフィールアイコンをクリックし、「Settings」（または「Personal settings」）を選択します",
+        "左サイドバーで「Security」をクリックします",
+        "「Devices & sessions」セクションまでスクロールします",
+        "下部のテキストフィールドにアプリ名として「{appName}」を入力します",
+        "「Create new app password」をクリックします",
+        "生成されたパスワードをコピーします（これがAPI tokenです）",
+        "上のフィールドに貼り付けます"
+      ],
+      "note": "形式: username:app-password（例: admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx）"
+    },
+    "uptimekuma": {
+      "steps": [
+        "Uptime Kumaインスタンスを開いてログインします",
+        "左サイドバーの「Settings」をクリックします",
+        "「API Keys」タブを開きます",
+        "「Add API Key」をクリックし、「{appName}」のような名前を入力します",
+        "有効期限を設定するか、無期限なら空欄のままにします",
+        "「Create」をクリックして生成されたAPI keyをコピーします",
+        "上のフィールドにkeyを貼り付けます"
+      ]
+    },
+    "adguard": {
+      "steps": [
+        "AdGuard HomeはAPI tokenではなくBasic認証（ユーザー名とパスワード）を使用します",
+        "AdGuard Web UIにログインするときと同じユーザー名・パスワードを使います",
+        "上のフィールドに username:password 形式で入力します"
+      ],
+      "note": "例: ユーザー名が「admin」、パスワードが「mypass」の場合は admin:mypass"
+    },
+    "nginxproxymanager": {
+      "steps": [
+        "Nginx Proxy ManagerはAPIアクセスにログイン認証情報を使用します",
+        "email:password 形式で入力します",
+        "NPM Web UIにログインするときと同じ認証情報です"
+      ],
+      "note": "形式: email:password（例: admin@example.com:changeme）"
+    },
+    "portainer": {
+      "steps": [
+        "PortainerはAPIアクセスにログイン認証情報を使用します",
+        "username:password 形式で入力します",
+        "Portainer Web UIにログインするときと同じ認証情報です"
+      ],
+      "note": "形式: username:password（例: admin:mypassword）"
+    },
+    "freshrss": {
+      "steps": [
+        "FreshRSSはプログラムアクセス用に別のAPI passwordを使用します",
+        "FreshRSSで Settings → Profile → API Management を開きます",
+        "必要に応じて「Allow API access」を有効化します",
+        "API passwordを設定します（ログイン用パスワードとは別です）",
+        "username:api_password 形式で入力します"
+      ],
+      "note": "形式: username:api_password — API passwordはログイン用ではなくFreshRSS設定で別途定義します"
+    },
+    "wallabag": {
+      "steps": [
+        "Wallabagインスタンスを開いてログインします",
+        "設定内のDeveloperセクションにあるAPI clients管理を開きます",
+        "「Create a new client」をクリックし、client IDとclient secretを確認します",
+        "client_id:client_secret:username:password の4要素形式で入力します"
+      ],
+      "note": "形式: client_id:client_secret:username:password（コロン区切り4項目）"
+    },
+    "stirlingpdf": {
+      "steps": [
+        "Stirling PDFインスタンスを開き、管理者でログインします",
+        "右上の設定アイコン（⚙️）をクリックしてAccount Settingsを開きます",
+        "設定画面で個人用API keyを確認または生成します",
+        "または、SECURITY_CUSTOMGLOBALAPIKEY 環境変数で設定したグローバルAPI keyを使用します",
+        "上のフィールドにAPI keyを貼り付けます"
+      ],
+      "note": "X-API-KEYヘッダーを使用します。API key認証を使うにはStirling PDFでログイン機能が有効である必要があります"
+    },
+    "wikijs": {
+      "steps": [
+        "Wiki.jsインスタンスを開き、管理者でログインします",
+        "Administration → API Access に移動します",
+        "「Create API Key」をクリックし、名前（例: \"{appName}\"）を設定します",
+        "適切なpermission groupを選択します（推奨: Full Access）",
+        "有効期限を設定するか、無期限なら空欄のままにします",
+        "生成されたAPI keyをコピーして上のフィールドに貼り付けます"
+      ]
+    },
+    "tailscale": {
+      "steps": [
+        "Tailscale管理コンソール（https://login.tailscale.com/admin）を開きます",
+        "Settings → Keys に移動します",
+        "「API access tokens」で「Generate access token...」をクリックします",
+        "tokenの有効期限を設定するか、デフォルトのままにします",
+        "「Generate」をクリックし、tokenをすぐコピーします（再表示されません）",
+        "上のフィールドにtokenを貼り付けます"
+      ],
+      "note": "Tailscale API keyは tskey-api-... で始まり、Tailscale API（api.tailscale.com/api/v2）に対して認証します"
+    },
+    "calibreweb": {
+      "steps": [
+        "Calibre-WebはAPIアクセスにログイン認証情報を使用します",
+        "Calibre-Webのユーザー名とパスワードを username:password 形式で入力します",
+        "Calibre-Web Web UIにログインするときと同じ認証情報です"
+      ],
+      "note": "初期認証情報は admin/admin123 です。接続前に変更してください。形式: username:password"
+    },
+    "cloudflare": {
+      "steps": [
+        "Cloudflareダッシュボード（https://dash.cloudflare.com）を開きます",
+        "右上のプロフィールアイコンをクリックし、「My Profile」を選択します",
+        "左サイドバーで「API Tokens」をクリックします",
+        "「Create Token」をクリックします",
+        "カスタムtokenテンプレートを使い、次の権限を設定します: Zone:DNS:Edit、Zone:Zone:Read、Account:Cloudflare Tunnel:Edit",
+        "必要に応じて特定のzoneやaccountに制限します",
+        "「Continue to summary」→「Create Token」をクリックします",
+        "tokenをすぐコピーします（再表示されません）",
+        "上のフィールドにtokenを貼り付けます"
+      ],
+      "note": "Base URLには https://api.cloudflare.com を使用します。tokenは Bearer ヘッダーで認証されます。"
+    }
+  }
+}

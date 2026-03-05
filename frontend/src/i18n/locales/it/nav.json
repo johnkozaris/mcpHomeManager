@@ -1,0 +1,23 @@
+{
+  "items": {
+    "home": "Home",
+    "services": "Servizi",
+    "tools": "Strumenti",
+    "agents": "Agenti",
+    "logs": "Log",
+    "users": "Utenti",
+    "settings": "Impostazioni"
+  },
+  "actions": {
+    "collapseSidebar": "Comprimi la barra laterale",
+    "expandSidebar": "Espandi la barra laterale",
+    "collapse": "Comprimi",
+    "expand": "Espandi",
+    "switchToDarkMode": "Modalità scura",
+    "switchToLightMode": "Modalità chiara"
+  },
+  "theme": {
+    "dark": "Scuro",
+    "light": "Chiaro"
+  }
+}

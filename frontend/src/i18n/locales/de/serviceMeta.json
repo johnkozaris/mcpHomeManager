@@ -1,0 +1,76 @@
+{
+  "services": {
+    "forgejo": {
+      "label": "Forgejo",
+      "description": "Git-Hosting & CI/CD"
+    },
+    "homeassistant": {
+      "label": "Home Assistant",
+      "description": "Smart-Home-Automatisierung"
+    },
+    "paperless": {
+      "label": "Paperless-ngx",
+      "description": "Dokumentenverwaltung"
+    },
+    "immich": {
+      "label": "Immich",
+      "description": "Foto- und Videoverwaltung"
+    },
+    "nextcloud": {
+      "label": "Nextcloud",
+      "description": "Cloud-Speicher & Sync"
+    },
+    "uptimekuma": {
+      "label": "Uptime Kuma",
+      "description": "Uptime-Monitoring"
+    },
+    "adguard": {
+      "label": "AdGuard Home",
+      "description": "DNS-Filterung & Werbeblockierung"
+    },
+    "nginxproxymanager": {
+      "label": "Nginx Proxy Manager",
+      "description": "Reverse-Proxy & SSL"
+    },
+    "portainer": {
+      "label": "Portainer",
+      "description": "Containerverwaltung"
+    },
+    "freshrss": {
+      "label": "FreshRSS",
+      "description": "RSS-Feed-Reader"
+    },
+    "wallabag": {
+      "label": "Wallabag",
+      "description": "Artikel zum späteren Lesen"
+    },
+    "stirlingpdf": {
+      "label": "Stirling PDF",
+      "description": "PDF-Tools"
+    },
+    "wikijs": {
+      "label": "Wiki.js",
+      "description": "Team-Wissensdatenbank"
+    },
+    "calibreweb": {
+      "label": "Calibre-Web",
+      "description": "E-Book-Bibliothek"
+    },
+    "cloudflare": {
+      "label": "Cloudflare",
+      "description": "DNS, Tunnel & Zero-Trust-Management"
+    },
+    "tailscale": {
+      "label": "Tailscale",
+      "description": "VPN-Mesh & Gerätemanagement"
+    },
+    "generic_rest": {
+      "label": "Generic REST",
+      "description": "Eigener REST-API-Service"
+    }
+  },
+  "fallback": {
+    "label": "Unbekannt",
+    "description": "Unbekannter Service-Typ"
+  }
+}

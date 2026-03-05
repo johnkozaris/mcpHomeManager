@@ -1,0 +1,76 @@
+{
+  "services": {
+    "forgejo": {
+      "label": "Forgejo",
+      "description": "Git hosting & CI/CD"
+    },
+    "homeassistant": {
+      "label": "Home Assistant",
+      "description": "Smart home automation"
+    },
+    "paperless": {
+      "label": "Paperless-ngx",
+      "description": "Document management"
+    },
+    "immich": {
+      "label": "Immich",
+      "description": "Photo & video management"
+    },
+    "nextcloud": {
+      "label": "Nextcloud",
+      "description": "Cloud storage & sync"
+    },
+    "uptimekuma": {
+      "label": "Uptime Kuma",
+      "description": "Uptime monitoring"
+    },
+    "adguard": {
+      "label": "AdGuard Home",
+      "description": "DNS filtering & ad blocking"
+    },
+    "nginxproxymanager": {
+      "label": "Nginx Proxy Manager",
+      "description": "Reverse proxy & SSL"
+    },
+    "portainer": {
+      "label": "Portainer",
+      "description": "Container management"
+    },
+    "freshrss": {
+      "label": "FreshRSS",
+      "description": "RSS feed reader"
+    },
+    "wallabag": {
+      "label": "Wallabag",
+      "description": "Read-it-later articles"
+    },
+    "stirlingpdf": {
+      "label": "Stirling PDF",
+      "description": "PDF processing tools"
+    },
+    "wikijs": {
+      "label": "Wiki.js",
+      "description": "Team knowledge base"
+    },
+    "calibreweb": {
+      "label": "Calibre-Web",
+      "description": "E-book library management"
+    },
+    "cloudflare": {
+      "label": "Cloudflare",
+      "description": "DNS, tunnels, and zero trust management"
+    },
+    "tailscale": {
+      "label": "Tailscale",
+      "description": "VPN mesh network and device management"
+    },
+    "generic_rest": {
+      "label": "Generic REST",
+      "description": "Custom REST API service"
+    }
+  },
+  "fallback": {
+    "label": "Unknown",
+    "description": "Unknown service type"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "page": {
+    "title": "Protokolle",
+    "description": "Sieh dir die letzten MCP-Tool-Aufrufe, Ergebnisse und Latenzen an.",
+    "stats": {
+      "totalCalls": "Aufrufe gesamt",
+      "successRate": "Erfolgsrate",
+      "errors": "Fehler",
+      "avgLatency": "Ø-Latenz"
+    },
+    "chart": {
+      "callsOverTime": "Aufrufe im Zeitverlauf"
+    },
+    "filters": {
+      "searchPlaceholder": "Nach Tool-Name suchen",
+      "allServices": "Alle Services",
+      "status": {
+        "all": "Alle",
+        "success": "Erfolgreich",
+        "error": "Fehler"
+      }
+    },
+    "query": {
+      "loading": "Protokolle werden geladen…"
+    },
+    "table": {
+      "headers": {
+        "status": "Status",
+        "tool": "Tool",
+        "service": "Service",
+        "client": "Client",
+        "latency": "Latenz",
+        "time": "Zeitpunkt"
+      }
+    },
+    "pagination": {
+      "totalEntries": "{count, plural, one {# entry} other {# entries}}",
+      "page": "Seite {current} von {total}"
+    },
+    "empty": {
+      "filteredTitle": "Keine passenden Protokolleinträge",
+      "filteredDescription": "Passe deine Filter an.",
+      "defaultTitle": "Noch keine Protokolleinträge",
+      "defaultDescription": "Sobald Agenten Tools aufrufen, erscheinen die Aktivitäten hier."
+    }
+  }
+}

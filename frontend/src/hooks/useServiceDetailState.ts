@@ -1,5 +1,9 @@
 import { useReducer } from "react";
-import type { GenericToolDefinition, ServiceDetail } from "@/lib/types";
+import type {
+  GenericToolDefinition,
+  ServiceDetail,
+  TestResult,
+} from "@/lib/types";
 
 interface ServiceDetailState {
   editing: boolean;
@@ -15,7 +19,7 @@ interface ServiceDetailState {
   previewAppName: string | null;
   editToolDef: GenericToolDefinition | null;
   deleteToolName: string | null;
-  testToolResults: Record<string, { success: boolean; message: string }>;
+  testToolResults: Record<string, TestResult>;
   testingToolName: string | null;
 }
 
@@ -38,7 +42,7 @@ type Action =
   | {
       type: "SET_TEST_TOOL_RESULT";
       toolName: string;
-      result: { success: boolean; message: string };
+      result: TestResult;
     }
   | { type: "SET_TESTING_TOOL_NAME"; name: string | null };
 

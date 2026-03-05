@@ -1,0 +1,75 @@
+{
+  "page": {
+    "title": "Utenti",
+    "description": "Gestisci chi può accedere a questo gateway e quali servizi possono utilizzare.",
+    "actions": {
+      "cancel": "Annulla",
+      "createUser": "Crea utente",
+      "creating": "Creazione…",
+      "create": "Crea"
+    },
+    "form": {
+      "title": "Crea utente",
+      "fields": {
+        "username": {
+          "label": "Nome utente",
+          "placeholder": "jane",
+          "errors": {
+            "minLength": "Il nome utente deve contenere almeno 2 caratteri",
+            "maxLength": "Il nome utente deve contenere massimo 100 caratteri"
+          }
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "jane@esempio.com"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Lascia vuoto per impostarla in seguito",
+          "errors": {
+            "minLength": "La password deve contenere almeno 8 caratteri (attualmente {current})"
+          }
+        }
+      },
+      "passwordHelp": "La password è facoltativa in fase di creazione, ma deve contenere almeno 8 caratteri se la imposti.",
+      "toggles": {
+        "admin": "Accesso amministratore",
+        "selfMcp": "Consenti strumenti self-MCP"
+      },
+      "allowedServices": "Servizi consentiti"
+    },
+    "errors": {
+      "createUserFailed": "Impossibile creare l'utente",
+      "updateUserFailed": "Impossibile aggiornare l'utente"
+    },
+    "query": {
+      "loading": "Caricamento utenti…"
+    },
+    "list": {
+      "count": "{count, plural, one {# user} other {# users}}",
+      "badges": {
+        "admin": "Admin",
+        "mcp": "Self-MCP"
+      },
+      "toggles": {
+        "admin": "Admin",
+        "mcp": "Self-MCP"
+      },
+      "access": {
+        "allServices": "Tutti i servizi",
+        "serviceCount": "{count, plural, one {# service} other {# services}}"
+      }
+    },
+    "empty": {
+      "title": "Nessun utente per ora",
+      "description": "Crea il tuo primo utente per concedere l'accesso."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Elimina utente",
+        "description": "Questo eliminerà in modo definitivo l'account utente.",
+        "confirm": "Elimina"
+      }
+    }
+  }
+}

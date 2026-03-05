@@ -1,0 +1,11 @@
+{
+  "api": {
+    "generic": "Une erreur est survenue"
+  },
+  "queryState": {
+    "loading": "Chargement…",
+    "authRequired": "Authentification requise — reconnecte-toi pour continuer.",
+    "networkUnreachable": "Impossible de joindre le serveur. Le backend tourne ?",
+    "generic": "Une erreur est survenue"
+  }
+}

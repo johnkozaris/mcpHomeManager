@@ -1,0 +1,30 @@
+{
+  "page": {
+    "title": "Εργαλεία",
+    "description": {
+      "withCounts": "{toolsCount} εργαλεία σε {serviceCount} υπηρεσίες • {enabledCount} ενεργά",
+      "empty": "Διαχειρίσου ποια εργαλεία είναι διαθέσιμα στους MCP Clients."
+    },
+    "filters": {
+      "searchPlaceholder": "Αναζήτηση εργαλείων",
+      "allServices": "Όλες οι υπηρεσίες",
+      "status": {
+        "all": "Όλα ({count})",
+        "enabled": "Ενεργά ({count})",
+        "disabled": "Ανενεργά ({count})"
+      }
+    },
+    "errors": {
+      "missingService": "Δεν γίνεται ενημέρωση του \"{toolName}\" γιατί δεν έχει συνδεδεμένη υπηρεσία."
+    },
+    "query": {
+      "loading": "Φόρτωση εργαλείων…"
+    },
+    "empty": {
+      "searchTitle": "Δεν βρέθηκαν εργαλεία",
+      "searchDescription": "Δοκίμασε διαφορετικό όρο αναζήτησης ή φίλτρο.",
+      "noToolsTitle": "Δεν υπάρχουν εργαλεία ακόμα",
+      "noToolsDescription": "Σύνδεσε μια υπηρεσία για να ξεκινήσεις."
+    }
+  }
+}

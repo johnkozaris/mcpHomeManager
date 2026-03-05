@@ -1,0 +1,76 @@
+{
+  "services": {
+    "forgejo": {
+      "label": "Forgejo",
+      "description": "Alojamento Git e CI/CD"
+    },
+    "homeassistant": {
+      "label": "Home Assistant",
+      "description": "Automação doméstica inteligente"
+    },
+    "paperless": {
+      "label": "Paperless-ngx",
+      "description": "Gestão documental"
+    },
+    "immich": {
+      "label": "Immich",
+      "description": "Gestão de fotos e vídeos"
+    },
+    "nextcloud": {
+      "label": "Nextcloud",
+      "description": "Armazenamento na nuvem e sincronização"
+    },
+    "uptimekuma": {
+      "label": "Uptime Kuma",
+      "description": "Monitorização de disponibilidade"
+    },
+    "adguard": {
+      "label": "AdGuard Home",
+      "description": "Filtragem DNS e bloqueio de anúncios"
+    },
+    "nginxproxymanager": {
+      "label": "Nginx Proxy Manager",
+      "description": "Proxy inverso e SSL"
+    },
+    "portainer": {
+      "label": "Portainer",
+      "description": "Gestão de contentores"
+    },
+    "freshrss": {
+      "label": "FreshRSS",
+      "description": "Leitor de feeds RSS"
+    },
+    "wallabag": {
+      "label": "Wallabag",
+      "description": "Artigos para ler mais tarde"
+    },
+    "stirlingpdf": {
+      "label": "Stirling PDF",
+      "description": "Ferramentas de processamento de PDF"
+    },
+    "wikijs": {
+      "label": "Wiki.js",
+      "description": "Base de conhecimento de equipa"
+    },
+    "calibreweb": {
+      "label": "Calibre-Web",
+      "description": "Gestão da biblioteca de e-books"
+    },
+    "cloudflare": {
+      "label": "Cloudflare",
+      "description": "Gestão de DNS, túneis e Zero Trust"
+    },
+    "tailscale": {
+      "label": "Tailscale",
+      "description": "Rede mesh VPN e gestão de dispositivos"
+    },
+    "generic_rest": {
+      "label": "REST genérico",
+      "description": "Serviço de API REST personalizado"
+    }
+  },
+  "fallback": {
+    "label": "Desconhecido",
+    "description": "Tipo de serviço desconhecido"
+  }
+}

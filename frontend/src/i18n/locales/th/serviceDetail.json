@@ -1,0 +1,84 @@
+{
+  "page": {
+    "profileChips": {
+      "label": "โปรไฟล์"
+    },
+    "invalidServiceId": "รหัสบริการไม่ถูกต้อง",
+    "query": {
+      "loading": "กำลังโหลดรายละเอียดบริการ…",
+      "error": "โหลดบริการนี้ไม่สำเร็จ"
+    },
+    "errors": {
+      "invalidJson": "JSON ไม่ถูกต้อง"
+    },
+    "actions": {
+      "save": "บันทึก",
+      "edit": "แก้ไข",
+      "testing": "กำลังทดสอบ…",
+      "testConnection": "ทดสอบการเชื่อมต่อ"
+    },
+    "editConnection": {
+      "title": "แก้ไขการเชื่อมต่อ",
+      "fields": {
+        "displayName": "ชื่อที่แสดง",
+        "baseUrl": "Base URL",
+        "apiToken": "API token",
+        "apiTokenPlaceholder": "เว้นว่างไว้เพื่อใช้ token เดิม",
+        "configuration": "การตั้งค่า"
+      }
+    },
+    "stats": {
+      "health": {
+        "label": "สถานะ"
+      },
+      "tools": {
+        "label": "เครื่องมือ",
+        "sub": "{count, plural, one {# ที่เปิดใช้งาน} other {# ที่เปิดใช้งาน}}"
+      },
+      "lastTested": {
+        "label": "ทดสอบล่าสุด",
+        "never": "ไม่เคย"
+      }
+    },
+    "state": {
+      "label": "สถานะ",
+      "active": "ใช้งานอยู่",
+      "disabled": "ปิดใช้งาน"
+    },
+    "apps": {
+      "title": "แอป ({count})"
+    },
+    "appPreview": {
+      "title": "ตัวอย่างแอป",
+      "close": "ปิดตัวอย่าง"
+    },
+    "tools": {
+      "title": "MCP tools ({count})",
+      "actions": {
+        "importOpenApi": "นำเข้า OpenAPI",
+        "addTool": "เพิ่มเครื่องมือ"
+      },
+      "errors": {
+        "requestFailed": "คำขอล้มเหลว"
+      }
+    },
+    "dialogs": {
+      "deleteTool": {
+        "title": "ลบเครื่องมือ",
+        "description": "เครื่องมือ \"{toolName}\" จะถูกลบออกจากบริการนี้อย่างถาวร",
+        "confirm": "ลบ"
+      },
+      "deleteService": {
+        "title": "ลบบริการ",
+        "description": "บริการนี้และเครื่องมือทั้งหมดที่ลงทะเบียนกับ MCP จะถูกลบอย่างถาวร",
+        "confirm": "ลบ"
+      }
+    },
+    "removeService": {
+      "title": "ลบบริการ",
+      "description": "บริการนี้และเครื่องมือทั้งหมดที่ลงทะเบียนกับ MCP จะถูกลบอย่างถาวร",
+      "action": "ลบบริการ"
+    },
+    "notFound": "ไม่พบบริการ"
+  }
+}

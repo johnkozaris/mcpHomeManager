@@ -1,0 +1,84 @@
+{
+  "page": {
+    "profileChips": {
+      "label": "Profiles"
+    },
+    "invalidServiceId": "Invalid service ID",
+    "query": {
+      "loading": "Loading service details…",
+      "error": "Could not load this service"
+    },
+    "errors": {
+      "invalidJson": "Invalid JSON"
+    },
+    "actions": {
+      "save": "Save",
+      "edit": "Edit",
+      "testing": "Testing…",
+      "testConnection": "Test connection"
+    },
+    "editConnection": {
+      "title": "Edit connection",
+      "fields": {
+        "displayName": "Display name",
+        "baseUrl": "Base URL",
+        "apiToken": "API token",
+        "apiTokenPlaceholder": "Leave blank to keep existing token",
+        "configuration": "Configuration"
+      }
+    },
+    "stats": {
+      "health": {
+        "label": "Health"
+      },
+      "tools": {
+        "label": "Tools",
+        "sub": "{count, plural, one {# enabled} other {# enabled}}"
+      },
+      "lastTested": {
+        "label": "Last tested",
+        "never": "Never"
+      }
+    },
+    "state": {
+      "label": "State",
+      "active": "Active",
+      "disabled": "Disabled"
+    },
+    "apps": {
+      "title": "Apps ({count})"
+    },
+    "appPreview": {
+      "title": "App preview",
+      "close": "Close preview"
+    },
+    "tools": {
+      "title": "MCP tools ({count})",
+      "actions": {
+        "importOpenApi": "Import OpenAPI",
+        "addTool": "Add tool"
+      },
+      "errors": {
+        "requestFailed": "Request failed"
+      }
+    },
+    "dialogs": {
+      "deleteTool": {
+        "title": "Delete tool",
+        "description": "This will permanently remove the tool \"{toolName}\" from this service.",
+        "confirm": "Delete"
+      },
+      "deleteService": {
+        "title": "Delete service",
+        "description": "This will permanently remove the service and all its registered tools from MCP.",
+        "confirm": "Delete"
+      }
+    },
+    "removeService": {
+      "title": "Remove service",
+      "description": "This will permanently remove the service and all its registered tools from MCP.",
+      "action": "Delete service"
+    },
+    "notFound": "Service not found."
+  }
+}

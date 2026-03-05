@@ -1,0 +1,75 @@
+{
+  "page": {
+    "title": "Benutzer",
+    "description": "Verwalte, wer auf dieses Gateway zugreifen kann und welche Services genutzt werden dürfen.",
+    "actions": {
+      "cancel": "Abbrechen",
+      "createUser": "Benutzer erstellen",
+      "creating": "Wird erstellt…",
+      "create": "Erstellen"
+    },
+    "form": {
+      "title": "Benutzer erstellen",
+      "fields": {
+        "username": {
+          "label": "Benutzername",
+          "placeholder": "jane",
+          "errors": {
+            "minLength": "Der Benutzername muss mindestens 2 Zeichen lang sein",
+            "maxLength": "Der Benutzername darf höchstens 100 Zeichen lang sein"
+          }
+        },
+        "email": {
+          "label": "E-Mail-Adresse",
+          "placeholder": "jane@example.com"
+        },
+        "password": {
+          "label": "Passwort",
+          "placeholder": "Leer lassen, um es später festzulegen",
+          "errors": {
+            "minLength": "Das Passwort muss mindestens 8 Zeichen lang sein (derzeit {current})"
+          }
+        }
+      },
+      "passwordHelp": "Ein Passwort ist bei der Erstellung optional, muss aber mindestens 8 Zeichen lang sein, wenn eines gesetzt wird.",
+      "toggles": {
+        "admin": "Admin-Zugriff",
+        "selfMcp": "Self-MCP-Tools erlauben"
+      },
+      "allowedServices": "Zugelassene Services"
+    },
+    "errors": {
+      "createUserFailed": "Benutzer konnte nicht erstellt werden",
+      "updateUserFailed": "Benutzer konnte nicht aktualisiert werden"
+    },
+    "query": {
+      "loading": "Benutzer werden geladen…"
+    },
+    "list": {
+      "count": "{count, plural, one {# user} other {# users}}",
+      "badges": {
+        "admin": "Admin",
+        "mcp": "Self-MCP"
+      },
+      "toggles": {
+        "admin": "Admin",
+        "mcp": "Self-MCP"
+      },
+      "access": {
+        "allServices": "Alle Services",
+        "serviceCount": "{count, plural, one {# service} other {# services}}"
+      }
+    },
+    "empty": {
+      "title": "Noch keine Benutzer",
+      "description": "Erstelle den ersten Benutzer, um Zugriff zu gewähren."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Benutzer löschen",
+        "description": "Dadurch wird das Benutzerkonto dauerhaft entfernt.",
+        "confirm": "Löschen"
+      }
+    }
+  }
+}

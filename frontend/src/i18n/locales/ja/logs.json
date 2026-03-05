@@ -1,0 +1,47 @@
+{
+  "page": {
+    "title": "ログ",
+    "description": "最近のMCPツール呼び出し、結果、レイテンシを確認します。",
+    "stats": {
+      "totalCalls": "総コール数",
+      "successRate": "成功率",
+      "errors": "エラー",
+      "avgLatency": "平均レイテンシ"
+    },
+    "chart": {
+      "callsOverTime": "コール数の推移"
+    },
+    "filters": {
+      "searchPlaceholder": "ツール名で検索",
+      "allServices": "すべてのサービス",
+      "status": {
+        "all": "すべて",
+        "success": "成功",
+        "error": "エラー"
+      }
+    },
+    "query": {
+      "loading": "ログを読み込み中…"
+    },
+    "table": {
+      "headers": {
+        "status": "ステータス",
+        "tool": "ツール",
+        "service": "サービス",
+        "client": "クライアント",
+        "latency": "レイテンシ",
+        "time": "時刻"
+      }
+    },
+    "pagination": {
+      "totalEntries": "{count, plural, one {# 件} other {# 件}}",
+      "page": "ページ {current} / {total}"
+    },
+    "empty": {
+      "filteredTitle": "条件に一致するログがありません",
+      "filteredDescription": "フィルタ条件を調整してください。",
+      "defaultTitle": "まだログがありません",
+      "defaultDescription": "エージェントがツールを呼び出すと、ここにアクティビティが表示されます。"
+    }
+  }
+}

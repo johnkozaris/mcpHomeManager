@@ -1,0 +1,11 @@
+{
+  "api": {
+    "generic": "请求失败"
+  },
+  "queryState": {
+    "loading": "加载中…",
+    "authRequired": "需要身份验证 — 请重新登录后继续。",
+    "networkUnreachable": "无法连接到服务器，后端服务是否已启动？",
+    "generic": "加载失败"
+  }
+}

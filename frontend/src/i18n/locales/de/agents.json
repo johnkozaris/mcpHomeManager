@@ -1,0 +1,146 @@
+{
+  "page": {
+    "title": "AI-Agenten verbinden",
+    "description": "Füge deinen MCP-Endpoint in einen beliebigen AI-Client ein. Nach der Verbindung werden deine Homelab-Tools automatisch erkannt.",
+    "placeholders": {
+      "apiKey": "YOUR_API_KEY"
+    },
+    "cards": {
+      "claudeDesktop": {
+        "name": "Claude Desktop",
+        "badge": "Empfohlen",
+        "steps": {
+          "step1": {
+            "before": "Gehe zu",
+            "settings": "Settings",
+            "middle": "(Zahnradsymbol) →",
+            "developer": "Developer",
+            "and": "→",
+            "editConfig": "Edit Config"
+          },
+          "step2": {
+            "beforeFile": "Dadurch wird",
+            "afterFile": "geöffnet. Wenn die Datei bereits andere MCP-Server enthält, füge den",
+            "afterHomelab": "Eintrag in das vorhandene",
+            "afterMcpServers": "Objekt ein. Andernfalls ersetze den gesamten Dateiinhalt durch:"
+          },
+          "step3": {
+            "before": "Speichere die Datei und",
+            "emphasis": "beende",
+            "after": "Claude Desktop vollständig (nicht nur das Fenster schließen – über Menüleiste oder Systemtray beenden) und öffne die App dann erneut"
+          },
+          "step4": "In der Chat-Eingabe sollte ein Hammersymbol erscheinen – klicke darauf, um zu prüfen, ob deine Homelab-Tools geladen sind",
+          "step5": {
+            "prefix": "Probier es aus:",
+            "exampleRepos": "„Welche Repos habe ich auf Forgejo?“",
+            "or": "oder",
+            "examplePaperless": "„Durchsuche meine Paperless-Dokumente nach Rechnungen“"
+          }
+        },
+        "configPath": "Konfigurationspfad – macOS: ~/Library/Application Support/Claude/ · Windows: %APPDATA%\\Claude\\"
+      },
+      "claudeCode": {
+        "name": "Claude Code",
+        "terminalLabel": "Terminal",
+        "steps": {
+          "step1": "Registriere deinen Homelab-MCP-Server global mit folgendem Befehl (in allen Projekten verfügbar):",
+          "step2": {
+            "before": "Prüfe mit",
+            "after": "— in der Ausgabe sollte „homelab“ erscheinen"
+          },
+          "step3": "Deine Homelab-Tools stehen jetzt automatisch in jeder Sitzung zur Verfügung"
+        },
+        "removePrefix": "So entfernst du die Registrierung später:"
+      },
+      "cursor": {
+        "name": "Cursor",
+        "steps": {
+          "step1": {
+            "before": "Erstelle",
+            "after": "im Projektstammverzeichnis mit folgendem Inhalt:"
+          },
+          "step2": "Starte Cursor neu (Cmd+Q / schließen und neu öffnen). Deine Tools sollten im AI-Panel (Cmd+L / Strg+L) unter „Available Tools“ erscheinen.",
+          "step3": "Wenn keine Tools angezeigt werden, prüfe den MCP-Statusindikator in der unteren Statusleiste."
+        }
+      },
+      "chatgpt": {
+        "name": "ChatGPT",
+        "steps": {
+          "step1": {
+            "before": "Gehe zu",
+            "settings": "Settings",
+            "middle": "→",
+            "appsAndConnectors": "Apps & Connectors",
+            "after": "→ aktiviere",
+            "developerMode": "Developer mode",
+            "suffix": "unter „Advanced settings“"
+          },
+          "step2": {
+            "before": "Klicke in „Apps & Connectors“ auf",
+            "create": "Create",
+            "and": "→ wähle",
+            "mcpServer": "MCP Server"
+          },
+          "step3": {
+            "before": "Gib einen Namen wie „My Homelab“ ein und füge deinen Endpoint ein:"
+          },
+          "step4": {
+            "before": "Klicke auf",
+            "create": "Create",
+            "after": ". Neue Unterhaltungen erkennen deine Homelab-Tools automatisch."
+          }
+        },
+        "note": {
+          "label": "Hinweis:",
+          "body": "ChatGPT benötigt einen öffentlich erreichbaren Endpoint. Verwende die mitgelieferte Caddy-Konfiguration oder einen Tunneldienst wie Cloudflare Tunnel, wenn dein Server nur lokal erreichbar ist."
+        }
+      },
+      "openWebui": {
+        "name": "Open WebUI",
+        "steps": {
+          "step1": {
+            "before": "Gehe zum",
+            "adminPanel": "Admin Panel",
+            "and": "→",
+            "settings": "Settings",
+            "then": "→",
+            "tools": "Tools"
+          },
+          "step2": {
+            "before": "Klicke auf",
+            "addMcpConnection": "Add MCP Connection",
+            "after": ", gib einen Namen ein und füge deinen Endpoint ein:"
+          },
+          "step3": "Wenn du API-Key-Authentifizierung verwendest, gib deinen Schlüssel im Authentifizierungsfeld ein.",
+          "step4": {
+            "before": "Klicke auf",
+            "save": "Save",
+            "after": "— Open WebUI testet die Verbindung und erkennt deine Tools. Sie stehen dann allen Benutzern mit jedem LLM zur Verfügung."
+          }
+        }
+      },
+      "otherClients": {
+        "name": "Andere MCP-Clients",
+        "description": "Wenn dein MCP-Client nach bestimmten Verbindungsdetails fragt:",
+        "details": {
+          "transport": {
+            "label": "Transport",
+            "value": "Streamable HTTP"
+          },
+          "auth": {
+            "label": "Auth",
+            "value": "Authorization: Bearer"
+          },
+          "discovery": {
+            "label": "Discovery",
+            "value": "Automatic"
+          }
+        },
+        "sse": {
+          "before": "Für reine SSE-Clients hänge",
+          "after": "an die Endpoint-URL an. Die Basis-URL muss von dort erreichbar sein, wo dein AI-Client läuft."
+        }
+      }
+    }
+  }
+}

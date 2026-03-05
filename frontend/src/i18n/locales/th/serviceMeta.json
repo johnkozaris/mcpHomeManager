@@ -1,0 +1,76 @@
+{
+  "services": {
+    "forgejo": {
+      "label": "Forgejo",
+      "description": "Git hosting พร้อม CI/CD"
+    },
+    "homeassistant": {
+      "label": "Home Assistant",
+      "description": "สมาร์ทโฮม"
+    },
+    "paperless": {
+      "label": "Paperless-ngx",
+      "description": "จัดการเอกสาร"
+    },
+    "immich": {
+      "label": "Immich",
+      "description": "จัดการรูปภาพและวิดีโอ"
+    },
+    "nextcloud": {
+      "label": "Nextcloud",
+      "description": "จัดเก็บและซิงก์ไฟล์บนคลาวด์"
+    },
+    "uptimekuma": {
+      "label": "Uptime Kuma",
+      "description": "ตรวจสอบสถานะบริการ"
+    },
+    "adguard": {
+      "label": "AdGuard Home",
+      "description": "กรอง DNS และบล็อกโฆษณา"
+    },
+    "nginxproxymanager": {
+      "label": "Nginx Proxy Manager",
+      "description": "Reverse proxy และ SSL"
+    },
+    "portainer": {
+      "label": "Portainer",
+      "description": "จัดการคอนเทนเนอร์"
+    },
+    "freshrss": {
+      "label": "FreshRSS",
+      "description": "ตัวอ่าน RSS"
+    },
+    "wallabag": {
+      "label": "Wallabag",
+      "description": "บันทึกบทความไว้อ่านทีหลัง"
+    },
+    "stirlingpdf": {
+      "label": "Stirling PDF",
+      "description": "เครื่องมือจัดการ PDF"
+    },
+    "wikijs": {
+      "label": "Wiki.js",
+      "description": "คลังความรู้ของทีม"
+    },
+    "calibreweb": {
+      "label": "Calibre-Web",
+      "description": "จัดการคลัง e-book"
+    },
+    "cloudflare": {
+      "label": "Cloudflare",
+      "description": "จัดการ DNS, tunnel และ zero trust"
+    },
+    "tailscale": {
+      "label": "Tailscale",
+      "description": "เครือข่าย VPN mesh และจัดการอุปกรณ์"
+    },
+    "generic_rest": {
+      "label": "Generic REST",
+      "description": "บริการ REST API แบบกำหนดเอง"
+    }
+  },
+  "fallback": {
+    "label": "ไม่ทราบ",
+    "description": "ประเภทบริการที่ไม่รู้จัก"
+  }
+}

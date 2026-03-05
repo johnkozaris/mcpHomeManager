@@ -1,0 +1,30 @@
+{
+  "page": {
+    "title": "ツール",
+    "description": {
+      "withCounts": "{toolsCount} 個のツール / {serviceCount} 個のサービス • {enabledCount} 個が有効",
+      "empty": "MCPクライアントに公開するツールを管理します。"
+    },
+    "filters": {
+      "searchPlaceholder": "ツールを検索",
+      "allServices": "すべてのサービス",
+      "status": {
+        "all": "すべて ({count})",
+        "enabled": "有効 ({count})",
+        "disabled": "無効 ({count})"
+      }
+    },
+    "errors": {
+      "missingService": "このツールに紐づくサービスがないため、\"{toolName}\" を更新できません。"
+    },
+    "query": {
+      "loading": "ツールを読み込み中…"
+    },
+    "empty": {
+      "searchTitle": "検索条件に一致するツールがありません",
+      "searchDescription": "検索条件やフィルターを変えてみてください。",
+      "noToolsTitle": "ツールはまだありません",
+      "noToolsDescription": "サービスを接続するとツールを使えるようになります。"
+    }
+  }
+}

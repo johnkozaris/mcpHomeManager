@@ -1,0 +1,111 @@
+{
+  "page": {
+    "title": "Settings",
+    "description": "Appearance, endpoints, and system info",
+    "appearance": {
+      "title": "Appearance",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "language": {
+      "title": "Language",
+      "description": "Choose your preferred language. The app will remember your choice."
+    },
+    "security": {
+      "title": "Security",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "signedInAs": "Signed in as",
+      "currentUserFallback": "admin",
+      "selfMcp": {
+        "title": "Self-MCP Tools",
+        "description": "When enabled, AI agents can manage this gateway through MCP itself — listing services, toggling tools, adding connections, and viewing logs without using the web UI.",
+        "accessPrefix": "Access is granted per-user in",
+        "userManagementLink": "User Management",
+        "accessSuffix": ".",
+        "defaultsPrefix": "Defaults from",
+        "defaultsSuffix": " env var on restart."
+      }
+    },
+    "apiKey": {
+      "title": "MCP API Key",
+      "status": {
+        "active": "Active",
+        "notSet": "Not set"
+      },
+      "description": "AI agents (Claude, Cursor, ChatGPT) use this key to connect to your MCP endpoint.",
+      "revealedTitle": "Your API key",
+      "actions": {
+        "regenerate": "Regenerate Key",
+        "generate": "Generate Key",
+        "reveal": "Reveal Key",
+        "revoke": "Revoke"
+      },
+      "errors": {
+        "revealFailed": "Could not reveal key. Try regenerating instead."
+      }
+    },
+    "about": {
+      "title": "About",
+      "versionLabel": "Version",
+      "serverLabel": "Server",
+      "serverFallback": "MCP Manager"
+    },
+    "endpoint": {
+      "title": "MCP Endpoint",
+      "description": "Your AI agents connect to this URL",
+      "agentGuide": "Agent setup guide"
+    },
+    "systemHealth": {
+      "title": "System Health",
+      "checking": "checking",
+      "rows": {
+        "database": "Database",
+        "mcpServer": "MCP Server",
+        "services": "Services"
+      },
+      "servicesConnected": "{healthy} / {total} connected"
+    },
+    "smtp": {
+      "title": "Email (SMTP)",
+      "description": "Configure SMTP for password reset emails. Leave blank to disable.",
+      "testFailed": "Test failed",
+      "fields": {
+        "host": "Host",
+        "port": "Port",
+        "username": "Username",
+        "password": "Password",
+        "passwordHint": "(set — leave blank to keep)",
+        "fromEmail": "From Email"
+      },
+      "placeholders": {
+        "host": "smtp.gmail.com",
+        "username": "user@example.com",
+        "passwordMasked": "••••••••",
+        "password": "App password",
+        "fromEmail": "noreply@example.com"
+      },
+      "toggles": {
+        "useTls": "Use TLS (STARTTLS)",
+        "enabled": "Enabled"
+      },
+      "errors": {
+        "saveFailed": "Failed to save SMTP config"
+      },
+      "actions": {
+        "saved": "Saved",
+        "saving": "Saving…",
+        "save": "Save",
+        "sending": "Sending…",
+        "sendTestEmail": "Send Test Email"
+      }
+    },
+    "dialogs": {
+      "revokeKey": {
+        "title": "Revoke API Key",
+        "description": "This will immediately disconnect any AI agents using this key. You can generate a new key afterwards.",
+        "confirm": "Revoke Key"
+      }
+    }
+  }
+}

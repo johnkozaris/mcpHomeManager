@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { Button } from "@/components/ui/Button";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   open: boolean;
@@ -19,14 +20,19 @@ export function ConfirmDialog({
   open,
   title,
   description,
-  confirmText = "Confirm",
-  cancelText = "Cancel",
+  confirmText,
+  cancelText,
   variant = "primary",
   onConfirm,
   onCancel,
   isLoading = false,
 }: Props) {
+  const { t } = useTranslation("components", {
+    keyPrefix: "ui.confirmDialog",
+  });
   const dialogRef = useRef<HTMLDivElement>(null);
+  const resolvedConfirmText = confirmText ?? t("confirm");
+  const resolvedCancelText = cancelText ?? t("cancel");
 
   useEffect(() => {
     if (!open) return;
@@ -70,7 +76,7 @@ export function ConfirmDialog({
             onClick={onCancel}
             disabled={isLoading}
           >
-            {cancelText}
+            {resolvedCancelText}
           </Button>
           <Button
             variant={variant === "danger" ? "danger" : "primary"}
@@ -78,7 +84,7 @@ export function ConfirmDialog({
             onClick={onConfirm}
             disabled={isLoading}
           >
-            {isLoading ? "Working…" : confirmText}
+            {isLoading ? t("working") : resolvedConfirmText}
           </Button>
         </div>
       </div>

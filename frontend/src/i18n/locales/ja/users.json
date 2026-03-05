@@ -1,0 +1,75 @@
+{
+  "page": {
+    "title": "ユーザー",
+    "description": "このgatewayにアクセスできるユーザーと、利用可能なサービスを管理します。",
+    "actions": {
+      "cancel": "キャンセル",
+      "createUser": "ユーザーを作成",
+      "creating": "作成中…",
+      "create": "作成"
+    },
+    "form": {
+      "title": "ユーザーを作成",
+      "fields": {
+        "username": {
+          "label": "ユーザー名",
+          "placeholder": "jane",
+          "errors": {
+            "minLength": "ユーザー名は2文字以上で入力してください",
+            "maxLength": "ユーザー名は100文字以内で入力してください"
+          }
+        },
+        "email": {
+          "label": "メールアドレス",
+          "placeholder": "jane@example.com"
+        },
+        "password": {
+          "label": "パスワード",
+          "placeholder": "後で設定する場合は空欄",
+          "errors": {
+            "minLength": "パスワードは8文字以上で入力してください（現在 {current} 文字）"
+          }
+        }
+      },
+      "passwordHelp": "作成時のパスワードは任意ですが、入力する場合は8文字以上が必要です。",
+      "toggles": {
+        "admin": "管理者アクセス",
+        "selfMcp": "Self-MCPツールを許可"
+      },
+      "allowedServices": "許可するサービス"
+    },
+    "errors": {
+      "createUserFailed": "ユーザーの作成に失敗しました",
+      "updateUserFailed": "ユーザーの更新に失敗しました"
+    },
+    "query": {
+      "loading": "ユーザーを読み込み中…"
+    },
+    "list": {
+      "count": "{count, plural, one {# 人のユーザー} other {# 人のユーザー}}",
+      "badges": {
+        "admin": "管理者",
+        "mcp": "Self-MCP"
+      },
+      "toggles": {
+        "admin": "管理者",
+        "mcp": "Self-MCP"
+      },
+      "access": {
+        "allServices": "すべてのサービス",
+        "serviceCount": "{count, plural, one {# 件のサービス} other {# 件のサービス}}"
+      }
+    },
+    "empty": {
+      "title": "ユーザーはいません",
+      "description": "最初のユーザーを作成してアクセス権を付与してください。"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "ユーザーを削除",
+        "description": "この操作でユーザーアカウントは完全に削除されます。",
+        "confirm": "削除"
+      }
+    }
+  }
+}

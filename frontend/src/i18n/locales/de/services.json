@@ -1,0 +1,25 @@
+{
+  "listPage": {
+    "title": "Services",
+    "description": "Verbinde Services und verwalte deren Status, Tools und Konfiguration.",
+    "actions": {
+      "export": "Exportieren",
+      "import": "Importieren",
+      "connectService": "Service verbinden"
+    },
+    "errors": {
+      "exportFailed": "Services konnten nicht exportiert werden"
+    },
+    "query": {
+      "loading": "Services werden geladen…",
+      "error": "Services konnten nicht geladen werden"
+    },
+    "cards": {
+      "connectDescription": "Weiteren Service verbinden"
+    },
+    "empty": {
+      "title": "Noch keine Services verbunden",
+      "description": "Verbinde deinen ersten Service, um Tools für MCP-Clients verfügbar zu machen."
+    }
+  }
+}

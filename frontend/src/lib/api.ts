@@ -1,10 +1,13 @@
 import type {
   AppConfig,
   AppDefinition,
+  ApplyProfileResult,
+  AuthStatusResponse,
   AuditListResponse,
   CreateServiceRequest,
   CreateUserRequest,
   DiscoveredService,
+  GenericToolResult,
   GenericToolDefinition,
   HealthResponse,
   ImportResult,
@@ -12,6 +15,7 @@ import type {
   PermissionProfile,
   ServiceConnection,
   ServiceDetail,
+  SmtpTestResult,
   SetupResponse,
   SmtpConfigResponse,
   TestResult,
@@ -76,12 +80,12 @@ export const api = {
     revokeApiKey: () => request<void>("/auth/api-key", { method: "DELETE" }),
     getApiKey: () => request<{ api_key: string }>("/auth/api-key"),
     forgotPassword: (email: string) =>
-      request<{ status: string }>("/auth/forgot-password", {
+      request<AuthStatusResponse>("/auth/forgot-password", {
         method: "POST",
         body: JSON.stringify({ email }),
       }),
     resetPassword: (token: string, password: string) =>
-      request<{ status: string }>("/auth/reset-password", {
+      request<AuthStatusResponse>("/auth/reset-password", {
         method: "POST",
         body: JSON.stringify({ token, password }),
       }),
@@ -116,7 +120,7 @@ export const api = {
     getProfiles: (id: string) =>
       request<PermissionProfile[]>(`/services/${id}/profiles`),
     applyProfile: (id: string, profileName: string) =>
-      request<{ status: string; profile: string }>(
+      request<ApplyProfileResult>(
         `/services/${id}/apply-profile`,
         {
           method: "POST",
@@ -205,7 +209,7 @@ export const api = {
         body: JSON.stringify(data),
       }),
     testSmtp: () =>
-      request<{ success: boolean; message: string }>("/admin/smtp/test", {
+      request<SmtpTestResult>("/admin/smtp/test", {
         method: "POST",
       }),
     getSelfMcp: () => request<{ enabled: boolean }>("/admin/self-mcp"),
@@ -244,7 +248,7 @@ export const api = {
 
   genericTools: {
     create: (serviceId: string, data: GenericToolDefinition) =>
-      request<{ status: string; tool_name: string; tools_count: number }>(
+      request<GenericToolResult>(
         `/services/${serviceId}/tools`,
         { method: "POST", body: JSON.stringify(data) },
       ),
@@ -263,12 +267,12 @@ export const api = {
       toolName: string,
       data: Record<string, unknown>,
     ) =>
-      request<{ status: string; tool_name: string; tools_count: number }>(
+      request<GenericToolResult>(
         `/services/${serviceId}/tools/${encodeURIComponent(toolName)}`,
         { method: "PATCH", body: JSON.stringify(data) },
       ),
     testTool: (serviceId: string, toolName: string) =>
-      request<{ success: boolean; message: string }>(
+      request<TestResult>(
         `/services/${serviceId}/tools/${encodeURIComponent(toolName)}/test`,
         { method: "POST" },
       ),

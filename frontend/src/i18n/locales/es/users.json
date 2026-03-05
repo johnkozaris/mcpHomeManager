@@ -1,0 +1,75 @@
+{
+  "page": {
+    "title": "Usuarios",
+    "description": "Gestiona quién puede acceder a este gateway y qué servicios puede usar.",
+    "actions": {
+      "cancel": "Cancelar",
+      "createUser": "Crear usuario",
+      "creating": "Creando…",
+      "create": "Crear"
+    },
+    "form": {
+      "title": "Crear usuario",
+      "fields": {
+        "username": {
+          "label": "Nombre de usuario",
+          "placeholder": "jane",
+          "errors": {
+            "minLength": "El nombre de usuario debe tener al menos 2 caracteres.",
+            "maxLength": "El nombre de usuario debe tener 100 caracteres o menos"
+          }
+        },
+        "email": {
+          "label": "Correo electrónico",
+          "placeholder": "jane@ejemplo.com"
+        },
+        "password": {
+          "label": "Contraseña",
+          "placeholder": "Déjalo en blanco para configurarla después",
+          "errors": {
+            "minLength": "La contraseña debe tener al menos 8 caracteres (actualmente {current})"
+          }
+        }
+      },
+      "passwordHelp": "La contraseña es opcional al crear la cuenta, pero debe tener al menos 8 caracteres si la defines.",
+      "toggles": {
+        "admin": "Acceso de administrador",
+        "selfMcp": "Permitir herramientas Self-MCP"
+      },
+      "allowedServices": "Servicios permitidos"
+    },
+    "errors": {
+      "createUserFailed": "No se pudo crear el usuario",
+      "updateUserFailed": "No se pudo actualizar el usuario"
+    },
+    "query": {
+      "loading": "Cargando usuarios…"
+    },
+    "list": {
+      "count": "{count, plural, one {# user} other {# users}}",
+      "badges": {
+        "admin": "Admin",
+        "mcp": "Self-MCP"
+      },
+      "toggles": {
+        "admin": "Admin",
+        "mcp": "Self-MCP"
+      },
+      "access": {
+        "allServices": "Todos los servicios",
+        "serviceCount": "{count, plural, one {# service} other {# services}}"
+      }
+    },
+    "empty": {
+      "title": "Aún no hay usuarios",
+      "description": "Crea tu primer usuario para dar acceso."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar usuario",
+        "description": "Esto eliminará permanentemente la cuenta de usuario.",
+        "confirm": "Eliminar"
+      }
+    }
+  }
+}

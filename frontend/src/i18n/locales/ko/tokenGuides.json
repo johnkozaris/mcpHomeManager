@@ -1,0 +1,168 @@
+{
+  "guides": {
+    "forgejo": {
+      "steps": [
+        "Forgejo 인스턴스를 열고 계정으로 로그인하세요",
+        "오른쪽 상단 프로필 아바타를 클릭하고 \"Settings\"를 선택하세요",
+        "왼쪽 사이드바에서 \"Applications\"를 클릭하세요",
+        "\"Manage Access Tokens\"에서 token 이름을 입력하세요 (예: \"{appName}\")",
+        "필요한 권한을 선택하세요 — 전체 권한이 필요하면 모든 scope를 체크하세요. 최소 권한: read:organization, read:repository, read:issue, write:issue",
+        "\"Generate Token\"을 클릭하고 token을 즉시 복사하세요 — 다시 표시되지 않습니다",
+        "위 입력란에 token을 붙여넣으세요"
+      ]
+    },
+    "homeassistant": {
+      "steps": [
+        "Home Assistant 인스턴스를 열고 로그인하세요",
+        "왼쪽 사이드바 하단에서 사용자 이름/프로필을 클릭하세요",
+        "페이지 하단의 \"Long-Lived Access Tokens\" 섹션으로 스크롤하세요",
+        "\"Create Token\"을 클릭하세요",
+        "\"{appName}\" 같은 이름을 입력하고 OK를 클릭하세요",
+        "대화상자에 표시된 token을 복사하세요 — 한 번만 표시됩니다",
+        "위 입력란에 token을 붙여넣으세요"
+      ],
+      "note": "Home Assistant token은 eyJ…로 시작합니다"
+    },
+    "paperless": {
+      "steps": [
+        "Paperless-ngx 인스턴스를 열고 관리자 계정으로 로그인하세요",
+        "상단 내비게이션에서 톱니바퀴 아이콘을 클릭하거나 Settings로 이동하세요",
+        "\"API\" 섹션을 찾거나 아래로 스크롤하세요",
+        "여기에 API token이 표시됩니다 — 복사 아이콘을 눌러 복사하세요",
+        "token이 없으면 \"Generate\"를 클릭해 생성하세요",
+        "위 입력란에 token을 붙여넣으세요"
+      ]
+    },
+    "immich": {
+      "steps": [
+        "Immich 인스턴스를 열고 로그인하세요",
+        "오른쪽 상단 프로필 아바타를 클릭하세요",
+        "드롭다운에서 \"Account Settings\"를 선택하세요",
+        "\"API Keys\"까지 스크롤하세요",
+        "\"New API Key\"를 클릭하고 \"{appName}\" 같은 이름을 지정하세요",
+        "생성된 key를 즉시 복사하세요 — 다시 표시되지 않습니다",
+        "위 입력란에 key를 붙여넣으세요"
+      ]
+    },
+    "nextcloud": {
+      "steps": [
+        "Nextcloud 인스턴스를 열고 로그인하세요",
+        "오른쪽 상단 프로필 아바타를 클릭하고 \"Settings\"(또는 \"Personal settings\")를 선택하세요",
+        "왼쪽 사이드바에서 \"Security\"를 클릭하세요",
+        "\"Devices & sessions\" 섹션까지 스크롤하세요",
+        "하단 텍스트 필드의 앱 이름에 \"{appName}\"을 입력하세요",
+        "\"Create new app password\"를 클릭하세요",
+        "생성된 비밀번호를 복사하세요 — 이것이 API token입니다",
+        "위 입력란에 붙여넣으세요"
+      ],
+      "note": "형식: username:app-password (예: admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx)"
+    },
+    "uptimekuma": {
+      "steps": [
+        "Uptime Kuma 인스턴스를 열고 로그인하세요",
+        "왼쪽 사이드바에서 \"Settings\"를 클릭하세요",
+        "\"API Keys\" 탭으로 이동하세요",
+        "\"Add API Key\"를 클릭하고 \"{appName}\" 같은 이름을 입력하세요",
+        "만료일을 설정하거나 무기한이면 비워 두세요",
+        "\"Create\"를 클릭하고 생성된 API key를 복사하세요",
+        "위 입력란에 key를 붙여넣으세요"
+      ]
+    },
+    "adguard": {
+      "steps": [
+        "AdGuard Home은 API token 대신 기본 인증(사용자 이름/비밀번호)을 사용합니다",
+        "AdGuard 웹 인터페이스 로그인에 사용하는 사용자 이름과 비밀번호를 그대로 사용하세요",
+        "위 입력란에 username:password 형식으로 입력하세요"
+      ],
+      "note": "예: 로그인 아이디가 \"admin\", 비밀번호가 \"mypass\"라면 admin:mypass 입력"
+    },
+    "nginxproxymanager": {
+      "steps": [
+        "Nginx Proxy Manager는 API 접근에 로그인 정보를 사용합니다",
+        "email:password 형식으로 이메일과 비밀번호를 입력하세요",
+        "NPM 웹 인터페이스 로그인에 사용하는 같은 로그인 정보입니다"
+      ],
+      "note": "형식: email:password (예: admin@example.com:changeme)"
+    },
+    "portainer": {
+      "steps": [
+        "Portainer는 API 접근에 로그인 정보를 사용합니다",
+        "username:password 형식으로 사용자 이름과 비밀번호를 입력하세요",
+        "Portainer 웹 인터페이스 로그인에 사용하는 같은 로그인 정보입니다"
+      ],
+      "note": "형식: username:password (예: admin:mypassword)"
+    },
+    "freshrss": {
+      "steps": [
+        "FreshRSS는 프로그램 접근용 별도 API 비밀번호를 사용합니다",
+        "FreshRSS에서 Settings → Profile → API Management로 이동하세요",
+        "아직 비활성이라면 \"Allow API access\" 옵션을 활성화하세요",
+        "API 비밀번호를 설정하세요 (로그인 비밀번호와 다릅니다)",
+        "username:api_password 형식으로 FreshRSS 사용자 이름과 API 비밀번호를 입력하세요"
+      ],
+      "note": "형식: username:api_password — API 비밀번호는 로그인 비밀번호가 아니라 FreshRSS 설정에서 별도로 지정합니다"
+    },
+    "wallabag": {
+      "steps": [
+        "Wallabag 인스턴스를 열고 로그인하세요",
+        "API clients 관리 화면으로 이동하세요 (설정의 Developer 섹션)",
+        "\"Create a new client\"를 클릭하고 client ID와 client secret을 확인하세요",
+        "client_id:client_secret:username:password 형식으로 네 값을 모두 입력하세요"
+      ],
+      "note": "형식: client_id:client_secret:username:password (콜론으로 구분된 4개 값)"
+    },
+    "stirlingpdf": {
+      "steps": [
+        "Stirling PDF 인스턴스를 열고 관리자 계정으로 로그인하세요",
+        "오른쪽 상단 설정 톱니바퀴(⚙️)를 클릭해 Account Settings를 여세요",
+        "설정 패널에서 개인 API key를 찾거나 생성하세요",
+        "또는 SECURITY_CUSTOMGLOBALAPIKEY 환경 변수로 설정한 전역 API key를 사용하세요",
+        "위 입력란에 API key를 붙여넣으세요"
+      ],
+      "note": "X-API-KEY 헤더를 사용합니다. API key 인증이 동작하려면 Stirling PDF에서 로그인 기능이 활성화되어 있어야 합니다"
+    },
+    "wikijs": {
+      "steps": [
+        "Wiki.js 인스턴스를 열고 관리자 계정으로 로그인하세요",
+        "Administration → API Access로 이동하세요",
+        "\"Create API Key\"를 클릭하고 이름을 설정하세요 (예: \"{appName}\")",
+        "적절한 권한 그룹을 선택하세요 (권장: Full Access)",
+        "만료일을 설정하거나 만료가 필요 없으면 비워 두세요",
+        "생성된 API key를 복사해 위 입력란에 붙여넣으세요"
+      ]
+    },
+    "tailscale": {
+      "steps": [
+        "https://login.tailscale.com/admin 에서 Tailscale 관리자 콘솔을 여세요",
+        "Settings → Keys로 이동하세요",
+        "\"API access tokens\"에서 \"Generate access token...\"을 클릭하세요",
+        "token 만료 기간을 설정하거나 기본값을 사용하세요",
+        "\"Generate\"를 클릭하고 token을 즉시 복사하세요 — 다시 표시되지 않습니다",
+        "위 입력란에 token을 붙여넣으세요"
+      ],
+      "note": "Tailscale API key는 tskey-api-...로 시작하며 Tailscale API(api.tailscale.com/api/v2) 인증에 사용됩니다"
+    },
+    "calibreweb": {
+      "steps": [
+        "Calibre-Web은 API 접근에 로그인 정보를 사용합니다",
+        "username:password 형식으로 Calibre-Web 사용자 이름과 비밀번호를 입력하세요",
+        "Calibre-Web 웹 인터페이스 로그인에 사용하는 같은 로그인 정보입니다"
+      ],
+      "note": "기본 로그인 정보는 admin/admin123입니다 — 연결 전에 변경하세요. 형식: username:password"
+    },
+    "cloudflare": {
+      "steps": [
+        "https://dash.cloudflare.com 에서 Cloudflare 대시보드를 여세요",
+        "오른쪽 상단 프로필 아이콘을 클릭하고 \"My Profile\"을 선택하세요",
+        "왼쪽 사이드바에서 \"API Tokens\"를 클릭하세요",
+        "\"Create Token\"을 클릭하세요",
+        "커스텀 token 템플릿을 사용하고 다음 권한을 설정하세요: Zone:DNS:Edit, Zone:Zone:Read, Account:Cloudflare Tunnel:Edit",
+        "필요하면 특정 zone 또는 account로 token 범위를 제한하세요",
+        "\"Continue to summary\"를 누른 뒤 \"Create Token\"을 클릭하세요",
+        "token을 즉시 복사하세요 — 다시 표시되지 않습니다",
+        "위 입력란에 token을 붙여넣으세요"
+      ],
+      "note": "Base URL은 https://api.cloudflare.com 을 사용하세요. token은 Bearer 헤더로 인증됩니다."
+    }
+  }
+}

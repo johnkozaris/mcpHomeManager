@@ -1,0 +1,182 @@
+{
+  "errorBoundary": {
+    "title": "Something broke",
+    "fallbackMessage": "An unexpected error occurred.",
+    "reload": "Reload"
+  },
+  "routeErrorFallback": {
+    "title": "Something went wrong",
+    "fallbackMessage": "An unexpected error occurred.",
+    "tryAgain": "Try again",
+    "goHome": "Go home"
+  },
+  "logs": {
+    "logEntryDetail": {
+      "error": "Error",
+      "input": "Input",
+      "duration": "Duration:",
+      "durationUnit": "ms",
+      "client": "Client:",
+      "time": "Time:",
+      "viewService": "View Service"
+    }
+  },
+  "services": {
+    "addServicePanel": {
+      "scanDescription": "Scan your network for running services.",
+      "scan": "Scan",
+      "scanning": "Scanning…",
+      "noKnownServices": "No known service containers found.",
+      "connectWithLabel": "Connect {label}",
+      "connectService": "Connect a Service",
+      "closeDialog": "Close dialog",
+      "dismiss": "dismiss",
+      "failedConnectService": "Failed to connect service",
+      "chooseService": "Choose a service",
+      "or": "or",
+      "autoDetect": "Auto-detect"
+    },
+    "addToolModal": {
+      "invalidJson": "Invalid JSON in parameters schema",
+      "titleEdit": "Edit Tool Definition",
+      "titleAdd": "Add Tool",
+      "closeEditDialog": "Close edit tool dialog",
+      "closeAddDialog": "Close add tool dialog",
+      "descriptionEdit": "Edit the definition of this MCP tool.",
+      "descriptionAdd": "Create a new MCP tool for this generic REST service.",
+      "toolNameLabel": "Tool Name",
+      "toolNamePlaceholder": "e.g. list_items",
+      "toolNameValidation": "Must start with a letter; only letters, numbers, and underscores",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "List all items",
+      "httpMethodLabel": "HTTP Method",
+      "pathTemplateLabel": "Path Template",
+      "pathTemplatePlaceholder": "/api/v1/items",
+      "parametersSchemaLabel": "Parameters Schema (JSON)",
+      "failedUpdate": "Failed to update tool",
+      "failedCreate": "Failed to create tool",
+      "cancel": "Cancel",
+      "saving": "Saving…",
+      "creating": "Creating…",
+      "saveChanges": "Save Changes",
+      "createTool": "Create Tool"
+    },
+    "appCard": {
+      "preview": "Preview"
+    },
+    "importOpenApiModal": {
+      "title": "Import OpenAPI Spec",
+      "closeDialog": "Close import OpenAPI dialog",
+      "importedSummary": "{count, plural, one {Imported # tool} other {Imported # tools}}",
+      "partialSummary": "{importedCount, plural, one {Imported # tool} other {Imported # tools}}, {skippedCount} skipped (already exist)",
+      "allSkippedSummary": "{count, plural, one {All # tool already exists — nothing imported} other {All # tools already exist — nothing imported}}",
+      "ok": "OK",
+      "description": "Paste your OpenAPI 3.x spec below (JSON or YAML). Each operation will be imported as an MCP tool.",
+      "importFailed": "Import failed",
+      "cancel": "Cancel",
+      "importing": "Importing…",
+      "import": "Import"
+    },
+    "importServiceModal": {
+      "title": "Import Services",
+      "closeDialog": "Close dialog",
+      "yamlConfigFile": "YAML Config File",
+      "fileLoaded": "File loaded",
+      "chooseFile": "Choose a .yml file",
+      "servicesFound": "Services found ({count})",
+      "apiTokenLabel": "API Token",
+      "apiTokenPlaceholder": "Enter API token for this service",
+      "createdPrefix": "Created:",
+      "skippedPrefix": "Skipped:",
+      "errorsPrefix": "Errors:",
+      "importFailed": "Import failed",
+      "cancel": "Cancel",
+      "importing": "Importing…",
+      "import": "Import"
+    },
+    "serviceCard": {
+      "paused": "paused",
+      "toolsCount": "{count, plural, one {# tool} other {# tools}}"
+    },
+    "serviceConfig": {
+      "identifierLabel": "Identifier",
+      "identifierPlaceholder": "forgejo",
+      "displayNameLabel": "Display Name",
+      "displayNamePlaceholder": "Forgejo",
+      "serviceTypeLabel": "Service Type",
+      "baseUrlLabel": "Base URL",
+      "baseUrlPlaceholder": "https://service.example.com",
+      "apiTokenLabel": "API Token",
+      "apiTokenPlaceholder": "Paste your API token",
+      "tokenGuideHide": "Hide a {label} token",
+      "tokenGuideShow": "How to get a {label} token",
+      "connecting": "Connecting…",
+      "connectService": "Connect Service"
+    },
+    "toolCard": {
+      "noParameters": "No parameters",
+      "required": "required",
+      "optional": "optional",
+      "parameterDescriptionPlaceholder": "Parameter description (what the AI sees)…",
+      "customized": "customized",
+      "hintLabel": "Hint:",
+      "customizedParenthetical": "(customized)",
+      "paramsCount": "{count, plural, one {# param} other {# params}}",
+      "noParams": "No params",
+      "testEndpointReachability": "Test endpoint reachability",
+      "testEndpointAria": "Test {toolName} endpoint",
+      "testing": "Testing…",
+      "test": "Test",
+      "editToolDefinition": "Edit tool definition (method, path, schema)",
+      "editToolDefinitionAria": "Edit {toolName} definition",
+      "deleteTool": "Delete tool",
+      "deleteToolAria": "Delete {toolName}",
+      "edit": "Edit",
+      "enabled": "enabled",
+      "disabled": "disabled",
+      "toolDescriptionLabel": "Tool description",
+      "toolDescriptionPlaceholder": "Describe what this tool does (this is what the AI reads)…",
+      "aiHintLabel": "AI hint",
+      "optionalParenthetical": "(optional)",
+      "aiHintPlaceholder": "e.g. Call ha_list_entities first to discover valid entity IDs",
+      "aiHintHelpText": "Appended to the description so the AI knows when and how to use this tool.",
+      "endpointLabel": "Endpoint",
+      "endpointPathPlaceholder": "/api/v1/endpoint",
+      "endpointHelpPrefix": "Use",
+      "endpointHelpSuffix": "for path parameters. Changes override the default endpoint.",
+      "parameterDescriptionsLabel": "Parameter descriptions",
+      "save": "Save",
+      "cancel": "Cancel",
+      "resetToOriginal": "Reset to original"
+    },
+    "toolList": {
+      "toolsJson": "tools.json",
+      "emptyTitle": "No tools registered",
+      "emptyDescription": "Tools will appear here once a service is connected.",
+      "cardView": "Card view",
+      "jsonView": "JSON view",
+      "manageAccess": "Manage tool access on the Tools page"
+    }
+  },
+  "ui": {
+    "confirmDialog": {
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "working": "Working…"
+    },
+    "mcpEndpointBar": {
+      "label": "MCP Endpoint",
+      "copied": "Copied!",
+      "copyUrl": "Copy URL",
+      "copyJson": "Copy JSON"
+    },
+    "monacoEditor": {
+      "loading": "Loading editor..."
+    },
+    "terminalBlock": {
+      "copyToClipboard": "Copy to clipboard",
+      "copied": "Copied",
+      "copy": "Copy"
+    }
+  }
+}

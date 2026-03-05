@@ -1,0 +1,111 @@
+{
+  "page": {
+    "title": "Configuración",
+    "description": "Apariencia, Endpoints e información del sistema",
+    "appearance": {
+      "title": "Apariencia",
+      "light": "Claro",
+      "dark": "Oscuro"
+    },
+    "language": {
+      "title": "Idioma",
+      "description": "Elige tu idioma. La app recordará tu preferencia."
+    },
+    "security": {
+      "title": "Seguridad",
+      "enabled": "Activado",
+      "disabled": "Desactivado",
+      "signedInAs": "Sesión iniciada como",
+      "currentUserFallback": "admin",
+      "selfMcp": {
+        "title": "Herramientas propias MCP",
+        "description": "Cuando está habilitado, los agentes de IA pueden gestionar este gateway a través del propio MCP: listar servicios, alternar herramientas, agregar conexiones y ver registros sin usar la UI web.",
+        "accessPrefix": "El acceso se otorga por usuario en",
+        "userManagementLink": "Gestión de usuarios",
+        "accessSuffix": ".",
+        "defaultsPrefix": "Por defecto usa la variable de entorno ",
+        "defaultsSuffix": " al reiniciar."
+      }
+    },
+    "apiKey": {
+      "title": "MCP API Key",
+      "status": {
+        "active": "Activo",
+        "notSet": "Sin configurar"
+      },
+      "description": "Los agentes de IA (Claude, Cursor, ChatGPT) usan esta clave para conectarse a tu Endpoint MCP.",
+      "revealedTitle": "Tu API Key",
+      "actions": {
+        "regenerate": "Regenerar API Key",
+        "generate": "Generar API Key",
+        "reveal": "Mostrar API Key",
+        "revoke": "Revocar"
+      },
+      "errors": {
+        "revealFailed": "No se pudo mostrar la clave. Prueba regenerándola."
+      }
+    },
+    "about": {
+      "title": "Acerca de",
+      "versionLabel": "Versión",
+      "serverLabel": "Servidor",
+      "serverFallback": "MCP Manager"
+    },
+    "endpoint": {
+      "title": "MCP Endpoint",
+      "description": "Tus agentes de IA se conectan a esta URL",
+      "agentGuide": "Guía de configuración del agente"
+    },
+    "systemHealth": {
+      "title": "Estado del sistema",
+      "checking": "comprobando",
+      "rows": {
+        "database": "Base de datos",
+        "mcpServer": "Servidor MCP",
+        "services": "Servicios"
+      },
+      "servicesConnected": "{healthy} / {total} conectados"
+    },
+    "smtp": {
+      "title": "Correo electrónico (SMTP)",
+      "description": "Configura SMTP para los correos de restablecimiento de contraseña. Déjalo en blanco para desactivarlo.",
+      "testFailed": "La prueba falló",
+      "fields": {
+        "host": "Host",
+        "port": "Puerto",
+        "username": "Nombre de usuario",
+        "password": "Contraseña",
+        "passwordHint": "(configurada — dejar en blanco para conservar)",
+        "fromEmail": "Correo remitente"
+      },
+      "placeholders": {
+        "host": "smtp.gmail.com",
+        "username": "usuario@ejemplo.com",
+        "passwordMasked": "••••••••",
+        "password": "Contraseña de la aplicación",
+        "fromEmail": "noreply@ejemplo.com"
+      },
+      "toggles": {
+        "useTls": "Usar TLS (STARTTLS)",
+        "enabled": "Activado"
+      },
+      "errors": {
+        "saveFailed": "No se pudo guardar la configuración SMTP"
+      },
+      "actions": {
+        "saved": "Guardado",
+        "saving": "Guardando…",
+        "save": "Guardar",
+        "sending": "Enviando…",
+        "sendTestEmail": "Enviar correo electrónico de prueba"
+      }
+    },
+    "dialogs": {
+      "revokeKey": {
+        "title": "Revocar API Key",
+        "description": "Esto desconectará de inmediato a cualquier agente de IA que use esta clave. Puedes generar una nueva después.",
+        "confirm": "Revocar API Key"
+      }
+    }
+  }
+}

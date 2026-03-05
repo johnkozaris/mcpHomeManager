@@ -1,0 +1,30 @@
+{
+  "page": {
+    "title": "Strumenti",
+    "description": {
+      "withCounts": "{toolsCount} strumenti su {serviceCount} servizi • {enabledCount} abilitati",
+      "empty": "Gestisci quali strumenti sono esposti ai client MCP."
+    },
+    "filters": {
+      "searchPlaceholder": "Cerca strumenti",
+      "allServices": "Tutti i servizi",
+      "status": {
+        "all": "Tutti ({count})",
+        "enabled": "Abilitati ({count})",
+        "disabled": "Disabilitati ({count})"
+      }
+    },
+    "errors": {
+      "missingService": "Impossibile aggiornare \"{toolName}\" perché questo strumento non ha un servizio collegato."
+    },
+    "query": {
+      "loading": "Caricamento strumenti…"
+    },
+    "empty": {
+      "searchTitle": "Nessuno strumento corrisponde alla tua ricerca",
+      "searchDescription": "Prova un termine di ricerca o un filtro diverso.",
+      "noToolsTitle": "Nessuno strumento per ora",
+      "noToolsDescription": "Connetti un servizio per iniziare a usare gli strumenti."
+    }
+  }
+}

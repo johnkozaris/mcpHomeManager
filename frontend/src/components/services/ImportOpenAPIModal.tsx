@@ -5,6 +5,8 @@ import { useScrollLock } from "@/hooks/useScrollLock";
 import { Button } from "@/components/ui/Button";
 import { MonacoEditor } from "@/components/ui/MonacoEditor";
 import type { OpenAPIImportResult } from "@/lib/types";
+import { parseApiError } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   open: boolean;
@@ -13,6 +15,9 @@ interface Props {
 }
 
 export function ImportOpenAPIModal({ open, onClose, serviceId }: Props) {
+  const { t } = useTranslation("components", {
+    keyPrefix: "services.importOpenApiModal",
+  });
   const [spec, setSpec] = useState("");
   const [importResult, setImportResult] = useState<OpenAPIImportResult | null>(
     null,
@@ -73,11 +78,11 @@ export function ImportOpenAPIModal({ open, onClose, serviceId }: Props) {
             id="import-openapi-title"
             className="text-lg font-semibold text-ink"
           >
-            Import OpenAPI Spec
+            {t("title")}
           </h2>
           <button
             onClick={handleClose}
-            aria-label="Close import OpenAPI dialog"
+            aria-label={t("closeDialog")}
             className="text-ink-tertiary hover:text-ink transition-colors"
           >
             &times;
@@ -88,23 +93,24 @@ export function ImportOpenAPIModal({ open, onClose, serviceId }: Props) {
             <>
               {allImported && (
                 <p className="text-sm font-medium text-sage">
-                  Imported {importedCount} tool{importedCount !== 1 ? "s" : ""}
+                  {t("importedSummary", { count: importedCount })}
                 </p>
               )}
               {hasSkipped && (
                 <p className="text-sm font-medium text-clay">
-                  Imported {importedCount} tool{importedCount !== 1 ? "s" : ""},{" "}
-                  {skippedCount} skipped (already exist)
+                  {t("partialSummary", {
+                    importedCount,
+                    skippedCount,
+                  })}
                 </p>
               )}
               {allSkipped && (
                 <p className="text-sm font-medium text-clay">
-                  All {skippedCount} tool{skippedCount !== 1 ? "s" : ""} already
-                  exist — nothing imported
+                  {t("allSkippedSummary", { count: skippedCount })}
                 </p>
               )}
               <div className="flex justify-end">
-                <Button onClick={handleClose}>OK</Button>
+                <Button onClick={handleClose}>{t("ok")}</Button>
               </div>
             </>
           ) : (
@@ -113,8 +119,7 @@ export function ImportOpenAPIModal({ open, onClose, serviceId }: Props) {
                 id="import-openapi-desc"
                 className="text-sm text-ink-secondary"
               >
-                Paste your OpenAPI 3.x spec below (JSON or YAML). Each operation
-                will be imported as an MCP tool.
+                {t("description")}
               </p>
               <MonacoEditor
                 value={spec}
@@ -124,14 +129,12 @@ export function ImportOpenAPIModal({ open, onClose, serviceId }: Props) {
               />
               {importOpenapi.isError && (
                 <p className="text-xs text-rust">
-                  {importOpenapi.error instanceof Error
-                    ? importOpenapi.error.message
-                    : "Import failed"}
+                  {parseApiError(importOpenapi.error, t("importFailed"))}
                 </p>
               )}
               <div className="flex justify-end gap-2">
                 <Button variant="secondary" onClick={handleClose}>
-                  Cancel
+                  {t("cancel")}
                 </Button>
                 <Button
                   onClick={() => {
@@ -158,7 +161,7 @@ export function ImportOpenAPIModal({ open, onClose, serviceId }: Props) {
                   }}
                   disabled={importOpenapi.isPending || !spec.trim()}
                 >
-                  {importOpenapi.isPending ? "Importing\u2026" : "Import"}
+                  {importOpenapi.isPending ? t("importing") : t("import")}
                 </Button>
               </div>
             </>

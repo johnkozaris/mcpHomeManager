@@ -7,8 +7,10 @@ import { queryKeys } from "@/lib/query-keys";
 import { queryClient } from "@/lib/queryClient";
 import { parseApiError } from "@/lib/utils";
 import { Home } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export function Login() {
+  const { t } = useTranslation("auth", { keyPrefix: "login" });
   const appName = useAppName();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -32,7 +34,7 @@ export function Login() {
       queryClient.clear();
       navigate({ to: "/" });
     } catch (err) {
-      setError(parseApiError(err, "Login failed"));
+      setError(parseApiError(err, t("errors.loginFailed")));
     } finally {
       setLoading(false);
     }
@@ -47,7 +49,7 @@ export function Login() {
           </div>
           <h1 className="text-xl font-semibold text-ink">{appName}</h1>
           <p className="text-sm text-ink-muted mt-1">
-            Sign in to your dashboard
+            {t("subtitle")}
           </p>
         </div>
 
@@ -67,7 +69,7 @@ export function Login() {
               htmlFor="username"
               className="block text-sm font-medium text-ink mb-1.5"
             >
-              Username
+              {t("fields.username.label")}
             </label>
             <input
               id="username"
@@ -80,7 +82,7 @@ export function Login() {
               className="w-full px-3 py-2 rounded-lg border border-line bg-canvas text-ink text-sm
                          placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
                          transition-colors"
-              placeholder="admin"
+              placeholder={t("fields.username.placeholder")}
             />
           </div>
 
@@ -89,7 +91,7 @@ export function Login() {
               htmlFor="password"
               className="block text-sm font-medium text-ink mb-1.5"
             >
-              Password
+              {t("fields.password.label")}
             </label>
             <input
               id="password"
@@ -101,18 +103,18 @@ export function Login() {
               className="w-full px-3 py-2 rounded-lg border border-line bg-canvas text-ink text-sm
                          placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
                          transition-colors"
-              placeholder="••••••••"
+              placeholder={t("fields.password.placeholder")}
             />
           </div>
 
           <button
             type="submit"
             disabled={loading || !username || !password}
-            className="w-full py-2.5 rounded-lg bg-terra text-white text-sm font-medium
+              className="w-full py-2.5 rounded-lg bg-terra text-white text-sm font-medium
                        hover:bg-terra-hover active:scale-[0.98] transition-all
                        disabled:opacity-50 disabled:pointer-events-none"
           >
-            {loading ? "Signing in…" : "Sign in"}
+            {loading ? t("actions.signingIn") : t("actions.signIn")}
           </button>
 
           <div className="h-6 text-center">
@@ -121,7 +123,7 @@ export function Login() {
                 to="/forgot-password"
                 className="text-sm text-ink-muted hover:text-terra transition-colors"
               >
-                Forgot password?
+                {t("actions.forgotPassword")}
               </Link>
             )}
           </div>

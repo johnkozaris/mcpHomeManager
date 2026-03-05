@@ -16,6 +16,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from config import settings
 from domain.entities.smtp_config import SmtpConfig
 from entrypoints.api.guards import require_admin
+from entrypoints.api.message_codes import ApiMessageCode, exception_extra
 from infrastructure.encryption.fernet_encryption import FernetEncryption
 from infrastructure.persistence.service_repository import ServiceRepository
 from infrastructure.persistence.smtp_repository import SmtpConfigRepository
@@ -64,6 +65,7 @@ class SmtpConfigResponse(msgspec.Struct):
 class SmtpTestResponse(msgspec.Struct):
     success: bool
     message: str
+    message_code: str | None = None
 
 
 class SelfMcpRequest(msgspec.Struct):
@@ -97,7 +99,10 @@ class AdminController(Controller):
         try:
             new_encryption = FernetEncryption(new_key_str)
         except Exception as e:
-            raise ClientException(f"Invalid Fernet key: {e}") from e
+            raise ClientException(
+                f"Invalid Fernet key: {e}",
+                extra=exception_extra(ApiMessageCode.ADMIN_ENCRYPTION_KEY_INVALID),
+            ) from e
 
         rotation_service = KeyRotationService(
             service_repo=ServiceRepository(db_session),
@@ -244,25 +249,42 @@ class AdminController(Controller):
         """Send a test email to the admin's email address."""
         ctx: AuthContext = request.user
         if not ctx.user_id:
-            raise ClientException("Admin user account required to send test email.")
+            raise ClientException(
+                "Admin user account required to send test email.",
+                extra=exception_extra(ApiMessageCode.ADMIN_SMTP_TEST_USER_REQUIRED),
+            )
 
         user_repo = UserRepository(db_session)
         user = await user_repo.get_by_id(UUID(ctx.user_id))
         if not user or not user.email:
-            raise ClientException("Set your email address in your profile before testing SMTP.")
+            raise ClientException(
+                "Set your email address in your profile before testing SMTP.",
+                extra=exception_extra(ApiMessageCode.ADMIN_SMTP_TEST_EMAIL_REQUIRED),
+            )
 
         smtp_repo = SmtpConfigRepository(db_session)
         smtp_config = await smtp_repo.get()
         if not smtp_config or not smtp_config.is_enabled:
-            raise ClientException("SMTP is not configured or disabled.")
+            raise ClientException(
+                "SMTP is not configured or disabled.",
+                extra=exception_extra(ApiMessageCode.ADMIN_SMTP_NOT_CONFIGURED),
+            )
 
         try:
             svc = EmailService(smtp_config, state.encryption)
             await svc.send_test(user.email)
-            return SmtpTestResponse(success=True, message=f"Test email sent to {user.email}")
+            return SmtpTestResponse(
+                success=True,
+                message=f"Test email sent to {user.email}",
+                message_code=ApiMessageCode.ADMIN_SMTP_TEST_SUCCESS.value,
+            )
         except Exception as e:
             logger.warning("smtp_test_failed", error=str(e))
-            return SmtpTestResponse(success=False, message=str(e))
+            return SmtpTestResponse(
+                success=False,
+                message=str(e),
+                message_code=ApiMessageCode.ADMIN_SMTP_TEST_FAILED.value,
+            )
 
     # --- Self-MCP toggle ---
 

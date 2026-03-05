@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Copy, Check } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   code: string;
@@ -7,6 +8,7 @@ interface Props {
 }
 
 export function TerminalBlock({ code, label }: Props) {
+  const { t } = useTranslation("components", { keyPrefix: "ui.terminalBlock" });
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -54,10 +56,10 @@ export function TerminalBlock({ code, label }: Props) {
           onClick={handleCopy}
           className="flex items-center gap-1 text-xs transition-colors hover:text-white focus-visible:outline-none focus-visible:shadow-focus rounded"
           style={{ color: "var(--terminal-label)" }}
-          aria-label="Copy to clipboard"
+          aria-label={t("copyToClipboard")}
         >
           {copied ? <Check size={13} /> : <Copy size={13} />}
-          {copied ? "Copied" : "Copy"}
+          {copied ? t("copied") : t("copy")}
         </button>
       </div>
 

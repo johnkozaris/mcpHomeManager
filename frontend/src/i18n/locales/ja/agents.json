@@ -1,0 +1,146 @@
+{
+  "page": {
+    "title": "AIエージェントを接続",
+    "description": "以下のAIクライアントにMCP endpointを追加してください。接続すると、homelabツールが自動で検出されます。",
+    "placeholders": {
+      "apiKey": "YOUR_API_KEY"
+    },
+    "cards": {
+      "claudeDesktop": {
+        "name": "Claude Desktop",
+        "badge": "おすすめ",
+        "steps": {
+          "step1": {
+            "before": "次の順に開きます:",
+            "settings": "Settings",
+            "middle": "（歯車アイコン）→",
+            "developer": "Developer",
+            "and": "→",
+            "editConfig": "Edit Config"
+          },
+          "step2": {
+            "beforeFile": "これで",
+            "afterFile": "が開きます。すでに他のMCPサーバーがある場合は、",
+            "afterHomelab": "エントリを既存の",
+            "afterMcpServers": "オブジェクト内に追加してください。ない場合は、ファイル内容を次で置き換えます:"
+          },
+          "step3": {
+            "before": "ファイルを保存し、Claude Desktopを",
+            "emphasis": "完全に終了",
+            "after": "してください（ウィンドウを閉じるだけでなく、メニューバーまたはシステムトレイから終了）。その後、再起動してください"
+          },
+          "step4": "チャット入力欄にハンマーアイコンが表示されます。クリックしてhomelabツールが読み込まれていることを確認してください",
+          "step5": {
+            "prefix": "例:",
+            "exampleRepos": "「Forgejoにあるリポジトリを教えて」",
+            "or": "または",
+            "examplePaperless": "「Paperlessの書類から請求書を検索して」"
+          }
+        },
+        "configPath": "設定ファイルの場所 — macOS: ~/Library/Application Support/Claude/ · Windows: %APPDATA%\\Claude\\"
+      },
+      "claudeCode": {
+        "name": "Claude Code",
+        "terminalLabel": "Terminal",
+        "steps": {
+          "step1": "以下のコマンドでhomelab MCPサーバーをグローバル登録します（すべてのプロジェクトで利用可能）:",
+          "step2": {
+            "before": "次で確認:",
+            "after": "— 出力に \"homelab\" が表示されます"
+          },
+          "step3": "これで、すべてのセッションでhomelabツールが自動的に利用可能になります"
+        },
+        "removePrefix": "削除する場合:"
+      },
+      "cursor": {
+        "name": "Cursor",
+        "steps": {
+          "step1": {
+            "before": "プロジェクトルートに",
+            "after": "を作成し、以下を貼り付けます:"
+          },
+          "step2": "Cursorを再起動します（Cmd+Q / 閉じて再度開く）。AIパネル（Cmd+L / Ctrl+L）の \"Available Tools\" にツールが表示されます",
+          "step3": "ツールが表示されない場合は、下部ステータスバーのMCPステータスインジケータを確認してください"
+        }
+      },
+      "chatgpt": {
+        "name": "ChatGPT",
+        "steps": {
+          "step1": {
+            "before": "「",
+            "settings": "Settings",
+            "middle": "→",
+            "appsAndConnectors": "Apps & Connectors",
+            "after": "→「Advanced settings」で",
+            "developerMode": "Developer mode",
+            "suffix": "を有効化します"
+          },
+          "step2": {
+            "before": "「Apps & Connectors」に戻り、",
+            "create": "Create",
+            "and": "→",
+            "mcpServer": "MCP Server"
+          },
+          "step3": {
+            "before": "「My Homelab」などの名前を入力し、endpointを貼り付けます:"
+          },
+          "step4": {
+            "before": "",
+            "create": "Create",
+            "after": "をクリックします。新しい会話でhomelabツールが自動検出されます"
+          }
+        },
+        "note": {
+          "label": "注意:",
+          "body": "ChatGPTでは外部から到達可能なendpointが必要です。サーバーがローカルのみの場合は、同梱のCaddy設定またはCloudflare Tunnelのようなトンネルサービスを利用してください。"
+        }
+      },
+      "openWebui": {
+        "name": "Open WebUI",
+        "steps": {
+          "step1": {
+            "before": "",
+            "adminPanel": "Admin Panel",
+            "and": "→",
+            "settings": "Settings",
+            "then": "→",
+            "tools": "Tools"
+          },
+          "step2": {
+            "before": "",
+            "addMcpConnection": "Add MCP Connection",
+            "after": "をクリックし、名前を入力してendpointを貼り付けます:"
+          },
+          "step3": "API key認証を使う場合は、認証フィールドにkeyを入力します",
+          "step4": {
+            "before": "",
+            "save": "Save",
+            "after": "をクリックすると、Open WebUIが接続をテストしてツールを検出します。以後、すべてのユーザーが任意のLLMで利用できます"
+          }
+        }
+      },
+      "otherClients": {
+        "name": "その他のMCPクライアント",
+        "description": "MCPクライアントが接続情報の入力を求める場合は、以下の情報を使用してください:",
+        "details": {
+          "transport": {
+            "label": "Transport",
+            "value": "Streamable HTTP"
+          },
+          "auth": {
+            "label": "Auth",
+            "value": "Authorization: Bearer"
+          },
+          "discovery": {
+            "label": "Discovery",
+            "value": "Automatic"
+          }
+        },
+        "sse": {
+          "before": "SSE専用クライアントの場合は、endpoint URLの末尾に",
+          "after": "を追加してください。ベースURLはAIクライアントからアクセスできる必要があります。"
+        }
+      }
+    }
+  }
+}
