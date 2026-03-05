@@ -405,7 +405,7 @@ class TestMCPToolSync:
 
         server_module.settings.self_mcp_enabled = False
         mcp_factory = MCPServerFactory(
-            tool_registry=EmptyRegistry(),
+            tool_registry=EmptyRegistry(),  # type: ignore[arg-type]
             session_factory=fake_session_factory,
             encryption=encryption,
             client_factory=PerUrlClientFactory(),

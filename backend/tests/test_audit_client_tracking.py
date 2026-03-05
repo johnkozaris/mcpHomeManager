@@ -1,6 +1,7 @@
 """Tests for audit client tracking."""
 
 import time
+from collections.abc import Set
 from datetime import UTC, datetime
 
 from domain.entities.audit_entry import AuditEntry, CallStatus
@@ -27,7 +28,7 @@ class FakeAuditRepository(IAuditRepository):
         status: str | None = None,
         created_after: datetime | None = None,
         created_before: datetime | None = None,
-        allowed_service_names: set[str] | None = None,
+        allowed_service_names: Set[str] | None = None,
     ) -> list[AuditEntry]:
         filtered = self.entries
         if service_name:
@@ -47,7 +48,7 @@ class FakeAuditRepository(IAuditRepository):
         status: str | None = None,
         created_after: datetime | None = None,
         created_before: datetime | None = None,
-        allowed_service_names: set[str] | None = None,
+        allowed_service_names: Set[str] | None = None,
     ) -> int:
         filtered = self.entries
         if service_name:

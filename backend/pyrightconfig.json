@@ -1,14 +1,15 @@
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/pyright/main/packages/pyright/schema/pyrightconfig.schema.json",
   "pythonVersion": "3.14",
+  "pythonPlatform": "Darwin",
+  "venvPath": ".",
+  "venv": ".venv",
   "include": [
     "src",
     "tests"
   ],
   "exclude": [
     "**/__pycache__",
-    ".venv",
-    "alembic"
+    ".venv"
   ],
   "executionEnvironments": [
     {
