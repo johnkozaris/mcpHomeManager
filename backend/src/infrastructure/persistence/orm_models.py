@@ -44,7 +44,9 @@ class ToolPermissionModel(UUIDAuditBase):
         nullable=True,
         default=None,
     )
-    http_method_override: Mapped[str | None] = mapped_column(String(10), nullable=True, default=None)
+    http_method_override: Mapped[str | None] = mapped_column(
+        String(10), nullable=True, default=None
+    )
     path_template_override: Mapped[str | None] = mapped_column(
         String(500), nullable=True, default=None
     )

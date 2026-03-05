@@ -25,9 +25,17 @@ jobs:
         working-directory: backend
         run: uv sync
 
-      - name: Lint
+      - name: Lint (ruff)
         working-directory: backend
         run: uv run ruff check src/
+
+      - name: Type check (mypy)
+        working-directory: backend
+        run: uv run mypy
+
+      - name: Type check (pyright)
+        working-directory: backend
+        run: npx --yes pyright
 
       - name: Test
         working-directory: backend
@@ -50,9 +58,17 @@ jobs:
         working-directory: frontend
         run: pnpm install --frozen-lockfile
 
+      - name: Lint
+        working-directory: frontend
+        run: pnpm lint
+
       - name: Type check and build
         working-directory: frontend
         run: pnpm build
+
+      - name: Test
+        working-directory: frontend
+        run: pnpm test
 
   docker:
     name: Docker Build

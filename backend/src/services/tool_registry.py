@@ -236,6 +236,9 @@ class ToolRegistry:
                         src_client: IServiceClient,
                         svc_overrides: dict,
                         svc_ref: Any,
+                        *,
+                        custom_client: IServiceClient | None = None,
+                        override_specs: list[GenericToolSpec] | None = None,
                     ) -> None:
                         for tool_def in src_client.get_tool_definitions():
                             override = svc_overrides.get(tool_def.name)
@@ -273,21 +276,28 @@ class ToolRegistry:
                             exec_client: IServiceClient | None = src_client
                             has_endpoint_override = method_override or path_override
                             # Only reroute tools that originally have HTTP endpoints
-                            is_http_tool = tool_def.http_method is not None or tool_def.path_template is not None
-                            if has_endpoint_override and is_http_tool and src_client is not custom_tool_client:
-                                # Will be routed through a per-service override client
+                            is_http_tool = (
+                                tool_def.http_method is not None
+                                or tool_def.path_template is not None
+                            )
+                            if (
+                                has_endpoint_override
+                                and is_http_tool
+                                and src_client is not custom_client
+                            ):
                                 final_method = method_override or tool_def.http_method or "GET"
                                 final_path = path_override or tool_def.path_template or "/"
-                                endpoint_override_specs.append(
-                                    GenericToolSpec(
-                                        tool_name=tool_def.name,
-                                        description=resolved.description,
-                                        http_method=final_method,
-                                        path_template=final_path,
-                                        params_schema=resolved.parameters_schema,
+                                if override_specs is not None:
+                                    override_specs.append(
+                                        GenericToolSpec(
+                                            tool_name=tool_def.name,
+                                            description=resolved.description,
+                                            http_method=final_method,
+                                            path_template=final_path,
+                                            params_schema=resolved.parameters_schema,
+                                        )
                                     )
-                                )
-                                exec_client = None  # placeholder, set after loop
+                                exec_client = None
 
                             active = ActiveTool(
                                 definition=resolved,
@@ -317,7 +327,11 @@ class ToolRegistry:
                             new_tools[tool_def.name] = active
                             result.append(active)
 
-                    _register_tools(client, overrides, svc)
+                    _register_tools(
+                        client, overrides, svc,
+                        custom_client=custom_tool_client,
+                        override_specs=endpoint_override_specs,
+                    )
 
                     if custom_tool_client is not None and custom_tool_client is not client:
                         _register_tools(custom_tool_client, overrides, svc)
