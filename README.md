@@ -21,7 +21,7 @@ Examples:
 ## Quick start
 
 ```bash
-git clone https://github.com/YOUR_USER/mcpHomeManager.git
+git clone https://github.com/johnkozaris/mcpHomeManager.git
 cd mcpHomeManager
 docker compose up -d
 ```
@@ -46,7 +46,7 @@ Use MCP Streamable HTTP with your endpoint:
 
 `http://<your-host>:8000/mcp/`
 
-If API key auth is enabled, send `X-API-Key`.
+Send your API key via `Authorization: Bearer YOUR_API_KEY`.
 
 ## Developer quick commands
 
@@ -77,7 +77,6 @@ pnpm exec eslint .
 
 - Contributing guide: [CONTRIBUTING.md](CONTRIBUTING.md)
 - Security policy: [SECURITY.md](SECURITY.md)
-- Testing notes: [TESTING.md](TESTING.md)
 
 ## License
 
