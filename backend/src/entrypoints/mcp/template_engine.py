@@ -81,7 +81,7 @@ class TemplateEngine:
 
     def __init__(self) -> None:
         templates_dir = Path(__file__).parent / "templates"
-        self._env = Environment(
+        self._env = Environment(  # nosemgrep: direct-use-of-jinja2 — autoescape=True is set
             loader=FileSystemLoader(str(templates_dir)),
             autoescape=True,
             undefined=StrictUndefined,
