@@ -1,5 +1,3 @@
-"""Repository for generic REST tool definitions."""
-
 from typing import Any
 from uuid import UUID
 

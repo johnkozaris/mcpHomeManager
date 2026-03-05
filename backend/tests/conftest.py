@@ -20,9 +20,6 @@ from domain.ports.service_repository import IServiceRepository
 from domain.ports.user_repository import IUserRepository
 from services.client_factory import ServiceClientFactory
 
-# --- Fake encryption (identity: plaintext == ciphertext) ---
-
-
 class FakeEncryption(IEncryptionPort):
     def encrypt(self, plaintext: str) -> str:
         return f"enc:{plaintext}"
@@ -36,9 +33,6 @@ class FakeEncryption(IEncryptionPort):
 @pytest.fixture
 def fake_encryption() -> FakeEncryption:
     return FakeEncryption()
-
-
-# --- Fake repository (in-memory) ---
 
 
 class FakeServiceRepository(IServiceRepository):
@@ -76,9 +70,6 @@ def fake_repo() -> FakeServiceRepository:
     return FakeServiceRepository()
 
 
-# --- Fake service client ---
-
-
 class FakeServiceClient(IServiceClient):
     def __init__(self, base_url: str = "", api_token: str = "", *, healthy: bool = True) -> None:
         self._healthy = healthy
@@ -106,9 +97,6 @@ class FakeServiceClient(IServiceClient):
 @pytest.fixture
 def fake_client() -> FakeServiceClient:
     return FakeServiceClient(healthy=True)
-
-
-# --- Fake app provider client ---
 
 
 class FakeAppProviderClient(IServiceClient):
@@ -146,7 +134,6 @@ class FakeAppProviderClient(IServiceClient):
     async def close(self) -> None:
         pass
 
-    # IAppProvider methods
     def get_app_definitions(self) -> list[AppDefinition]:
         return self._apps
 
@@ -157,9 +144,6 @@ class FakeAppProviderClient(IServiceClient):
         self, app_name: str, action: str, payload: dict[str, Any]
     ) -> dict[str, Any]:
         return {"action": action, "handled": True}
-
-
-# --- Fake client factory ---
 
 
 class FakeClientFactory(ServiceClientFactory):
@@ -220,9 +204,6 @@ def fake_user_repo() -> FakeUserRepository:
 @pytest.fixture
 def fake_client_factory(fake_client: FakeServiceClient) -> FakeClientFactory:
     return FakeClientFactory(fake_client)
-
-
-# --- Fake generic tool repository (in-memory) ---
 
 
 class FakeGenericToolRepository(IGenericToolRepository):
@@ -292,9 +273,6 @@ class FakeGenericToolRepository(IGenericToolRepository):
 @pytest.fixture
 def fake_generic_tool_repo() -> FakeGenericToolRepository:
     return FakeGenericToolRepository()
-
-
-# --- Helper to build a ServiceConnection ---
 
 
 def make_service(

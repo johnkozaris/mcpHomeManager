@@ -110,9 +110,7 @@ export function Agents() {
 
       <McpEndpointBar apiKey={apiKey} />
 
-      {/* Agent cards */}
       <div className="space-y-3">
-        {/* Claude Desktop */}
         <AgentCard
           name="Claude Desktop"
           icon={Sparkles}
@@ -165,7 +163,6 @@ export function Agents() {
           </p>
         </AgentCard>
 
-        {/* Claude Code */}
         <AgentCard
           name="Claude Code"
           icon={Terminal}
@@ -203,7 +200,6 @@ export function Agents() {
           </p>
         </AgentCard>
 
-        {/* Cursor */}
         <AgentCard
           name="Cursor"
           icon={Code2}
@@ -232,7 +228,6 @@ export function Agents() {
           </Guide>
         </AgentCard>
 
-        {/* ChatGPT */}
         <AgentCard
           name="ChatGPT"
           icon={MonitorSmartphone}
@@ -267,7 +262,6 @@ export function Agents() {
           </div>
         </AgentCard>
 
-        {/* Open WebUI */}
         <AgentCard
           name="Open WebUI"
           icon={Globe}
@@ -297,7 +291,6 @@ export function Agents() {
           </Guide>
         </AgentCard>
 
-        {/* Other MCP Clients */}
         <AgentCard
           name="Other MCP Clients"
           icon={Puzzle}

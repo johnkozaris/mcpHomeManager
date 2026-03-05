@@ -7,9 +7,6 @@ import pytest
 from conftest import FakeGenericToolRepository
 from domain.validation import validate_tool_name
 
-# ---------- FakeGenericToolRepository tests ----------
-
-
 @pytest.fixture
 def repo() -> FakeGenericToolRepository:
     return FakeGenericToolRepository()
@@ -95,9 +92,6 @@ async def test_delete(repo: FakeGenericToolRepository):
 async def test_delete_not_found(repo: FakeGenericToolRepository):
     sid = uuid4()
     assert await repo.delete(sid, "nonexistent") is False
-
-
-# ---------- Tool name validation tests ----------
 
 
 def test_validate_tool_name_valid():

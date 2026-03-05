@@ -1,5 +1,3 @@
-"""SQLAlchemy implementation of the user repository."""
-
 from uuid import UUID
 
 from sqlalchemy import func, select

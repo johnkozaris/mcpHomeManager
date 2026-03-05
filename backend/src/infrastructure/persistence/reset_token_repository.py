@@ -1,5 +1,3 @@
-"""SQLAlchemy implementation of the password reset token repository."""
-
 from datetime import UTC, datetime
 from uuid import UUID
 

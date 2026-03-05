@@ -1,5 +1,3 @@
-"""Port for user persistence."""
-
 from abc import ABC, abstractmethod
 from uuid import UUID
 

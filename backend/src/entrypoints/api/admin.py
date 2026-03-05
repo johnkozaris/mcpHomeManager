@@ -29,11 +29,6 @@ logger = structlog.get_logger()
 SECRETS_KEY_PATH = Path("/app/data/encryption_key")
 
 
-# ---------------------------------------------------------------------------
-# Request / response schemas
-# ---------------------------------------------------------------------------
-
-
 class RotateKeyRequest(msgspec.Struct):
     new_key: str | None = None
 
@@ -79,11 +74,6 @@ class SelfMcpResponse(msgspec.Struct):
     enabled: bool
 
 
-# ---------------------------------------------------------------------------
-# Controller
-# ---------------------------------------------------------------------------
-
-
 class AdminController(Controller):
     path = "/api/admin"
     guards = [require_admin]
@@ -102,7 +92,6 @@ class AdminController(Controller):
         """
         old_encryption = state.encryption
 
-        # Generate or validate the new key
         new_key_str = data.new_key or Fernet.generate_key().decode()
 
         try:
@@ -110,7 +99,6 @@ class AdminController(Controller):
         except Exception as e:
             raise ClientException(f"Invalid Fernet key: {e}") from e
 
-        # Re-encrypt everything in one transaction
         rotation_service = KeyRotationService(
             service_repo=ServiceRepository(db_session),
             user_repo=UserRepository(db_session),
@@ -136,7 +124,6 @@ class AdminController(Controller):
             users=summary["users"],
         )
 
-        # Best-effort: persist new key to secrets volume
         persisted = False
         try:
             async_path = anyio.Path(SECRETS_KEY_PATH)
@@ -217,7 +204,6 @@ class AdminController(Controller):
         """Create or update SMTP configuration."""
         encryption = state.encryption
 
-        # Encrypt password if provided
         password_encrypted = None
         if data.password:
             password_encrypted = encryption.encrypt(data.password)

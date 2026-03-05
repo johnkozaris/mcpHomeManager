@@ -144,7 +144,6 @@ export function AddServicePanel({ open, onClose }: Props) {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [open, onClose]);
 
-  // Trap focus inside the modal.
   useFocusTrap(modalRef, open);
   useScrollLock(open);
 

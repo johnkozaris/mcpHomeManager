@@ -6,14 +6,12 @@ This module only defines MCP-specific tool call metrics.
 
 from prometheus_client import Counter, Gauge, Histogram
 
-# Counter — incremented on each MCP tool call
 tool_calls_total = Counter(
     "mcp_tool_calls_total",
     "Total MCP tool calls",
     ["tool_name", "service_name", "status"],
 )
 
-# Histogram — observe latency on each MCP tool call
 tool_call_duration = Histogram(
     "mcp_tool_call_duration_seconds",
     "Duration of MCP tool calls in seconds",
@@ -22,7 +20,6 @@ tool_call_duration = Histogram(
 )
 
 
-# Gauges — set periodically by the health runner / metrics endpoint
 services_total = Gauge(
     "mcp_services_total",
     "Total number of configured services",

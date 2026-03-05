@@ -9,7 +9,6 @@ from config import settings
 
 
 def _status_color(status: str) -> str:
-    """Map a health status string to a CSS class name."""
     return {
         "healthy": "status-healthy",
         "unhealthy": "status-unhealthy",
@@ -17,7 +16,6 @@ def _status_color(status: str) -> str:
 
 
 def _status_label(status: str) -> str:
-    """Human-readable label for health status."""
     return {
         "healthy": "Healthy",
         "unhealthy": "Unhealthy",
@@ -25,7 +23,6 @@ def _status_label(status: str) -> str:
 
 
 def _time_ago(dt: datetime | str | None) -> str:
-    """Format a datetime as a human-readable relative time string."""
     if dt is None:
         return "never"
     if isinstance(dt, str):
@@ -93,5 +90,4 @@ class TemplateEngine:
         self._env.globals["app_name"] = settings.app_name
 
     def render(self, template_name: str, **context: object) -> str:
-        """Render a template with the given context and return HTML."""
         return self._env.get_template(template_name).render(**context)

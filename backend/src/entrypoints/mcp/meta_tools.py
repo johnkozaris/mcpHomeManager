@@ -120,7 +120,6 @@ def register_meta_tools(
             repo = ServiceRepository(session)
             services = await repo.get_all()
 
-        # Filter to user-accessible services in multi-user mode
         services = await filter_services_for_user(services)
 
         active = tool_registry.active_tools
@@ -245,7 +244,6 @@ def register_meta_tools(
                 service_name=service_name,
             )
 
-        # Filter audit entries to user-accessible services
         user = current_user_var.get()
         if user is None:
             entries = []
@@ -281,7 +279,6 @@ def register_meta_tools(
             repo = ServiceRepository(session)
             services = await repo.get_all()
 
-        # Filter to user-accessible services in multi-user mode
         services = await filter_services_for_user(services)
 
         active = tool_registry.active_tools
@@ -296,8 +293,6 @@ def register_meta_tools(
             },
             indent=2,
         )
-
-    # --- MCP App UI tools (HTML dashboards rendered via Jinja2) ---
 
     template_engine = TemplateEngine()
 
@@ -378,7 +373,6 @@ def register_meta_tools(
         if svc is None:
             return json.dumps({"error": f"Service '{service_name}' not found"})
 
-        # Enforce multi-user access control
         allowed = await filter_services_for_user([svc])
         if not allowed:
             return json.dumps({"error": f"Access denied to service '{service_name}'"})
@@ -426,7 +420,6 @@ def register_meta_tools(
             else:
                 raw_services = await repo.get_all()
 
-        # Enforce multi-user access control
         services = await filter_services_for_user(raw_services)
 
         if service_name and not services:
@@ -453,8 +446,6 @@ def register_meta_tools(
             app_name=settings.app_name,
         )
 
-    # --- Generic REST tool management meta-tools ---
-
     @mcp.tool(
         name="mcp_home_list_tools",
         description="List all MCP tools with their status, optionally filtered by service name",
@@ -463,7 +454,6 @@ def register_meta_tools(
         _require_self_mcp_access()
         all_t = tool_registry.all_tools
 
-        # Filter for user-accessible services
         async with session_factory() as session:
             repo = ServiceRepository(session)
             all_services = await repo.get_all()
@@ -633,4 +623,4 @@ def register_meta_tools(
             {"status": "updated", "tool_name": tool_name, "service_name": service_name}
         )
 
-    logger.info("meta_tools_registered", count=12)
+    logger.info("meta_tools_registered", count=len(META_TOOL_NAMES))

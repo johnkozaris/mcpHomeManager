@@ -8,11 +8,6 @@ from litestar.exceptions import PermissionDeniedException
 
 @dataclass(frozen=True, slots=True)
 class AuthContext:
-    """Typed user context set by the API auth middleware.
-
-    Available on any authenticated request as ``request.user``.
-    """
-
     is_admin: bool
     allowed_service_ids: set[str]
     username: str

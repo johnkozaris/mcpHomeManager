@@ -65,7 +65,6 @@ function SidebarLink({
   );
 }
 
-/* Background geometric shapes — Bauhaus style */
 function BgShapes({ sidebarWidth }: { sidebarWidth: number }) {
   return (
     <div
@@ -157,12 +156,10 @@ export function Shell({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex h-screen overflow-hidden bg-canvas">
-      {/* Sidebar */}
       <aside
         className="shrink-0 sidebar flex flex-col transition-all duration-300"
         style={{ width: sidebarWidth }}
       >
-        {/* Logo + collapse toggle */}
         <div
           className={`flex items-center border-b border-white/5 ${collapsed ? "flex-col gap-1 px-2 pt-5 pb-3" : "gap-3 px-5 pt-5 pb-4"}`}
         >
@@ -200,7 +197,6 @@ export function Shell({ children }: { children: ReactNode }) {
           )}
         </div>
 
-        {/* Nav */}
         <nav className="flex-1 px-2 py-4 space-y-1">
           {baseNav.map((item) => (
             <SidebarLink key={item.to} item={item} collapsed={collapsed} />
@@ -211,7 +207,6 @@ export function Shell({ children }: { children: ReactNode }) {
           ))}
         </nav>
 
-        {/* Decorative shapes in sidebar */}
         {!collapsed && (
           <div className="px-5 pb-2" aria-hidden>
             <svg
@@ -236,9 +231,7 @@ export function Shell({ children }: { children: ReactNode }) {
           </div>
         )}
 
-        {/* Footer — theme + user */}
         <div className="px-2 py-2 border-t border-white/5 space-y-0.5">
-          {/* Theme toggle */}
           <button
             onClick={toggle}
             className={`sidebar-link flex items-center gap-3 text-sm font-medium transition-all duration-200 w-full ${collapsed ? "justify-center" : ""}`}
@@ -253,7 +246,6 @@ export function Shell({ children }: { children: ReactNode }) {
             {!collapsed && <span>{theme === "light" ? "Dark" : "Light"}</span>}
           </button>
 
-          {/* User row */}
           {currentUser && (
             <div
               className={`flex items-center ${collapsed ? "flex-col gap-1 justify-center" : "gap-2.5 px-1.5"} py-1`}
@@ -291,7 +283,6 @@ export function Shell({ children }: { children: ReactNode }) {
         </div>
       </aside>
 
-      {/* Main — wider content area with bg shapes */}
       <div className="flex-1 overflow-y-auto relative">
         <BgShapes sidebarWidth={sidebarWidth} />
         <div className="relative z-10 px-14 py-8">{children}</div>

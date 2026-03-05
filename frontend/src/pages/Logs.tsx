@@ -257,7 +257,6 @@ export function Logs() {
           <>
             <Card className="!p-0 overflow-hidden">
               <div className="overflow-x-auto">
-                {/* Table header */}
                 <div className="flex items-center py-2.5 px-5 bg-canvas-secondary text-2xs font-semibold uppercase tracking-wider text-ink-tertiary border-b border-line min-w-[640px]">
                   <span className="w-18">Status</span>
                   <span className="flex-1">Tool</span>
@@ -349,7 +348,6 @@ export function Logs() {
               </div>
             </Card>
 
-            {/* Pagination */}
             {totalPages > 1 && (
               <div className="flex items-center justify-between">
                 <span className="text-sm text-ink-tertiary">

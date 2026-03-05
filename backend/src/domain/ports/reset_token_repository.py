@@ -1,5 +1,3 @@
-"""Port for password reset token persistence."""
-
 from abc import ABC, abstractmethod
 from datetime import datetime
 from uuid import UUID

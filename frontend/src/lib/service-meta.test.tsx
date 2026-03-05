@@ -89,7 +89,6 @@ describe("ServiceIconBadge", () => {
   it("applies the service color with transparency as background", () => {
     const { container } = render(<ServiceIconBadge type="forgejo" />);
     const wrapper = container.firstElementChild as HTMLElement;
-    // Background uses color + "15" hex suffix for translucent bg
     expect(wrapper?.style.backgroundColor).toBeTruthy();
   });
 });

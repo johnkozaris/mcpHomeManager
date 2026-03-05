@@ -16,8 +16,6 @@ import { api } from "@/lib/api";
 import { queryKeys } from "@/lib/query-keys";
 import { queryClient } from "@/lib/queryClient";
 
-/* ─── Auth helper ─────────────────────────────────────────── */
-
 async function requireAuth() {
   try {
     const config = await queryClient.ensureQueryData({
@@ -117,7 +115,6 @@ const appLayout = createRoute({
   beforeLoad: requireAuth,
 });
 
-/* ─── Routes ──────────────────────────────────────────────── */
 const indexRoute = createRoute({
   getParentRoute: () => appLayout,
   path: "/",
@@ -182,7 +179,6 @@ const notFoundRoute = createRoute({
   component: lazyRouteComponent(() => import("@/pages/NotFound"), "NotFound"),
 });
 
-/* ─── Route tree + router ─────────────────────────────────── */
 const routeTree = rootRoute.addChildren([
   setupRoute,
   loginRoute,
@@ -206,7 +202,6 @@ export const router = createRouter({
   defaultPreload: "intent",
 });
 
-/* ─── Type registration ───────────────────────────────────── */
 declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;

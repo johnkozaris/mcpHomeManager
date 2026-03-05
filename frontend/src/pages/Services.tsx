@@ -83,7 +83,6 @@ export function Services() {
             {services.map((svc) => (
               <ServiceCard key={svc.id} service={svc} />
             ))}
-            {/* Add service card */}
             <button
               onClick={() => setModalOpen(true)}
               className="card flex flex-col items-center justify-center min-h-[160px] border-2 border-dashed border-line-strong hover:border-terra/40 text-ink-tertiary hover:text-ink transition-all cursor-pointer"

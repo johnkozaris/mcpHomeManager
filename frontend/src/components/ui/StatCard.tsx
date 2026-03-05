@@ -27,7 +27,6 @@ export function StatCard({
           background: `linear-gradient(135deg, ${iconColor || "var(--terra)"}, color-mix(in srgb, ${iconColor || "var(--terra)"} 70%, var(--ink)))`,
         }}
       >
-        {/* Bold decorative circle */}
         <div
           className="absolute -top-8 -right-8 w-28 h-28 rounded-full"
           style={{ backgroundColor: "rgba(255,255,255,0.15)" }}
@@ -56,7 +55,6 @@ export function StatCard({
 
   return (
     <div className="card relative overflow-hidden p-5">
-      {/* Decorative half-circle — visible, Bauhaus-style */}
       {iconColor && (
         <div
           className="absolute -top-10 -right-10 w-24 h-24 rounded-full pointer-events-none"

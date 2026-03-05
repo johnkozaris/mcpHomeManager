@@ -10,9 +10,6 @@ interface AuthUser {
   can_reveal_api_key: boolean;
 }
 
-/**
- * Fetch the current user from /api/auth/me.
- */
 export function useCurrentUser() {
   return useQuery<AuthUser>({
     queryKey: queryKeys.authMe(),

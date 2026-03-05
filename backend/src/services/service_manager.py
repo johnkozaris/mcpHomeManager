@@ -46,7 +46,6 @@ class ServiceManager:
         api_token: str,
         config: dict[str, Any] | None = None,
     ) -> ServiceConnection:
-        # Validate URL safety for generic_rest services
         if service_type == ServiceType.GENERIC_REST:
             from infrastructure.clients.generic_rest_client import validate_base_url
 
@@ -75,7 +74,6 @@ class ServiceManager:
     ) -> ServiceConnection:
         entity = await self.get_by_id(service_id)
 
-        # Validate URL safety when updating generic_rest services
         if base_url is not None and entity.service_type == ServiceType.GENERIC_REST:
             from infrastructure.clients.generic_rest_client import validate_base_url
 

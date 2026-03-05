@@ -65,7 +65,6 @@ class MCPServerFactory:
 
     async def initialize(self) -> None:
         """Register tools from DB-configured services onto the MCP server."""
-        # build() fires the on_rebuild callback which calls sync_tools()
         await self._registry.build()
         self.sync_meta_tools(settings.self_mcp_enabled)
 
@@ -108,7 +107,6 @@ class MCPServerFactory:
             if current is None:
                 raise ToolExecutionError(tool_name, "Tool is no longer active")
 
-            # Enforce per-user authorization (reads from contextvars, not shared state)
             user = current_user_var.get()
             if user is not None and not user.is_admin:
                 svc_name = current.service_name
@@ -212,14 +210,13 @@ class MCPServerFactory:
         desired = set(active.keys())
         synced: set[str] = set()
 
-        # Remove tools no longer active
         for name in self._registered_tools - desired:
             try:
                 self._mcp.remove_tool(name)
             except Exception:
                 logger.exception("Failed to remove tool %s from FastMCP", name)
 
-        # Remove then re-add tools that still exist (schema/description may have changed)
+        # Re-register to pick up schema/description changes
         for name in self._registered_tools & desired:
             try:
                 self._mcp.remove_tool(name)
@@ -228,7 +225,6 @@ class MCPServerFactory:
             except Exception:
                 logger.exception("Failed to re-register tool %s", name)
 
-        # Add brand new tools
         for name in desired - self._registered_tools:
             try:
                 self._register_tool(name)
@@ -238,11 +234,9 @@ class MCPServerFactory:
 
         self._registered_tools = synced
 
-        # Sync apps
         active_app_names = set(self._registry.active_apps.keys())
         synced_apps: set[str] = set()
 
-        # Remove stale app tools
         for app_name in self._registered_apps - active_app_names:
             tool_name = f"app_{app_name}"
             try:
@@ -250,7 +244,6 @@ class MCPServerFactory:
             except Exception:
                 logger.exception("Failed to remove app tool %s", tool_name)
 
-        # Re-register existing apps
         for app_name in self._registered_apps & active_app_names:
             tool_name = f"app_{app_name}"
             try:
@@ -260,7 +253,6 @@ class MCPServerFactory:
             except Exception:
                 logger.exception("Failed to re-register app %s", app_name)
 
-        # Add new apps
         for app_name in active_app_names - self._registered_apps:
             try:
                 self._register_app(app_name)

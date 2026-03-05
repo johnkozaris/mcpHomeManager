@@ -247,14 +247,11 @@ export function ToolCard({
     <div
       className={`tool-card break-inside-avoid mb-3 ${isDisabled ? "opacity-50" : ""}`}
     >
-      {/* Top color accent */}
       <div
         className={`h-1 rounded-t-2xl ${isDisabled ? "bg-ink-faint" : "bg-terra opacity-40"}`}
       />
 
-      {/* Body */}
       <div className="p-4">
-        {/* Name row */}
         <div className="flex items-center gap-2 mb-2">
           {showService && (
             <ServiceIconBadge type={tool.service_type} size="sm" />
@@ -267,7 +264,6 @@ export function ToolCard({
           )}
         </div>
 
-        {/* Description + hint */}
         {!editing &&
           (() => {
             const { desc, hint } = splitHint(tool.description);
@@ -285,7 +281,6 @@ export function ToolCard({
             );
           })()}
 
-        {/* Endpoint info */}
         {!editing && tool.http_method && tool.path_template && (
           <div className="flex items-center gap-1.5 mb-3">
             <Badge variant={tool.http_method_override || tool.path_template_override ? "brand" : "default"}>
@@ -300,7 +295,6 @@ export function ToolCard({
           </div>
         )}
 
-        {/* Controls row */}
         {!editing && (
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2">
@@ -394,7 +388,6 @@ export function ToolCard({
         )}
       </div>
 
-      {/* Editing mode */}
       {editing && (
         <div className="px-4 pb-4 space-y-3">
           <div>
@@ -509,7 +502,6 @@ export function ToolCard({
         </div>
       )}
 
-      {/* Expanded params */}
       {expanded && hasParams && !editing && (
         <div className="px-4 pb-4 pt-2 border-t border-line">
           <ParameterSchema schema={tool.parameters_schema} />

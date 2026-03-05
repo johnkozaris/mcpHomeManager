@@ -1,7 +1,6 @@
 """API authentication middleware using Litestar's AbstractAuthenticationMiddleware.
 
-Replaces the former ``require_api_auth`` guard. Every /api/* request is
-authenticated via either:
+Every /api/* request is authenticated via either:
 
 1. Session tokens (from web login) — validated against session_tokens table
 2. Per-user API keys (for machine clients) — validated via SHA-256 hash lookup
@@ -25,12 +24,10 @@ from security.auth_helpers import authenticate_api_key, build_auth_context, extr
 
 class ApiAuthMiddleware(AbstractAuthenticationMiddleware):
     async def authenticate_request(self, connection: ASGIConnection) -> AuthenticationResult:
-        # 1. Check httpOnly session cookie first (browser clients)
         cookie_token = connection.cookies.get("mcp_session", "")
         if cookie_token and cookie_token.startswith("mcp_session_"):
             return await self._authenticate_session(connection, cookie_token)
 
-        # 2. Authorization header / X-API-Key (API keys, MCP clients, legacy)
         auth_header = connection.headers.get("authorization", "")
         token = extract_api_token(
             auth_header=auth_header,
@@ -42,11 +39,9 @@ class ApiAuthMiddleware(AbstractAuthenticationMiddleware):
                 "Authentication required. Provide a session token or API key."
             )
 
-        # Session tokens via header (backward compatibility)
         if token.startswith("mcp_session_"):
             return await self._authenticate_session(connection, token)
 
-        # Per-user API keys
         return await self._authenticate_api_key(connection, token)
 
     async def _authenticate_session(

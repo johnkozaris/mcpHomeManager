@@ -85,7 +85,6 @@ export function Settings() {
     },
   });
 
-  // SMTP config state
   const { data: smtpConfig } = useQuery({
     queryKey: queryKeys.adminSmtp(),
     queryFn: api.admin.getSmtp,
@@ -149,7 +148,6 @@ export function Settings() {
 
   return (
     <div className="space-y-8">
-      {/* Page header */}
       <div>
         <h1 className="page-header">Settings</h1>
         <p className="page-description">
@@ -157,11 +155,8 @@ export function Settings() {
         </p>
       </div>
 
-      {/* Two-column grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Left column */}
         <div className="space-y-6">
-          {/* Theme */}
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2.5">
@@ -189,7 +184,6 @@ export function Settings() {
             </div>
           </Card>
 
-          {/* Security */}
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2.5">
@@ -262,7 +256,6 @@ export function Settings() {
               </div>
             </div>
 
-            {/* API Key Management */}
             <div className="mt-3 pt-3 border-t border-line">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
@@ -362,7 +355,6 @@ export function Settings() {
             </div>
           </Card>
 
-          {/* About */}
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2.5">
@@ -387,9 +379,7 @@ export function Settings() {
           </Card>
         </div>
 
-        {/* Right column */}
         <div className="space-y-6">
-          {/* MCP Endpoint */}
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2.5">
@@ -421,7 +411,6 @@ export function Settings() {
             </Link>
           </Card>
 
-          {/* System Health */}
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2.5">
@@ -473,7 +462,6 @@ export function Settings() {
               </div>
             </div>
           </Card>
-          {/* SMTP / Email Configuration (admin only) */}
           {isAdmin && (
             <Card>
               <CardHeader>

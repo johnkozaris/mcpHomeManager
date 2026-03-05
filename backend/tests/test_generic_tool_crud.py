@@ -29,7 +29,6 @@ class TestGenericToolCRUDLifecycle:
         return uuid4()
 
     async def test_full_crud_lifecycle(self, repo: FakeGenericToolRepository, service_id: UUID):
-        # CREATE
         row = await repo.create(
             service_id=service_id,
             tool_name="list_items",
@@ -42,21 +41,17 @@ class TestGenericToolCRUDLifecycle:
         assert row.http_method == "GET"
         assert row.path_template == "/api/v1/items"
 
-        # READ — get_by_service_id
         tools = await repo.get_by_service_id(service_id)
         assert len(tools) == 1
         assert tools[0].tool_name == "list_items"
 
-        # READ — get_by_name
         found = await repo.get_by_name(service_id, "list_items")
         assert found is not None
         assert found.description == "List all items"
 
-        # READ — not found
         missing = await repo.get_by_name(service_id, "nonexistent")
         assert missing is None
 
-        # UPDATE — partial (only description)
         updated = await repo.update(
             service_id,
             "list_items",
@@ -67,7 +62,6 @@ class TestGenericToolCRUDLifecycle:
         assert updated.http_method == "GET"  # unchanged
         assert updated.path_template == "/api/v1/items"  # unchanged
 
-        # UPDATE — change method and path
         updated2 = await repo.update(
             service_id,
             "list_items",
@@ -78,7 +72,6 @@ class TestGenericToolCRUDLifecycle:
         assert updated2.http_method == "POST"  # uppercased
         assert updated2.path_template == "/api/v2/items"
 
-        # UPDATE — params_schema
         updated3 = await repo.update(
             service_id,
             "list_items",
@@ -87,24 +80,19 @@ class TestGenericToolCRUDLifecycle:
         assert updated3 is not None
         assert "limit" in updated3.params_schema["properties"]
 
-        # UPDATE — not found
         not_found = await repo.update(service_id, "does_not_exist", description="x")
         assert not_found is None
 
-        # UPDATE — no-op (all None fields)
         noop = await repo.update(service_id, "list_items")
         assert noop is not None
         assert noop.http_method == "POST"  # still the value from previous update
 
-        # DELETE
         deleted = await repo.delete(service_id, "list_items")
         assert deleted is True
 
-        # DELETE — already gone
         deleted_again = await repo.delete(service_id, "list_items")
         assert deleted_again is False
 
-        # Verify empty
         tools = await repo.get_by_service_id(service_id)
         assert len(tools) == 0
 
@@ -190,7 +178,6 @@ class TestOpenAPIImportSkipLogic:
             },
         ]
 
-        # Simulate import logic from services.py
         existing_tools = await repo.get_by_service_id(service_id)
         existing_names = {t.tool_name for t in existing_tools}
         created = []
@@ -225,11 +212,9 @@ class TestOpenAPIImportSkipLogic:
             },
         ]
 
-        # First import
         for spec in specs:
             await repo.create(service_id, **spec)
 
-        # Second import — simulate skip logic
         existing_tools = await repo.get_by_service_id(service_id)
         existing_names = {t.tool_name for t in existing_tools}
         created = []
@@ -293,7 +278,6 @@ class TestOpenAPIImportSkipLogic:
         assert skipped == ["get_users"]
         assert len(await repo.get_by_service_id(service_id)) == 3
 
-        # Verify original get_users was NOT overwritten
         original = await repo.get_by_name(service_id, "get_users")
         assert original is not None
         assert original.description == "Get users"  # not "Get users v2"

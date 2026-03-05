@@ -88,7 +88,6 @@ class GenericRestClient(IServiceClient):
         self._api_token = api_token
         self._tool_specs = tool_definitions or []
 
-        # Read config for custom headers and health check path
         _config = config or {}
         custom_headers = {
             k: v
@@ -122,12 +121,10 @@ class GenericRestClient(IServiceClient):
         if spec is None:
             raise ToolExecutionError(tool_name, f"Unknown tool: {tool_name}")
 
-        # Interpolate path parameters with validation
         path = spec.path_template
         path_params = re.findall(r"\{(\w+)\}", path)
         remaining_args = dict(arguments)
 
-        # Validate all required path params are present
         missing = [p for p in path_params if p not in remaining_args]
         if missing:
             raise ValueError(f"Missing required path parameters: {', '.join(missing)}")

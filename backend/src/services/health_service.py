@@ -19,7 +19,6 @@ from services.client_factory import ServiceClientFactory
 
 logger = structlog.get_logger()
 
-# Jitter range as a fraction of the interval (0.0 - 0.2 -> up to 20%).
 _JITTER_FRACTION = 0.2
 
 
@@ -120,15 +119,12 @@ class HealthCheckRunner:
             skipped,
         )
 
-        # Prune backoff state for services no longer in the enabled set
         active_ids = {svc.id for svc in services if svc.id is not None}
         self._failure_counts = {k: v for k, v in self._failure_counts.items() if k in active_ids}
 
-        # Update Prometheus gauges
         prom_metrics.services_total.set(len(services))
         prom_metrics.services_healthy.set(healthy)
 
-        # Periodic cleanup (every ~100 cycles ≈ every ~100 minutes at default interval)
         self._checks_since_cleanup += 1
         if self._checks_since_cleanup >= 100:
             self._checks_since_cleanup = 0
@@ -225,7 +221,6 @@ class HealthCheckRunner:
             if client is not None:
                 await client.close()
 
-        # Update backoff tracking
         prev_failures = self._failure_counts.get(svc.id, 0)
         if result:
             if prev_failures > 0:
@@ -245,7 +240,6 @@ class HealthCheckRunner:
                     new_backoff,
                 )
 
-        # Persist health status in a dedicated short-lived session.
         try:
             async with self._session_factory() as session:
                 repo = self._make_repo(session)

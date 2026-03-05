@@ -139,7 +139,6 @@ export function ServiceDetail() {
 
           return (
             <div className="space-y-6">
-              {/* Header */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <button
@@ -244,7 +243,6 @@ export function ServiceDetail() {
                 </div>
               </div>
 
-              {/* Test result */}
               {testConnection.data && (
                 <div
                   className={[
@@ -264,7 +262,6 @@ export function ServiceDetail() {
                 </div>
               )}
 
-              {/* Edit form or stat cards */}
               {state.editing ? (
                 <Card>
                   <CardHeader>
@@ -375,7 +372,6 @@ export function ServiceDetail() {
                 </div>
               )}
 
-              {/* Apps */}
               {(() => {
                 const serviceApps =
                   apps?.filter((a) => a.service_name === service.name) ?? [];
@@ -414,7 +410,6 @@ export function ServiceDetail() {
                 );
               })()}
 
-              {/* App preview modal */}
               {state.appPreviewHtml && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                   <div
@@ -465,7 +460,6 @@ export function ServiceDetail() {
                 </div>
               )}
 
-              {/* Tools */}
               <Card>
                 <CardHeader>
                   <div className="flex items-center justify-between w-full">
@@ -578,7 +572,6 @@ export function ServiceDetail() {
                 />
               </Card>
 
-              {/* Custom tool modals (available for all service types) */}
               <ImportOpenAPIModal
                 open={state.importOpen}
                 onClose={() =>
@@ -632,7 +625,6 @@ export function ServiceDetail() {
                 isLoading={deleteGenericTool.isPending}
               />
 
-              {/* Danger zone */}
               <div className="rounded-xl border border-rust p-5">
                 <h3 className="text-sm font-semibold text-rust mb-1">
                   Remove service

@@ -22,7 +22,6 @@ export function TerminalBlock({ code, label }: Props) {
 
   return (
     <div className="rounded-xl overflow-hidden border border-[var(--terminal-border)]">
-      {/* Title bar */}
       <div
         className="flex items-center justify-between px-4 py-2.5"
         style={{ backgroundColor: "var(--terminal-title)" }}
@@ -62,7 +61,6 @@ export function TerminalBlock({ code, label }: Props) {
         </button>
       </div>
 
-      {/* Code area */}
       <pre
         className="px-4 py-4 text-sm font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap select-all"
         style={{

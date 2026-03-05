@@ -21,11 +21,6 @@ from services.user_service import UserService
 logger = structlog.get_logger()
 
 
-# ---------------------------------------------------------------------------
-# Schemas
-# ---------------------------------------------------------------------------
-
-
 class SetupRequest(msgspec.Struct):
     username: Annotated[str, msgspec.Meta(min_length=2, max_length=100)]
     password: Annotated[str, msgspec.Meta(min_length=8, max_length=200)]
@@ -41,11 +36,6 @@ class SetupResponse(msgspec.Struct):
 
 class SetupStatusResponse(msgspec.Struct):
     setup_required: bool
-
-
-# ---------------------------------------------------------------------------
-# Controller
-# ---------------------------------------------------------------------------
 
 
 class SetupController(Controller):
@@ -76,7 +66,6 @@ class SetupController(Controller):
                 status_code=409,
             )
 
-        # Validate email format if provided
         if data.email:
             parts = data.email.split("@")
             if len(parts) != 2 or not parts[0] or not parts[1] or "." not in parts[1]:
@@ -96,12 +85,10 @@ class SetupController(Controller):
                 status_code=409,
             ) from e
 
-        # Auto-generate an MCP API key for the admin
         if user.id is None:
             raise RuntimeError("User was created without an ID — this should never happen")
         _, api_key = await user_service.generate_api_key(user.id)
 
-        # Create a session so the admin is logged in immediately
         token = await create_session(
             db_session,
             username=user.username,

@@ -52,7 +52,6 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-// Services
 export const api = {
   auth: {
     login: (username: string, password: string) =>

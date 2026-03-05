@@ -1,5 +1,3 @@
-"""Port for SMTP configuration persistence."""
-
 from abc import ABC, abstractmethod
 
 from domain.entities.smtp_config import SmtpConfig

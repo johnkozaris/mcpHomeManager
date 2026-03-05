@@ -12,7 +12,6 @@ from domain.entities.service_connection import ServiceType
 
 logger = structlog.get_logger()
 
-# Map Docker image name patterns to service types + default ports
 _KNOWN_IMAGES: dict[str, tuple[ServiceType, str, int]] = {
     "forgejo": (ServiceType.FORGEJO, "Forgejo", 3000),
     "gitea": (ServiceType.FORGEJO, "Gitea", 3000),

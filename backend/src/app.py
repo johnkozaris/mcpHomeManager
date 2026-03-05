@@ -69,11 +69,6 @@ from services.user_service import UserService
 logger = structlog.get_logger()
 
 
-# ---------------------------------------------------------------------------
-# Domain → HTTP exception handlers
-# ---------------------------------------------------------------------------
-
-
 def _not_found_handler(_: Request, exc: ServiceNotFoundError) -> Response:
     return Response(content={"detail": f"Service not found: {exc.identifier}"}, status_code=404)
 
@@ -98,11 +93,6 @@ def _client_error_handler(
 def _encryption_error_handler(_: Request, exc: EncryptionError) -> Response:
     logger.error("encryption_error", error=str(exc))
     return Response(content={"detail": "Internal error"}, status_code=500)
-
-
-# ---------------------------------------------------------------------------
-# DI Providers — access singletons from app.state
-# ---------------------------------------------------------------------------
 
 
 async def provide_encryption(state: State) -> IEncryptionPort:
@@ -139,11 +129,6 @@ async def provide_service_manager(
     )
 
 
-# ---------------------------------------------------------------------------
-# Lifespan — startup / shutdown
-# ---------------------------------------------------------------------------
-
-
 @contextlib.asynccontextmanager
 async def app_lifespan(app: Litestar) -> AsyncGenerator[None]:
     logger.info("Starting %s...", settings.app_name)
@@ -163,14 +148,11 @@ async def app_lifespan(app: Litestar) -> AsyncGenerator[None]:
             'print(Fernet.generate_key().decode())"'
         ) from e
 
-    # Build singletons and store in app.state
     client_factory = ServiceClientFactory()
 
-    # Create engine for background use (separate from Litestar's request-scoped sessions)
     engine = create_async_engine(settings.database_url)
     session_factory = async_sessionmaker(engine, expire_on_commit=False)
 
-    # Create all tables from ORM models (no Alembic migrations needed for fresh installs)
     from advanced_alchemy.base import UUIDAuditBase
 
     importlib.import_module("infrastructure.persistence.orm_models")
@@ -178,7 +160,6 @@ async def app_lifespan(app: Litestar) -> AsyncGenerator[None]:
     async with engine.begin() as conn:
         await conn.run_sync(UUIDAuditBase.metadata.create_all)
 
-    # Build tool registry and MCP server
     tool_registry = ToolRegistry(
         session_factory=session_factory,
         encryption=encryption,
@@ -196,7 +177,6 @@ async def app_lifespan(app: Litestar) -> AsyncGenerator[None]:
     tool_registry.set_on_rebuild(mcp_factory.sync_tools)
     await mcp_factory.initialize()
 
-    # Store in app.state for DI providers and ASGI handler
     app.state.encryption = encryption
     app.state.client_factory = client_factory
     app.state.tool_registry = tool_registry
@@ -204,10 +184,8 @@ async def app_lifespan(app: Litestar) -> AsyncGenerator[None]:
     app.state.session_factory = session_factory
     app.state.db_healthy = True
 
-    # Ensure ASGI app is built (lazily creates session manager)
     mcp_factory.get_asgi_app()
 
-    # Background health check
     health_runner = HealthCheckRunner(
         session_factory,
         encryption,
@@ -232,11 +210,6 @@ async def app_lifespan(app: Litestar) -> AsyncGenerator[None]:
     await engine.dispose()
 
 
-# ---------------------------------------------------------------------------
-# MCP ASGI mount
-# ---------------------------------------------------------------------------
-
-
 @asgi("/mcp", is_mount=True, copy_scope=False)
 async def mcp_asgi_handler(scope: Scope, receive: Receive, send: Send) -> None:
     """Forward /mcp/* to the MCP SDK's Streamable HTTP app."""
@@ -246,7 +219,6 @@ async def mcp_asgi_handler(scope: Scope, receive: Receive, send: Send) -> None:
     if not await verify_mcp_request(scope, receive, send):
         return
 
-    # Pass authenticated user for per-tool authorization (contextvars — request-scoped)
     user = scope.get("state", {}).get("authenticated_user")
     MCPServerFactory.set_current_user(user)
     try:
@@ -254,11 +226,6 @@ async def mcp_asgi_handler(scope: Scope, receive: Receive, send: Send) -> None:
         await asgi_app(scope, receive, send)
     finally:
         MCPServerFactory.set_current_user(None)
-
-
-# ---------------------------------------------------------------------------
-# App factory
-# ---------------------------------------------------------------------------
 
 
 def create_app() -> Litestar:

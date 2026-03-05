@@ -366,7 +366,6 @@ function DashboardView({
       />
 
       <div className="grid grid-cols-12 gap-5">
-        {/* Services list */}
         <div className="col-span-7">
           <h2 className="section-label mb-3">Your services</h2>
           <div className="space-y-2.5">
@@ -382,9 +381,7 @@ function DashboardView({
           </Link>
         </div>
 
-        {/* Right column */}
         <div className="col-span-5 space-y-5">
-          {/* Activity */}
           {audit && audit.length > 0 && (
             <div>
               <div className="flex items-center justify-between mb-2.5">
@@ -423,7 +420,6 @@ function DashboardView({
             </div>
           )}
 
-          {/* Quick actions */}
           <div>
             <h3 className="section-label mb-2.5">Quick actions</h3>
             <div className="space-y-2">

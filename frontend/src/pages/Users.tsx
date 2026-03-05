@@ -83,7 +83,6 @@ export function Users() {
         </Button>
       </div>
 
-      {/* Create form */}
       {showForm && (
         <Card>
           <CardHeader>
@@ -182,7 +181,6 @@ export function Users() {
         </Card>
       )}
 
-      {/* User list */}
       <QueryState
         isLoading={isLoading}
         isError={isError}

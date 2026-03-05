@@ -13,9 +13,6 @@ from entrypoints.mcp.user_context import (
     filter_services_for_user,
 )
 
-# --- Helpers ---
-
-
 def _make_user(*, is_admin: bool = False, allowed_service_ids: list | None = None) -> User:
     return User(
         id=uuid4(),
@@ -24,9 +21,6 @@ def _make_user(*, is_admin: bool = False, allowed_service_ids: list | None = Non
         is_admin=is_admin,
         allowed_service_ids=allowed_service_ids or [],
     )
-
-
-# --- Meta-tool Admin Guard ---
 
 
 class TestRequireAdminUser:
@@ -54,9 +48,6 @@ class TestRequireAdminUser:
             assert _require_admin_user() is None
         finally:
             current_user_var.reset(token)
-
-
-# --- Self-MCP Access Guard ---
 
 
 class TestRequireSelfMcpAccess:
@@ -105,9 +96,6 @@ class TestRequireSelfMcpAccess:
                 _require_self_mcp_access()
         finally:
             current_user_var.reset(token)
-
-
-# --- filter_services_for_user ---
 
 
 class _FakeService:

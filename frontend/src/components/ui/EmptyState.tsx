@@ -18,7 +18,6 @@ export function EmptyState({
   const accentColor = color || "var(--terra)";
   return (
     <div className="relative flex flex-col items-center justify-center py-20 px-4 overflow-hidden">
-      {/* Decorative background shapes */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
         <svg
           className="absolute -top-10 right-[20%] w-40 h-40 opacity-[0.04]"

@@ -5,7 +5,6 @@ from uuid import UUID
 
 from domain.entities.user import User
 
-# Per-request user context — safe across concurrent async tasks
 current_user_var: contextvars.ContextVar[User | None] = contextvars.ContextVar(
     "current_user_var",
     default=None,

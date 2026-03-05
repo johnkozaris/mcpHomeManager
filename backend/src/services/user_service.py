@@ -11,7 +11,7 @@ from domain.ports.user_repository import IUserRepository
 
 
 class UserService:
-    """Manages users and API key authentication when multi-user mode is enabled."""
+    """Manages user accounts and API key lifecycle."""
 
     def __init__(
         self,
@@ -36,7 +36,7 @@ class UserService:
         email: str | None = None,
         self_mcp_enabled: bool = False,
     ) -> User:
-        """Create a new user. No API key is generated — users create their own."""
+        """No API key is generated — call generate_api_key separately."""
         existing = await self._repo.get_by_username(username)
         if existing is not None:
             raise ValueError(f"User '{username}' already exists")
@@ -136,7 +136,6 @@ class UserService:
 
     @staticmethod
     def _generate_api_key() -> str:
-        """Generate a cryptographically secure API key."""
         return f"mcp_{secrets.token_urlsafe(32)}"
 
     @staticmethod
@@ -146,14 +145,12 @@ class UserService:
 
     @staticmethod
     def _hash_password(password: str) -> str:
-        """Hash a password using scrypt with a random salt."""
         salt = os.urandom(16)
         dk = hashlib.scrypt(password.encode(), salt=salt, n=16384, r=8, p=1, dklen=32)
         return f"{salt.hex()}${dk.hex()}"
 
     @staticmethod
     def _verify_password(password: str, stored_hash: str) -> bool:
-        """Verify a password against a stored scrypt hash."""
         try:
             salt_hex, dk_hex = stored_hash.split("$", 1)
             salt = bytes.fromhex(salt_hex)

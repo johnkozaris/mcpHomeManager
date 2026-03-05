@@ -41,9 +41,7 @@ class BaseServiceClient(IServiceClient, ABC):
         )
 
     @abstractmethod
-    def _build_headers(self, token: str) -> dict[str, str]:
-        """Build auth headers specific to this service."""
-        ...
+    def _build_headers(self, token: str) -> dict[str, str]: ...
 
     async def _request(self, method: str, path: str, **kwargs: Any) -> Any:
         try:

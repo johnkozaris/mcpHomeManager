@@ -138,7 +138,6 @@ class ToolRegistry:
 
         try:
             async with self._session_factory() as session:
-                # Use injected factories or fall back to concrete implementations
                 if self._service_repo_factory:
                     service_repo = self._service_repo_factory(session)
                 else:
@@ -172,7 +171,6 @@ class ToolRegistry:
                     try:
                         token = self._encryption.decrypt(svc.api_token_encrypted)
 
-                        # Load custom tool definitions from DB for ALL service types
                         db_tool_defs = await generic_tool_repo.get_by_service_id(svc.id)
                         custom_specs = [
                             GenericToolSpec(
@@ -186,7 +184,6 @@ class ToolRegistry:
                         ]
 
                         if svc.service_type == ServiceType.GENERIC_REST:
-                            # generic_rest: all tools are custom, pass them to the client
                             from infrastructure.clients.generic_rest_client import (
                                 validate_base_url as _validate_url,
                             )
@@ -199,16 +196,13 @@ class ToolRegistry:
                                 tool_definitions=custom_specs,
                                 config=svc.config,
                             )
-                            custom_tool_client = client  # same client handles everything
+                            custom_tool_client = client
                         else:
-                            # Built-in service: create the main adapter client
                             client = self._client_factory.create(
                                 svc.service_type,
                                 svc.base_url,
                                 token,
                             )
-                            # If there are custom tool defs, create a GenericRestClient
-                            # alongside to handle them using the same base_url + token
                             custom_tool_client = None
                             if custom_specs:
                                 from infrastructure.clients.generic_rest_client import (
@@ -323,16 +317,11 @@ class ToolRegistry:
                             new_tools[tool_def.name] = active
                             result.append(active)
 
-                    # Register built-in tools from the main client
                     _register_tools(client, overrides, svc)
 
-                    # Register custom tools (from generic_tool_definitions table).
-                    # For generic_rest these come from client.get_tool_definitions().
-                    # For built-in services they come from a separate client.
                     if custom_tool_client is not None and custom_tool_client is not client:
                         _register_tools(custom_tool_client, overrides, svc)
 
-                    # Create a GenericRestClient for endpoint-overridden built-in tools
                     if endpoint_override_specs:
                         from infrastructure.clients.generic_rest_client import (
                             GenericRestClient,
@@ -360,7 +349,6 @@ class ToolRegistry:
                                 if at.definition.name == spec.tool_name and at.client is None:
                                     result[i] = replace(at, client=override_client)
 
-                    # Discover apps from IAppProvider clients
                     if isinstance(client, IAppProvider):
                         try:
                             for app_def in client.get_app_definitions():
@@ -396,7 +384,6 @@ class ToolRegistry:
 
         logger.info("Tool registry built: %d tools from %d services", len(result), len(services))
 
-        # Update Prometheus gauge
         from infrastructure import metrics as prom_metrics
 
         prom_metrics.tools_enabled.set(len(result))

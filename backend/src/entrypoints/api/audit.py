@@ -28,12 +28,10 @@ class AuditController(Controller):
     ) -> AuditListResponse:
         ctx: AuthContext = request.user
 
-        # Non-admin: resolve which service names are allowed
         allowed_names: set[str] | None = None
         if not ctx.is_admin:
             all_services = await service_manager.list_all()
             allowed_names = {s.name for s in all_services if str(s.id) in ctx.allowed_service_ids}
-            # If requesting a specific service, block if not allowed
             if service_name and service_name not in allowed_names:
                 return AuditListResponse(items=[], total=0)
 

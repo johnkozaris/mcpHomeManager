@@ -107,7 +107,6 @@ class AuditRepository(IAuditRepository):
         return result.scalar_one()
 
     async def delete_older_than(self, cutoff: datetime) -> int:
-        """Delete audit entries older than the cutoff timestamp."""
         result = await self._session.execute(
             delete(AuditLogModel).where(AuditLogModel.created_at < cutoff)
         )

@@ -77,7 +77,6 @@ class ServiceController(Controller):
         ctx: AuthContext = request.user
         services = await service_manager.list_all()
 
-        # Non-admin users only see their allowed services
         if not ctx.is_admin:
             services = [s for s in services if ctx.can_access_service(s.id)]
 
@@ -131,7 +130,6 @@ class ServiceController(Controller):
 
         svc = await service_manager.get_by_id(service_id)
 
-        # Load custom tool definitions so we can include http_method / path_template
         generic_tool_defs: set[str] = set()
         gt_repo = GenericToolDefinitionRepository(db_session)
         for td in await gt_repo.get_by_service_id(service_id):
@@ -227,7 +225,6 @@ class ServiceController(Controller):
         ctx: AuthContext = request.user
         services = await service_manager.list_all()
 
-        # Non-admin: only export allowed services
         if not ctx.is_admin:
             services = [s for s in services if ctx.can_access_service(s.id)]
 
@@ -473,7 +470,6 @@ class ServiceController(Controller):
         except GenericToolNotFoundError as exc:
             raise NotFoundException(str(exc)) from exc
 
-        # Probe: substitute path params with "test" placeholder
         path = re.sub(r"\{[^}]+\}", "test", tool.path_template)
 
         encryption: IEncryptionPort = request.app.state.encryption
@@ -488,7 +484,6 @@ class ServiceController(Controller):
 
         try:
             token = encryption.decrypt(svc.api_token_encrypted)
-            # Apply custom headers from service config (matches GenericRestClient behavior)
             # Filter dangerous headers that could enable request smuggling
             raw_headers = (svc.config or {}).get("headers", {}) or {}
             custom_headers = {
@@ -527,7 +522,6 @@ class ServiceController(Controller):
             )
             result = TestResult(success=False, message=f"Error: {type(e).__name__}: {str(e)[:200]}")
 
-        # Record audit for the test probe
         audit = AuditService(repository=AuditRepository(db_session))
         try:
             if result.success:

@@ -194,8 +194,6 @@ export function useImportServices() {
   });
 }
 
-// --- Generic REST Tools ---
-
 export function useCreateGenericTool() {
   const qc = useQueryClient();
   return useMutation({
@@ -273,8 +271,6 @@ export function useTestGenericTool() {
   });
 }
 
-// --- Users ---
-
 export function useUsers() {
   return useQuery({
     queryKey: queryKeys.users(),
@@ -317,8 +313,6 @@ export function useUpdateUser() {
     },
   });
 }
-
-// --- MCP Apps ---
 
 export function useApps() {
   return useQuery({

@@ -35,7 +35,6 @@ class ToolController(Controller):
 
         results = []
         for t in tool_registry.all_tools.values():
-            # Filter by allowed services for non-admins
             if not ctx.can_access_service(t.service_id):
                 continue
             results.append(
@@ -109,7 +108,6 @@ class ToolController(Controller):
                 http_method_override=tool.http_method_override,
                 path_template_override=tool.path_template_override,
             )
-        # Tool was disabled
         return ToolResponse(
             name=tool_name,
             service_type="",
@@ -119,8 +117,6 @@ class ToolController(Controller):
             parameters_schema={},
             is_enabled=False,
         )
-
-    # --- MCP Apps ---
 
     @get("/apps")
     async def list_apps(self, request: Request, tool_registry: ToolRegistry) -> list[AppResponse]:

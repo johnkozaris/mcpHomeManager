@@ -1,7 +1,6 @@
 """Authentication endpoints for web dashboard login.
 
 - Login with username + password → receive an opaque session token
-- Session token is short-lived, stored server-side, sent as Bearer token
 - MCP API keys remain separate and long-lived for machine clients
 - GET /me returns current user info from the session
 - Password reset via email (when SMTP is configured)
@@ -267,7 +266,6 @@ class AuthController(Controller):
                 expires_at = datetime.now(UTC) + timedelta(hours=RESET_TOKEN_TTL_HOURS)
 
                 reset_repo = ResetTokenRepository(db_session)
-                # Delete any existing tokens for this user before creating a new one
                 await reset_repo.delete_for_user(user.id)
                 await reset_repo.create(token_hash, user.id, expires_at)
                 await db_session.commit()

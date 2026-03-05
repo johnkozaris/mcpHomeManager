@@ -6,8 +6,6 @@ from typing import Any
 
 @dataclass(frozen=True)
 class GenericToolSpec:
-    """Definition of a single tool on a generic REST service."""
-
     tool_name: str
     description: str
     http_method: str

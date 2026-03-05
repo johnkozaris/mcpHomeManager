@@ -121,7 +121,6 @@ export function ImportServiceModal({ open, onClose }: Props) {
         </div>
 
         <div className="p-6 max-h-[70vh] overflow-y-auto space-y-4">
-          {/* File picker */}
           <div>
             <span className="section-label mb-2 block">YAML Config File</span>
             <label className="flex items-center gap-3 p-4 rounded-xl border-2 border-dashed border-line hover:border-terra cursor-pointer transition-colors">
@@ -138,7 +137,6 @@ export function ImportServiceModal({ open, onClose }: Props) {
             </label>
           </div>
 
-          {/* Preview */}
           {parsed.length > 0 && (
             <div className="space-y-3">
               <p className="section-label">Services found ({parsed.length})</p>
@@ -174,7 +172,6 @@ export function ImportServiceModal({ open, onClose }: Props) {
             </div>
           )}
 
-          {/* Import result */}
           {importServices.data && (
             <div className="space-y-1 text-sm">
               {importServices.data.created.length > 0 && (
@@ -203,7 +200,6 @@ export function ImportServiceModal({ open, onClose }: Props) {
             </p>
           )}
 
-          {/* Actions */}
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="secondary" size="sm" onClick={handleClose}>
               Cancel

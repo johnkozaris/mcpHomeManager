@@ -44,7 +44,6 @@ export function Setup() {
     }
   };
 
-  // After setup, show the API key card
   if (apiKey) {
     return (
       <div className="min-h-screen bg-canvas flex items-center justify-center px-4">

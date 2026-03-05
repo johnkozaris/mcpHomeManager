@@ -1,5 +1,3 @@
-"""SQLAlchemy implementation of the SMTP config repository."""
-
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
