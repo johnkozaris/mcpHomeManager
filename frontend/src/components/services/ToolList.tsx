@@ -7,7 +7,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 
 interface Props {
   tools: ToolDefinition[];
-  /** All tools including disabled — used when we want to show disabled tools greyed out. */
+  /** Full list including disabled tools; when provided, disabled tools render at reduced opacity. */
   allTools?: ToolDefinition[];
   onToggle?: (tool: ToolDefinition, enabled: boolean) => void;
   onSaveOverrides?: (

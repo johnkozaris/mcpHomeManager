@@ -42,7 +42,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   });
   if (!res.ok) {
     const text = await res.text().catch(() => "Unknown error");
-    // On 401, let route guards / UI handle navigation.
+    // On 401, throw typed error; route loaders and UI handle the redirect.
     if (res.status === 401 && !path.startsWith("/auth/")) {
       throw new UnauthorizedError(text || "Unauthorized");
     }

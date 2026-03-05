@@ -120,8 +120,9 @@ class AuthController(Controller):
         """Authenticate with username + password, receive a session token.
 
         The session token is set as an httpOnly cookie for browser clients
-        (XSS-safe). The token is also returned in the response body for
-        backward compatibility, but frontends should rely on the cookie.
+        (XSS-safe). The token is also returned in the response body for API
+        clients that cannot access cookies, but browser frontends should
+        rely on the cookie.
         """
         user = await user_service.authenticate_by_password(data.username, data.password)
 

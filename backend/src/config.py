@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     public_url: str = "http://localhost:8000"
 
     mcp_server_name: str = "My Homelab"
-    # Expose management tools (list/add services, toggle tools) via MCP
+    # Expose self-management tools (services, tools, audit, HTML UIs) via MCP
     self_mcp_enabled: bool = True
 
     health_check_interval_seconds: int = 60

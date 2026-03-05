@@ -1,4 +1,4 @@
-"""User management service for multi-user mode."""
+"""User management service — account CRUD, authentication, and API key lifecycle."""
 
 import hashlib
 import os

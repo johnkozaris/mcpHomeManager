@@ -165,7 +165,7 @@ export function ToolCard({
   testingTool,
   isGenericTool,
 }: ToolCardProps) {
-  // A tool is custom (user-defined generic_rest) if is_user_defined or explicitly set
+  // A tool is user-defined if the prop is set or the tool's own flag says so
   const isCustomTool = isGenericTool ?? tool.is_user_defined ?? false;
   const [expanded, setExpanded] = useState(false);
   const [editing, setEditing] = useState(false);

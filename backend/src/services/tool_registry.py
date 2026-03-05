@@ -53,7 +53,7 @@ class ActiveApp:
 class ToolRegistry:
     """Manages the lifecycle of MCP tool registration.
 
-    Thread-safe via an asyncio.Lock that serialises build/refresh cycles.
+    Concurrency-safe via an asyncio.Lock that serialises build/refresh cycles.
     Readers get an immutable snapshot via ``active_tools`` so they never
     observe a half-built registry.
     """

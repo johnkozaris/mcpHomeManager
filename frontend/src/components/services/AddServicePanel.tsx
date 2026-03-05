@@ -56,7 +56,7 @@ function CatalogGrid({ onSelect }: { onSelect: (type: ServiceType) => void }) {
   );
 }
 
-/* ─── Docker scan section ───────────────────────────────────── */
+/* ─── Auto-detect section ──────────────────────────────────── */
 
 function ScanSection({
   onSelectService,
@@ -177,14 +177,12 @@ export function AddServicePanel({ open, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/40"
         onClick={handleClose}
         aria-hidden
       />
 
-      {/* Modal */}
       <div
         ref={modalRef}
         role="dialog"
@@ -192,7 +190,6 @@ export function AddServicePanel({ open, onClose }: Props) {
         aria-labelledby={headerId}
         className="relative w-full max-w-lg bg-surface rounded-2xl border border-line shadow-elevated overflow-hidden"
       >
-        {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-line">
           <div className="flex items-center gap-3">
             {selectedType && (
@@ -216,7 +213,6 @@ export function AddServicePanel({ open, onClose }: Props) {
           </button>
         </div>
 
-        {/* Body */}
         <div className="p-6 max-h-[70vh] overflow-y-auto space-y-6">
           {mutationError && (
             <div

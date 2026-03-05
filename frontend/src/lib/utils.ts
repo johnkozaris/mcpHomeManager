@@ -1,10 +1,4 @@
-/**
- * Shared utilities — formatting, localStorage helpers, and common patterns.
- *
- * Keep this module free of React imports so it can be used anywhere.
- */
-
-/* ─── Time formatting ──────────────────────────────────────── */
+/** Formatting, localStorage helpers, and MCP config builders. No React imports. */
 
 /** Human-friendly relative time string ("just now", "5m ago", "2d ago"). */
 export function formatRelativeTime(date: Date): string {
@@ -17,8 +11,6 @@ export function formatRelativeTime(date: Date): string {
   return `${Math.floor(hours / 24)}d ago`;
 }
 
-/* ─── localStorage helpers (dismissible banners) ───────────── */
-
 const DISMISS_PREFIX = "dismiss_";
 
 export function isDismissed(key: string): boolean {
@@ -29,14 +21,10 @@ export function dismiss(key: string): void {
   localStorage.setItem(`${DISMISS_PREFIX}${key}`, "1");
 }
 
-/* ─── MCP endpoint ─────────────────────────────────────────── */
-
 /** Build the public MCP endpoint URL from the current origin. */
 export function getMcpEndpoint(): string {
   return `${window.location.origin}/mcp/`;
 }
-
-/* ─── MCP JSON config ─────────────────────────────────────── */
 
 /** Build the standard MCP JSON config snippet for agent setup guides. */
 export function buildMcpJsonConfig(
@@ -58,8 +46,6 @@ export function buildMcpJsonConfig(
     2,
   );
 }
-
-/* ─── API error parsing ────────────────────────────────────── */
 
 /** Extract a human-readable message from an API error response.
  *  Handles both `{detail: "..."}` and `{extra: [{message: "..."}]}` shapes. */

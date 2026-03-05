@@ -42,7 +42,7 @@ async def validate_base_url(base_url: str) -> None:
     MCP Home Manager is a self-hosted homelab gateway, so private/internal IPs
     are expected and allowed. We only block:
     - Non-HTTP(S) schemes
-    - Cloud metadata endpoints (169.254.169.254, metadata.google.internal)
+    - Cloud metadata endpoints (169.254.169.254, metadata.google.internal, metadata)
     """
     parsed = urlparse(base_url)
     if parsed.scheme not in ("http", "https"):

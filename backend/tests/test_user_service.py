@@ -1,4 +1,4 @@
-"""Tests for the user service (multi-user mode)."""
+"""Tests for the user service."""
 
 import pytest
 

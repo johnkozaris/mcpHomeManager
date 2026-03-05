@@ -27,8 +27,7 @@ class HealthCheckRunner:
 
     Each service is checked and committed individually so a single failure
     doesn't roll back updates for other services.  A random jitter is added
-    to the sleep interval to avoid thundering-herd effects when many
-    instances start simultaneously.
+    to the sleep interval to spread load across the check interval.
     """
 
     # Maximum backoff multiplier (caps exponential growth).

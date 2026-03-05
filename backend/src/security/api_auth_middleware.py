@@ -2,14 +2,13 @@
 
 Every /api/* request is authenticated via either:
 
-1. Session tokens (from web login) — validated against session_tokens table
-2. Per-user API keys (for machine clients) — validated via SHA-256 hash lookup
+1. Session tokens (from web login) — read from the ``mcp_session`` httpOnly
+   cookie, falling back to ``Authorization: Bearer`` for non-browser clients
+2. Per-user API keys (for machine clients) — read from ``X-API-Key`` header
+   or ``Authorization: Bearer`` header, validated via SHA-256 hash lookup
 
-Both sent via ``X-API-Key`` header or ``Authorization: Bearer`` header.
-
-The middleware sets ``request.user`` to a typed :class:`AuthContext` and
-``request.auth`` to the raw token string, making both available to all
-downstream handlers without manual scope access.
+Sets ``request.user`` to a typed :class:`AuthContext` and ``request.auth``
+to the raw token string.
 """
 
 import hashlib

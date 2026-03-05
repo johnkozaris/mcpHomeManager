@@ -1,7 +1,7 @@
 """Docker-based service auto-discovery.
 
 Scans running containers for known homelab service images and suggests
-services to add to MCP Home Manager.
+services to connect to MCP Home Manager.
 """
 
 from dataclasses import dataclass

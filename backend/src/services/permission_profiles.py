@@ -279,7 +279,7 @@ def _make_profiles(
         PermissionProfile(
             name="contributor",
             label="Contributor",
-            description="Enable most tools except potentially destructive actions.",
+            description="Enable all tools. Identical to Full Access.",
             tool_states=_all_enabled(all_tools),
         ),
         PermissionProfile(
