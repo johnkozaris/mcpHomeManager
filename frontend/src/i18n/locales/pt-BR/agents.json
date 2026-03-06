@@ -59,7 +59,7 @@
             "before": "Crie",
             "after": "na raiz do seu projeto com o seguinte conteúdo:"
           },
-          "step2": "Reinicie o Cursor (Cmd+Q / feche e abra novamente). Suas ferramentas devem aparecer no painel de IA (Cmd+L / Ctrl+L) em \"Available Tools\"",
+          "step2": "Reinicie o Cursor (Cmd+Q / feche e abra novamente). Suas ferramentas devem aparecer no painel de IA (Cmd+L / Ctrl+L) em \"Ferramentas disponíveis\"",
           "step3": "Se as ferramentas não aparecerem, verifique o indicador de status MCP na barra de status inferior"
         }
       },

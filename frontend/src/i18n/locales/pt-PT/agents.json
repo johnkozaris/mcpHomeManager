@@ -59,7 +59,7 @@
             "before": "Crie",
             "after": "na raiz do projeto com o seguinte conteúdo:"
           },
-          "step2": "Reinicie o Cursor (Cmd+Q / fechar e voltar a abrir). As suas ferramentas devem aparecer no painel de IA (Cmd+L / Ctrl+L) em \"Available Tools\"",
+          "step2": "Reinicie o Cursor (Cmd+Q / fechar e voltar a abrir). As suas ferramentas devem aparecer no painel de IA (Cmd+L / Ctrl+L) em \"Ferramentas disponíveis\"",
           "step3": "Se as ferramentas não aparecerem, verifique o indicador de estado MCP na barra de estado inferior"
         }
       },
@@ -138,7 +138,7 @@
         },
         "sse": {
           "before": "Para clientes apenas com SSE, acrescente",
-          "after": "ao URL do endpoint. A URL base tem de estar acessível a partir do local onde o seu cliente de IA é executado."
+          "after": " ao URL do endpoint. O URL base tem de estar acessível a partir do local onde o seu cliente de IA é executado."
         }
       }
     }

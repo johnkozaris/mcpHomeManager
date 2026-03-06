@@ -67,7 +67,7 @@
     "dialogs": {
       "delete": {
         "title": "Eliminar utilizador",
-        "description": "Isto remove permanentemente a conta de utilizador.",
+        "description": "Isto elimina permanentemente a conta de utilizador.",
         "confirm": "Eliminar"
       }
     }

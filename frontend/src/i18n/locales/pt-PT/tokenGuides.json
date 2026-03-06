@@ -2,69 +2,69 @@
   "guides": {
     "forgejo": {
       "steps": [
-        "Abra a sua instância Forgejo e inicie sessão com a sua conta",
+        "Abra a sua instância do Forgejo e inicie sessão com a sua conta",
         "Clique no avatar do seu perfil no canto superior direito e selecione \"Definições\"",
         "Na barra lateral esquerda, clique em \"Aplicações\"",
-        "Em \"Manage Access Tokens\", introduza um nome para o seu token (por ex., \"{appName}\")",
-        "Selecione as permissões de que o seu token precisa — para acesso total, marque todos os scopes. No mínimo precisa de: read:organization, read:repository, read:issue, write:issue",
-        "Clique em \"Generate Token\" e copie o token imediatamente — não voltará a ser mostrado",
+        "Em \"Gerir tokens de acesso\", introduza um nome para o token (por ex., \"{appName}\")",
+        "Selecione as permissões de que o token precisa — para acesso total, marque todos os escopos. No mínimo, precisa de: read:organization, read:repository, read:issue, write:issue",
+        "Clique em \"Gerar token\" e copie o token imediatamente — não voltará a ser mostrado",
         "Cole o token no campo acima"
       ]
     },
     "homeassistant": {
       "steps": [
-        "Abra a sua instância Home Assistant e inicie sessão",
+        "Abra a sua instância do Home Assistant e inicie sessão",
         "Clique no seu nome de utilizador/perfil no fundo da barra lateral esquerda",
-        "Desloque-se até à secção \"Long-Lived Access Tokens\" no final da página",
-        "Clique em \"Create Token\"",
-        "Atribua um nome como \"{appName}\" e clique em OK",
-        "Copie o token apresentado no diálogo — só é mostrado uma vez",
+        "Desloque-se até à secção \"Tokens de acesso de longa duração\" no final da página",
+        "Clique em \"Criar token\"",
+        "Atribua um nome, como \"{appName}\", e clique em OK",
+        "Copie o token apresentado na janela — só é mostrado uma vez",
         "Cole o token no campo acima"
       ],
       "note": "Os tokens do Home Assistant começam por eyJ…"
     },
     "paperless": {
       "steps": [
-        "Abra a sua instância Paperless-ngx e inicie sessão como utilizador administrador",
-        "Clique no ícone de engrenagem ou navegue para Definições na navegação superior",
+        "Abra a sua instância do Paperless-ngx e inicie sessão como utilizador administrador",
+        "Clique no ícone de engrenagem ou vá para Definições na navegação superior",
         "Desloque-se para baixo ou procure a secção \"API\"",
         "O token de API é apresentado aqui — clique no ícone de cópia para o copiar",
-        "Se não existir token, clique em \"Generate\" para criar um",
+        "Se não existir token, clique em \"Gerar\" para criar um",
         "Cole o token no campo acima"
       ]
     },
     "immich": {
       "steps": [
-        "Abra a sua instância Immich e inicie sessão",
+        "Abra a sua instância do Immich e inicie sessão",
         "Clique no avatar do seu perfil no canto superior direito",
-        "Selecione \"Account Settings\" no menu suspenso",
-        "Desloque-se até \"API Keys\"",
-        "Clique em \"New API Key\" e atribua um nome como \"{appName}\"",
+        "Selecione \"Definições da conta\" no menu pendente",
+        "Desloque-se até \"Chaves de API\"",
+        "Clique em \"Nova chave de API\" e atribua um nome como \"{appName}\"",
         "Copie a chave gerada imediatamente — não voltará a ser mostrada",
         "Cole a chave no campo acima"
       ]
     },
     "nextcloud": {
       "steps": [
-        "Abra a sua instância Nextcloud e inicie sessão",
+        "Abra a sua instância do Nextcloud e inicie sessão",
         "Clique no avatar do seu perfil no canto superior direito e selecione \"Definições\" (ou \"Definições pessoais\")",
         "Na barra lateral esquerda, clique em \"Segurança\"",
         "Desloque-se até à secção \"Dispositivos e sessões\"",
         "Introduza \"{appName}\" como nome da app no campo de texto na parte inferior",
-        "Clique em \"Create new app password\"",
-        "Copie a palavra-passe gerada — este é o seu token de API",
+        "Clique em \"Criar nova palavra-passe da app\"",
+        "Copie a palavra-passe gerada — este é o token de API",
         "Cole-a no campo acima"
       ],
-      "note": "Formato: username:app-password (por ex., admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx)"
+      "note": "Formato: utilizador:palavra-passe-da-app (por ex., admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx)"
     },
     "uptimekuma": {
       "steps": [
-        "Abra a sua instância Uptime Kuma e inicie sessão",
+        "Abra a sua instância do Uptime Kuma e inicie sessão",
         "Clique em \"Definições\" na barra lateral esquerda",
-        "Navegue para o separador \"API Keys\"",
-        "Clique em \"Add API Key\" e introduza um nome como \"{appName}\"",
+        "Navegue para o separador \"Chaves de API\"",
+        "Clique em \"Adicionar chave de API\" e introduza um nome como \"{appName}\"",
         "Defina uma data de expiração ou deixe em branco para não expirar",
-        "Clique em \"Create\" e copie a chave de API gerada",
+        "Clique em \"Criar\" e copie a chave de API gerada",
         "Cole a chave no campo acima"
       ]
     },
@@ -72,49 +72,49 @@
       "steps": [
         "O AdGuard Home usa autenticação básica (nome de utilizador e palavra-passe) em vez de tokens de API",
         "Use o mesmo nome de utilizador e palavra-passe que utiliza para iniciar sessão na interface web do AdGuard",
-        "Introduza-os no campo acima no formato: username:password"
+        "Introduza no campo acima no formato: utilizador:palavra-passe"
       ],
       "note": "Por exemplo, se o seu login for \"admin\" e a palavra-passe for \"mypass\", introduza admin:mypass"
     },
     "nginxproxymanager": {
       "steps": [
-        "O Nginx Proxy Manager usa as suas credenciais de início de sessão para acesso API",
-        "Introduza o seu email e palavra-passe no formato: email:password",
+        "O Nginx Proxy Manager usa as suas credenciais de início de sessão para acesso à API",
+        "Introduza o seu email e palavra-passe no formato: email:palavra-passe",
         "Estas são as mesmas credenciais que usa para iniciar sessão na interface web do NPM"
       ],
-      "note": "Formato: email:password (por ex., admin@example.com:changeme)"
+      "note": "Formato: email:palavra-passe (por ex., admin@example.com:changeme)"
     },
     "portainer": {
       "steps": [
-        "O Portainer usa as suas credenciais de início de sessão para acesso API",
-        "Introduza o seu nome de utilizador e palavra-passe no formato: username:password",
+        "O Portainer usa as suas credenciais de início de sessão para acesso à API",
+        "Introduza o seu nome de utilizador e palavra-passe no formato: utilizador:palavra-passe",
         "Estas são as mesmas credenciais que usa para iniciar sessão na interface web do Portainer"
       ],
-      "note": "Formato: username:password (por ex., admin:mypassword)"
+      "note": "Formato: utilizador:palavra-passe (por ex., admin:mypassword)"
     },
     "freshrss": {
       "steps": [
-        "O FreshRSS usa uma palavra-passe da API separada para acesso programático",
-        "No FreshRSS, vá a Definições → Perfil → API Management",
-        "Ative a opção \"Allow API access\" se ainda não estiver ativada",
-        "Defina uma palavra-passe da API (diferente da palavra-passe de início de sessão)",
-        "Introduza o nome de utilizador FreshRSS e a palavra-passe da API no formato: username:api_password"
+        "O FreshRSS usa uma palavra-passe de API separada para acesso programático",
+        "No FreshRSS, vá a Definições → Perfil → Gestão da API",
+        "Ative a opção \"Permitir acesso à API\" se ainda não estiver ativada",
+        "Defina uma palavra-passe de API (diferente da palavra-passe de início de sessão)",
+        "Introduza o nome de utilizador do FreshRSS e a palavra-passe de API no formato: utilizador:palavra_passe_api"
       ],
-      "note": "Formato: username:api_password — a palavra-passe da API é definida separadamente nas definições do FreshRSS, não na palavra-passe de início de sessão"
+      "note": "Formato: utilizador:palavra_passe_api — a palavra-passe de API é definida separadamente nas definições do FreshRSS, não na palavra-passe de início de sessão"
     },
     "wallabag": {
       "steps": [
-        "Abra a sua instância Wallabag e inicie sessão",
-        "Vá para a gestão de clientes API (secção Developer nas definições)",
-        "Clique em \"Create a new client\" e anote o client ID e o client secret",
-        "Introduza os quatro valores no formato: client_id:client_secret:username:password"
+        "Abra a sua instância do Wallabag e inicie sessão",
+        "Vá para a gestão de clientes de API (secção de programador nas definições)",
+        "Clique em \"Criar novo cliente\" e anote o ID do cliente e o segredo do cliente",
+        "Introduza os quatro valores no formato: id_cliente:segredo_cliente:utilizador:palavra-passe"
       ],
-      "note": "Formato: client_id:client_secret:username:password (4 partes separadas por dois pontos)"
+      "note": "Formato: id_cliente:segredo_cliente:utilizador:palavra-passe (4 partes separadas por dois pontos)"
     },
     "stirlingpdf": {
       "steps": [
-        "Abra a sua instância Stirling PDF e inicie sessão como administrador",
-        "Clique na engrenagem de definições (⚙️) no canto superior direito para abrir as Account Settings",
+        "Abra a sua instância do Stirling PDF e inicie sessão como administrador",
+        "Clique na engrenagem de definições (⚙️) no canto superior direito para abrir as Definições da conta",
         "Encontre ou gere a sua chave de API pessoal no painel de definições",
         "Em alternativa, use a chave de API global definida através da variável de ambiente SECURITY_CUSTOMGLOBALAPIKEY",
         "Cole a chave de API no campo acima"
@@ -123,10 +123,10 @@
     },
     "wikijs": {
       "steps": [
-        "Abra a sua instância Wiki.js e inicie sessão como administrador",
-        "Navegue para Administration → API Access",
-        "Clique em \"Create API Key\" e defina um nome (por ex., \"{appName}\")",
-        "Selecione o grupo de permissões adequado (recomenda-se Full Access)",
+        "Abra a sua instância do Wiki.js e inicie sessão como administrador",
+        "Navegue para Administração → Acesso à API",
+        "Clique em \"Criar chave de API\" e defina um nome (por ex., \"{appName}\")",
+        "Selecione o grupo de permissões adequado (Acesso total recomendado)",
         "Defina uma data de expiração ou deixe em branco para não expirar",
         "Copie a chave de API gerada e cole-a no campo acima"
       ]
@@ -134,31 +134,31 @@
     "tailscale": {
       "steps": [
         "Abra a consola de administração do Tailscale em https://login.tailscale.com/admin",
-        "Navegue para Definições → Keys",
-        "Em \"API access tokens\", clique em \"Generate access token...\"",
+        "Navegue para Definições → Chaves",
+        "Em \"Tokens de acesso da API\", clique em \"Gerar token de acesso...\"",
         "Defina uma expiração para o token ou mantenha o valor predefinido",
-        "Clique em \"Generate\" e copie o token imediatamente — não voltará a ser mostrado",
+        "Clique em \"Gerar\" e copie o token imediatamente — não voltará a ser mostrado",
         "Cole o token no campo acima"
       ],
-      "note": "As chaves de API do Tailscale começam por tskey-api-... e autenticam na Tailscale API (api.tailscale.com/api/v2)"
+      "note": "As chaves de API do Tailscale começam por tskey-api-... e autenticam na API do Tailscale (api.tailscale.com/api/v2)"
     },
     "calibreweb": {
       "steps": [
-        "O Calibre-Web usa as suas credenciais de início de sessão para acesso API",
-        "Introduza o nome de utilizador e a palavra-passe do Calibre-Web no formato: username:password",
+        "O Calibre-Web usa as suas credenciais de início de sessão para acesso à API",
+        "Introduza o nome de utilizador e a palavra-passe do Calibre-Web no formato: utilizador:palavra-passe",
         "Estas são as mesmas credenciais que usa para iniciar sessão na interface web do Calibre-Web"
       ],
-      "note": "As credenciais predefinidas são admin/admin123 — altere-as antes de ligar. Formato: username:password"
+      "note": "As credenciais predefinidas são admin/admin123 — altere-as antes de ligar. Formato: utilizador:palavra-passe"
     },
     "cloudflare": {
       "steps": [
         "Abra o dashboard da Cloudflare em https://dash.cloudflare.com",
-        "Clique no ícone do seu perfil no canto superior direito e selecione \"My Profile\"",
-        "Na barra lateral esquerda, clique em \"API Tokens\"",
-        "Clique em \"Create Token\"",
+        "Clique no ícone do seu perfil no canto superior direito e selecione \"O meu perfil\"",
+        "Na barra lateral esquerda, clique em \"Tokens de API\"",
+        "Clique em \"Criar token\"",
         "Use um modelo de token personalizado e defina as seguintes permissões: Zone:DNS:Edit, Zone:Zone:Read, Account:Cloudflare Tunnel:Edit",
         "Opcionalmente, restrinja o token a zonas ou contas específicas",
-        "Clique em \"Continue to summary\" e depois em \"Create Token\"",
+        "Clique em \"Continuar para o resumo\" e depois em \"Criar token\"",
         "Copie o token imediatamente — não voltará a ser mostrado",
         "Cole o token no campo acima"
       ],

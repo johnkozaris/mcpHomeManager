@@ -9,7 +9,7 @@
     },
     "language": {
       "title": "Idioma",
-      "description": "Escolha o seu idioma. A aplicação vai guardar a sua preferência."
+      "description": "Escolha o seu idioma preferido. A aplicação guardará a sua preferência."
     },
     "security": {
       "title": "Segurança",
@@ -80,7 +80,7 @@
       },
       "placeholders": {
         "host": "smtp.gmail.com",
-        "username": "user@example.com",
+        "username": "utilizador@exemplo.com",
         "passwordMasked": "••••••••",
         "password": "Palavra-passe da app",
         "fromEmail": "noreply@example.com"

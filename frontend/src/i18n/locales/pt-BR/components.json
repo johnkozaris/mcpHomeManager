@@ -1,7 +1,7 @@
 {
   "errorBoundary": {
     "title": "Algo quebrou",
-    "fallbackMessage": "Algo deu errado. Tente recarregar a página.",
+    "fallbackMessage": "Ocorreu um erro inesperado.",
     "reload": "Recarregar"
   },
   "routeErrorFallback": {

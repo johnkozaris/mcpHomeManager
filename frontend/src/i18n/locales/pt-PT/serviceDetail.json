@@ -65,18 +65,18 @@
     "dialogs": {
       "deleteTool": {
         "title": "Eliminar ferramenta",
-        "description": "Isto remove permanentemente a ferramenta \"{toolName}\" deste serviço.",
+        "description": "Isto elimina permanentemente a ferramenta \"{toolName}\" deste serviço.",
         "confirm": "Eliminar"
       },
       "deleteService": {
         "title": "Eliminar serviço",
-        "description": "Isto remove permanentemente o serviço e todas as ferramentas registadas no MCP.",
+        "description": "Isto elimina permanentemente o serviço e todas as ferramentas registadas no MCP.",
         "confirm": "Eliminar"
       }
     },
     "removeService": {
       "title": "Remover serviço",
-      "description": "Isto remove permanentemente o serviço e todas as ferramentas registadas no MCP.",
+      "description": "Isto elimina permanentemente o serviço e todas as ferramentas registadas no MCP.",
       "action": "Eliminar serviço"
     },
     "notFound": "Serviço não encontrado."
