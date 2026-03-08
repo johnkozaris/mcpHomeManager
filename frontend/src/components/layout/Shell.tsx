@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { useAppName } from "@/hooks/useAppName";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
@@ -15,6 +15,7 @@ import {
   ChevronLeft,
   ChevronRight,
   LogOut,
+  Globe,
   type LucideIcon,
 } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
@@ -22,6 +23,11 @@ import { useCurrentUser } from "@/hooks/useAuth";
 import { api } from "@/lib/api";
 import { queryClient } from "@/lib/queryClient";
 import logoSrc from "@/assets/logo.png";
+import {
+  SUPPORTED_LOCALES,
+  LOCALE_DISPLAY_NAMES,
+  type SupportedLocale,
+} from "@/i18n/config";
 
 interface NavItem {
   to: string;
@@ -131,7 +137,7 @@ function BgShapes({ sidebarWidth }: { sidebarWidth: number }) {
 const COLLAPSED_KEY = "sidebar_collapsed";
 
 export function Shell({ children }: { children: ReactNode }) {
-  const { t } = useTranslation(["common", "nav"]);
+  const { t, i18n } = useTranslation(["common", "nav"]);
   const appName = useAppName();
   const { data: currentUserData } = useCurrentUser();
   const { theme, toggle } = useTheme();
@@ -158,6 +164,21 @@ export function Shell({ children }: { children: ReactNode }) {
     navigate({ to: "/login" });
   };
 
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
+  const currentLocale = (i18n.language ?? "en") as SupportedLocale;
+
+  useEffect(() => {
+    if (!langOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setLangOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [langOpen]);
+
   const sidebarWidth = collapsed ? 68 : 220;
   const isLightMode = theme === "light";
   const themeToggleLabel = isLightMode
@@ -180,9 +201,7 @@ export function Shell({ children }: { children: ReactNode }) {
           <img
             src={logoSrc}
             alt=""
-            width={collapsed ? 36 : 32}
-            height={collapsed ? 36 : 32}
-            className="shrink-0 drop-shadow-lg transition-all duration-300"
+            className={`shrink-0 drop-shadow-lg transition-all duration-300 w-auto ${collapsed ? "h-9" : "h-8"}`}
           />
           {!collapsed && (
             <>
@@ -259,6 +278,39 @@ export function Shell({ children }: { children: ReactNode }) {
             )}
             {!collapsed && <span>{themeLabel}</span>}
           </button>
+
+          <div className="relative" ref={langRef}>
+            <button
+              onClick={() => setLangOpen((v) => !v)}
+              className={`sidebar-link flex items-center gap-3 text-sm font-medium transition-all duration-200 w-full ${collapsed ? "justify-center" : ""}`}
+              title={LOCALE_DISPLAY_NAMES[currentLocale]}
+            >
+              <Globe size={18} className="shrink-0" />
+              {!collapsed && (
+                <span>{LOCALE_DISPLAY_NAMES[currentLocale]}</span>
+              )}
+            </button>
+            {langOpen && (
+              <div className="absolute bottom-full left-0 mb-1 w-48 max-h-64 overflow-y-auto rounded-xl border border-line bg-surface shadow-lg z-50">
+                {SUPPORTED_LOCALES.map((locale) => (
+                  <button
+                    key={locale}
+                    onClick={() => {
+                      i18n.changeLanguage(locale);
+                      setLangOpen(false);
+                    }}
+                    className={`w-full text-left px-3 py-2 text-sm transition-colors ${
+                      currentLocale === locale
+                        ? "text-terra font-semibold bg-terra-bg"
+                        : "text-ink hover:bg-surface-hover"
+                    }`}
+                  >
+                    {LOCALE_DISPLAY_NAMES[locale]}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
 
           {currentUser && (
             <div

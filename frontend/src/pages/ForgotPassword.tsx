@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { api } from "@/lib/api";
 import { parseApiError } from "@/lib/utils";
-import { Home, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import logoSrc from "@/assets/logo.png";
 import { useTranslation } from "react-i18next";
 
 export function ForgotPassword() {
@@ -31,9 +32,7 @@ export function ForgotPassword() {
     <div className="min-h-screen bg-canvas flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
-          <div className="w-12 h-12 rounded-xl bg-terra-bg flex items-center justify-center mb-4">
-            <Home className="w-6 h-6 text-terra" />
-          </div>
+          <img src={logoSrc} alt="" height={48} className="h-12 w-auto mb-4 drop-shadow-lg" />
           <h1 className="text-xl font-semibold text-ink">{t("title")}</h1>
           <p className="text-sm text-ink-muted mt-1">
             {sent ? t("subtitle.sent") : t("subtitle.default")}

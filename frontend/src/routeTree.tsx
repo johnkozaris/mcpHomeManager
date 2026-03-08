@@ -2,6 +2,7 @@ import {
   createRootRoute,
   createRoute,
   createRouter,
+  isRedirect,
   lazyRouteComponent,
   Outlet,
   redirect,
@@ -27,8 +28,7 @@ async function requireAuth() {
       throw redirect({ to: "/setup" });
     }
   } catch (err) {
-    // If it's already a redirect, re-throw it
-    if (err && typeof err === "object" && "to" in err) throw err;
+    if (isRedirect(err)) throw err;
     // Network error — let them through, they'll get errors on the pages
   }
 
@@ -68,7 +68,7 @@ const setupRoute = createRoute({
         throw redirect({ to: "/" });
       }
     } catch (err) {
-      if (err && typeof err === "object" && "to" in err) throw err;
+      if (isRedirect(err)) throw err;
     }
   },
 });
@@ -78,6 +78,20 @@ const loginRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/login",
   component: Login,
+  beforeLoad: async () => {
+    try {
+      const config = await queryClient.ensureQueryData({
+        queryKey: queryKeys.config(),
+        queryFn: api.health.config,
+        staleTime: 30_000,
+      });
+      if (config.setup_required) {
+        throw redirect({ to: "/setup" });
+      }
+    } catch (err) {
+      if (isRedirect(err)) throw err;
+    }
+  },
 });
 
 /* ─── Forgot password route (no Shell) ───────────────────── */
