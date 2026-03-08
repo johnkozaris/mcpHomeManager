@@ -1,0 +1,9 @@
+# Modern pnpm supply-chain guardrails for the frontend project.
+strictDepBuilds: true
+
+allowBuilds:
+  'esbuild@0.27.3': false
+
+blockExoticSubdeps: true
+minimumReleaseAge: 1440
+trustPolicy: no-downgrade

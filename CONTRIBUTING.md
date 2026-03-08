@@ -31,6 +31,8 @@ pnpm install
 pnpm dev
 ```
 
+Frontend installs are governed by `frontend/pnpm-workspace.yaml`, which enforces reviewed dependency build rules, release-age delay, and trust-policy checks. If a future package genuinely needs an install-script or trust-policy exception, research it first and add the narrowest version-scoped exception instead of weakening the policy broadly.
+
 ### Docker / full stack
 
 ```bash
