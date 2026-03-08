@@ -2,7 +2,26 @@
   "name": "mcp-home-frontend",
   "private": true,
   "version": "0.1.0",
+  "description": "React frontend for MCP Home Manager, a self-hosted MCP gateway for homelab services.",
+  "license": "MIT",
   "type": "module",
+  "author": "MCP Home Manager Contributors",
+  "homepage": "https://github.com/johnkozaris/mcpHomeManager#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnkozaris/mcpHomeManager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/johnkozaris/mcpHomeManager/issues"
+  },
+  "keywords": [
+    "mcp",
+    "homelab",
+    "react",
+    "dashboard",
+    "llm",
+    "ai-agents"
+  ],
   "packageManager": "pnpm@10.30.0",
   "engines": {
     "node": ">=24.13.1"

@@ -1,51 +1,306 @@
-name: Publish
+name: Publish Release
 
 on:
   push:
-    branches: [main]
-    tags: ["v*"]
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing semver tag to publish (for example v1.2.3)
+        required: true
+        type: string
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{ github.repository_owner }}/mcp-home-manager
+  REPO_URL: https://github.com/${{ github.repository }}
 
 jobs:
   build-and-push:
-    name: Build & Push
+    name: Build and publish release
     runs-on: ubuntu-latest
+    concurrency:
+      group: release-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.release_tag || github.ref_name }}
+      cancel-in-progress: false
     permissions:
-      contents: read
+      actions: read
+      attestations: write
+      contents: write
+      id-token: write
       packages: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Resolve release metadata
+        id: release
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_TAG: ${{ github.event.inputs.release_tag }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            release_tag="$INPUT_TAG"
+          else
+            release_tag="$REF_NAME"
+          fi
 
-      - uses: docker/setup-qemu-action@v3
+          if ! printf '%s' "$release_tag" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'; then
+            echo "Release tag must look like v1.2.3 or v1.2.3-rc1" >&2
+            exit 1
+          fi
 
-      - uses: docker/setup-buildx-action@v3
+          release_version="${release_tag#v}"
+          IFS=. read -r major minor _rest <<< "$release_version"
+          is_prerelease=false
+          if printf '%s' "$release_version" | grep -q -- '-'; then
+            is_prerelease=true
+          fi
 
-      - uses: docker/login-action@v3
+          {
+            echo "tag=$release_tag"
+            echo "version=$release_version"
+            echo "major_minor=$major.$minor"
+            echo "is_prerelease=$is_prerelease"
+          } >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        with:
+          fetch-depth: 0
+          ref: ${{ steps.release.outputs.tag }}
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.14"
+
+      - name: Capture git revision
+        id: git
+        run: |
+          echo "revision=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "short_sha=$(git rev-parse --short=12 HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Validate release versions
+        env:
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import pathlib
+          import tomllib
+
+          release_version = os.environ["RELEASE_VERSION"]
+
+          backend_version = tomllib.loads(
+              pathlib.Path("backend/pyproject.toml").read_text(encoding="utf-8")
+          )["project"]["version"]
+          frontend_version = json.loads(
+              pathlib.Path("frontend/package.json").read_text(encoding="utf-8")
+          )["version"]
+
+          errors = []
+          if backend_version != release_version:
+              errors.append(
+                  f"backend/pyproject.toml version {backend_version!r} does not match release {release_version!r}"
+              )
+          if frontend_version != release_version:
+              errors.append(
+                  f"frontend/package.json version {frontend_version!r} does not match release {release_version!r}"
+              )
+
+          if errors:
+              raise SystemExit("\n".join(errors))
+          PY
+
+      - name: Capture build timestamp
+        id: build-date
+        run: echo "value=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
+
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: docker/metadata-action@v5
+      - uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
         id: meta
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=edge,branch=main
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=${{ steps.release.outputs.version }}
+            type=raw,value=${{ steps.release.outputs.major_minor }},enable=${{ steps.release.outputs.is_prerelease == 'false' }}
+            type=raw,value=latest,enable=${{ steps.release.outputs.is_prerelease == 'false' }}
+            type=raw,value=sha-${{ steps.git.outputs.short_sha }}
 
-      - uses: docker/build-push-action@v6
+      - name: Build and push image
+        id: build
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
         with:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          provenance: mode=max
+          sbom: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            APP_VERSION=${{ steps.release.outputs.version }}
+            VCS_REF=${{ steps.git.outputs.revision }}
+            BUILD_DATE=${{ steps.build-date.outputs.value }}
+            REPO_URL=${{ env.REPO_URL }}
+
+      - uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad # v4.0.0
+        with:
+          cosign-release: "v3.0.5"
+
+      - name: Sign image digest with Cosign
+        env:
+          IMAGE_REF: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build.outputs.digest }}
+        run: cosign sign --yes "$IMAGE_REF"
+
+      - name: Render release assets
+        env:
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+          IMAGE_URL: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        run: |
+          mkdir -p release-assets
+          cp docker-compose.yml release-assets/docker-compose.yml
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+
+          image = f"{os.environ['IMAGE_URL']}:{os.environ['RELEASE_VERSION']}"
+          source = Path(".env.example").read_text(encoding="utf-8").splitlines()
+          rendered: list[str] = []
+          replaced = False
+
+          for line in source:
+              if line.startswith("MCP_HOME_IMAGE="):
+                  rendered.append(f"MCP_HOME_IMAGE={image}")
+                  replaced = True
+              else:
+                  rendered.append(line)
+
+          if not replaced:
+              raise SystemExit("MCP_HOME_IMAGE entry not found in .env.example")
+
+          rendered.insert(0, f"# Generated for release v{os.environ['RELEASE_VERSION']}")
+          Path("release-assets/.env.example").write_text(
+              "\n".join(rendered) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Validate release asset bundle
+        run: docker compose --env-file release-assets/.env.example -f release-assets/docker-compose.yml config >/dev/null
+
+      - name: Generate SBOM asset
+        uses: anchore/sbom-action@17ae1740179002c89186b61233e0f892c3118b11 # v0
+        with:
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build.outputs.digest }}
+          output-file: release-assets/mcp-home-manager-${{ steps.release.outputs.version }}.spdx.json
+          upload-artifact: false
+          upload-release-assets: false
+
+      - name: Write operator release notes
+        env:
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+          IMAGE_URL: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        run: |
+          cat <<EOF > release-notes.md
+          ## Operator quickstart
+
+          - Download \`docker-compose.yml\` and \`.env.example\` from this release.
+          - Copy \`.env.example\` to \`.env\`, then set a strong \`POSTGRES_PASSWORD\` before starting the stack.
+          - This release bundle pins \`MCP_HOME_IMAGE\` to \`${IMAGE_URL}:${RELEASE_VERSION}\`.
+          - Persistent state lives in Docker volumes \`pgdata\` (PostgreSQL) and \`app_data\` (application data and encryption key).
+          - The published image digest is keylessly signed with Cosign; see \`verify-image-signature.txt\` in the release assets.
+
+          ## Upgrade checklist
+
+          1. Back up \`pgdata\` and \`app_data\`.
+          2. Replace your deployment files with the assets from this release.
+          3. Review \`.env\` for any new settings.
+          4. Run \`docker compose pull && docker compose up -d\`.
+          5. Review container health and logs after the upgrade.
+
+          ## Notes
+
+          - \`docker-compose.dev.yml\` is for contributors and is not part of the release bundle.
+          - The default PostgreSQL image follows the configured major line in \`.env\` (\`POSTGRES_IMAGE\`) while the app image is pinned to this exact release.
+          EOF
+
+      - name: Write release metadata
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+          RELEASE_DIGEST: ${{ steps.build.outputs.digest }}
+          IMAGE_TAGS: ${{ steps.meta.outputs.tags }}
+          IMAGE_URL: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        run: |
+          cat <<EOF > release-assets/release-metadata.txt
+          Release tag: $RELEASE_TAG
+          Release version: $RELEASE_VERSION
+          Image repository: $IMAGE_URL
+          Image digest: $RELEASE_DIGEST
+
+          Published image tags:
+          $IMAGE_TAGS
+
+          Provenance:
+          - OCI provenance attestations are published with the GHCR image build.
+          - OCI SBOM attestations are published with the GHCR image build.
+          - The pushed image digest is keylessly signed with Cosign via GitHub Actions OIDC.
+          EOF
+
+      - name: Write signature verification instructions
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          RELEASE_DIGEST: ${{ steps.build.outputs.digest }}
+          IMAGE_URL: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          cat <<EOF > release-assets/verify-image-signature.txt
+          Verify this release image signature with Cosign:
+
+          cosign verify \\
+            --certificate-oidc-issuer https://token.actions.githubusercontent.com \\
+            --certificate-identity "https://github.com/${REPOSITORY}/.github/workflows/publish.yml@refs/tags/${RELEASE_TAG}" \\
+            ${IMAGE_URL}@${RELEASE_DIGEST}
+          EOF
+
+      - name: Generate checksums
+        run: |
+          find release-assets -maxdepth 1 -type f ! -name checksums.txt -print0 \
+            | sort -z \
+            | xargs -0 sha256sum > release-assets/checksums.txt
+
+      - name: Ensure GitHub Release exists
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          RELEASE_TITLE: Release ${{ steps.release.outputs.tag }}
+          IS_PRERELEASE: ${{ steps.release.outputs.is_prerelease }}
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "GitHub Release $RELEASE_TAG already exists."
+            exit 0
+          fi
+
+          release_notes="$(cat release-notes.md)"
+
+          if [ "$IS_PRERELEASE" = "true" ]; then
+            gh release create "$RELEASE_TAG" --verify-tag --generate-notes --notes "$release_notes" --title "$RELEASE_TITLE" --prerelease --latest=false
+          else
+            gh release create "$RELEASE_TAG" --verify-tag --generate-notes --notes "$release_notes" --title "$RELEASE_TITLE" --latest
+          fi
+
+      - name: Upload release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+        run: gh release upload "$RELEASE_TAG" release-assets/* release-assets/.env.example --clobber

@@ -30,5 +30,33 @@ if [ -z "$ENCRYPTION_KEY" ]; then
     fi
 fi
 
+if [ -z "$DATABASE_URL" ] && [ -n "$POSTGRES_PASSWORD" ]; then
+    POSTGRES_HOST="${POSTGRES_HOST:-db}"
+    POSTGRES_PORT="${POSTGRES_PORT:-5432}"
+    POSTGRES_DB="${POSTGRES_DB:-mcp_home}"
+    POSTGRES_USER="${POSTGRES_USER:-mcp}"
+
+    DATABASE_URL=$(
+        POSTGRES_HOST="$POSTGRES_HOST" \
+        POSTGRES_PORT="$POSTGRES_PORT" \
+        POSTGRES_DB="$POSTGRES_DB" \
+        POSTGRES_USER="$POSTGRES_USER" \
+        POSTGRES_PASSWORD="$POSTGRES_PASSWORD" \
+        "$PYTHON" - <<'PY'
+import os
+from urllib.parse import quote
+
+print(
+    "postgresql+asyncpg://"
+    f"{quote(os.environ['POSTGRES_USER'], safe='')}:"
+    f"{quote(os.environ['POSTGRES_PASSWORD'], safe='')}@"
+    f"{os.environ['POSTGRES_HOST']}:{os.environ['POSTGRES_PORT']}/"
+    f"{quote(os.environ['POSTGRES_DB'], safe='')}"
+)
+PY
+    )
+    export DATABASE_URL
+fi
+
 echo "Starting ${APP_NAME:-MCP Manager}..."
 exec $PYTHON -m serve

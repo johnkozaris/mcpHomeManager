@@ -2,10 +2,14 @@ import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
-import { copyFileSync } from "fs";
+import { copyFileSync, readFileSync } from "fs";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const packageJson = JSON.parse(
+  readFileSync(path.resolve(__dirname, "package.json"), "utf-8"),
+) as { version: string };
+const appVersion = process.env.APP_VERSION || packageJson.version;
 
 /** Copy index.html → 404.html so Litestar's html_mode serves the SPA shell for unknown routes. */
 function spaFallback(): Plugin {
@@ -19,6 +23,9 @@ function spaFallback(): Plugin {
 }
 
 export default defineConfig({
+  define: {
+    __APP_VERSION__: JSON.stringify(appVersion),
+  },
   plugins: [
     react({
       babel: {

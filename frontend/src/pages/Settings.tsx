@@ -417,7 +417,7 @@ export function Settings() {
             <div className="mt-3 space-y-2 text-sm text-ink-secondary">
               <div className="flex justify-between">
                 <span>{t("about.versionLabel")}</span>
-                <span className="text-ink font-mono font-bold">0.1.0</span>
+                <span className="text-ink font-mono font-bold">{__APP_VERSION__}</span>
               </div>
               <div className="flex justify-between">
                 <span>{t("about.serverLabel")}</span>

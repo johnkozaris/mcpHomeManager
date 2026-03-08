@@ -31,27 +31,35 @@ pnpm install
 pnpm dev
 ```
 
+### Docker / full stack
+
+```bash
+cp .env.example .env
+# Set a strong POSTGRES_PASSWORD before first start
+docker compose up -d
+```
+
+For contributor workflows, `docker-compose.dev.yml` is a local override for source builds. It is not part of the GitHub Release asset bundle.
+
 ## Run checks before opening a PR
 
 ### Backend checks
 
 ```bash
 cd backend
-uv run python -m pytest -x -q
-uv run python -m pytest tests/test_service_manager.py -x -q
-uv run python -m pytest tests/test_service_manager.py::test_create_service -x -q
 uv run ruff check src/
+uv run mypy
+npx --yes pyright
+uv run python -m pytest -x -q
 ```
 
 ### Frontend checks
 
 ```bash
 cd frontend
-pnpm exec vitest run
-pnpm exec vitest run src/components/ui/Badge.test.tsx
-pnpm exec vitest run -t "renders children"
-pnpm exec tsc -b
-pnpm exec eslint .
+pnpm lint
+pnpm build
+pnpm test
 ```
 
 ## What to know about this codebase
@@ -94,6 +102,10 @@ Primary flow:
    - what changed
    - why it changed
    - how to test it
+
+## Release model
+
+If you're maintaining releases, keep `backend/pyproject.toml` and `frontend/package.json` aligned, then push an annotated semver tag from `main` (for example `git tag -a v0.1.0 -m "Release v0.1.0"` followed by `git push origin v0.1.0`). The publish workflow handles GHCR publishing and GitHub Release assets automatically; after it finishes, verify the release page before announcing it.
 
 ## Security issues
 
