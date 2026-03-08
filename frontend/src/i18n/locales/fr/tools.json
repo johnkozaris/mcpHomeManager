@@ -1,12 +1,13 @@
 {
+  "_machine_translated": "Ce fichier a été traduit automatiquement et peut contenir des erreurs. Les contributions et corrections sont les bienvenues.",
   "page": {
     "title": "Outils",
     "description": {
       "withCounts": "{toolsCount} outils sur {serviceCount} services • {enabledCount} activés",
-      "empty": "Gère quels outils sont exposés aux clients MCP."
+      "empty": "Gère les outils exposés aux clients MCP."
     },
     "filters": {
-      "searchPlaceholder": "Rechercher des outils",
+      "searchPlaceholder": "Rechercher un outil",
       "allServices": "Tous les services",
       "status": {
         "all": "Tous ({count})",
@@ -24,7 +25,7 @@
       "searchTitle": "Aucun outil ne correspond à ta recherche",
       "searchDescription": "Essaie un autre terme ou un autre filtre.",
       "noToolsTitle": "Aucun outil pour l’instant",
-      "noToolsDescription": "Connecte un service pour commencer à utiliser des outils."
+      "noToolsDescription": "Connecte un service pour commencer à utiliser ces outils."
     }
   }
 }

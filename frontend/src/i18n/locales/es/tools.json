@@ -1,8 +1,9 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "title": "Herramientas",
     "description": {
-      "withCounts": "{toolsCount} herramientas en {serviceCount} servicios • {enabledCount} habilitadas",
+      "withCounts": "{toolsCount, plural, one {# herramienta} other {# herramientas}} en {serviceCount, plural, one {# servicio} other {# servicios}} • {enabledCount, plural, one {# habilitada} other {# habilitadas}}",
       "empty": "Administra qué herramientas se exponen a los clientes MCP."
     },
     "filters": {
@@ -21,7 +22,7 @@
       "loading": "Cargando herramientas…"
     },
     "empty": {
-      "searchTitle": "Ninguna herramienta coincide con tu búsqueda",
+      "searchTitle": "No hay herramientas que coincidan con tu búsqueda",
       "searchDescription": "Prueba con otro término o filtro.",
       "noToolsTitle": "Aún no hay herramientas",
       "noToolsDescription": "Conecta un servicio para empezar a usar herramientas."

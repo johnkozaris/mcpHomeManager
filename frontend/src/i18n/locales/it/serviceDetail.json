@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "profileChips": {
       "label": "Profili"
@@ -22,7 +23,7 @@
       "fields": {
         "displayName": "Nome da visualizzare",
         "baseUrl": "Base URL",
-        "apiToken": "API token",
+        "apiToken": "Token API",
         "apiTokenPlaceholder": "Lascia vuoto per mantenere il token esistente",
         "configuration": "Configurazione"
       }
@@ -33,7 +34,7 @@
       },
       "tools": {
         "label": "Strumenti",
-        "sub": "{count, plural, one {# enabled} other {# enabled}}"
+        "sub": "{count, plural, one {# abilitato} other {# abilitati}}"
       },
       "lastTested": {
         "label": "Ultimo test",

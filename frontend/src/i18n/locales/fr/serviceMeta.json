@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "Ce fichier a été traduit automatiquement et peut contenir des erreurs. Les contributions et corrections sont les bienvenues.",
   "services": {
     "forgejo": {
       "label": "Forgejo",
@@ -10,7 +11,7 @@
     },
     "paperless": {
       "label": "Paperless-ngx",
-      "description": "Gestion de documents"
+      "description": "Gestion documentaire"
     },
     "immich": {
       "label": "Immich",
@@ -30,7 +31,7 @@
     },
     "nginxproxymanager": {
       "label": "Nginx Proxy Manager",
-      "description": "Reverse proxy et SSL"
+      "description": "Proxy inverse et SSL"
     },
     "portainer": {
       "label": "Portainer",
@@ -58,15 +59,15 @@
     },
     "cloudflare": {
       "label": "Cloudflare",
-      "description": "DNS, tunnels et gestion Zero Trust"
+      "description": "DNS, tunnels et Zero Trust"
     },
     "tailscale": {
       "label": "Tailscale",
       "description": "Réseau VPN maillé et gestion des appareils"
     },
     "generic_rest": {
-      "label": "REST générique",
-      "description": "Service API REST personnalisé"
+      "label": "API personnalisée",
+      "description": "Connexion à n’importe quelle API REST"
     }
   },
   "fallback": {

@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "ไฟล์นี้แปลด้วยเครื่องและอาจมีความคลาดเคลื่อน ยินดีรับข้อเสนอแนะและการแก้ไขเพิ่มเติม",
   "page": {
-    "title": "เชื่อมต่อ AI Agents",
-    "description": "เพิ่ม MCP endpoint ใน AI client ตามคำแนะนำด้านล่าง เมื่อเชื่อมต่อแล้วเครื่องมือ homelab จะถูกค้นพบอัตโนมัติ",
+    "title": "เชื่อมต่อเอเจนต์ AI",
+    "description": "เพิ่มปลายทาง MCP ของคุณลงในไคลเอนต์ AI ด้านล่าง เมื่อเชื่อมต่อแล้วเครื่องมือ homelab จะถูกค้นพบโดยอัตโนมัติ",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },
@@ -20,14 +21,14 @@
           },
           "step2": {
             "beforeFile": "ระบบจะเปิดไฟล์",
-            "afterFile": ". ถ้าไฟล์มี MCP servers อื่นอยู่แล้ว ให้เพิ่มรายการ",
-            "afterHomelab": "เข้าไปใน",
-            "afterMcpServers": "ที่มีอยู่เดิม ถ้าไม่มีให้แทนที่ทั้งไฟล์ด้วย:"
+            "afterFile": ". หากไฟล์มีเซิร์ฟเวอร์ MCP อื่นอยู่แล้ว ให้เพิ่มรายการ",
+            "afterHomelab": "ไว้ใน",
+            "afterMcpServers": "ที่มีอยู่เดิม หากไม่มีให้แทนที่ทั้งไฟล์ด้วย:"
           },
           "step3": {
             "before": "บันทึกไฟล์แล้ว",
             "emphasis": "ปิด",
-            "after": "Claude Desktop ให้หมดจริง ๆ (ไม่ใช่แค่ปิดหน้าต่าง — ให้ออกจากแอปจากเมนูบาร์หรือ system tray) แล้วค่อยเปิดใหม่"
+            "after": "Claude Desktop ให้สนิท (ไม่ใช่แค่ปิดหน้าต่าง — ให้ออกจากแอปจากเมนูบาร์หรือ system tray) แล้วเปิดใหม่อีกครั้ง"
           },
           "step4": "คุณควรเห็นไอคอนรูปค้อนในช่องแชต — คลิกเพื่อตรวจสอบว่าโหลดเครื่องมือ homelab แล้ว",
           "step5": {
@@ -37,27 +38,27 @@
             "examplePaperless": "\"ค้นหาเอกสารใบแจ้งหนี้ใน Paperless ของฉัน\""
           }
         },
-        "configPath": "ตำแหน่งไฟล์ config — macOS: ~/Library/Application Support/Claude/ · Windows: %APPDATA%\\Claude\\"
+        "configPath": "พาธไฟล์คอนฟิก — macOS: ~/Library/Application Support/Claude/ · Windows: %APPDATA%\\Claude\\"
       },
       "claudeCode": {
         "name": "Claude Code",
         "terminalLabel": "เทอร์มินัล",
         "steps": {
-          "step1": "ลงทะเบียน homelab MCP server แบบ global ด้วยคำสั่งด้านล่าง (ใช้ได้ทุกโปรเจ็กต์):",
+          "step1": "ลงทะเบียนเซิร์ฟเวอร์ MCP ของ homelab แบบทั้งระบบด้วยคำสั่งด้านล่าง (ใช้ได้กับทุกโปรเจ็กต์):",
           "step2": {
             "before": "ตรวจสอบด้วย",
             "after": "— คุณควรเห็น \"homelab\" ในผลลัพธ์"
           },
-          "step3": "เครื่องมือ homelab จะพร้อมใช้ในทุก session โดยอัตโนมัติ"
+          "step3": "เครื่องมือ homelab จะพร้อมใช้งานในทุกเซสชันโดยอัตโนมัติ"
         },
-        "removePrefix": "หากต้องการลบภายหลัง:"
+        "removePrefix": "หากต้องการลบออกภายหลัง:"
       },
       "cursor": {
         "name": "Cursor",
         "steps": {
           "step1": {
             "before": "สร้างไฟล์",
-            "after": "ที่ root ของโปรเจ็กต์ด้วยเนื้อหาด้านล่าง:"
+            "after": "ไว้ที่โฟลเดอร์รากของโปรเจ็กต์ โดยใช้เนื้อหาด้านล่าง:"
           },
           "step2": "รีสตาร์ต Cursor (Cmd+Q / ปิดแล้วเปิดใหม่) เครื่องมือควรปรากฏใน AI panel (Cmd+L / Ctrl+L) ภายใต้ \"Available Tools\"",
           "step3": "ถ้าเครื่องมือไม่ขึ้น ให้ตรวจ MCP status indicator ที่แถบสถานะด้านล่าง"
@@ -82,7 +83,7 @@
             "mcpServer": "MCP Server"
           },
           "step3": {
-            "before": "ตั้งชื่อเช่น \"My Homelab\" แล้ววาง endpoint ของคุณ:"
+            "before": "ตั้งชื่อ เช่น \"My Homelab\" แล้ววางปลายทางของคุณ:"
           },
           "step4": {
             "before": "คลิก",
@@ -92,7 +93,7 @@
         },
         "note": {
           "label": "หมายเหตุ:",
-          "body": "ChatGPT ต้องการ endpoint ที่เข้าถึงได้จากภายนอก ใช้ Caddy config ที่มีมาให้หรือ tunnel service อย่าง Cloudflare Tunnel หากเซิร์ฟเวอร์ของคุณเข้าถึงได้เฉพาะในเครือข่ายภายใน"
+          "body": "ChatGPT ต้องใช้ปลายทางที่เข้าถึงได้จากภายนอก ใช้คอนฟิก Caddy ที่มีมาให้หรือบริการ tunnel เช่น Cloudflare Tunnel หากเซิร์ฟเวอร์ของคุณเข้าถึงได้เฉพาะในเครือข่ายภายใน"
         }
       },
       "openWebui": {
@@ -109,9 +110,9 @@
           "step2": {
             "before": "คลิก",
             "addMcpConnection": "Add MCP Connection",
-            "after": ", จากนั้นใส่ชื่อและวาง endpoint ของคุณ:"
+            "after": ", แล้วใส่ชื่อพร้อมวางปลายทางของคุณ:"
           },
-          "step3": "ถ้าใช้การยืนยันตัวตนด้วย API key ให้ใส่คีย์ในช่อง authentication",
+          "step3": "หากใช้การยืนยันตัวตนด้วยคีย์ API ให้ใส่คีย์ในช่อง authentication",
           "step4": {
             "before": "คลิก",
             "save": "Save",
@@ -120,25 +121,25 @@
         }
       },
       "otherClients": {
-        "name": "MCP Clients อื่น ๆ",
-        "description": "ถ้า MCP client ของคุณต้องการรายละเอียดการเชื่อมต่อแบบเจาะจง:",
+        "name": "ไคลเอนต์ MCP อื่น ๆ",
+        "description": "หากไคลเอนต์ MCP ของคุณต้องใช้รายละเอียดการเชื่อมต่อเพิ่มเติม:",
         "details": {
           "transport": {
-            "label": "Transport",
+            "label": "การรับส่ง",
             "value": "Streamable HTTP"
           },
           "auth": {
-            "label": "Auth",
+            "label": "การยืนยันตัวตน",
             "value": "Authorization: Bearer"
           },
           "discovery": {
-            "label": "Discovery",
-            "value": "Automatic"
+            "label": "การค้นหา",
+            "value": "อัตโนมัติ"
           }
         },
         "sse": {
           "before": "สำหรับไคลเอนต์ที่รองรับเฉพาะ SSE ให้เติม",
-          "after": "ท้าย endpoint URL โดย base URL ต้องเข้าถึงได้จากเครื่องที่ AI client รันอยู่"
+          "after": "ต่อท้าย URL ปลายทาง โดย URL หลักต้องเข้าถึงได้จากเครื่องที่รันไคลเอนต์ AI"
         }
       }
     }

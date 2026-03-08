@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "errorBoundary": {
     "title": "Algo falló",
     "fallbackMessage": "Ocurrió un error inesperado.",
@@ -18,7 +19,7 @@
       "durationUnit": "ms",
       "client": "Cliente:",
       "time": "Tiempo:",
-      "viewService": "Ver Servicio"
+      "viewService": "Ver servicio"
     }
   },
   "services": {
@@ -26,11 +27,11 @@
       "scanDescription": "Escanea tu red para detectar servicios en ejecución.",
       "scan": "Escanear",
       "scanning": "Escaneando…",
-      "noKnownServices": "No se encontraron contenedores de servicios conocidos.",
+      "noKnownServices": "No se detectaron contenedores de servicios conocidos.",
       "connectWithLabel": "Conectar {label}",
       "connectService": "Conectar un servicio",
       "closeDialog": "Cerrar diálogo",
-      "dismiss": "descartar",
+      "dismiss": "Cerrar",
       "failedConnectService": "No se pudo conectar el servicio",
       "chooseService": "Elegir un servicio",
       "or": "o",
@@ -43,7 +44,7 @@
       "closeEditDialog": "Cerrar diálogo de edición de herramienta",
       "closeAddDialog": "Cerrar diálogo de agregar herramienta",
       "descriptionEdit": "Edita la definición de esta herramienta MCP.",
-      "descriptionAdd": "Crea una nueva herramienta MCP para este servicio REST genérico.",
+      "descriptionAdd": "Crea una nueva herramienta MCP para esta conexión de API personalizada.",
       "toolNameLabel": "Nombre de la herramienta",
       "toolNamePlaceholder": "p. ej. list_items",
       "toolNameValidation": "Debe comenzar con una letra; solo letras, números y guiones bajos",
@@ -51,7 +52,7 @@
       "descriptionPlaceholder": "Listar todos los elementos",
       "httpMethodLabel": "Método HTTP",
       "pathTemplateLabel": "Plantilla de ruta",
-      "pathTemplatePlaceholder": "/api/v1/elementos",
+      "pathTemplatePlaceholder": "/api/v1/items",
       "parametersSchemaLabel": "Esquema de parámetros (JSON)",
       "failedUpdate": "No se pudo actualizar la herramienta",
       "failedCreate": "No se pudo crear la herramienta",
@@ -67,11 +68,12 @@
     "importOpenApiModal": {
       "title": "Importar especificación OpenAPI",
       "closeDialog": "Cerrar diálogo de importación de OpenAPI",
-      "importedSummary": "{count, plural, one {Imported # tool} other {Imported # tools}}",
-      "partialSummary": "{importedCount, plural, one {Imported # tool} other {Imported # tools}}, {skippedCount} omitidas (ya existen)",
-      "allSkippedSummary": "{count, plural, one {All # tool already exists — nothing imported} other {All # tools already exist — nothing imported}}",
-      "ok": "OK",
-      "description": "Pega tu especificación OpenAPI 3.x a continuación (JSON o YAML). Cada operación se importará como una herramienta MCP.",
+      "importedSummary": "{count, plural, one {# herramienta importada} other {# herramientas importadas}}",
+      "partialSummary": "{importedCount, plural, one {# herramienta importada} other {# herramientas importadas}}, {skippedCount, plural, one {# omitida (ya existe)} other {# omitidas (ya existen)}}",
+      "allSkippedSummary": "{count, plural, one {Ya existía # herramienta; no se importó nada} other {Ya existían # herramientas; no se importó nada}}",
+      "warningsSummary": "{count, plural, one {# advertencia de importación} other {# advertencias de importación}}",
+      "ok": "Aceptar",
+      "description": "Pega aquí tu especificación OpenAPI 3.x (JSON o YAML). Las operaciones compatibles se importarán como herramientas MCP y las formas no compatibles se señalarán con advertencias.",
       "importFailed": "La importación falló",
       "cancel": "Cancelar",
       "importing": "Importando…",
@@ -84,8 +86,8 @@
       "fileLoaded": "Archivo cargado",
       "chooseFile": "Elegir archivo .yml",
       "servicesFound": "Servicios encontrados ({count})",
-      "apiTokenLabel": "API Token",
-      "apiTokenPlaceholder": "Ingresa el token API para este servicio",
+      "apiTokenLabel": "Token API",
+      "apiTokenPlaceholder": "Introduce el token API de este servicio",
       "createdPrefix": "Creados:",
       "skippedPrefix": "Omitidos:",
       "errorsPrefix": "Errores:",
@@ -96,7 +98,7 @@
     },
     "serviceCard": {
       "paused": "en pausa",
-      "toolsCount": "{count, plural, one {# tool} other {# tools}}"
+      "toolsCount": "{count, plural, one {# herramienta} other {# herramientas}}"
     },
     "serviceConfig": {
       "identifierLabel": "Identificador",
@@ -106,7 +108,7 @@
       "serviceTypeLabel": "Tipo de servicio",
       "baseUrlLabel": "URL base",
       "baseUrlPlaceholder": "https://service.example.com",
-      "apiTokenLabel": "API Token",
+      "apiTokenLabel": "Token API",
       "apiTokenPlaceholder": "Pega tu token API",
       "tokenGuideHide": "Ocultar token de {label}",
       "tokenGuideShow": "Cómo obtener un token de {label}",
@@ -119,12 +121,12 @@
       "optional": "opcional",
       "parameterDescriptionPlaceholder": "Descripción del parámetro (lo que ve la IA)…",
       "customized": "personalizada",
-      "hintLabel": "Nota:",
+      "hintLabel": "Sugerencia:",
       "customizedParenthetical": "(personalizada)",
-      "paramsCount": "{count, plural, one {# param} other {# params}}",
+      "paramsCount": "{count, plural, one {# parámetro} other {# parámetros}}",
       "noParams": "Sin parámetros",
-      "testEndpointReachability": "Probar accesibilidad del Endpoint",
-      "testEndpointAria": "Probar Endpoint de {toolName}",
+      "testEndpointReachability": "Probar la accesibilidad del endpoint",
+      "testEndpointAria": "Probar el endpoint de {toolName}",
       "testing": "Probando…",
       "test": "Probar",
       "editToolDefinition": "Editar definición de herramienta (método, ruta, esquema)",
@@ -143,7 +145,7 @@
       "endpointLabel": "Endpoint",
       "endpointPathPlaceholder": "/api/v1/endpoint",
       "endpointHelpPrefix": "Usa",
-      "endpointHelpSuffix": "para parámetros de ruta. Los cambios sustituyen el Endpoint predeterminado.",
+      "endpointHelpSuffix": "para parámetros de ruta. Los cambios sustituyen el endpoint predeterminado.",
       "parameterDescriptionsLabel": "Descripciones de parámetros",
       "save": "Guardar",
       "cancel": "Cancelar",
@@ -155,7 +157,7 @@
       "emptyDescription": "Las herramientas aparecerán aquí una vez que se conecte un servicio.",
       "cardView": "Vista de tarjetas",
       "jsonView": "Vista JSON",
-      "manageAccess": "Gestiona el acceso de herramientas en la página Herramientas"
+      "manageAccess": "Gestiona el acceso a las herramientas en la página Herramientas"
     }
   },
   "ui": {
@@ -165,13 +167,13 @@
       "working": "Procesando…"
     },
     "mcpEndpointBar": {
-      "label": "MCP Endpoint",
+      "label": "Endpoint MCP",
       "copied": "¡Copiado!",
       "copyUrl": "Copiar URL",
       "copyJson": "Copiar JSON"
     },
     "monacoEditor": {
-      "loading": "Cargando editor..."
+      "loading": "Cargando el editor…"
     },
     "terminalBlock": {
       "copyToClipboard": "Copiar al portapapeles",

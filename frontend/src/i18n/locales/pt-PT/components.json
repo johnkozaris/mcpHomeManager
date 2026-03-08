@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "errorBoundary": {
     "title": "Algo correu mal",
     "fallbackMessage": "Ocorreu um erro inesperado.",
@@ -8,7 +9,7 @@
     "title": "Algo correu mal",
     "fallbackMessage": "Ocorreu um erro inesperado.",
     "tryAgain": "Tentar novamente",
-    "goHome": "Ir para início"
+    "goHome": "Ir para a página inicial"
   },
   "logs": {
     "logEntryDetail": {
@@ -17,16 +18,16 @@
       "duration": "Duração:",
       "durationUnit": "ms",
       "client": "Cliente:",
-      "time": "Hora:",
-      "viewService": "Ver Serviço"
+      "time": "Data/hora:",
+      "viewService": "Ver serviço"
     }
   },
   "services": {
     "addServicePanel": {
-      "scanDescription": "Detete serviços em execução na sua rede.",
-      "scan": "Detetar",
+      "scanDescription": "Procure serviços em execução na sua rede.",
+      "scan": "Procurar",
       "scanning": "A procurar…",
-      "noKnownServices": "Não foram encontrados contentores de serviço conhecidos.",
+      "noKnownServices": "Não foram encontrados contentores de serviços conhecidos.",
       "connectWithLabel": "Ligar {label}",
       "connectService": "Ligar um serviço",
       "closeDialog": "Fechar diálogo",
@@ -43,14 +44,14 @@
       "closeEditDialog": "Fechar diálogo de edição da ferramenta",
       "closeAddDialog": "Fechar diálogo de adição da ferramenta",
       "descriptionEdit": "Edite a definição desta ferramenta MCP.",
-      "descriptionAdd": "Crie uma nova ferramenta MCP para este serviço REST genérico.",
+      "descriptionAdd": "Crie uma nova ferramenta MCP para esta ligação de API personalizada.",
       "toolNameLabel": "Nome da ferramenta",
-      "toolNamePlaceholder": "por ex. list_items",
-      "toolNameValidation": "Deve começar por uma letra; apenas letras, números e underscores",
+      "toolNamePlaceholder": "por exemplo, list_items",
+      "toolNameValidation": "Deve começar por uma letra; apenas letras, números e sublinhados (_)",
       "descriptionLabel": "Descrição",
       "descriptionPlaceholder": "Listar todos os itens",
       "httpMethodLabel": "Método HTTP",
-      "pathTemplateLabel": "Modelo de caminho",
+      "pathTemplateLabel": "Modelo do caminho",
       "pathTemplatePlaceholder": "/api/v1/items",
       "parametersSchemaLabel": "Esquema de parâmetros (JSON)",
       "failedUpdate": "Não foi possível atualizar a ferramenta",
@@ -69,9 +70,9 @@
       "closeDialog": "Fechar diálogo de importação OpenAPI",
       "importedSummary": "{count, plural, one {# ferramenta importada} other {# ferramentas importadas}}",
       "partialSummary": "{importedCount, plural, one {# ferramenta importada} other {# ferramentas importadas}}, {skippedCount} ignoradas (já existem)",
-      "allSkippedSummary": "{count, plural, one {A # ferramenta já existe — nada foi importado} other {Todas as # ferramentas já existem — nada foi importado}}",
+      "allSkippedSummary": "{count, plural, one {A ferramenta já existe — nada foi importado} other {Todas as # ferramentas já existem — nada foi importado}}",
       "ok": "OK",
-      "description": "Cole abaixo a sua especificação OpenAPI 3.x (JSON ou YAML). Cada operação será importada como uma ferramenta MCP.",
+      "description": "Cole abaixo a especificação OpenAPI 3.x (JSON ou YAML). As operações suportadas serão importadas como ferramentas MCP e as estruturas não suportadas serão assinaladas com avisos.",
       "importFailed": "A importação falhou",
       "cancel": "Cancelar",
       "importing": "A importar…",
@@ -80,9 +81,9 @@
     "importServiceModal": {
       "title": "Importar serviços",
       "closeDialog": "Fechar diálogo",
-      "yamlConfigFile": "Ficheiro de configuração YAML",
+      "yamlConfigFile": "Ficheiro YAML de configuração",
       "fileLoaded": "Ficheiro carregado",
-      "chooseFile": "Escolha um ficheiro .yml",
+      "chooseFile": "Escolha um ficheiro .yml ou .yaml",
       "servicesFound": "Serviços encontrados ({count})",
       "apiTokenLabel": "Token de API",
       "apiTokenPlaceholder": "Introduza o token de API para este serviço",
@@ -101,7 +102,7 @@
     "serviceConfig": {
       "identifierLabel": "Identificador",
       "identifierPlaceholder": "forgejo",
-      "displayNameLabel": "Nome a apresentar",
+      "displayNameLabel": "Nome de apresentação",
       "displayNamePlaceholder": "Forgejo",
       "serviceTypeLabel": "Tipo de serviço",
       "baseUrlLabel": "URL base",
@@ -117,10 +118,10 @@
       "noParameters": "Sem parâmetros",
       "required": "obrigatório",
       "optional": "opcional",
-      "parameterDescriptionPlaceholder": "Descrição do parâmetro (o que a IA vê)…",
-      "customized": "personalizado",
+      "parameterDescriptionPlaceholder": "Descrição do parâmetro (é isto que a IA vê)…",
+      "customized": "personalizada",
       "hintLabel": "Sugestão:",
-      "customizedParenthetical": "(personalizado)",
+      "customizedParenthetical": "(personalizada)",
       "paramsCount": "{count, plural, one {# parâmetro} other {# parâmetros}}",
       "noParams": "Sem parâmetros",
       "testEndpointReachability": "Testar acessibilidade do endpoint",
@@ -136,7 +137,7 @@
       "disabled": "desativada",
       "toolDescriptionLabel": "Descrição da ferramenta",
       "toolDescriptionPlaceholder": "Descreva o que esta ferramenta faz (é isto que a IA lê)…",
-      "aiHintLabel": "Sugestão para IA",
+      "aiHintLabel": "Sugestão para a IA",
       "optionalParenthetical": "(opcional)",
       "aiHintPlaceholder": "por ex. Chame ha_list_entities primeiro para descobrir IDs de entidade válidos",
       "aiHintHelpText": "É acrescentada à descrição para que a IA saiba quando e como usar esta ferramenta.",
@@ -155,7 +156,7 @@
       "emptyDescription": "As ferramentas aparecem aqui quando um serviço é ligado.",
       "cardView": "Vista em cartões",
       "jsonView": "Vista JSON",
-      "manageAccess": "Gerir acesso às ferramentas na página Ferramentas"
+      "manageAccess": "Gerir o acesso às ferramentas na página Ferramentas"
     }
   },
   "ui": {
@@ -165,7 +166,7 @@
       "working": "A processar…"
     },
     "mcpEndpointBar": {
-      "label": "Endpoint MCP",
+      "label": "URL MCP",
       "copied": "Copiado!",
       "copyUrl": "Copiar URL",
       "copyJson": "Copiar JSON"

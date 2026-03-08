@@ -1,15 +1,16 @@
 {
+  "_machine_translated": "このファイルは機械翻訳をもとにしており、不正確な表現が含まれる場合があります。修正や改善の提案を歓迎します。",
   "page": {
     "title": "ログ",
-    "description": "最近のMCPツール呼び出し、結果、レイテンシを確認します。",
+    "description": "最近の MCP ツール呼び出しの結果やレイテンシを確認します。",
     "stats": {
-      "totalCalls": "総コール数",
+      "totalCalls": "総呼び出し数",
       "successRate": "成功率",
       "errors": "エラー",
-      "avgLatency": "平均レイテンシ"
+      "avgLatency": "平均応答時間"
     },
     "chart": {
-      "callsOverTime": "コール数の推移"
+      "callsOverTime": "呼び出し数の推移"
     },
     "filters": {
       "searchPlaceholder": "ツール名で検索",
@@ -35,10 +36,10 @@
     },
     "pagination": {
       "totalEntries": "{count, plural, one {# 件} other {# 件}}",
-      "page": "ページ {current} / {total}"
+      "page": "{total} ページ中 {current} ページ"
     },
     "empty": {
-      "filteredTitle": "条件に一致するログがありません",
+      "filteredTitle": "条件に一致するログはありません",
       "filteredDescription": "フィルタ条件を調整してください。",
       "defaultTitle": "まだログがありません",
       "defaultDescription": "エージェントがツールを呼び出すと、ここにアクティビティが表示されます。"

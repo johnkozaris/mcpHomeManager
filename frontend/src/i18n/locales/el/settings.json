@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "title": "Ρυθμίσεις",
-    "description": "Εμφάνιση, endpoints και πληροφορίες συστήματος",
+    "description": "Εμφάνιση, endpoint και πληροφορίες συστήματος",
     "appearance": {
       "title": "Εμφάνιση",
       "light": "Φωτεινό",
@@ -24,11 +25,11 @@
         "userManagementLink": "Διαχείριση χρηστών",
         "accessSuffix": ".",
         "defaultsPrefix": "Προεπιλογή από",
-        "defaultsSuffix": "env var κατά την επανεκκίνηση."
+        "defaultsSuffix": "μεταβλητής περιβάλλοντος κατά την επανεκκίνηση."
       }
     },
     "apiKey": {
-      "title": "MCP API Key",
+      "title": "Κλειδί API MCP",
       "status": {
         "active": "Ενεργό",
         "notSet": "Δεν έχει οριστεί"
@@ -48,7 +49,7 @@
     "about": {
       "title": "Σχετικά",
       "versionLabel": "Έκδοση",
-      "serverLabel": "Server",
+      "serverLabel": "Διακομιστής",
       "serverFallback": "MCP Home Manager"
     },
     "endpoint": {
@@ -61,10 +62,10 @@
       "checking": "έλεγχος",
       "rows": {
         "database": "Βάση δεδομένων",
-        "mcpServer": "MCP Server",
+        "mcpServer": "Διακομιστής MCP",
         "services": "Υπηρεσίες"
       },
-      "servicesConnected": "{healthy} / {total} συνδεδεμένες"
+      "servicesConnected": "{healthy} από {total} συνδεδεμένες"
     },
     "smtp": {
       "title": "Email (SMTP)",
@@ -76,13 +77,13 @@
         "username": "Όνομα χρήστη",
         "password": "Κωδικός",
         "passwordHint": "(ορισμένος — άφησέ το κενό για να μη αλλάξει)",
-        "fromEmail": "Email αποστολέα"
+        "fromEmail": "Διεύθυνση αποστολέα"
       },
       "placeholders": {
         "host": "smtp.gmail.com",
         "username": "user@example.com",
         "passwordMasked": "••••••••",
-        "password": "App password",
+        "password": "Κωδικός εφαρμογής",
         "fromEmail": "noreply@example.com"
       },
       "toggles": {

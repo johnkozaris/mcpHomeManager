@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "guides": {
     "forgejo": {
       "steps": [
@@ -6,7 +7,7 @@
         "Fai clic sull'avatar in alto a destra e seleziona \"Settings\"",
         "Nella barra laterale sinistra, fai clic su \"Applications\"",
         "In \"Manage Access Tokens\", inserisci un nome per il token (es. \"{appName}\")",
-        "Seleziona i permessi necessari. Per accesso completo abilita tutti gli scope; minimo richiesto: read:organization, read:repository, read:issue, write:issue",
+        "Seleziona i permessi necessari. Per accesso completo abilita tutti gli scope; minimo richiesto: read:user, read:organization, read:repository, write:repository, read:issue, write:issue",
         "Fai clic su \"Generate Token\" e copia subito il token — non verrà mostrato di nuovo",
         "Incolla il token nel campo sopra"
       ]
@@ -21,15 +22,14 @@
         "Copia il token mostrato nella finestra di dialogo — verrà visualizzato una sola volta",
         "Incolla il token nel campo sopra"
       ],
-      "note": "I token di Home Assistant iniziano con eyJ…"
+      "note": "I token a lunga durata di Home Assistant sono stringhe opache mostrate una sola volta quando li crei."
     },
     "paperless": {
       "steps": [
-        "Apri la tua istanza Paperless-ngx e accedi come utente admin",
-        "Fai clic sull'icona a ingranaggio o vai su Settings nella barra di navigazione in alto",
-        "Scorri la pagina o cerca la sezione \"API\"",
-        "Qui trovi il tuo API token: fai clic sull'icona copia per copiarlo",
-        "Se non esiste ancora un token, fai clic su \"Generate\" per crearlo",
+        "Apri la tua istanza Paperless-ngx e accedi",
+        "Apri \"My Profile\" dal menu utente",
+        "Nella pagina del profilo trova la sezione del token API e copia il token mostrato lì",
+        "Se non esiste ancora un token, generane uno da lì (oppure crealo via /api/token/)",
         "Incolla il token nel campo sopra"
       ]
     },
@@ -40,9 +40,11 @@
         "Seleziona \"Account Settings\" dal menu",
         "Scorri fino a \"API Keys\"",
         "Fai clic su \"New API Key\" e assegna un nome, ad esempio \"{appName}\"",
+        "Seleziona i permessi / scope richiesti. Come minimo scegli asset.read e album.read; aggiungi server.statistics per gli strumenti di statistiche amministrative.",
         "Copia subito la chiave generata — non verrà mostrata di nuovo",
         "Incolla la chiave nel campo sopra"
-      ]
+      ],
+      "note": "Gli strumenti di statistiche del server richiedono una chiave amministratore con server.statistics. Le chiavi non admin continuano a funzionare per gli strumenti della libreria personale."
     },
     "nextcloud": {
       "steps": [
@@ -55,18 +57,18 @@
         "Copia la password generata — questo è il tuo API token",
         "Incollala nel campo sopra"
       ],
-      "note": "Formato: username:app-password (es. admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx)"
+      "note": "Formato: login-name:app-password (es. admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx). Le password app di Nextcloud possono anche comparire come password specifiche del dispositivo. Usa lo stesso nome di accesso che inserisci nella schermata di login di Nextcloud, anche se il tuo UID DAV/WebDAV è diverso."
     },
     "uptimekuma": {
       "steps": [
         "Apri la tua istanza Uptime Kuma e accedi",
-        "Fai clic su \"Settings\" nella barra laterale sinistra",
-        "Vai alla scheda \"API Keys\"",
-        "Fai clic su \"Add API Key\" e inserisci un nome, ad esempio \"{appName}\"",
-        "Imposta una data di scadenza oppure lasciala vuota per non impostarne una",
-        "Fai clic su \"Create\" e copia l'API key generata",
-        "Incolla la chiave nel campo sopra"
-      ]
+        "Usa lo stesso nome utente e la stessa password che utilizzi nell'interfaccia web di Uptime Kuma",
+        "Inseriscili nel campo sopra nel formato: username:password",
+        "Se l'account usa la 2FA, aggiungi in linea il codice corrente a 6 cifre: username:password:123456",
+        "In alternativa puoi usare un JWT di sessione ricordata da un precedente accesso web (facoltativamente con prefisso jwt:)",
+        "Non usare qui una API key — le API key servono solo per raccogliere metriche, non per gestire i monitor"
+      ],
+      "note": "Formati accettati: username:password, username:password:123456 per 2FA oppure un JWT di sessione ricordata (facoltativamente con prefisso jwt:)."
     },
     "adguard": {
       "steps": [
@@ -82,25 +84,26 @@
         "Inserisci email e password nel formato: email:password",
         "Sono le stesse credenziali che usi per accedere all'interfaccia web di NPM"
       ],
-      "note": "Formato: email:password (ad esempio, admin@example.com:changeme)"
+      "note": "Formato: email:password (ad esempio, admin@example.com:changeme). Gli account che richiedono 2FA non sono ancora supportati."
     },
     "portainer": {
       "steps": [
-        "Portainer usa le tue credenziali di accesso per l'API",
-        "Inserisci username e password nel formato: username:password",
-        "Sono le stesse credenziali che usi per accedere all'interfaccia web di Portainer"
+        "Apri la tua istanza Portainer e accedi",
+        "Apri \"My account\" e crea un access token nella sezione \"Access tokens\" (Portainer potrebbe chiederti di reinserire la password)",
+        "Copia quel token e incollalo direttamente nel campo sopra",
+        "Se non puoi usare una API key, puoi ancora usare username:password"
       ],
-      "note": "Formato: username:password (es. admin:mypassword)"
+      "note": "Preferito: incolla direttamente un access token / API key di Portainer da My account → Access tokens (inviato come X-API-Key). Fallback: username:password."
     },
     "freshrss": {
       "steps": [
         "FreshRSS usa una password API separata per l'accesso programmatico",
-        "In FreshRSS, vai su Settings → Profile → API Management",
-        "Abilita l'opzione \"Allow API access\" se non è già attiva",
+        "In FreshRSS, apri le impostazioni del profilo e poi la sezione \"Authentication / API access\"",
+        "Abilita l'accesso API se non è già attivo",
         "Imposta una password API (diversa dalla password di login)",
         "Inserisci username FreshRSS e password API nel formato: username:api_password"
       ],
-      "note": "Formato: username:api_password — la password API si imposta nelle impostazioni FreshRSS, non è la password di login"
+      "note": "Formato: username:api_password — la password API è separata dalla password di login. Se l'indirizzo API è configurato separatamente, usa il tuo URL FreshRSS più /api/greader.php."
     },
     "wallabag": {
       "steps": [
@@ -113,23 +116,24 @@
     },
     "stirlingpdf": {
       "steps": [
-        "Apri la tua istanza Stirling PDF e accedi come amministratore",
-        "Fai clic sull'icona impostazioni (⚙️) in alto a destra per aprire Account Settings",
-        "Trova o genera la tua API key personale nel pannello impostazioni",
-        "In alternativa, usa l'API key globale impostata tramite la variabile d'ambiente SECURITY_CUSTOMGLOBALAPIKEY",
+        "Apri la tua istanza Stirling PDF",
+        "Se il login è abilitato, accedi e apri Account Settings dall'icona a ingranaggio (⚙️) in alto a destra",
+        "Trova o genera lì la tua API key personale",
+        "Se il tuo deployment usa SECURITY_CUSTOMGLOBALAPIKEY, puoi usare invece quella API key globale",
         "Incolla l'API key nel campo sopra"
       ],
-      "note": "Usa l'header X-API-KEY. In Stirling PDF il login deve essere abilitato perché l'autenticazione API key funzioni"
+      "note": "Usa l'header X-API-KEY. Alcuni deployment usano una API key globale e non richiedono il login utente."
     },
     "wikijs": {
       "steps": [
-        "Apri la tua istanza Wiki.js e accedi come amministratore",
+        "Apri la tua istanza Wiki.js e accedi con un account che possa creare API key",
         "Vai su Administration → API Access",
         "Fai clic su \"Create API Key\" e imposta un nome (es. \"{appName}\")",
-        "Seleziona il gruppo permessi appropriato (consigliato Full Access)",
+        "Seleziona gli scope necessari. read:pages copre gli strumenti health/list/search/get page, read:source copre le letture source/system, write:pages serve per creare o aggiornare pagine e gli strumenti utente richiedono scope aggiuntivi come write:users o manage:users.",
         "Imposta una scadenza oppure lascia vuoto per nessuna scadenza",
         "Copia l'API key generata e incollala nel campo sopra"
-      ]
+      ],
+      "note": "Le API key di Wiki.js sono bearer token, ma anche le regole delle pagine devono consentire a questa chiave l'accesso alle pagine desiderate. Quando crei pagine, scegli la lingua/locale che quelle pagine devono usare."
     },
     "tailscale": {
       "steps": [
@@ -156,7 +160,7 @@
         "Fai clic sull'icona profilo in alto a destra e seleziona \"My Profile\"",
         "Nella barra laterale sinistra, fai clic su \"API Tokens\"",
         "Fai clic su \"Create Token\"",
-        "Usa un template di token personalizzato e imposta questi permessi: Zone:DNS:Edit, Zone:Zone:Read, Account:Cloudflare Tunnel:Edit",
+        "Usa un template di token personalizzato e imposta questi permessi: Zone:DNS:Edit, Zone:Zone:Read, Account:Cloudflare Tunnel:Read",
         "Facoltativamente limita il token a zone o account specifici",
         "Fai clic su \"Continue to summary\" poi su \"Create Token\"",
         "Copia subito il token — non verrà mostrato di nuovo",

@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "title": "Usuarios",
     "description": "Gestiona quién puede acceder a este gateway y qué servicios puede usar.",
@@ -46,7 +47,7 @@
       "loading": "Cargando usuarios…"
     },
     "list": {
-      "count": "{count, plural, one {# user} other {# users}}",
+      "count": "{count, plural, one {# usuario} other {# usuarios}}",
       "badges": {
         "admin": "Admin",
         "mcp": "Self-MCP"
@@ -57,7 +58,7 @@
       },
       "access": {
         "allServices": "Todos los servicios",
-        "serviceCount": "{count, plural, one {# service} other {# services}}"
+        "serviceCount": "{count, plural, one {# servicio} other {# servicios}}"
       }
     },
     "empty": {

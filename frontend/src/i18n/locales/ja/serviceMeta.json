@@ -1,8 +1,9 @@
 {
+  "_machine_translated": "このファイルは機械翻訳をもとにしており、不正確な表現が含まれる場合があります。修正や改善の提案を歓迎します。",
   "services": {
     "forgejo": {
       "label": "Forgejo",
-      "description": "GitホスティングとCI/CD"
+      "description": "Gitホスティングと CI/CD"
     },
     "homeassistant": {
       "label": "Home Assistant",
@@ -26,11 +27,11 @@
     },
     "adguard": {
       "label": "AdGuard Home",
-      "description": "DNSフィルタリングと広告ブロック"
+      "description": "DNS フィルタリングと広告ブロック"
     },
     "nginxproxymanager": {
       "label": "Nginx Proxy Manager",
-      "description": "リバースプロキシとSSL"
+      "description": "リバースプロキシと SSL 管理"
     },
     "portainer": {
       "label": "Portainer",
@@ -58,15 +59,15 @@
     },
     "cloudflare": {
       "label": "Cloudflare",
-      "description": "DNS、Tunnel、Zero Trust管理"
+      "description": "DNS、Cloudflare Tunnel、Zero Trust の管理"
     },
     "tailscale": {
       "label": "Tailscale",
       "description": "VPNメッシュネットワークとデバイス管理"
     },
     "generic_rest": {
-      "label": "Generic REST",
-      "description": "カスタムREST APIサービス"
+      "label": "カスタム API",
+      "description": "任意の REST API に接続"
     }
   },
   "fallback": {

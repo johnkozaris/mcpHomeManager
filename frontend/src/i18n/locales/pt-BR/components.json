@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "Este arquivo foi traduzido por máquina e pode conter imprecisões. Contribuições e correções são bem-vindas.",
   "errorBoundary": {
     "title": "Algo quebrou",
     "fallbackMessage": "Ocorreu um erro inesperado.",
@@ -43,7 +44,7 @@
       "closeEditDialog": "Fechar diálogo de edição de ferramenta",
       "closeAddDialog": "Fechar diálogo de adição de ferramenta",
       "descriptionEdit": "Edite a definição desta ferramenta MCP.",
-      "descriptionAdd": "Crie uma nova ferramenta MCP para este serviço REST genérico.",
+      "descriptionAdd": "Crie uma nova ferramenta MCP para esta conexão de API personalizada.",
       "toolNameLabel": "Nome da ferramenta",
       "toolNamePlaceholder": "ex.: lista_itens",
       "toolNameValidation": "Deve começar com uma letra; apenas letras, números e underscores",
@@ -58,7 +59,7 @@
       "cancel": "Cancelar",
       "saving": "Salvando…",
       "creating": "Criando…",
-      "saveChanges": "Salvar",
+      "saveChanges": "Salvar alterações",
       "createTool": "Criar ferramenta"
     },
     "appCard": {
@@ -66,12 +67,13 @@
     },
     "importOpenApiModal": {
       "title": "Importar especificação OpenAPI",
-      "closeDialog": "Fechar caixa de diálogo de importação OpenAPI",
+      "closeDialog": "Fechar diálogo de importação da OpenAPI",
       "importedSummary": "{count, plural, one {# ferramenta importada} other {# ferramentas importadas}}",
-      "partialSummary": "{importedCount, plural, one {# ferramenta importada} other {# ferramentas importadas}}, {skippedCount} ignoradas (já existem)",
-      "allSkippedSummary": "{count, plural, one {A # ferramenta já existe — nada foi importado} other {Todas as # ferramentas já existem — nada foi importado}}",
+      "partialSummary": "{importedCount, plural, one {# ferramenta importada} other {# ferramentas importadas}}, {skippedCount, plural, one {# ignorada (já existe)} other {# ignoradas (já existem)}}",
+      "allSkippedSummary": "{count, plural, one {# ferramenta já existe — nada foi importado} other {As # ferramentas já existem — nada foi importado}}",
+      "warningsSummary": "{count, plural, one {# aviso de importação} other {# avisos de importação}}",
       "ok": "OK",
-      "description": "Cole sua especificação OpenAPI 3.x abaixo (JSON ou YAML). Cada operação será importada como uma ferramenta MCP.",
+      "description": "Cole sua especificação OpenAPI 3.x abaixo (JSON ou YAML). As operações compatíveis serão importadas como ferramentas MCP, e estruturas não compatíveis serão sinalizadas com avisos.",
       "importFailed": "Não foi possível importar",
       "cancel": "Cancelar",
       "importing": "Importando…",

@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "title": "Configuración",
-    "description": "Apariencia, Endpoints e información del sistema",
+    "description": "Apariencia, endpoint e información del sistema",
     "appearance": {
       "title": "Apariencia",
       "light": "Claro",
@@ -19,7 +20,7 @@
       "currentUserFallback": "admin",
       "selfMcp": {
         "title": "Herramientas propias MCP",
-        "description": "Cuando está habilitado, los agentes de IA pueden gestionar este gateway a través del propio MCP: listar servicios, alternar herramientas, agregar conexiones y ver registros sin usar la UI web.",
+        "description": "Cuando está habilitado, los agentes de IA pueden gestionar este gateway desde el propio MCP: listar servicios, activar o desactivar herramientas, añadir conexiones y ver registros sin usar la interfaz web.",
         "accessPrefix": "El acceso se otorga por usuario en",
         "userManagementLink": "Gestión de usuarios",
         "accessSuffix": ".",
@@ -28,17 +29,17 @@
       }
     },
     "apiKey": {
-      "title": "MCP API Key",
+      "title": "Clave API de MCP",
       "status": {
-        "active": "Activo",
-        "notSet": "Sin configurar"
+        "active": "Activa",
+        "notSet": "No configurada"
       },
-      "description": "Los agentes de IA (Claude, Cursor, ChatGPT) usan esta clave para conectarse a tu Endpoint MCP.",
-      "revealedTitle": "Tu API Key",
+      "description": "Los agentes de IA (Claude, Cursor, ChatGPT) usan esta clave para conectarse a tu endpoint MCP.",
+      "revealedTitle": "Tu clave API",
       "actions": {
-        "regenerate": "Regenerar API Key",
-        "generate": "Generar API Key",
-        "reveal": "Mostrar API Key",
+        "regenerate": "Regenerar clave API",
+        "generate": "Generar clave API",
+        "reveal": "Mostrar clave API",
         "revoke": "Revocar"
       },
       "errors": {
@@ -49,10 +50,10 @@
       "title": "Acerca de",
       "versionLabel": "Versión",
       "serverLabel": "Servidor",
-      "serverFallback": "MCP Manager"
+      "serverFallback": "MCP Home Manager"
     },
     "endpoint": {
-      "title": "MCP Endpoint",
+      "title": "Endpoint MCP",
       "description": "Tus agentes de IA se conectan a esta URL",
       "agentGuide": "Guía de configuración del agente"
     },
@@ -102,9 +103,9 @@
     },
     "dialogs": {
       "revokeKey": {
-        "title": "Revocar API Key",
+        "title": "Revocar clave API",
         "description": "Esto desconectará de inmediato a cualquier agente de IA que use esta clave. Puedes generar una nueva después.",
-        "confirm": "Revocar API Key"
+        "confirm": "Revocar clave"
       }
     }
   }

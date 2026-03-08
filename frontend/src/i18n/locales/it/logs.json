@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "title": "Log",
     "description": "Consulta le chiamate recenti agli strumenti MCP, gli esiti e la latenza.",
@@ -34,7 +35,7 @@
       }
     },
     "pagination": {
-      "totalEntries": "{count, plural, one {# entry} other {# entries}}",
+      "totalEntries": "{count, plural, one {# voce} other {# voci}}",
       "page": "Pagina {current} di {total}"
     },
     "empty": {

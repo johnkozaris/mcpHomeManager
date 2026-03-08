@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "services": {
     "forgejo": {
       "label": "Forgejo",
@@ -18,7 +19,7 @@
     },
     "nextcloud": {
       "label": "Nextcloud",
-      "description": "Armazenamento na nuvem e sincronização"
+      "description": "Armazenamento e sincronização na nuvem"
     },
     "uptimekuma": {
       "label": "Uptime Kuma",
@@ -65,8 +66,8 @@
       "description": "Rede mesh VPN e gestão de dispositivos"
     },
     "generic_rest": {
-      "label": "REST genérico",
-      "description": "Serviço de API REST personalizado"
+      "label": "API personalizada",
+      "description": "Ligar qualquer API REST"
     }
   },
   "fallback": {

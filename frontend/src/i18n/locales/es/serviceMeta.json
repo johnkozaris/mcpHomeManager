@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "services": {
     "forgejo": {
       "label": "Forgejo",
@@ -62,11 +63,11 @@
     },
     "tailscale": {
       "label": "Tailscale",
-      "description": "Mesh VPN y gestión de dispositivos"
+      "description": "VPN en malla y gestión de dispositivos"
     },
     "generic_rest": {
-      "label": "REST genérico",
-      "description": "Servicio API REST personalizado"
+      "label": "API personalizada",
+      "description": "Conecta cualquier API REST"
     }
   },
   "fallback": {

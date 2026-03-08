@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "Diese Datei wurde maschinell übersetzt und kann Ungenauigkeiten enthalten. Beiträge und Korrekturen sind willkommen.",
   "page": {
     "title": "Einstellungen",
-    "description": "Darstellung, Endpoints und Systeminformationen",
+    "description": "Darstellung, Endpunkte und Systeminformationen",
     "appearance": {
       "title": "Darstellung",
       "light": "Hell",
@@ -19,7 +20,7 @@
       "currentUserFallback": "admin",
       "selfMcp": {
         "title": "Self-MCP-Tools",
-        "description": "Wenn aktiviert, können AI-Agenten dieses Gateway über MCP selbst verwalten – Services auflisten, Tools umschalten, Verbindungen hinzufügen und Logs ansehen, ohne die Weboberfläche zu nutzen.",
+        "description": "Wenn aktiviert, können KI-Agenten dieses Gateway direkt über MCP verwalten – Services auflisten, Tools aktivieren oder deaktivieren, Verbindungen hinzufügen und Protokolle ansehen, ohne die Weboberfläche zu verwenden.",
         "accessPrefix": "Der Zugriff wird pro Benutzer in der",
         "userManagementLink": "Benutzerverwaltung",
         "accessSuffix": " konfiguriert.",
@@ -33,7 +34,7 @@
         "active": "Aktiv",
         "notSet": "Nicht gesetzt"
       },
-      "description": "AI-Agenten (Claude, Cursor, ChatGPT) verwenden diesen Schlüssel, um sich mit deinem MCP-Endpoint zu verbinden.",
+      "description": "KI-Agenten (Claude, Cursor, ChatGPT) verwenden diesen Schlüssel, um sich mit deinem MCP-Endpunkt zu verbinden.",
       "revealedTitle": "Dein API-Schlüssel",
       "actions": {
         "regenerate": "Schlüssel neu generieren",
@@ -52,8 +53,8 @@
       "serverFallback": "MCP Manager"
     },
     "endpoint": {
-      "title": "MCP-Endpoint",
-      "description": "Deine AI-Agenten verbinden sich mit dieser URL.",
+      "title": "MCP-Endpunkt",
+      "description": "Deine KI-Agenten verbinden sich mit dieser URL.",
       "agentGuide": "Anleitung zur Agenteneinrichtung"
     },
     "systemHealth": {
@@ -62,7 +63,7 @@
       "rows": {
         "database": "Datenbank",
         "mcpServer": "MCP-Server",
-        "services": "Services"
+        "services": "Dienste"
       },
       "servicesConnected": "{healthy} / {total} verbunden"
     },
@@ -103,7 +104,7 @@
     "dialogs": {
       "revokeKey": {
         "title": "API-Schlüssel widerrufen",
-        "description": "Dadurch werden alle AI-Agenten, die diesen Schlüssel verwenden, sofort getrennt. Danach kannst du einen neuen Schlüssel generieren.",
+        "description": "Dadurch werden alle KI-Agenten, die diesen Schlüssel verwenden, sofort getrennt. Danach kannst du einen neuen Schlüssel generieren.",
         "confirm": "Schlüssel widerrufen"
       }
     }

@@ -1,9 +1,10 @@
 {
+  "_machine_translated": "이 파일은 기계 번역을 바탕으로 작성되어 부정확한 표현이 있을 수 있습니다. 수정과 개선 제안을 환영합니다.",
   "page": {
     "title": "도구",
     "description": {
-      "withCounts": "{serviceCount}개 서비스의 도구 {toolsCount}개 • 활성화 {enabledCount}개",
-      "empty": "MCP 클라이언트에 노출할 도구를 관리하세요."
+      "withCounts": "서비스 {serviceCount}개, 도구 {toolsCount}개 • 활성 {enabledCount}개",
+      "empty": "MCP 클라이언트에 노출할 도구를 관리합니다."
     },
     "filters": {
       "searchPlaceholder": "도구 검색",

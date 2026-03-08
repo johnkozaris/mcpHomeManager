@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "Ce fichier a été traduit automatiquement et peut contenir des erreurs. Les contributions et corrections sont les bienvenues.",
   "items": {
     "home": "Accueil",
     "services": "Services",
@@ -9,12 +10,12 @@
     "settings": "Paramètres"
   },
   "actions": {
-    "collapseSidebar": "Réduire la barre latérale",
+    "collapseSidebar": "Replier la barre latérale",
     "expandSidebar": "Déplier la barre latérale",
-    "collapse": "Réduire",
+    "collapse": "Replier",
     "expand": "Déplier",
-    "switchToDarkMode": "Mode sombre",
-    "switchToLightMode": "Mode clair"
+    "switchToDarkMode": "Passer au mode sombre",
+    "switchToLightMode": "Passer au mode clair"
   },
   "theme": {
     "dark": "Sombre",

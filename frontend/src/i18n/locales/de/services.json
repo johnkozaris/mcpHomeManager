@@ -1,6 +1,7 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "listPage": {
-    "title": "Services",
+    "title": "Dienste",
     "description": "Verbinde Services und verwalte deren Status, Tools und Konfiguration.",
     "actions": {
       "export": "Exportieren",

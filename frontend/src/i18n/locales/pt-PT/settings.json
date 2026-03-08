@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "title": "Definições",
-    "description": "Aspeto, endpoints e informações do sistema",
+    "description": "Aspeto, URLs e informações do sistema",
     "appearance": {
       "title": "Aspeto",
       "light": "Claro",
@@ -18,17 +19,17 @@
       "signedInAs": "Sessão iniciada como",
       "currentUserFallback": "admin",
       "selfMcp": {
-        "title": "Ferramentas Self-MCP",
-        "description": "Quando ativado, os agentes de IA podem gerir este gateway através do próprio MCP — listar serviços, alternar ferramentas, adicionar ligações e consultar registos sem usar a interface web.",
+        "title": "Ferramentas internas via MCP",
+        "description": "Quando ativado, os agentes de IA podem gerir este gateway através do próprio MCP — listar serviços, ativar ou desativar ferramentas, adicionar ligações e consultar registos sem recorrer à interface web.",
         "accessPrefix": "O acesso é concedido por utilizador em",
         "userManagementLink": "Gestão de utilizadores",
         "accessSuffix": ".",
-        "defaultsPrefix": "Predefinições da variável de ambiente",
-        "defaultsSuffix": "ao reiniciar."
+        "defaultsPrefix": "Usa as predefinições da variável de ambiente",
+        "defaultsSuffix": "após reinício."
       }
     },
     "apiKey": {
-      "title": "Chave de API MCP",
+      "title": "Chave de API do MCP",
       "status": {
         "active": "Ativa",
         "notSet": "Não definida"
@@ -52,7 +53,7 @@
       "serverFallback": "MCP Manager"
     },
     "endpoint": {
-      "title": "Endpoint MCP",
+      "title": "URL MCP",
       "description": "Os seus agentes de IA ligam-se a este URL",
       "agentGuide": "Guia de configuração de agentes"
     },

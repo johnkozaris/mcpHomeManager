@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "このファイルは機械翻訳をもとにしており、不正確な表現が含まれる場合があります。修正や改善の提案を歓迎します。",
   "page": {
     "title": "設定",
-    "description": "表示、endpoint、システム情報",
+    "description": "表示設定、エンドポイント、システム情報",
     "appearance": {
       "title": "表示",
       "light": "ライト",
@@ -18,8 +19,8 @@
       "signedInAs": "ログイン中:",
       "currentUserFallback": "admin",
       "selfMcp": {
-        "title": "Self-MCPツール",
-        "description": "有効にすると、AIエージェントはMCP経由でこのgatewayを管理できます。Web UIを使わずに、サービス一覧、ツールの切り替え、接続追加、ログ確認が可能です。",
+        "title": "セルフ管理用 MCP ツール",
+        "description": "有効にすると、AI エージェントが MCP 経由でこのゲートウェイ自体を管理できるようになります。Web UI を使わずに、サービスの一覧表示、ツールの切り替え、接続の追加、ログの閲覧を行えます。",
         "accessPrefix": "アクセス権はユーザーごとに",
         "userManagementLink": "ユーザー管理",
         "accessSuffix": "で設定します。",
@@ -28,31 +29,31 @@
       }
     },
     "apiKey": {
-      "title": "MCP API key",
+      "title": "MCP APIキー",
       "status": {
         "active": "有効",
         "notSet": "未設定"
       },
-      "description": "AIエージェント（Claude、Cursor、ChatGPT）はこのkeyを使ってMCP endpointに接続します。",
-      "revealedTitle": "現在のAPI key",
+      "description": "AI エージェント（Claude、Cursor、ChatGPT）はこのキーを使って MCP エンドポイントに接続します。",
+      "revealedTitle": "現在の API キー",
       "actions": {
-        "regenerate": "keyを再生成",
-        "generate": "keyを生成",
-        "reveal": "keyを表示",
+        "regenerate": "キーを再生成",
+        "generate": "キーを生成",
+        "reveal": "キーを表示",
         "revoke": "無効化"
       },
       "errors": {
-        "revealFailed": "keyを表示できませんでした。代わりに再生成をお試しください。"
+        "revealFailed": "キーを表示できませんでした。代わりに再生成をお試しください。"
       }
     },
     "about": {
-      "title": "About",
+      "title": "このアプリについて",
       "versionLabel": "バージョン",
       "serverLabel": "サーバー",
       "serverFallback": "MCP Manager"
     },
     "endpoint": {
-      "title": "MCP endpoint",
+      "title": "MCP エンドポイント",
       "description": "AIエージェントはこのURLに接続します",
       "agentGuide": "エージェント設定ガイド"
     },
@@ -64,7 +65,7 @@
         "mcpServer": "MCPサーバー",
         "services": "サービス"
       },
-      "servicesConnected": "{healthy} / {total} 接続済み"
+      "servicesConnected": "{healthy} / {total} 件接続済み"
     },
     "smtp": {
       "title": "メール（SMTP）",
@@ -102,9 +103,9 @@
     },
     "dialogs": {
       "revokeKey": {
-        "title": "API keyを無効化",
-        "description": "このkeyを使っているAIエージェントは即座に切断されます。その後で新しいkeyを生成できます。",
-        "confirm": "keyを無効化"
+        "title": "APIキーを無効化",
+        "description": "このキーを使っている AI エージェントは即座に切断されます。その後で新しいキーを生成できます。",
+        "confirm": "キーを無効化"
       }
     }
   }

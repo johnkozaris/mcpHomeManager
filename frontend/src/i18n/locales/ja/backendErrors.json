@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "http.bad_request": "不正なリクエストです。",
   "http.unauthorized": "認証が必要です。",
   "http.forbidden": "この操作を実行する権限がありません。",

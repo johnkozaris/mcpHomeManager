@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "이 파일은 기계 번역을 바탕으로 작성되어 부정확한 표현이 있을 수 있습니다. 수정과 개선 제안을 환영합니다.",
   "page": {
     "title": "AI 에이전트 연결",
-    "description": "아래 AI 클라이언트에 MCP endpoint를 추가하세요. 연결되면 홈랩 도구가 자동으로 감지됩니다.",
+    "description": "아래 AI 클라이언트에 MCP 엔드포인트를 추가하세요. 연결되면 홈랩 도구가 자동으로 감지됩니다.",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },
@@ -12,11 +13,11 @@
         "steps": {
           "step1": {
             "before": "다음으로 이동하세요:",
-            "settings": "설정",
+            "settings": "\"Settings\"",
             "middle": "(톱니바퀴 아이콘) →",
-            "developer": "개발자",
+            "developer": "\"Developer\"",
             "and": "→",
-            "editConfig": "설정 파일 편집"
+            "editConfig": "\"Edit Config\""
           },
           "step2": {
             "beforeFile": "그러면",
@@ -37,7 +38,7 @@
             "examplePaperless": "\"Paperless 문서에서 인보이스를 찾아줘\""
           }
         },
-        "configPath": "설정 경로 — macOS: ~/Library/Application Support/Claude/ · Windows: %APPDATA%\\Claude\\"
+        "configPath": "설정 파일 경로 — macOS: ~/Library/Application Support/Claude/ · Windows: %APPDATA%\\Claude\\"
       },
       "claudeCode": {
         "name": "Claude Code",
@@ -67,32 +68,32 @@
         "name": "ChatGPT",
         "steps": {
           "step1": {
-            "before": "다음으로 이동:",
-            "settings": "설정",
+            "before": "다음으로 이동하세요:",
+            "settings": "\"Settings\"",
             "middle": "→",
-            "appsAndConnectors": "앱 및 커넥터",
+            "appsAndConnectors": "\"Apps & Connectors\"",
             "after": "→ \"Advanced settings\"에서",
-            "developerMode": "개발자 모드",
+            "developerMode": "\"Developer mode\"",
             "suffix": "활성화"
           },
           "step2": {
             "before": "\"Apps & Connectors\"로 돌아가",
-            "create": "생성",
+            "create": "\"Create\"",
             "and": "→",
-            "mcpServer": "MCP Server 선택"
+            "mcpServer": "\"MCP Server\""
           },
           "step3": {
-            "before": "\"My Homelab\" 같은 이름을 입력하고 endpoint를 붙여넣으세요:"
+            "before": "\"My Homelab\" 같은 이름을 입력하고 엔드포인트를 붙여넣으세요:"
           },
           "step4": {
             "before": "",
-            "create": "생성",
+            "create": "\"Create\"",
             "after": "를 클릭하면 새 대화에서 홈랩 도구가 자동 감지됩니다"
           }
         },
         "note": {
           "label": "참고:",
-          "body": "ChatGPT는 외부에서 접근 가능한 endpoint가 필요합니다. 서버가 로컬 전용이면 포함된 Caddy 설정이나 Cloudflare Tunnel 같은 터널 서비스를 사용하세요."
+          "body": "ChatGPT는 외부에서 접근 가능한 엔드포인트가 필요합니다. 서버가 로컬 전용이라면 포함된 Caddy 설정이나 Cloudflare Tunnel 같은 터널 서비스를 사용하세요."
         }
       },
       "openWebui": {
@@ -100,28 +101,28 @@
         "steps": {
           "step1": {
             "before": "다음으로 이동:",
-            "adminPanel": "관리자 패널",
+            "adminPanel": "\"Admin Panel\"",
             "and": "→",
-            "settings": "설정",
+            "settings": "\"Settings\"",
             "then": "→",
-            "tools": "도구"
+            "tools": "\"Tools\""
           },
           "step2": {
             "before": "",
-            "addMcpConnection": "MCP 연결 추가",
-            "after": "을 클릭하고 이름을 입력한 뒤 endpoint를 붙여넣으세요:"
+            "addMcpConnection": "\"Add MCP Connection\"",
+            "after": "을 클릭하고 이름을 입력한 뒤 엔드포인트를 붙여넣으세요:"
           },
-          "step3": "API key 인증을 사용하는 경우 인증 필드에 key를 입력하세요",
+          "step3": "API 키 인증을 사용하는 경우 인증 필드에 키를 입력하세요",
           "step4": {
             "before": "",
-            "save": "저장",
+            "save": "\"Save\"",
             "after": "를 클릭하면 Open WebUI가 연결을 테스트하고 도구를 감지합니다. 이제 모든 사용자가 어떤 LLM이든 사용할 수 있습니다"
           }
         }
       },
       "otherClients": {
         "name": "기타 MCP 클라이언트",
-        "description": "MCP 클라이언트가 구체적인 연결 정보를 요구하면 다음을 사용하세요:",
+        "description": "MCP 클라이언트가 구체적인 연결 정보를 요구한다면 다음 값을 사용하세요:",
         "details": {
           "transport": {
             "label": "전송 방식",
@@ -137,7 +138,7 @@
           }
         },
         "sse": {
-          "before": "SSE 전용 클라이언트는 endpoint URL 끝에",
+          "before": "SSE 전용 클라이언트는 엔드포인트 URL 끝에",
           "after": "를 붙이세요. 기본 URL은 AI 클라이언트가 실행되는 환경에서 접근할 수 있어야 합니다."
         }
       }

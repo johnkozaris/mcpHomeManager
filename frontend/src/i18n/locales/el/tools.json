@@ -1,9 +1,10 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "title": "Εργαλεία",
     "description": {
       "withCounts": "{toolsCount} εργαλεία σε {serviceCount} υπηρεσίες • {enabledCount} ενεργά",
-      "empty": "Διαχειρίσου ποια εργαλεία είναι διαθέσιμα στους MCP Clients."
+      "empty": "Διαχειρίσου ποια εργαλεία είναι διαθέσιμα στους πελάτες MCP."
     },
     "filters": {
       "searchPlaceholder": "Αναζήτηση εργαλείων",

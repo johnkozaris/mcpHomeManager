@@ -1,8 +1,9 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "services": {
     "forgejo": {
       "label": "Forgejo",
-      "description": "Hosting Git e CI/CD"
+      "description": "Piattaforma Git e CI/CD"
     },
     "homeassistant": {
       "label": "Home Assistant",
@@ -50,7 +51,7 @@
     },
     "wikijs": {
       "label": "Wiki.js",
-      "description": "Knowledge base del team"
+      "description": "Base di conoscenza del team"
     },
     "calibreweb": {
       "label": "Calibre-Web",
@@ -65,8 +66,8 @@
       "description": "Rete VPN mesh e gestione dispositivi"
     },
     "generic_rest": {
-      "label": "Generic REST",
-      "description": "Servizio API REST personalizzato"
+      "label": "API personalizzata",
+      "description": "Collega qualsiasi API REST"
     }
   },
   "fallback": {

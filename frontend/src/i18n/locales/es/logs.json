@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "title": "Registros",
-    "description": "Revisa las llamadas recientes de herramientas MCP, sus resultados y la latencia.",
+    "description": "Revisa las llamadas recientes a herramientas MCP, sus resultados y la latencia.",
     "stats": {
       "totalCalls": "Llamadas totales",
       "successRate": "Tasa de éxito",
@@ -9,13 +10,13 @@
       "avgLatency": "Latencia media"
     },
     "chart": {
-      "callsOverTime": "Llamadas en el tiempo"
+      "callsOverTime": "Llamadas a lo largo del tiempo"
     },
     "filters": {
       "searchPlaceholder": "Buscar por nombre de herramienta",
       "allServices": "Todos los servicios",
       "status": {
-        "all": "Todas",
+        "all": "Todos",
         "success": "Éxito",
         "error": "Error"
       }
@@ -34,11 +35,11 @@
       }
     },
     "pagination": {
-      "totalEntries": "{count, plural, one {# entry} other {# entries}}",
+      "totalEntries": "{count, plural, one {# registro} other {# registros}}",
       "page": "Página {current} de {total}"
     },
     "empty": {
-      "filteredTitle": "No hay entradas que coincidan",
+      "filteredTitle": "No hay registros que coincidan",
       "filteredDescription": "Prueba ajustando los filtros.",
       "defaultTitle": "Aún no hay registros",
       "defaultDescription": "La actividad de herramientas aparecerá aquí cuando los agentes empiecen a hacer llamadas."

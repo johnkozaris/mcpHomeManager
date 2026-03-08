@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "profileChips": {
       "label": "โปรไฟล์"
@@ -22,7 +23,7 @@
       "fields": {
         "displayName": "ชื่อที่แสดง",
         "baseUrl": "Base URL",
-        "apiToken": "API token",
+        "apiToken": "โทเค็น API",
         "apiTokenPlaceholder": "เว้นว่างไว้เพื่อใช้ token เดิม",
         "configuration": "การตั้งค่า"
       }
@@ -53,7 +54,7 @@
       "close": "ปิดตัวอย่าง"
     },
     "tools": {
-      "title": "MCP tools ({count})",
+      "title": "เครื่องมือ MCP ({count})",
       "actions": {
         "importOpenApi": "นำเข้า OpenAPI",
         "addTool": "เพิ่มเครื่องมือ"

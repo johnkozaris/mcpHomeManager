@@ -1,9 +1,10 @@
 {
+  "_machine_translated": "Ce fichier a été traduit automatiquement et peut contenir des erreurs. Les contributions et corrections sont les bienvenues.",
   "page": {
     "title": "Journaux",
-    "description": "Consulte les derniers appels d'outils MCP, leurs résultats et leur latence.",
+    "description": "Consulte les appels récents aux outils MCP, leurs résultats et leur latence.",
     "stats": {
-      "totalCalls": "Nombre total d’appels",
+      "totalCalls": "Total des appels",
       "successRate": "Taux de réussite",
       "errors": "Erreurs",
       "avgLatency": "Latence moyenne"
@@ -12,7 +13,7 @@
       "callsOverTime": "Appels au fil du temps"
     },
     "filters": {
-      "searchPlaceholder": "Rechercher par nom d’outil",
+      "searchPlaceholder": "Rechercher un outil",
       "allServices": "Tous les services",
       "status": {
         "all": "Tous",
@@ -34,14 +35,14 @@
       }
     },
     "pagination": {
-      "totalEntries": "{count, plural, one {# entry} other {# entries}}",
+      "totalEntries": "{count, plural, one {# entrée} other {# entrées}}",
       "page": "Page {current} sur {total}"
     },
     "empty": {
-      "filteredTitle": "Aucune entrée de journal ne correspond aux filtres",
-      "filteredDescription": "Essaie d'ajuster tes filtres.",
+      "filteredTitle": "Aucune entrée ne correspond à ces critères",
+      "filteredDescription": "Essaie d’ajuster tes filtres.",
       "defaultTitle": "Aucune entrée de journal pour l’instant",
-      "defaultDescription": "L'activité des outils apparaîtra ici dès que les agents commenceront à appeler des outils."
+      "defaultDescription": "L’activité des outils apparaîtra ici dès que des agents effectueront des appels."
     }
   }
 }

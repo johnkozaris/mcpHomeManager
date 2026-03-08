@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "Diese Datei wurde maschinell übersetzt und kann Ungenauigkeiten enthalten. Beiträge und Korrekturen sind willkommen.",
   "page": {
-    "title": "AI-Agenten verbinden",
-    "description": "Füge deinen MCP-Endpoint in einen beliebigen AI-Client ein. Nach der Verbindung werden deine Homelab-Tools automatisch erkannt.",
+    "title": "KI-Agenten verbinden",
+    "description": "Füge deinen MCP-Endpunkt unten in einen beliebigen KI-Client ein. Nach der Verbindung werden deine Homelab-Tools automatisch erkannt.",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },
@@ -59,7 +60,7 @@
             "before": "Erstelle",
             "after": "im Projektstammverzeichnis mit folgendem Inhalt:"
           },
-          "step2": "Starte Cursor neu (Cmd+Q / schließen und neu öffnen). Deine Tools sollten im AI-Panel (Cmd+L / Strg+L) unter „Available Tools“ erscheinen.",
+          "step2": "Starte Cursor neu (Cmd+Q / schließen und neu öffnen). Deine Tools sollten im KI-Panel (Cmd+L / Strg+L) unter „Available Tools“ erscheinen.",
           "step3": "Wenn keine Tools angezeigt werden, prüfe den MCP-Statusindikator in der unteren Statusleiste."
         }
       },
@@ -82,7 +83,7 @@
             "mcpServer": "MCP Server"
           },
           "step3": {
-            "before": "Gib einen Namen wie „My Homelab“ ein und füge deinen Endpoint ein:"
+            "before": "Gib einen Namen wie „My Homelab“ ein und füge deinen Endpunkt ein:"
           },
           "step4": {
             "before": "Klicke auf",
@@ -92,7 +93,7 @@
         },
         "note": {
           "label": "Hinweis:",
-          "body": "ChatGPT benötigt einen öffentlich erreichbaren Endpoint. Verwende die mitgelieferte Caddy-Konfiguration oder einen Tunneldienst wie Cloudflare Tunnel, wenn dein Server nur lokal erreichbar ist."
+          "body": "ChatGPT benötigt einen öffentlich erreichbaren Endpunkt. Verwende die mitgelieferte Caddy-Konfiguration oder einen Tunneldienst wie Cloudflare Tunnel, wenn dein Server nur lokal erreichbar ist."
         }
       },
       "openWebui": {
@@ -109,7 +110,7 @@
           "step2": {
             "before": "Klicke auf",
             "addMcpConnection": "Add MCP Connection",
-            "after": ", gib einen Namen ein und füge deinen Endpoint ein:"
+            "after": ", gib einen Namen ein und füge deinen Endpunkt ein:"
           },
           "step3": "Wenn du API-Key-Authentifizierung verwendest, gib deinen Schlüssel im Authentifizierungsfeld ein.",
           "step4": {
@@ -138,7 +139,7 @@
         },
         "sse": {
           "before": "Für reine SSE-Clients hänge",
-          "after": "an die Endpoint-URL an. Die Basis-URL muss von dort erreichbar sein, wo dein AI-Client läuft."
+          "after": "an die Endpunkt-URL an. Die Basis-URL muss von dort erreichbar sein, wo dein KI-Client läuft."
         }
       }
     }

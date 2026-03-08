@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "Este arquivo foi traduzido por máquina e pode conter imprecisões. Contribuições e correções são bem-vindas.",
   "services": {
     "forgejo": {
       "label": "Forgejo",
@@ -65,8 +66,8 @@
       "description": "Rede mesh VPN e gerenciamento de dispositivos"
     },
     "generic_rest": {
-      "label": "REST genérico",
-      "description": "Serviço de API REST personalizada"
+      "label": "API personalizada",
+      "description": "Conecte qualquer API REST"
     }
   },
   "fallback": {

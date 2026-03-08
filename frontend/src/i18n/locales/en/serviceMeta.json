@@ -65,8 +65,8 @@
       "description": "VPN mesh network and device management"
     },
     "generic_rest": {
-      "label": "Generic REST",
-      "description": "Custom REST API service"
+      "label": "Custom API",
+      "description": "Connect any REST API"
     }
   },
   "fallback": {

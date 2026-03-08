@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "profileChips": {
       "label": "プロファイル"
@@ -22,8 +23,8 @@
       "fields": {
         "displayName": "表示名",
         "baseUrl": "Base URL",
-        "apiToken": "API token",
-        "apiTokenPlaceholder": "既存のtokenを保持する場合は空欄",
+        "apiToken": "APIトークン",
+        "apiTokenPlaceholder": "既存のトークンを保持する場合は空欄",
         "configuration": "設定"
       }
     },

@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "errorBoundary": {
     "title": "Qualcosa è andato storto",
     "fallbackMessage": "Si è verificato un problema imprevisto.",
@@ -18,7 +19,7 @@
       "durationUnit": "ms",
       "client": "Client:",
       "time": "Ora:",
-      "viewService": "Apri servizio"
+      "viewService": "Visualizza servizio"
     }
   },
   "services": {
@@ -43,7 +44,7 @@
       "closeEditDialog": "Chiudi la finestra di modifica strumento",
       "closeAddDialog": "Chiudi la finestra di aggiunta strumento",
       "descriptionEdit": "Modifica la definizione di questo strumento MCP.",
-      "descriptionAdd": "Crea un nuovo strumento MCP per questo servizio REST generico.",
+      "descriptionAdd": "Crea un nuovo strumento MCP per questa connessione API personalizzata.",
       "toolNameLabel": "Nome dello strumento",
       "toolNamePlaceholder": "es. list_items",
       "toolNameValidation": "Deve iniziare con una lettera; solo lettere, numeri e trattini bassi",
@@ -67,11 +68,12 @@
     "importOpenApiModal": {
       "title": "Importa specifica OpenAPI",
       "closeDialog": "Chiudi la finestra di importazione OpenAPI",
-      "importedSummary": "{count, plural, one {Imported # tool} other {Imported # tools}}",
-      "partialSummary": "{importedCount, plural, one {Imported # tool} other {Imported # tools}}, {skippedCount} non importati (già esistenti)",
-      "allSkippedSummary": "{count, plural, one {All # tool already exists — nothing imported} other {All # tools already exist — nothing imported}}",
+      "importedSummary": "{count, plural, one {Importato # strumento} other {Importati # strumenti}}",
+      "partialSummary": "{importedCount, plural, one {Importato # strumento} other {Importati # strumenti}}, {skippedCount, plural, one {# ignorato (già esistente)} other {# ignorati (già esistenti)}}",
+      "allSkippedSummary": "{count, plural, one {# strumento già presente — non è stato importato nulla} other {# strumenti già presenti — non è stato importato nulla}}",
+      "warningsSummary": "{count, plural, one {# avviso di importazione} other {# avvisi di importazione}}",
       "ok": "OK",
-      "description": "Incolla qui sotto la tua specifica OpenAPI 3.x (JSON o YAML). Ogni operazione verrà importata come strumento MCP.",
+      "description": "Incolla qui sotto la specifica OpenAPI 3.x (JSON o YAML). Le operazioni supportate verranno importate come strumenti MCP; quelle non supportate verranno segnalate con avvisi.",
       "importFailed": "Importazione non riuscita",
       "cancel": "Annulla",
       "importing": "Importazione…",
@@ -84,8 +86,8 @@
       "fileLoaded": "File caricato",
       "chooseFile": "Scegli un file .yml",
       "servicesFound": "Servizi trovati ({count})",
-      "apiTokenLabel": "API token",
-      "apiTokenPlaceholder": "Inserisci API token per questo servizio",
+      "apiTokenLabel": "Token API",
+      "apiTokenPlaceholder": "Inserisci il token API per questo servizio",
       "createdPrefix": "Creati:",
       "skippedPrefix": "Ignorati:",
       "errorsPrefix": "Errori:",
@@ -96,7 +98,7 @@
     },
     "serviceCard": {
       "paused": "in pausa",
-      "toolsCount": "{count, plural, one {# tool} other {# tools}}"
+      "toolsCount": "{count, plural, one {# strumento} other {# strumenti}}"
     },
     "serviceConfig": {
       "identifierLabel": "Identificatore",
@@ -106,8 +108,8 @@
       "serviceTypeLabel": "Tipo di servizio",
       "baseUrlLabel": "Base URL",
       "baseUrlPlaceholder": "https://servizio.esempio.com",
-      "apiTokenLabel": "API token",
-      "apiTokenPlaceholder": "Incolla l'API token",
+      "apiTokenLabel": "Token API",
+      "apiTokenPlaceholder": "Incolla il token API",
       "tokenGuideHide": "Nascondi il token {label}",
       "tokenGuideShow": "Come ottenere un token {label}",
       "connecting": "Connessione…",
@@ -121,10 +123,10 @@
       "customized": "personalizzato",
       "hintLabel": "Suggerimento:",
       "customizedParenthetical": "(personalizzato)",
-      "paramsCount": "{count, plural, one {# param} other {# params}}",
+      "paramsCount": "{count, plural, one {# parametro} other {# parametri}}",
       "noParams": "Nessun parametro",
       "testEndpointReachability": "Verifica la raggiungibilità dell'endpoint",
-      "testEndpointAria": "Verifica endpoint {toolName}",
+      "testEndpointAria": "Verifica l'endpoint {toolName}",
       "testing": "Test in corso…",
       "test": "Test",
       "editToolDefinition": "Modifica la definizione dello strumento (metodo, percorso, schema)",

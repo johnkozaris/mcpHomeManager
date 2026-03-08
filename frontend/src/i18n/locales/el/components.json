@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "errorBoundary": {
     "title": "Κάτι πήγε στραβά",
     "fallbackMessage": "Παρουσιάστηκε απροσδόκητο σφάλμα.",
@@ -16,7 +17,7 @@
       "input": "Είσοδος",
       "duration": "Διάρκεια:",
       "durationUnit": "ms",
-      "client": "Client:",
+      "client": "Πελάτης:",
       "time": "Ώρα:",
       "viewService": "Προβολή υπηρεσίας"
     }
@@ -27,7 +28,7 @@
       "scan": "Σάρωση",
       "scanning": "Σάρωση…",
       "noKnownServices": "Δεν βρέθηκαν γνωστά containers υπηρεσιών.",
-      "connectWithLabel": "Σύνδεση {label}",
+      "connectWithLabel": "Σύνδεση με {label}",
       "connectService": "Σύνδεση υπηρεσίας",
       "closeDialog": "Κλείσιμο",
       "dismiss": "Παράβλεψη",
@@ -43,13 +44,13 @@
       "closeEditDialog": "Κλείσιμο επεξεργασίας εργαλείου",
       "closeAddDialog": "Κλείσιμο προσθήκης εργαλείου",
       "descriptionEdit": "Επεξεργάσου τον ορισμό αυτού του MCP εργαλείου.",
-      "descriptionAdd": "Δημιούργησε ένα νέο MCP εργαλείο για αυτήν την generic REST υπηρεσία.",
+      "descriptionAdd": "Δημιούργησε ένα νέο εργαλείο MCP για αυτήν τη σύνδεση προσαρμοσμένου API.",
       "toolNameLabel": "Όνομα εργαλείου",
       "toolNamePlaceholder": "π.χ. list_items",
       "toolNameValidation": "Πρέπει να ξεκινά με γράμμα. Μόνο γράμματα, αριθμοί και κάτω παύλες.",
       "descriptionLabel": "Περιγραφή",
       "descriptionPlaceholder": "π.χ. Εμφάνιση λίστας στοιχείων",
-      "httpMethodLabel": "HTTP μέθοδος",
+      "httpMethodLabel": "Μέθοδος HTTP",
       "pathTemplateLabel": "Πρότυπο διαδρομής",
       "pathTemplatePlaceholder": "/api/v1/items",
       "parametersSchemaLabel": "Σχήμα παραμέτρων (JSON)",
@@ -65,13 +66,14 @@
       "preview": "Προεπισκόπηση"
     },
     "importOpenApiModal": {
-      "title": "Εισαγωγή OpenAPI spec",
-      "closeDialog": "Κλείσιμο εισαγωγής OpenAPI",
-      "importedSummary": "{count, plural, one {Imported # tool} other {Imported # tools}}",
-      "partialSummary": "{importedCount, plural, one {Imported # tool} other {Imported # tools}}, {skippedCount} παραλείφθηκαν (υπάρχουν ήδη)",
-      "allSkippedSummary": "{count, plural, one {All # tool already exists — nothing imported} other {All # tools already exist — nothing imported}}",
+      "title": "Εισαγωγή προδιαγραφής OpenAPI",
+      "closeDialog": "Κλείσιμο παραθύρου εισαγωγής OpenAPI",
+      "importedSummary": "{count, plural, one {Εισήχθη # εργαλείο} other {Εισήχθησαν # εργαλεία}}",
+      "partialSummary": "{importedCount, plural, one {Εισήχθη # εργαλείο} other {Εισήχθησαν # εργαλεία}}, {skippedCount} παραλείφθηκαν (υπάρχουν ήδη)",
+      "allSkippedSummary": "{count, plural, one {Το # εργαλείο υπάρχει ήδη — δεν εισήχθη τίποτα} other {Τα # εργαλεία υπάρχουν ήδη — δεν εισήχθη τίποτα}}",
+      "warningsSummary": "{count, plural, one {# προειδοποίηση εισαγωγής} other {# προειδοποιήσεις εισαγωγής}}",
       "ok": "OK",
-      "description": "Επικόλλησε το OpenAPI 3.x spec παρακάτω (JSON ή YAML). Κάθε operation θα εισαχθεί ως MCP εργαλείο.",
+      "description": "Επικόλλησε παρακάτω την προδιαγραφή OpenAPI 3.x (JSON ή YAML). Οι υποστηριζόμενες λειτουργίες θα εισαχθούν ως εργαλεία MCP και οι μη υποστηριζόμενες μορφές θα επισημανθούν με προειδοποιήσεις.",
       "importFailed": "Η εισαγωγή απέτυχε",
       "cancel": "Ακύρωση",
       "importing": "Εισαγωγή…",
@@ -96,7 +98,7 @@
     },
     "serviceCard": {
       "paused": "σε παύση",
-      "toolsCount": "{count, plural, one {# tool} other {# tools}}"
+      "toolsCount": "{count, plural, one {# εργαλείο} other {# εργαλεία}}"
     },
     "serviceConfig": {
       "identifierLabel": "Αναγνωριστικό",
@@ -108,8 +110,8 @@
       "baseUrlPlaceholder": "https://service.example.com",
       "apiTokenLabel": "API Token",
       "apiTokenPlaceholder": "Επικόλλησε το API token",
-      "tokenGuideHide": "Απόκρυψη οδηγού για {label} token",
-      "tokenGuideShow": "Πώς να βρεις ένα {label} token",
+      "tokenGuideHide": "Απόκρυψη οδηγού για το token του {label}",
+      "tokenGuideShow": "Πώς να βρεις token για το {label}",
       "connecting": "Σύνδεση…",
       "connectService": "Σύνδεση υπηρεσίας"
     },
@@ -121,10 +123,10 @@
       "customized": "προσαρμοσμένο",
       "hintLabel": "Υπόδειξη:",
       "customizedParenthetical": "(προσαρμοσμένο)",
-      "paramsCount": "{count, plural, one {# param} other {# params}}",
+      "paramsCount": "{count, plural, one {# παράμετρος} other {# παράμετροι}}",
       "noParams": "Χωρίς παραμέτρους",
-      "testEndpointReachability": "Δοκιμή προσβασιμότητας endpoint",
-      "testEndpointAria": "Δοκιμή endpoint {toolName}",
+      "testEndpointReachability": "Έλεγχος προσβασιμότητας endpoint",
+      "testEndpointAria": "Έλεγχος endpoint {toolName}",
       "testing": "Δοκιμή…",
       "test": "Δοκιμή",
       "editToolDefinition": "Επεξεργασία ορισμού εργαλείου (μέθοδος, διαδρομή, σχήμα)",

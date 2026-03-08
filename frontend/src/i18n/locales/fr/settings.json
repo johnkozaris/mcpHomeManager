@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "Ce fichier a été traduit automatiquement et peut contenir des erreurs. Les contributions et corrections sont les bienvenues.",
   "page": {
     "title": "Paramètres",
-    "description": "Apparence, endpoints et informations système",
+    "description": "Apparence, points de terminaison et informations système",
     "appearance": {
       "title": "Apparence",
       "light": "Clair",
@@ -20,10 +21,10 @@
       "selfMcp": {
         "title": "Outils Self-MCP",
         "description": "Quand ils sont activés, les agents IA peuvent gérer cette passerelle directement via MCP : lister les services, activer ou désactiver des outils, ajouter des connexions et consulter les journaux sans passer par l'interface web.",
-        "accessPrefix": "L'accès se configure par utilisateur dans",
+        "accessPrefix": "L’accès se règle par utilisateur dans",
         "userManagementLink": "Gestion des utilisateurs",
         "accessSuffix": ".",
-        "defaultsPrefix": "Valeurs par défaut issues de la variable d’environnement",
+        "defaultsPrefix": "Paramètres par défaut issus de la variable d’environnement",
         "defaultsSuffix": " au redémarrage."
       }
     },
@@ -33,7 +34,7 @@
         "active": "Active",
         "notSet": "Non définie"
       },
-      "description": "Les agents IA (Claude, Cursor, ChatGPT) utilisent cette clé pour se connecter à ton endpoint MCP.",
+      "description": "Les agents IA (Claude, Cursor, ChatGPT) utilisent cette clé pour se connecter à ton point de terminaison MCP.",
       "revealedTitle": "Ta clé API",
       "actions": {
         "regenerate": "Régénérer la clé",
@@ -52,7 +53,7 @@
       "serverFallback": "MCP Manager"
     },
     "endpoint": {
-      "title": "Endpoint MCP",
+      "title": "Point de terminaison MCP",
       "description": "Tes agents IA se connectent à cette URL.",
       "agentGuide": "Guide de configuration des agents"
     },

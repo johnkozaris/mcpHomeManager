@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "此文件由机器翻译，可能存在不准确之处。欢迎提交修正。",
   "page": {
     "title": "日志",
-    "description": "查看最近的 MCP 工具调用、结果和延迟。",
+    "description": "查看最近的 MCP 工具调用记录、结果和延迟情况。",
     "stats": {
       "totalCalls": "总调用次数",
       "successRate": "成功率",
@@ -34,14 +35,14 @@
       }
     },
     "pagination": {
-      "totalEntries": "{count, plural, one {# 条记录} other {# 条记录}}",
-      "page": "第 {current} / {total} 页"
+      "totalEntries": "{count, plural, one {共 # 条记录} other {共 # 条记录}}",
+      "page": "第 {current} 页，共 {total} 页"
     },
     "empty": {
       "filteredTitle": "没有匹配的日志记录",
-      "filteredDescription": "请尝试调整筛选条件。",
+      "filteredDescription": "试试调整筛选条件。",
       "defaultTitle": "暂无日志记录",
-      "defaultDescription": "等 AI 开始调用工具后，这里会显示调用记录。"
+      "defaultDescription": "AI 智能体开始调用工具后，这里会显示记录。"
     }
   }
 }

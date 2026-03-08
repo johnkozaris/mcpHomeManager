@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "이 파일은 기계 번역을 바탕으로 작성되어 부정확한 표현이 있을 수 있습니다. 수정과 개선 제안을 환영합니다.",
   "page": {
     "title": "로그",
-    "description": "최근 MCP 도구 호출, 결과, 지연 시간을 확인하세요.",
+    "description": "최근 MCP 도구 호출 결과와 지연 시간을 확인하세요.",
     "stats": {
       "totalCalls": "총 호출 수",
       "successRate": "성공률",
@@ -34,13 +35,13 @@
       }
     },
     "pagination": {
-      "totalEntries": "{count, plural, one {항목 #개} other {항목 #개}}",
+      "totalEntries": "총 {count}개 항목",
       "page": "페이지 {current} / {total}"
     },
     "empty": {
-      "filteredTitle": "일치하는 로그 항목이 없습니다",
+      "filteredTitle": "일치하는 로그가 없습니다",
       "filteredDescription": "필터를 조정해 보세요.",
-      "defaultTitle": "아직 로그 항목이 없습니다",
+      "defaultTitle": "아직 로그가 없습니다",
       "defaultDescription": "에이전트가 도구를 호출하면 사용 기록이 여기에 표시됩니다."
     }
   }

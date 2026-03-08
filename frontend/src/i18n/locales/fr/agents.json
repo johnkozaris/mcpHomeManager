@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "Ce fichier a été traduit automatiquement et peut contenir des erreurs. Les contributions et corrections sont les bienvenues.",
   "page": {
     "title": "Connecter des agents IA",
-    "description": "Ajoute ton endpoint MCP dans l'un des clients IA ci-dessous. Une fois connecté, les outils de ton homelab seront découverts automatiquement.",
+    "description": "Ajoute ton point de terminaison MCP dans l’un des clients IA ci-dessous. Une fois connecté, les outils de ton homelab seront détectés automatiquement.",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },
@@ -12,11 +13,11 @@
         "steps": {
           "step1": {
             "before": "Va dans",
-            "settings": "Settings",
+            "settings": "Paramètres",
             "middle": "(icône d’engrenage) →",
-            "developer": "Developer",
+            "developer": "Développeur",
             "and": "→",
-            "editConfig": "Edit Config"
+            "editConfig": "Modifier la configuration"
           },
           "step2": {
             "beforeFile": "Cela ouvre",
@@ -37,7 +38,7 @@
             "examplePaperless": "\"Recherche les factures dans mes documents Paperless\""
           }
         },
-        "configPath": "Chemin de config — macOS : ~/Library/Application Support/Claude/ · Windows : %APPDATA%\\Claude\\"
+        "configPath": "Chemin du fichier de configuration — macOS : ~/Library/Application Support/Claude/ · Windows : %APPDATA%\\Claude\\"
       },
       "claudeCode": {
         "name": "Claude Code",
@@ -59,7 +60,7 @@
             "before": "Crée",
             "after": "à la racine de ton projet avec le contenu suivant :"
           },
-          "step2": "Redémarre Cursor (Cmd+Q / fermer puis rouvrir). Tes outils devraient apparaître dans le panneau IA (Cmd+L / Ctrl+L) sous \"Available Tools\"",
+          "step2": "Redémarre Cursor (Cmd+Q / ferme puis rouvre). Tes outils devraient apparaître dans le panneau IA (Cmd+L / Ctrl+L) sous « Outils disponibles »",
           "step3": "Si les outils n'apparaissent pas, vérifie l'indicateur d'état MCP en bas de la barre d'état."
         }
       },
@@ -68,31 +69,31 @@
         "steps": {
           "step1": {
             "before": "Va dans",
-            "settings": "Settings",
+            "settings": "Paramètres",
             "middle": "→",
-            "appsAndConnectors": "Apps & Connectors",
+            "appsAndConnectors": "Applications et connecteurs",
             "after": "→ active",
-            "developerMode": "Developer mode",
-            "suffix": "dans \"Advanced settings\""
+            "developerMode": "Mode développeur",
+            "suffix": "dans « Paramètres avancés »"
           },
           "step2": {
-            "before": "De retour dans \"Apps & Connectors\", clique sur",
-            "create": "Create",
+            "before": "De retour dans « Applications et connecteurs », clique sur",
+            "create": "Créer",
             "and": "→ sélectionne",
             "mcpServer": "MCP Server"
           },
           "step3": {
-            "before": "Saisis un nom comme \"Mon Homelab\" et colle ton endpoint :"
+            "before": "Saisis un nom comme « Mon Homelab » et colle ton point de terminaison :"
           },
           "step4": {
             "before": "Clique sur",
-            "create": "Create",
+            "create": "Créer",
             "after": ". Les nouvelles conversations découvriront automatiquement les outils de ton homelab"
           }
         },
         "note": {
           "label": "Remarque :",
-          "body": "ChatGPT nécessite un endpoint accessible publiquement. Utilise la configuration Caddy fournie ou un service de tunnel comme Cloudflare Tunnel si ton serveur est uniquement local."
+          "body": "ChatGPT nécessite un point de terminaison accessible publiquement. Utilise la configuration Caddy fournie ou un service de tunnel comme Cloudflare Tunnel si ton serveur est uniquement local."
         }
       },
       "openWebui": {
@@ -100,35 +101,35 @@
         "steps": {
           "step1": {
             "before": "Va dans",
-            "adminPanel": "Admin Panel",
+            "adminPanel": "Panneau d’administration",
             "and": "→",
-            "settings": "Settings",
+            "settings": "Paramètres",
             "then": "→",
-            "tools": "Tools"
+            "tools": "Outils"
           },
           "step2": {
             "before": "Clique sur",
-            "addMcpConnection": "Add MCP Connection",
-            "after": ", saisis un nom et colle ton endpoint :"
+            "addMcpConnection": "Ajouter une connexion MCP",
+            "after": ", saisis un nom et colle ton point de terminaison :"
           },
           "step3": "Si tu utilises l'authentification par clé API, saisis ta clé dans le champ d'authentification",
           "step4": {
             "before": "Clique sur",
-            "save": "Save",
-            "after": "— Open WebUI va tester la connexion et découvrir tes outils. Ils seront disponibles pour tous les utilisateurs, quel que soit le LLM."
+            "save": "Enregistrer",
+            "after": "— Open WebUI testera la connexion et détectera tes outils. Ils seront alors disponibles pour tous les utilisateurs, avec n’importe quel LLM."
           }
         }
       },
       "otherClients": {
         "name": "Autres clients MCP",
-        "description": "Si ton client MCP demande des détails de connexion :",
+        "description": "Si ton client MCP demande des informations de connexion précises :",
         "details": {
           "transport": {
             "label": "Transport",
             "value": "Streamable HTTP"
           },
           "auth": {
-            "label": "Auth",
+            "label": "Authentification",
             "value": "Authorization: Bearer"
           },
           "discovery": {
@@ -138,7 +139,7 @@
         },
         "sse": {
           "before": "Pour les clients compatibles SSE uniquement, ajoute",
-          "after": " à l'URL de l'endpoint. L'URL de base doit être accessible depuis là où tourne ton client IA."
+          "after": " à l’URL du point de terminaison. L’URL de base doit être accessible depuis l’emplacement où tourne ton client IA."
         }
       }
     }

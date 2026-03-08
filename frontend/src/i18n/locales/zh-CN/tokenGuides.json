@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "guides": {
     "forgejo": {
       "steps": [
@@ -6,7 +7,7 @@
         "点击右上角头像，选择“Settings（设置）”",
         "在左侧边栏点击“Applications（应用）”",
         "在“Manage Access Tokens”下，为 token 输入一个名称（例如“{appName}”）",
-        "选择 token 所需权限——如果需要完整访问，请勾选所有权限（scopes）。至少需要：read:organization、read:repository、read:issue、write:issue",
+        "选择 token 所需权限——如果需要完整访问，请勾选所有权限（scopes）。至少需要：read:user、read:organization、read:repository、write:repository、read:issue、write:issue",
         "点击“Generate Token（生成 token）”并立即复制 token——之后不会再次显示",
         "将 token 粘贴到上方字段"
       ]
@@ -21,15 +22,14 @@
         "复制弹窗中显示的 token——只会显示一次",
         "将 token 粘贴到上方字段"
       ],
-      "note": "Home Assistant token 通常以 eyJ… 开头"
+      "note": "Home Assistant 的长期访问 token 是创建时只显示一次的不透明字符串。"
     },
     "paperless": {
       "steps": [
-        "打开你的 Paperless-ngx 实例，并以管理员用户登录",
-        "点击齿轮图标，或在顶部导航进入 Settings（设置）",
-        "向下滚动或查找“API”区域",
-        "这里会显示你的 API token——点击复制图标即可复制",
-        "如果还没有 token，请点击“Generate（生成）”创建",
+        "打开你的 Paperless-ngx 实例并登录",
+        "从用户菜单打开“My Profile（我的资料）”",
+        "在你的个人资料页面找到 API token 区域，并复制那里显示的 token",
+        "如果还没有 token，可直接在那里生成（或通过 /api/token/ 以编程方式创建）",
         "将 token 粘贴到上方字段"
       ]
     },
@@ -40,9 +40,11 @@
         "在下拉菜单中选择“Account Settings（账户设置）”",
         "向下滚动到“API Keys（API 密钥）”",
         "点击“New API Key（新建 API key）”，输入类似“{appName}”的名称",
+        "选择此 key 所需的权限 / scope。至少需要 asset.read 和 album.read；管理员统计工具还要添加 server.statistics。",
         "立即复制生成的 key——之后不会再次显示",
         "将 key 粘贴到上方字段"
-      ]
+      ],
+      "note": "服务器统计工具需要包含 server.statistics 的管理员 key。非管理员 key 仍可用于个人资料库工具。"
     },
     "nextcloud": {
       "steps": [
@@ -55,18 +57,18 @@
         "复制生成的密码——这就是你的 API token",
         "将其粘贴到上方字段"
       ],
-      "note": "格式：username:app-password（例如：admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx）"
+      "note": "格式：login-name:app-password（例如：admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx）。Nextcloud 的应用密码也可能显示为设备专用密码。请使用你在 Nextcloud 登录页面输入的同一个登录名，即使你的 DAV/WebDAV UID 不同。"
     },
     "uptimekuma": {
       "steps": [
         "打开你的 Uptime Kuma 实例并登录",
-        "点击左侧边栏中的“Settings（设置）”",
-        "进入“API Keys（API 密钥）”标签页",
-        "点击“Add API Key（添加 API key）”，输入类似“{appName}”的名称",
-        "设置过期时间，或留空表示不过期",
-        "点击“Create（创建）”并复制生成的 API key",
-        "将 key 粘贴到上方字段"
-      ]
+        "使用与你在 Uptime Kuma Web UI 中相同的用户名和密码",
+        "按如下格式填入上方字段：username:password",
+        "如果账号启用了 2FA，请把当前 6 位验证码直接追加在后面：username:password:123456",
+        "你也可以使用之前网页登录留下的 remembered-session JWT（可选加上 jwt: 前缀）",
+        "不要在这里使用 API key —— API key 只适用于抓取指标，不适用于监控管理"
+      ],
+      "note": "支持的格式：username:password、用于 2FA 的 username:password:123456，或 remembered-session JWT（可选加上 jwt: 前缀）。"
     },
     "adguard": {
       "steps": [
@@ -82,25 +84,26 @@
         "请按格式输入邮箱和密码：email:password",
         "这与你登录 NPM Web 界面使用的凭据相同"
       ],
-      "note": "格式：email:password（例如：admin@example.com:changeme）"
+      "note": "格式：email:password（例如：admin@example.com:changeme）。需要 2FA 的账号暂时还不受支持。"
     },
     "portainer": {
       "steps": [
-        "Portainer 使用登录凭据进行 API 访问",
-        "请按格式输入用户名和密码：username:password",
-        "这与你登录 Portainer Web 界面使用的凭据相同"
+        "打开你的 Portainer 实例并登录",
+        "打开“My account”，然后在“Access tokens”区域创建 access token（Portainer 可能会要求你重新输入密码）",
+        "复制该 token，并直接粘贴到上方字段",
+        "如果无法使用 API key，也仍然可以使用 username:password 作为回退方案"
       ],
-      "note": "格式：username:password（例如：admin:mypassword）"
+      "note": "首选：直接粘贴来自 My account → Access tokens 的 Portainer access token / API key（会作为 X-API-Key 发送）。回退方案：username:password。"
     },
     "freshrss": {
       "steps": [
-        "FreshRSS 使用独立的 API 密码进行程序化访问",
-        "在 FreshRSS 中，前往 Settings（设置）→ Profile（个人资料）→ API Management（API 管理）",
-        "如果尚未启用，请开启“Allow API access”",
+        "FreshRSS 使用单独的 API 密码进行程序化访问",
+        "在 FreshRSS 中打开你的个人资料设置，然后进入“Authentication / API access（身份验证 / API 访问）”部分",
+        "如果尚未启用，请开启 API access",
         "设置一个 API 密码（与登录密码不同）",
         "按以下格式输入 FreshRSS 用户名和 API 密码：username:api_password"
       ],
-      "note": "格式：username:api_password — API 密码需要在 FreshRSS 设置中单独配置，不是登录密码"
+      "note": "格式：username:api_password —— API 密码独立于登录密码。如果 API 地址单独配置，请使用 FreshRSS URL 加上 /api/greader.php。"
     },
     "wallabag": {
       "steps": [
@@ -113,23 +116,24 @@
     },
     "stirlingpdf": {
       "steps": [
-        "打开你的 Stirling PDF 实例，并以管理员身份登录",
-        "点击右上角设置齿轮（⚙️）打开 Account Settings（账户设置）",
-        "在设置面板中找到或生成你的个人 API key",
-        "也可以使用通过 SECURITY_CUSTOMGLOBALAPIKEY 环境变量设置的全局 API key",
+        "打开你的 Stirling PDF 实例",
+        "如果启用了登录，请先登录，再通过右上角齿轮（⚙️）打开 Account Settings（账户设置）",
+        "在那里找到或生成你的个人 API key",
+        "如果你的部署使用 SECURITY_CUSTOMGLOBALAPIKEY，也可以改用该全局 API key",
         "将 API key 粘贴到上方字段"
       ],
-      "note": "使用 X-API-KEY header。Stirling PDF 必须启用登录，API key 认证才会生效"
+      "note": "使用 X-API-KEY header。有些部署使用全局 API key，不要求用户登录。"
     },
     "wikijs": {
       "steps": [
-        "打开你的 Wiki.js 实例，并以管理员身份登录",
+        "打开你的 Wiki.js 实例，并使用可创建 API key 的账号登录",
         "进入 Administration（管理）→ API Access（API 访问）",
         "点击“Create API Key（创建 API key）”并设置名称（例如“{appName}”）",
-        "选择合适的权限组（建议 Full Access（完全访问））",
+        "选择此 key 所需的 scope。read:pages 用于 health/list/search/get page 工具，read:source 用于 source/system 读取，write:pages 用于创建 / 更新页面，用户工具还需要 write:users 或 manage:users 等额外 user scope。",
         "设置过期时间，或留空表示不过期",
         "复制生成的 API key，并粘贴到上方字段"
-      ]
+      ],
+      "note": "Wiki.js API key 是 bearer token，但页面规则也必须允许该 key 访问你需要的页面。创建页面时，请选择这些页面要使用的 locale。"
     },
     "tailscale": {
       "steps": [
@@ -156,7 +160,7 @@
         "点击右上角头像并选择“My Profile（我的资料）”",
         "在左侧边栏点击“API Tokens（API token）”",
         "点击“Create Token（创建 token）”",
-        "使用自定义 token 模板，并设置以下权限：Zone:DNS:Edit、Zone:Zone:Read、Account:Cloudflare Tunnel:Edit",
+        "使用自定义 token 模板，并设置以下权限：Zone:DNS:Edit、Zone:Zone:Read、Account:Cloudflare Tunnel:Read",
         "可选：将 token 限制到特定 zone 或 account",
         "点击“Continue to summary（继续到摘要）”，然后点击“Create Token（创建 token）”",
         "立即复制 token——之后不会再次显示",

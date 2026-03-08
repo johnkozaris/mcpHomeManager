@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "guides": {
     "forgejo": {
       "steps": [
@@ -6,7 +7,7 @@
         "Clique no avatar do seu perfil no canto superior direito e selecione \"Definições\"",
         "Na barra lateral esquerda, clique em \"Aplicações\"",
         "Em \"Gerir tokens de acesso\", introduza um nome para o token (por ex., \"{appName}\")",
-        "Selecione as permissões de que o token precisa — para acesso total, marque todos os escopos. No mínimo, precisa de: read:organization, read:repository, read:issue, write:issue",
+        "Selecione as permissões de que o token precisa — para acesso total, marque todos os escopos. No mínimo, precisa de: read:user, read:organization, read:repository, write:repository, read:issue, write:issue",
         "Clique em \"Gerar token\" e copie o token imediatamente — não voltará a ser mostrado",
         "Cole o token no campo acima"
       ]
@@ -21,15 +22,14 @@
         "Copie o token apresentado na janela — só é mostrado uma vez",
         "Cole o token no campo acima"
       ],
-      "note": "Os tokens do Home Assistant começam por eyJ…"
+      "note": "Os tokens de acesso de longa duração do Home Assistant são cadeias opacas mostradas apenas uma vez quando os cria."
     },
     "paperless": {
       "steps": [
-        "Abra a sua instância do Paperless-ngx e inicie sessão como utilizador administrador",
-        "Clique no ícone de engrenagem ou vá para Definições na navegação superior",
-        "Desloque-se para baixo ou procure a secção \"API\"",
-        "O token de API é apresentado aqui — clique no ícone de cópia para o copiar",
-        "Se não existir token, clique em \"Gerar\" para criar um",
+        "Abra a sua instância do Paperless-ngx e inicie sessão",
+        "Abra \"My Profile\" através do menu do utilizador",
+        "Na sua página de perfil, encontre a secção do token de API e copie o token apresentado",
+        "Se ainda não existir um token, gere-o aí mesmo (ou crie-o programaticamente via /api/token/)",
         "Cole o token no campo acima"
       ]
     },
@@ -40,9 +40,11 @@
         "Selecione \"Definições da conta\" no menu pendente",
         "Desloque-se até \"Chaves de API\"",
         "Clique em \"Nova chave de API\" e atribua um nome como \"{appName}\"",
+        "Selecione as permissões / escopos de que esta chave precisa. No mínimo escolha asset.read e album.read; adicione server.statistics para as ferramentas administrativas de estatísticas.",
         "Copie a chave gerada imediatamente — não voltará a ser mostrada",
         "Cole a chave no campo acima"
-      ]
+      ],
+      "note": "As ferramentas de estatísticas do servidor exigem uma chave de administrador com server.statistics. Chaves sem privilégios de administrador continuam a funcionar para ferramentas da biblioteca pessoal."
     },
     "nextcloud": {
       "steps": [
@@ -55,18 +57,18 @@
         "Copie a palavra-passe gerada — este é o token de API",
         "Cole-a no campo acima"
       ],
-      "note": "Formato: utilizador:palavra-passe-da-app (por ex., admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx)"
+      "note": "Formato: login-name:app-password (por ex., admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx). As palavras-passe de aplicação do Nextcloud também podem aparecer como palavras-passe específicas do dispositivo. Use o mesmo nome de início de sessão que introduz no ecrã de login do Nextcloud, mesmo que o seu UID DAV/WebDAV seja diferente."
     },
     "uptimekuma": {
       "steps": [
         "Abra a sua instância do Uptime Kuma e inicie sessão",
-        "Clique em \"Definições\" na barra lateral esquerda",
-        "Navegue para o separador \"Chaves de API\"",
-        "Clique em \"Adicionar chave de API\" e introduza um nome como \"{appName}\"",
-        "Defina uma data de expiração ou deixe em branco para não expirar",
-        "Clique em \"Criar\" e copie a chave de API gerada",
-        "Cole a chave no campo acima"
-      ]
+        "Use o mesmo nome de utilizador e palavra-passe que utiliza na interface web do Uptime Kuma",
+        "Introduza-os no campo acima no formato: username:password",
+        "Se a conta usa 2FA, acrescente o código atual de 6 dígitos em linha: username:password:123456",
+        "Também pode usar um JWT de sessão memorizada de um login web anterior (opcionalmente com o prefixo jwt:)",
+        "Não use chave de API aqui — as chaves de API servem apenas para recolha de métricas, não para gerir monitores"
+      ],
+      "note": "Formatos aceites: username:password, username:password:123456 para 2FA, ou um JWT de sessão memorizada (opcionalmente com o prefixo jwt:)."
     },
     "adguard": {
       "steps": [
@@ -82,25 +84,26 @@
         "Introduza o seu email e palavra-passe no formato: email:palavra-passe",
         "Estas são as mesmas credenciais que usa para iniciar sessão na interface web do NPM"
       ],
-      "note": "Formato: email:palavra-passe (por ex., admin@example.com:changeme)"
+      "note": "Formato: email:palavra-passe (por ex., admin@example.com:changeme). As contas que exigem 2FA ainda não são suportadas."
     },
     "portainer": {
       "steps": [
-        "O Portainer usa as suas credenciais de início de sessão para acesso à API",
-        "Introduza o seu nome de utilizador e palavra-passe no formato: utilizador:palavra-passe",
-        "Estas são as mesmas credenciais que usa para iniciar sessão na interface web do Portainer"
+        "Abra a sua instância do Portainer e inicie sessão",
+        "Abra \"My account\" e crie um access token na secção \"Access tokens\" (o Portainer pode pedir-lhe para introduzir novamente a palavra-passe)",
+        "Copie esse token e cole-o diretamente no campo acima",
+        "Se não puder usar uma API key, ainda pode usar utilizador e palavra-passe no formato: username:password"
       ],
-      "note": "Formato: utilizador:palavra-passe (por ex., admin:mypassword)"
+      "note": "Preferido: cole diretamente um access token / API key do Portainer a partir de My account → Access tokens (enviado como X-API-Key). Alternativa: username:password."
     },
     "freshrss": {
       "steps": [
         "O FreshRSS usa uma palavra-passe de API separada para acesso programático",
-        "No FreshRSS, vá a Definições → Perfil → Gestão da API",
-        "Ative a opção \"Permitir acesso à API\" se ainda não estiver ativada",
-        "Defina uma palavra-passe de API (diferente da palavra-passe de início de sessão)",
-        "Introduza o nome de utilizador do FreshRSS e a palavra-passe de API no formato: utilizador:palavra_passe_api"
+        "No FreshRSS, abra as definições do seu perfil e depois a secção \"Authentication / API access\"",
+        "Ative o acesso à API se ainda não estiver ativado",
+        "Defina uma palavra-passe de API (diferente da sua palavra-passe de início de sessão)",
+        "Introduza o nome de utilizador do FreshRSS e a palavra-passe de API no formato: username:api_password"
       ],
-      "note": "Formato: utilizador:palavra_passe_api — a palavra-passe de API é definida separadamente nas definições do FreshRSS, não na palavra-passe de início de sessão"
+      "note": "Formato: username:api_password — a palavra-passe de API é separada da sua palavra-passe de início de sessão. Se o endereço da API estiver configurado separadamente, use o URL do FreshRSS mais /api/greader.php."
     },
     "wallabag": {
       "steps": [
@@ -113,23 +116,24 @@
     },
     "stirlingpdf": {
       "steps": [
-        "Abra a sua instância do Stirling PDF e inicie sessão como administrador",
-        "Clique na engrenagem de definições (⚙️) no canto superior direito para abrir as Definições da conta",
-        "Encontre ou gere a sua chave de API pessoal no painel de definições",
-        "Em alternativa, use a chave de API global definida através da variável de ambiente SECURITY_CUSTOMGLOBALAPIKEY",
+        "Abra a sua instância do Stirling PDF",
+        "Se o início de sessão estiver ativado, entre e abra as Definições da conta através da engrenagem (⚙️) no canto superior direito",
+        "Encontre ou gere aí a sua chave de API pessoal",
+        "Se a sua instalação usa SECURITY_CUSTOMGLOBALAPIKEY, também pode usar essa chave de API global",
         "Cole a chave de API no campo acima"
       ],
-      "note": "Usa o cabeçalho X-API-KEY. O início de sessão tem de estar ativado no Stirling PDF para a autenticação por chave de API funcionar"
+      "note": "Usa o cabeçalho X-API-KEY. Algumas instalações usam uma chave de API global e não exigem início de sessão de utilizador."
     },
     "wikijs": {
       "steps": [
-        "Abra a sua instância do Wiki.js e inicie sessão como administrador",
+        "Abra a sua instância do Wiki.js e inicie sessão com uma conta que possa criar chaves de API",
         "Navegue para Administração → Acesso à API",
         "Clique em \"Criar chave de API\" e defina um nome (por ex., \"{appName}\")",
-        "Selecione o grupo de permissões adequado (Acesso total recomendado)",
+        "Selecione os escopos de que esta chave precisa. read:pages cobre ferramentas de health/list/search/get page, read:source cobre leituras de source/system, write:pages é necessário para criar/atualizar páginas e as ferramentas de utilizador precisam de escopos adicionais como write:users ou manage:users.",
         "Defina uma data de expiração ou deixe em branco para não expirar",
         "Copie a chave de API gerada e cole-a no campo acima"
-      ]
+      ],
+      "note": "As chaves de API do Wiki.js são bearer tokens, mas as regras de página também têm de permitir que esta chave aceda às páginas pretendidas. Quando cria páginas, escolha o locale que essas páginas devem usar."
     },
     "tailscale": {
       "steps": [
@@ -156,7 +160,7 @@
         "Clique no ícone do seu perfil no canto superior direito e selecione \"O meu perfil\"",
         "Na barra lateral esquerda, clique em \"Tokens de API\"",
         "Clique em \"Criar token\"",
-        "Use um modelo de token personalizado e defina as seguintes permissões: Zone:DNS:Edit, Zone:Zone:Read, Account:Cloudflare Tunnel:Edit",
+        "Use um modelo de token personalizado e defina as seguintes permissões: Zone:DNS:Edit, Zone:Zone:Read, Account:Cloudflare Tunnel:Read",
         "Opcionalmente, restrinja o token a zonas ou contas específicas",
         "Clique em \"Continuar para o resumo\" e depois em \"Criar token\"",
         "Copie o token imediatamente — não voltará a ser mostrado",

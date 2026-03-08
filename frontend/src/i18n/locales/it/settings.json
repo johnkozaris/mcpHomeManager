@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "title": "Impostazioni",
     "description": "Aspetto, endpoint e informazioni di sistema",
@@ -15,7 +16,7 @@
       "title": "Sicurezza",
       "enabled": "Abilitato",
       "disabled": "Disabilitato",
-      "signedInAs": "Connesso come",
+      "signedInAs": "Accesso come",
       "currentUserFallback": "admin",
       "selfMcp": {
         "title": "Strumenti self-MCP",
@@ -28,13 +29,13 @@
       }
     },
     "apiKey": {
-      "title": "MCP API Key",
+      "title": "Chiave API MCP",
       "status": {
         "active": "Attiva",
         "notSet": "Non impostata"
       },
-      "description": "Gli agenti AI (Claude, Cursor, ChatGPT) utilizzano questa chiave per connettersi al tuo endpoint MCP.",
-      "revealedTitle": "La tua API key",
+      "description": "Gli agenti AI (Claude, Cursor, ChatGPT) usano questa chiave per collegarsi al tuo endpoint MCP.",
+      "revealedTitle": "La tua chiave API",
       "actions": {
         "regenerate": "Rigenera chiave",
         "generate": "Genera chiave",
@@ -61,7 +62,7 @@
       "checking": "Controllo in corso…",
       "rows": {
         "database": "Database",
-        "mcpServer": "MCP Server",
+        "mcpServer": "Server MCP",
         "services": "Servizi"
       },
       "servicesConnected": "{healthy} / {total} connessi"
@@ -102,7 +103,7 @@
     },
     "dialogs": {
       "revokeKey": {
-        "title": "Revoca API Key",
+        "title": "Revoca chiave API",
         "description": "Questo disconnetterà immediatamente tutti gli agenti AI che usano questa chiave. Dopo potrai generarne una nuova.",
         "confirm": "Revoca chiave"
       }

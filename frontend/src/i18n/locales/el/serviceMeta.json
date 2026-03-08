@@ -1,8 +1,9 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "services": {
     "forgejo": {
       "label": "Forgejo",
-      "description": "Git hosting & CI/CD"
+      "description": "Φιλοξενία Git και CI/CD"
     },
     "homeassistant": {
       "label": "Home Assistant",
@@ -18,19 +19,19 @@
     },
     "nextcloud": {
       "label": "Nextcloud",
-      "description": "Cloud αποθήκευση & συγχρονισμός"
+      "description": "Αποθήκευση στο cloud και συγχρονισμός"
     },
     "uptimekuma": {
       "label": "Uptime Kuma",
-      "description": "Παρακολούθηση uptime"
+      "description": "Παρακολούθηση διαθεσιμότητας"
     },
     "adguard": {
       "label": "AdGuard Home",
-      "description": "DNS filtering & ad blocking"
+      "description": "Φιλτράρισμα DNS και αποκλεισμός διαφημίσεων"
     },
     "nginxproxymanager": {
       "label": "Nginx Proxy Manager",
-      "description": "Reverse proxy & SSL"
+      "description": "Reverse proxy και SSL"
     },
     "portainer": {
       "label": "Portainer",
@@ -38,7 +39,7 @@
     },
     "freshrss": {
       "label": "FreshRSS",
-      "description": "RSS reader"
+      "description": "Αναγνώστης ροών RSS"
     },
     "wallabag": {
       "label": "Wallabag",
@@ -46,11 +47,11 @@
     },
     "stirlingpdf": {
       "label": "Stirling PDF",
-      "description": "Εργαλεία PDF"
+      "description": "Εργαλεία επεξεργασίας PDF"
     },
     "wikijs": {
       "label": "Wiki.js",
-      "description": "Wiki ομάδας"
+      "description": "Βάση γνώσης ομάδας"
     },
     "calibreweb": {
       "label": "Calibre-Web",
@@ -58,15 +59,15 @@
     },
     "cloudflare": {
       "label": "Cloudflare",
-      "description": "DNS, tunnels & zero-trust"
+      "description": "DNS, tunnels και διαχείριση zero trust"
     },
     "tailscale": {
       "label": "Tailscale",
-      "description": "Mesh VPN & διαχείριση συσκευών"
+      "description": "Mesh VPN και διαχείριση συσκευών"
     },
     "generic_rest": {
-      "label": "Generic REST",
-      "description": "Προσαρμοσμένη REST API υπηρεσία"
+      "label": "Προσαρμοσμένο API",
+      "description": "Σύνδεση με οποιοδήποτε REST API"
     }
   },
   "fallback": {

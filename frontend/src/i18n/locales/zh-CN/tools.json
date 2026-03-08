@@ -1,9 +1,10 @@
 {
+  "_machine_translated": "此文件由机器翻译，可能存在不准确之处。欢迎提交修正。",
   "page": {
     "title": "工具",
     "description": {
-      "withCounts": "{toolsCount} 个工具，来自 {serviceCount} 个服务 • 已启用 {enabledCount} 个",
-      "empty": "管理哪些工具对 MCP 客户端可用。"
+      "withCounts": "共 {toolsCount} 个工具，来自 {serviceCount} 个服务 · 已启用 {enabledCount} 个",
+      "empty": "管理哪些工具会向 MCP 客户端开放。"
     },
     "filters": {
       "searchPlaceholder": "搜索工具",
@@ -21,9 +22,9 @@
       "loading": "正在加载工具…"
     },
     "empty": {
-      "searchTitle": "没有工具匹配你的搜索",
-      "searchDescription": "请尝试其他搜索词或筛选条件。",
-      "noToolsTitle": "还没有工具",
+      "searchTitle": "没有匹配的工具",
+      "searchDescription": "试试其他关键词或筛选条件。",
+      "noToolsTitle": "暂无工具",
       "noToolsDescription": "连接一个服务后即可开始使用工具。"
     }
   }

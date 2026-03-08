@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "ไฟล์นี้แปลด้วยเครื่องและอาจมีความคลาดเคลื่อน ยินดีรับข้อเสนอแนะและการแก้ไขเพิ่มเติม",
   "page": {
     "title": "ตั้งค่า",
-    "description": "ตั้งค่ารูปลักษณ์, endpoint และข้อมูลระบบ",
+    "description": "ปรับรูปลักษณ์ ปลายทาง และข้อมูลระบบ",
     "appearance": {
       "title": "รูปลักษณ์",
       "light": "สว่าง",
@@ -19,22 +20,22 @@
       "currentUserFallback": "admin",
       "selfMcp": {
         "title": "เครื่องมือ Self-MCP",
-        "description": "เมื่อเปิดใช้งาน AI agents จะสามารถจัดการเกตเวย์นี้ผ่าน MCP ได้โดยตรง — ดูรายการบริการ สลับเปิด/ปิดเครื่องมือ เพิ่มการเชื่อมต่อ และดูบันทึก โดยไม่ต้องใช้เว็บ UI",
-        "accessPrefix": "กำหนดสิทธิ์เป็นรายผู้ใช้ได้ใน",
+        "description": "เมื่อเปิดใช้งาน เอเจนต์ AI จะจัดการเกตเวย์นี้ผ่าน MCP ได้โดยตรง ทั้งดูรายการบริการ เปิดหรือปิดเครื่องมือ เพิ่มการเชื่อมต่อ และดูบันทึก โดยไม่ต้องใช้หน้าเว็บ",
+        "accessPrefix": "กำหนดสิทธิ์เป็นรายผู้ใช้ได้ที่",
         "userManagementLink": "การจัดการผู้ใช้",
         "accessSuffix": ".",
-        "defaultsPrefix": "ค่าเริ่มต้นจากตัวแปร env",
-        "defaultsSuffix": "เมื่อรีสตาร์ต"
+        "defaultsPrefix": "ค่าตั้งต้นจากตัวแปรสภาพแวดล้อม",
+        "defaultsSuffix": "เมื่อตัวระบบเริ่มใหม่"
       }
     },
     "apiKey": {
-      "title": "MCP API Key",
+      "title": "คีย์ API ของ MCP",
       "status": {
         "active": "ใช้งานอยู่",
         "notSet": "ยังไม่ได้ตั้งค่า"
       },
-      "description": "AI agents (Claude, Cursor, ChatGPT) ใช้คีย์นี้เพื่อเชื่อมต่อกับ MCP endpoint ของคุณ",
-      "revealedTitle": "API key ของคุณ",
+      "description": "เอเจนต์ AI (Claude, Cursor, ChatGPT) ใช้คีย์นี้เพื่อเชื่อมต่อกับปลายทาง MCP ของคุณ",
+      "revealedTitle": "คีย์ API ของคุณ",
       "actions": {
         "regenerate": "สร้างคีย์ใหม่",
         "generate": "สร้างคีย์",
@@ -52,8 +53,8 @@
       "serverFallback": "MCP Manager"
     },
     "endpoint": {
-      "title": "MCP Endpoint",
-      "description": "AI agents ของคุณจะเชื่อมต่อผ่าน URL นี้",
+      "title": "ปลายทาง MCP",
+      "description": "เอเจนต์ AI ของคุณจะเชื่อมต่อผ่าน URL นี้",
       "agentGuide": "คู่มือตั้งค่าเอเจนต์"
     },
     "systemHealth": {
@@ -61,10 +62,10 @@
       "checking": "กำลังตรวจสอบ…",
       "rows": {
         "database": "ฐานข้อมูล",
-        "mcpServer": "MCP Server",
+        "mcpServer": "เซิร์ฟเวอร์ MCP",
         "services": "บริการ"
       },
-      "servicesConnected": "{healthy} / {total} เชื่อมต่ออยู่"
+      "servicesConnected": "{healthy} / {total} เชื่อมต่อแล้ว"
     },
     "smtp": {
       "title": "อีเมล (SMTP)",
@@ -82,7 +83,7 @@
         "host": "smtp.gmail.com",
         "username": "user@example.com",
         "passwordMasked": "••••••••",
-        "password": "App password",
+        "password": "รหัสผ่านสำหรับแอป",
         "fromEmail": "noreply@example.com"
       },
       "toggles": {
@@ -102,8 +103,8 @@
     },
     "dialogs": {
       "revokeKey": {
-        "title": "เพิกถอน API Key",
-        "description": "AI agents ที่ใช้คีย์นี้จะถูกตัดการเชื่อมต่อทันที สร้างคีย์ใหม่ได้ภายหลัง",
+        "title": "เพิกถอนคีย์ API",
+        "description": "เอเจนต์ AI ที่ใช้คีย์นี้จะถูกตัดการเชื่อมต่อทันที และคุณสามารถสร้างคีย์ใหม่ได้ภายหลัง",
         "confirm": "เพิกถอนคีย์"
       }
     }

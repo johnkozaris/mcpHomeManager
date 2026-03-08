@@ -1,9 +1,10 @@
 {
+  "_machine_translated": "ไฟล์นี้แปลด้วยเครื่องและอาจมีความคลาดเคลื่อน ยินดีรับข้อเสนอแนะและการแก้ไขเพิ่มเติม",
   "page": {
     "title": "เครื่องมือ",
     "description": {
-      "withCounts": "{toolsCount} เครื่องมือจาก {serviceCount} บริการ • เปิดใช้งาน {enabledCount}",
-      "empty": "จัดการว่าเครื่องมือใดจะถูกเปิดให้ MCP clients ใช้งาน"
+      "withCounts": "มี {toolsCount} เครื่องมือจาก {serviceCount} บริการ • เปิดใช้งานอยู่ {enabledCount}",
+      "empty": "จัดการว่าเครื่องมือใดจะเปิดให้ไคลเอนต์ MCP ใช้งานได้"
     },
     "filters": {
       "searchPlaceholder": "ค้นหาเครื่องมือ",

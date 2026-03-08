@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "title": "Σύνδεση Βοηθών AI",
-    "description": "Πρόσθεσε το MCP endpoint σου σε οποιοδήποτε AI Client παρακάτω. Μόλις συνδεθεί, τα εργαλεία του homelab σου θα εντοπιστούν αυτόματα.",
+    "description": "Πρόσθεσε το MCP endpoint σου σε οποιαδήποτε εφαρμογή AI από τις παρακάτω. Μόλις συνδεθεί, τα εργαλεία του homelab σου θα εντοπιστούν αυτόματα.",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },
@@ -22,7 +23,7 @@
             "beforeFile": "Αυτό ανοίγει το",
             "afterFile": ". Αν το αρχείο έχει ήδη άλλους MCP servers, πρόσθεσε την καταχώριση",
             "afterHomelab": "μέσα στο υπάρχον",
-            "afterMcpServers": "object. Αλλιώς, αντικατάστησε τα περιεχόμενα του αρχείου με:"
+            "afterMcpServers": "αντικείμενο. Διαφορετικά, αντικατάστησε τα περιεχόμενα του αρχείου με:"
           },
           "step3": {
             "before": "Αποθήκευσε το αρχείο και",
@@ -48,7 +49,7 @@
             "before": "Επιβεβαίωσε με",
             "after": "— θα πρέπει να δεις το \"homelab\" στην έξοδο"
           },
-          "step3": "Τα εργαλεία του homelab σου είναι πλέον διαθέσιμα αυτόματα σε κάθε session"
+          "step3": "Τα εργαλεία του homelab σου είναι πλέον διαθέσιμα αυτόματα σε κάθε συνεδρία"
         },
         "removePrefix": "Για αφαίρεση αργότερα:"
       },
@@ -120,8 +121,8 @@
         }
       },
       "otherClients": {
-        "name": "Άλλοι MCP Clients",
-        "description": "Αν ο MCP Client σου ζητά συγκεκριμένα στοιχεία σύνδεσης:",
+        "name": "Άλλοι πελάτες MCP",
+        "description": "Αν ο πελάτης MCP σου ζητά συγκεκριμένα στοιχεία σύνδεσης:",
         "details": {
           "transport": {
             "label": "Transport",
@@ -137,8 +138,8 @@
           }
         },
         "sse": {
-          "before": "Για Clients που υποστηρίζουν μόνο SSE, πρόσθεσε",
-          "after": "στο endpoint URL. Το base URL πρέπει να είναι προσβάσιμο από το σημείο όπου εκτελείται ο AI Client σου."
+          "before": "Για πελάτες που υποστηρίζουν μόνο SSE, πρόσθεσε",
+          "after": "στο URL του endpoint. Το βασικό URL πρέπει να είναι προσβάσιμο από το σημείο όπου εκτελείται ο πελάτης AI σου."
         }
       }
     }

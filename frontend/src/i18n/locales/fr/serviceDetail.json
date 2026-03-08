@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "profileChips": {
       "label": "Profils"
@@ -33,7 +34,7 @@
       },
       "tools": {
         "label": "Outils",
-        "sub": "{count, plural, one {# enabled} other {# enabled}}"
+        "sub": "{count, plural, one {# outil activé} other {# outils activés}}"
       },
       "lastTested": {
         "label": "Dernier test",

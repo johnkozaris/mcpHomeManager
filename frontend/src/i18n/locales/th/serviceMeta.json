@@ -1,12 +1,13 @@
 {
+  "_machine_translated": "ไฟล์นี้แปลด้วยเครื่องและอาจมีความคลาดเคลื่อน ยินดีรับข้อเสนอแนะและการแก้ไขเพิ่มเติม",
   "services": {
     "forgejo": {
       "label": "Forgejo",
-      "description": "Git hosting พร้อม CI/CD"
+      "description": "โฮสต์ Git พร้อม CI/CD"
     },
     "homeassistant": {
       "label": "Home Assistant",
-      "description": "สมาร์ทโฮม"
+      "description": "ระบบบ้านอัจฉริยะ"
     },
     "paperless": {
       "label": "Paperless-ngx",
@@ -18,11 +19,11 @@
     },
     "nextcloud": {
       "label": "Nextcloud",
-      "description": "จัดเก็บและซิงก์ไฟล์บนคลาวด์"
+      "description": "จัดเก็บไฟล์บนคลาวด์และซิงก์ข้อมูล"
     },
     "uptimekuma": {
       "label": "Uptime Kuma",
-      "description": "ตรวจสอบสถานะบริการ"
+      "description": "ติดตามสถานะการออนไลน์ของบริการ"
     },
     "adguard": {
       "label": "AdGuard Home",
@@ -30,7 +31,7 @@
     },
     "nginxproxymanager": {
       "label": "Nginx Proxy Manager",
-      "description": "Reverse proxy และ SSL"
+      "description": "จัดการ reverse proxy และ SSL"
     },
     "portainer": {
       "label": "Portainer",
@@ -38,7 +39,7 @@
     },
     "freshrss": {
       "label": "FreshRSS",
-      "description": "ตัวอ่าน RSS"
+      "description": "โปรแกรมอ่านฟีด RSS"
     },
     "wallabag": {
       "label": "Wallabag",
@@ -46,11 +47,11 @@
     },
     "stirlingpdf": {
       "label": "Stirling PDF",
-      "description": "เครื่องมือจัดการ PDF"
+      "description": "เครื่องมือจัดการไฟล์ PDF"
     },
     "wikijs": {
       "label": "Wiki.js",
-      "description": "คลังความรู้ของทีม"
+      "description": "คลังความรู้สำหรับทีม"
     },
     "calibreweb": {
       "label": "Calibre-Web",
@@ -58,15 +59,15 @@
     },
     "cloudflare": {
       "label": "Cloudflare",
-      "description": "จัดการ DNS, tunnel และ zero trust"
+      "description": "จัดการ DNS, tunnel และ Zero Trust"
     },
     "tailscale": {
       "label": "Tailscale",
-      "description": "เครือข่าย VPN mesh และจัดการอุปกรณ์"
+      "description": "เครือข่าย VPN แบบ mesh และการจัดการอุปกรณ์"
     },
     "generic_rest": {
-      "label": "Generic REST",
-      "description": "บริการ REST API แบบกำหนดเอง"
+      "label": "API แบบกำหนดเอง",
+      "description": "เชื่อมต่อ REST API ได้ทุกแบบ"
     }
   },
   "fallback": {

@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "title": "Καταγραφές",
     "description": "Δες πρόσφατες κλήσεις MCP εργαλείων, αποτελέσματα και καθυστερήσεις.",
@@ -28,13 +29,13 @@
         "status": "Κατάσταση",
         "tool": "Εργαλείο",
         "service": "Υπηρεσία",
-        "client": "Client",
+        "client": "Πελάτης",
         "latency": "Καθυστέρηση",
         "time": "Ώρα"
       }
     },
     "pagination": {
-      "totalEntries": "{count, plural, one {# entry} other {# entries}}",
+      "totalEntries": "{count, plural, one {# εγγραφή} other {# εγγραφές}}",
       "page": "Σελίδα {current} από {total}"
     },
     "empty": {

@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "Diese Datei wurde maschinell übersetzt und kann Ungenauigkeiten enthalten. Beiträge und Korrekturen sind willkommen.",
   "services": {
     "forgejo": {
       "label": "Forgejo",
@@ -65,8 +66,8 @@
       "description": "VPN-Mesh & Gerätemanagement"
     },
     "generic_rest": {
-      "label": "Generic REST",
-      "description": "Eigener REST-API-Service"
+      "label": "Benutzerdefinierte API",
+      "description": "Beliebige REST API verbinden"
     }
   },
   "fallback": {

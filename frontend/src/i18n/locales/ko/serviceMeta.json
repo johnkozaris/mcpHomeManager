@@ -1,8 +1,9 @@
 {
+  "_machine_translated": "이 파일은 기계 번역을 바탕으로 작성되어 부정확한 표현이 있을 수 있습니다. 수정과 개선 제안을 환영합니다.",
   "services": {
     "forgejo": {
       "label": "Forgejo",
-      "description": "Git 호스팅 & CI/CD"
+      "description": "Git 호스팅 및 CI/CD"
     },
     "homeassistant": {
       "label": "Home Assistant",
@@ -14,11 +15,11 @@
     },
     "immich": {
       "label": "Immich",
-      "description": "사진 & 동영상 관리"
+      "description": "사진 및 동영상 관리"
     },
     "nextcloud": {
       "label": "Nextcloud",
-      "description": "클라우드 저장소 & 동기화"
+      "description": "클라우드 저장소 및 동기화"
     },
     "uptimekuma": {
       "label": "Uptime Kuma",
@@ -26,11 +27,11 @@
     },
     "adguard": {
       "label": "AdGuard Home",
-      "description": "DNS 필터링 & 광고 차단"
+      "description": "DNS 필터링 및 광고 차단"
     },
     "nginxproxymanager": {
       "label": "Nginx Proxy Manager",
-      "description": "리버스 프록시 & SSL"
+      "description": "리버스 프록시 및 SSL"
     },
     "portainer": {
       "label": "Portainer",
@@ -62,11 +63,11 @@
     },
     "tailscale": {
       "label": "Tailscale",
-      "description": "VPN 메시 네트워크 & 기기 관리"
+      "description": "VPN 메시 네트워크 및 기기 관리"
     },
     "generic_rest": {
-      "label": "Generic REST",
-      "description": "커스텀 REST API 서비스"
+      "label": "사용자 지정 API",
+      "description": "원하는 REST API 연결"
     }
   },
   "fallback": {

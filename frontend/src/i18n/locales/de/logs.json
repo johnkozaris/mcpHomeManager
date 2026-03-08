@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "Diese Datei wurde maschinell übersetzt und kann Ungenauigkeiten enthalten. Beiträge und Korrekturen sind willkommen.",
   "page": {
     "title": "Protokolle",
     "description": "Sieh dir die letzten MCP-Tool-Aufrufe, Ergebnisse und Latenzen an.",
@@ -27,14 +28,14 @@
       "headers": {
         "status": "Status",
         "tool": "Tool",
-        "service": "Service",
+        "service": "Dienst",
         "client": "Client",
         "latency": "Latenz",
         "time": "Zeitpunkt"
       }
     },
     "pagination": {
-      "totalEntries": "{count, plural, one {# entry} other {# entries}}",
+      "totalEntries": "{count, plural, one {# Eintrag} other {# Einträge}}",
       "page": "Seite {current} von {total}"
     },
     "empty": {

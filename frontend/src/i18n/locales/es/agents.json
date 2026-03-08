@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "title": "Conectar agentes de IA",
-    "description": "Agrega tu Endpoint MCP en cualquiera de los clientes de IA a continuación. Una vez conectado, tus herramientas de homelab se descubrirán automáticamente.",
+    "description": "Añade tu endpoint MCP a cualquiera de los siguientes clientes de IA. Una vez conectado, las herramientas de tu homelab se detectarán automáticamente.",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },
@@ -14,9 +15,9 @@
             "before": "Ve a",
             "settings": "Configuración",
             "middle": "(icono de engranaje) →",
-            "developer": "Developer",
+            "developer": "Desarrollador",
             "and": "→",
-            "editConfig": "Edit Config"
+            "editConfig": "Editar configuración"
           },
           "step2": {
             "beforeFile": "Esto abre",
@@ -27,28 +28,28 @@
           "step3": {
             "before": "Guarda el archivo y",
             "emphasis": "cierra por completo",
-            "after": "Claude Desktop (no solo cierres la ventana: sal desde la barra de menú o la bandeja del sistema) y luego ábrelo de nuevo"
+            "after": "Claude Desktop (no solo cierres la ventana: sal de la app desde la barra de menús o la bandeja del sistema) y vuelve a abrirlo"
           },
-          "step4": "Deberías ver un icono de martillo en la entrada del chat; haz clic para comprobar que tus herramientas de homelab están cargadas",
+          "step4": "Deberías ver un icono de martillo en el cuadro de chat; haz clic para comprobar que las herramientas de tu homelab están cargadas",
           "step5": {
             "prefix": "Prueba:",
             "exampleRepos": "\"¿Qué repositorios tengo en Forgejo?\"",
             "or": "o",
-            "examplePaperless": "\"Buscar facturas en mis documentos Paperless\""
+            "examplePaperless": "\"Busca facturas en mis documentos de Paperless\""
           }
         },
-        "configPath": "Ruta de configuración — macOS: ~/Library/Application Support/Claude/ · Windows: %APPDATA%\\Claude\\"
+        "configPath": "Ruta del archivo de configuración — macOS: ~/Library/Application Support/Claude/ · Windows: %APPDATA%\\Claude\\"
       },
       "claudeCode": {
         "name": "Claude Code",
         "terminalLabel": "Terminal",
         "steps": {
-          "step1": "Registra tu servidor MCP de homelab de forma global con el comando a continuación (disponible en todos los proyectos):",
+          "step1": "Registra de forma global tu servidor MCP de homelab con el comando de abajo (estará disponible en todos los proyectos):",
           "step2": {
             "before": "Verifica con",
             "after": "— deberías ver \"homelab\" en la salida"
           },
-          "step3": "Tus herramientas de homelab ahora están disponibles automáticamente en cada sesión"
+          "step3": "Las herramientas de tu homelab ya están disponibles automáticamente en cada sesión"
         },
         "removePrefix": "Para eliminarlo después:"
       },
@@ -59,7 +60,7 @@
             "before": "Crea",
             "after": "en la raíz de tu proyecto con este contenido:"
           },
-          "step2": "Reinicia Cursor (Cmd+Q / cierra y vuelve a abrir). Tus herramientas deberían aparecer en el panel de IA (Cmd+L / Ctrl+L) bajo \"Available Tools\"",
+          "step2": "Reinicia Cursor (Cmd+Q / cierra y vuelve a abrir). Tus herramientas deberían aparecer en el panel de IA (Cmd+L / Ctrl+L) en \"Herramientas disponibles\"",
           "step3": "Si las herramientas no aparecen, revisa el indicador de estado MCP en la barra inferior"
         }
       },
@@ -70,29 +71,29 @@
             "before": "Ve a",
             "settings": "Configuración",
             "middle": "→",
-            "appsAndConnectors": "Apps & Connectors",
+            "appsAndConnectors": "Aplicaciones y conectores",
             "after": "→ habilita",
-            "developerMode": "Developer mode",
-            "suffix": "en \"Advanced settings\""
+            "developerMode": "Modo desarrollador",
+            "suffix": "en \"Configuración avanzada\""
           },
           "step2": {
-            "before": "De vuelta en \"Apps & Connectors\", haz clic en",
+            "before": "De vuelta en \"Aplicaciones y conectores\", haz clic en",
             "create": "Crear",
             "and": "→ selecciona",
-            "mcpServer": "MCP Server"
+            "mcpServer": "Servidor MCP"
           },
           "step3": {
-            "before": "Escribe un nombre como \"Mi Homelab\" y pega tu Endpoint:"
+            "before": "Introduce un nombre como \"Mi homelab\" y pega tu endpoint:"
           },
           "step4": {
             "before": "Haz clic en",
             "create": "Crear",
-            "after": ". Las conversaciones nuevas descubrirán automáticamente tus herramientas de homelab"
+            "after": ". Las conversaciones nuevas detectarán automáticamente las herramientas de tu homelab"
           }
         },
         "note": {
           "label": "Nota:",
-          "body": "ChatGPT requiere un Endpoint accesible públicamente. Usa la configuración incluida de Caddy o un servicio de túnel como Cloudflare Tunnel si tu servidor es solo local."
+          "body": "ChatGPT requiere un endpoint accesible públicamente. Usa la configuración de Caddy incluida o un servicio de túnel como Cloudflare Tunnel si tu servidor solo es accesible en local."
         }
       },
       "openWebui": {
@@ -100,7 +101,7 @@
         "steps": {
           "step1": {
             "before": "Ve a",
-            "adminPanel": "Admin Panel",
+            "adminPanel": "Panel de administración",
             "and": "→",
             "settings": "Configuración",
             "then": "→",
@@ -108,27 +109,27 @@
           },
           "step2": {
             "before": "Haz clic en",
-            "addMcpConnection": "Add MCP Connection",
-            "after": ", escribe un nombre y pega tu Endpoint:"
+            "addMcpConnection": "Agregar conexión MCP",
+            "after": ", escribe un nombre y pega tu endpoint:"
           },
-          "step3": "Si usas autenticación con API Key, ingresa tu clave en el campo de autenticación",
+          "step3": "Si usas autenticación con clave API, introduce la clave en el campo de autenticación",
           "step4": {
             "before": "Haz clic en",
-            "save": "Save",
-            "after": "— Open WebUI probará la conexión y descubrirá sus herramientas. Ahora están disponibles para todos los usuarios con cualquier LLM"
+            "save": "Guardar",
+            "after": "— Open WebUI probará la conexión y detectará tus herramientas. Quedarán disponibles para todos los usuarios con cualquier LLM"
           }
         }
       },
       "otherClients": {
         "name": "Otros clientes MCP",
-        "description": "Si tu cliente MCP pide detalles de conexión específicos:",
+        "description": "Si tu cliente MCP te pide datos de conexión concretos:",
         "details": {
           "transport": {
             "label": "Transporte",
             "value": "Streamable HTTP"
           },
           "auth": {
-            "label": "Auth",
+            "label": "Autenticación",
             "value": "Authorization: Bearer"
           },
           "discovery": {
@@ -137,8 +138,8 @@
           }
         },
         "sse": {
-          "before": "Para clientes que solo soporten SSE, añade",
-          "after": "a la URL del Endpoint. La URL base debe ser accesible desde donde se ejecute tu cliente de IA."
+          "before": "Para clientes que solo admiten SSE, añade",
+          "after": " a la URL del endpoint. La URL base debe ser accesible desde donde se ejecute tu cliente de IA."
         }
       }
     }

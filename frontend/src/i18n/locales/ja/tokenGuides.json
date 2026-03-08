@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "guides": {
     "forgejo": {
       "steps": [
@@ -6,7 +7,7 @@
         "右上のプロフィールアイコンをクリックし、「Settings」を選択します",
         "左サイドバーで「Applications」をクリックします",
         "「Manage Access Tokens」でtoken名（例: \"{appName}\"）を入力します",
-        "tokenに必要な権限を選択します。フルアクセスならすべてのscopeを有効化。最低限必要: read:organization、read:repository、read:issue、write:issue",
+        "tokenに必要な権限を選択します。フルアクセスならすべてのscopeを有効化。最低限必要: read:user、read:organization、read:repository、write:repository、read:issue、write:issue",
         "「Generate Token」をクリックし、表示されたtokenをすぐコピーします（再表示されません）",
         "上のフィールドにtokenを貼り付けます"
       ]
@@ -21,15 +22,14 @@
         "ダイアログに表示されたtokenをコピーします（表示は1回のみです）",
         "上のフィールドにtokenを貼り付けます"
       ],
-      "note": "Home Assistantのtokenは eyJ… で始まります"
+      "note": "Home Assistantのlong-lived access tokenは、作成時に一度だけ表示される不透明な文字列です"
     },
     "paperless": {
       "steps": [
-        "Paperless-ngxインスタンスを開き、管理者ユーザーでログインします",
-        "歯車アイコンをクリックするか、上部ナビゲーションのSettingsを開きます",
-        "下にスクロールして「API」セクションを探します",
-        "API tokenが表示されるので、コピーアイコンでコピーします",
-        "tokenがない場合は「Generate」をクリックして作成します",
+        "Paperless-ngxインスタンスを開いてログインします",
+        "ユーザーメニューから「My Profile」を開きます",
+        "プロフィールページのAPI tokenセクションで表示されているtokenをコピーします",
+        "まだtokenがない場合はそこで生成します（または /api/token/ からプログラムで作成します）",
         "上のフィールドにtokenを貼り付けます"
       ]
     },
@@ -40,9 +40,11 @@
         "ドロップダウンから「Account Settings」を選択します",
         "「API Keys」までスクロールします",
         "「New API Key」をクリックし、「{appName}」のような名前を付けます",
+        "このkeyに必要な権限 / scope を選択します。最低限 asset.read と album.read が必要で、管理者向け統計ツールには server.statistics も追加します。",
         "生成されたkeyをすぐコピーします（再表示されません）",
         "上のフィールドにkeyを貼り付けます"
-      ]
+      ],
+      "note": "サーバー統計ツールには server.statistics を含む管理者keyが必要です。管理者権限のないkeyでも個人ライブラリ用ツールでは引き続き使えます。"
     },
     "nextcloud": {
       "steps": [
@@ -55,18 +57,18 @@
         "生成されたパスワードをコピーします（これがAPI tokenです）",
         "上のフィールドに貼り付けます"
       ],
-      "note": "形式: username:app-password（例: admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx）"
+      "note": "形式: login-name:app-password（例: admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx）。Nextcloudでは app password が device-specific password と表示されることもあります。DAV/WebDAV UID が異なっていても、Nextcloudのログイン画面で入力するのと同じログイン名を使ってください。"
     },
     "uptimekuma": {
       "steps": [
         "Uptime Kumaインスタンスを開いてログインします",
-        "左サイドバーの「Settings」をクリックします",
-        "「API Keys」タブを開きます",
-        "「Add API Key」をクリックし、「{appName}」のような名前を入力します",
-        "有効期限を設定するか、無期限なら空欄のままにします",
-        "「Create」をクリックして生成されたAPI keyをコピーします",
-        "上のフィールドにkeyを貼り付けます"
-      ]
+        "Uptime Kuma Web UIで使っているものと同じusernameとpasswordを使います",
+        "上のフィールドに username:password 形式で入力します",
+        "アカウントで2FAを使っている場合は、現在の6桁コードをそのまま後ろに追加します: username:password:123456",
+        "以前のWebログインで得た remembered-session JWT を使うこともできます（必要なら jwt: プレフィックス可）",
+        "ここではAPI keyを使わないでください — API keyはメトリクス取得専用で、モニター管理には使えません"
+      ],
+      "note": "利用できる形式: username:password、2FA用の username:password:123456、または remembered-session JWT（必要なら jwt: プレフィックス可）。"
     },
     "adguard": {
       "steps": [
@@ -82,25 +84,26 @@
         "email:password 形式で入力します",
         "NPM Web UIにログインするときと同じ認証情報です"
       ],
-      "note": "形式: email:password（例: admin@example.com:changeme）"
+      "note": "形式: email:password（例: admin@example.com:changeme）。2FAが必須のアカウントはまだサポートされていません。"
     },
     "portainer": {
       "steps": [
-        "PortainerはAPIアクセスにログイン認証情報を使用します",
-        "username:password 形式で入力します",
-        "Portainer Web UIにログインするときと同じ認証情報です"
+        "Portainerインスタンスを開いてログインします",
+        "「My account」を開き、「Access tokens」セクションでaccess tokenを作成します（Portainerからパスワード再入力を求められる場合があります）",
+        "そのtokenをコピーして上のフィールドに直接貼り付けます",
+        "API keyを使えない場合は、username:password もフォールバックとして使えます"
       ],
-      "note": "形式: username:password（例: admin:mypassword）"
+      "note": "推奨: My account → Access tokens で作成したPortainerのaccess token / API keyをそのまま貼り付けます（X-API-Keyとして送信）。フォールバック: username:password。"
     },
     "freshrss": {
       "steps": [
         "FreshRSSはプログラムアクセス用に別のAPI passwordを使用します",
-        "FreshRSSで Settings → Profile → API Management を開きます",
-        "必要に応じて「Allow API access」を有効化します",
+        "FreshRSSでプロフィール設定を開き、「Authentication / API access」セクションへ進みます",
+        "必要ならAPI accessを有効化します",
         "API passwordを設定します（ログイン用パスワードとは別です）",
-        "username:api_password 形式で入力します"
+        "username:api_password 形式でFreshRSSのユーザー名とAPI passwordを入力します"
       ],
-      "note": "形式: username:api_password — API passwordはログイン用ではなくFreshRSS設定で別途定義します"
+      "note": "形式: username:api_password — API passwordはログイン用パスワードとは別です。APIアドレスが別に設定されている場合は、FreshRSSのURLに /api/greader.php を付けて使ってください。"
     },
     "wallabag": {
       "steps": [
@@ -113,23 +116,24 @@
     },
     "stirlingpdf": {
       "steps": [
-        "Stirling PDFインスタンスを開き、管理者でログインします",
-        "右上の設定アイコン（⚙️）をクリックしてAccount Settingsを開きます",
-        "設定画面で個人用API keyを確認または生成します",
-        "または、SECURITY_CUSTOMGLOBALAPIKEY 環境変数で設定したグローバルAPI keyを使用します",
+        "Stirling PDFインスタンスを開きます",
+        "ログインが有効ならサインインし、右上の設定アイコン（⚙️）からAccount Settingsを開きます",
+        "そこで個人用API keyを確認または生成します",
+        "デプロイで SECURITY_CUSTOMGLOBALAPIKEY を使っている場合は、そのグローバルAPI keyを代わりに使うこともできます",
         "上のフィールドにAPI keyを貼り付けます"
       ],
-      "note": "X-API-KEYヘッダーを使用します。API key認証を使うにはStirling PDFでログイン機能が有効である必要があります"
+      "note": "X-API-KEYヘッダーを使用します。環境によってはグローバルAPI keyを使い、ユーザーログインが不要な場合もあります。"
     },
     "wikijs": {
       "steps": [
-        "Wiki.jsインスタンスを開き、管理者でログインします",
+        "Wiki.jsインスタンスを開き、API keyを作成できるアカウントでログインします",
         "Administration → API Access に移動します",
         "「Create API Key」をクリックし、名前（例: \"{appName}\"）を設定します",
-        "適切なpermission groupを選択します（推奨: Full Access）",
+        "必要なscopeを選択します。read:pages は health/list/search/get page ツール向け、read:source は source/system の読み取り向け、write:pages はページ作成 / 更新向けで、ユーザー系ツールには write:users や manage:users など追加のuser scopeが必要です。",
         "有効期限を設定するか、無期限なら空欄のままにします",
         "生成されたAPI keyをコピーして上のフィールドに貼り付けます"
-      ]
+      ],
+      "note": "Wiki.jsのAPI keyはbearer tokenですが、対象ページにこのkeyでアクセスできるようpage rule側でも許可されている必要があります。ページを作成するときは、そのページで使いたいlocaleを選んでください。"
     },
     "tailscale": {
       "steps": [
@@ -156,7 +160,7 @@
         "右上のプロフィールアイコンをクリックし、「My Profile」を選択します",
         "左サイドバーで「API Tokens」をクリックします",
         "「Create Token」をクリックします",
-        "カスタムtokenテンプレートを使い、次の権限を設定します: Zone:DNS:Edit、Zone:Zone:Read、Account:Cloudflare Tunnel:Edit",
+        "カスタムtokenテンプレートを使い、次の権限を設定します: Zone:DNS:Edit、Zone:Zone:Read、Account:Cloudflare Tunnel:Read",
         "必要に応じて特定のzoneやaccountに制限します",
         "「Continue to summary」→「Create Token」をクリックします",
         "tokenをすぐコピーします（再表示されません）",

@@ -1,9 +1,10 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "title": "Ferramentas",
     "description": {
-      "withCounts": "{toolsCount} ferramentas em {serviceCount} serviços • {enabledCount} ativas",
-      "empty": "Gere quais as ferramentas expostas aos clientes MCP."
+      "withCounts": "{toolsCount} ferramentas em {serviceCount} serviços • {enabledCount} ativadas",
+      "empty": "Gira as ferramentas expostas aos clientes MCP."
     },
     "filters": {
       "searchPlaceholder": "Pesquisar ferramentas",
@@ -22,9 +23,9 @@
     },
     "empty": {
       "searchTitle": "Nenhuma ferramenta corresponde à pesquisa",
-      "searchDescription": "Experimente um termo de pesquisa ou filtro diferente.",
+      "searchDescription": "Experimente outro termo de pesquisa ou ajuste os filtros.",
       "noToolsTitle": "Ainda sem ferramentas",
-      "noToolsDescription": "Ligue um serviço para começar a usar ferramentas."
+      "noToolsDescription": "Ligue um serviço para começar a utilizar ferramentas."
     }
   }
 }

@@ -1,4 +1,5 @@
 {
+  "_machine_translated": "Este arquivo foi traduzido por máquina e pode conter imprecisões. Contribuições e correções são bem-vindas.",
   "page": {
     "title": "Configurações",
     "description": "Aparência, endpoints e informações do sistema",
@@ -19,7 +20,7 @@
       "currentUserFallback": "admin",
       "selfMcp": {
         "title": "Ferramentas Self-MCP",
-        "description": "Quando ativado, agentes de IA podem gerenciar este gateway pelo próprio MCP — listando serviços, alternando ferramentas, adicionando conexões e visualizando logs sem usar a interface web.",
+        "description": "Quando ativado, agentes de IA podem gerenciar este gateway pelo próprio MCP — listando serviços, ativando ou desativando ferramentas, adicionando conexões e visualizando logs sem usar a interface web.",
         "accessPrefix": "O acesso é concedido por usuário em",
         "userManagementLink": "Gerenciamento de usuários",
         "accessSuffix": ".",

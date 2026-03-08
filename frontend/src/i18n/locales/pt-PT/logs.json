@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
     "title": "Registos",
-    "description": "Consulte chamadas recentes de ferramentas MCP, resultados e latência.",
+    "description": "Consulte chamadas recentes de ferramentas MCP, respetivos resultados e latência.",
     "stats": {
       "totalCalls": "Total de chamadas",
       "successRate": "Taxa de sucesso",
@@ -12,7 +13,7 @@
       "callsOverTime": "Chamadas ao longo do tempo"
     },
     "filters": {
-      "searchPlaceholder": "Pesquisar por nome da ferramenta",
+      "searchPlaceholder": "Pesquisar pelo nome da ferramenta",
       "allServices": "Todos os serviços",
       "status": {
         "all": "Todos",
@@ -38,10 +39,10 @@
       "page": "Página {current} de {total}"
     },
     "empty": {
-      "filteredTitle": "Sem entradas de registo correspondentes",
+      "filteredTitle": "Nenhum registo corresponde aos filtros",
       "filteredDescription": "Experimente ajustar os filtros.",
-      "defaultTitle": "Ainda sem entradas de registo",
-      "defaultDescription": "A atividade das ferramentas aparece aqui quando os agentes começarem a fazer chamadas."
+      "defaultTitle": "Ainda não existem registos",
+      "defaultDescription": "A atividade das ferramentas aparecerá aqui quando os agentes começarem a fazer chamadas."
     }
   }
 }

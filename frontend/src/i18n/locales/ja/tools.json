@@ -1,12 +1,13 @@
 {
+  "_machine_translated": "このファイルは機械翻訳をもとにしており、不正確な表現が含まれる場合があります。修正や改善の提案を歓迎します。",
   "page": {
     "title": "ツール",
     "description": {
-      "withCounts": "{toolsCount} 個のツール / {serviceCount} 個のサービス • {enabledCount} 個が有効",
+      "withCounts": "{serviceCount} 個のサービスに {toolsCount} 個のツール • {enabledCount} 個が有効",
       "empty": "MCPクライアントに公開するツールを管理します。"
     },
     "filters": {
-      "searchPlaceholder": "ツールを検索",
+      "searchPlaceholder": "ツール名で検索",
       "allServices": "すべてのサービス",
       "status": {
         "all": "すべて ({count})",
@@ -24,7 +25,7 @@
       "searchTitle": "検索条件に一致するツールがありません",
       "searchDescription": "検索条件やフィルターを変えてみてください。",
       "noToolsTitle": "ツールはまだありません",
-      "noToolsDescription": "サービスを接続するとツールを使えるようになります。"
+      "noToolsDescription": "サービスを接続すると、使えるツールがここに表示されます。"
     }
   }
 }

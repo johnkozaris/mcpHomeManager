@@ -1,7 +1,8 @@
 {
+  "_machine_translated": "This file was machine-translated and may contain inaccuracies. Contributions and corrections are welcome.",
   "page": {
-    "title": "Connetti gli agenti AI",
-    "description": "Connetti il tuo endpoint MCP a uno dei client AI qui sotto. Una volta connesso, gli strumenti del tuo homelab verranno rilevati automaticamente.",
+    "title": "Collega gli agenti AI",
+    "description": "Collega il tuo endpoint MCP a uno dei client AI qui sotto. Una volta collegato, gli strumenti del tuo homelab verranno rilevati automaticamente.",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },
@@ -12,11 +13,11 @@
         "steps": {
           "step1": {
             "before": "Vai a",
-            "settings": "Settings",
-            "middle": "(icona ingranaggio) →",
-            "developer": "Developer",
+            "settings": "Impostazioni",
+            "middle": "(icona a ingranaggio) →",
+            "developer": "Sviluppatore",
             "and": "→",
-            "editConfig": "Edit Config"
+            "editConfig": "Modifica configurazione"
           },
           "step2": {
             "beforeFile": "Si aprirà",
@@ -59,7 +60,7 @@
             "before": "Crea",
             "after": "nella root del progetto con questo contenuto:"
           },
-          "step2": "Riavvia Cursor (Cmd+Q / chiudi e riapri). I tuoi strumenti dovrebbero comparire nel pannello AI (Cmd+L / Ctrl+L) sotto \"Available Tools\"",
+          "step2": "Riavvia Cursor (Cmd+Q / chiudi e riapri). I tuoi strumenti dovrebbero comparire nel pannello AI (Cmd+L / Ctrl+L) sotto \"Strumenti disponibili\"",
           "step3": "Se gli strumenti non compaiono, controlla l'indicatore di stato MCP nella barra in basso"
         }
       },
@@ -70,13 +71,13 @@
             "before": "Vai a",
             "settings": "Impostazioni",
             "middle": "→",
-            "appsAndConnectors": "Apps & Connectors",
+            "appsAndConnectors": "App e connettori",
             "after": "→ attiva",
-            "developerMode": "Developer mode",
+            "developerMode": "Modalità sviluppatore",
             "suffix": "in \"Impostazioni avanzate\""
           },
           "step2": {
-            "before": "Torna in \"Apps & Connectors\" e fai clic su",
+            "before": "Torna in \"App e connettori\" e fai clic su",
             "create": "Crea",
             "and": "→ seleziona",
             "mcpServer": "MCP Server"
@@ -104,11 +105,11 @@
             "and": "→",
             "settings": "Impostazioni",
             "then": "→",
-            "tools": "Tools"
+            "tools": "Strumenti"
           },
           "step2": {
             "before": "Fai clic su",
-            "addMcpConnection": "Add MCP Connection",
+            "addMcpConnection": "Aggiungi connessione MCP",
             "after": ", inserisci un nome e incolla il tuo endpoint:"
           },
           "step3": "Se usi l'autenticazione con API key, inserisci la chiave nel campo di autenticazione",
@@ -124,16 +125,16 @@
         "description": "Se il tuo client MCP richiede dettagli di connessione specifici:",
         "details": {
           "transport": {
-            "label": "Transport",
+            "label": "Trasporto",
             "value": "Streamable HTTP"
           },
           "auth": {
-            "label": "Auth",
+            "label": "Autenticazione",
             "value": "Authorization: Bearer"
           },
           "discovery": {
-            "label": "Discovery",
-            "value": "Automatica"
+            "label": "Rilevamento",
+            "value": "Automatico"
           }
         },
         "sse": {
