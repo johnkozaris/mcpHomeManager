@@ -1,3 +1,6 @@
+import base64
+import json
+import time
 from typing import Any
 
 from domain.entities.service_connection import ServiceType
@@ -158,12 +161,52 @@ class PortainerClient(BaseServiceClient):
     def __init__(self, base_url: str, api_token: str, **kwargs: Any) -> None:
         super().__init__(base_url, api_token, **kwargs)
         self._jwt: str | None = None
+        self._jwt_expires_at: float | None = None
 
     def _build_headers(self, token: str) -> dict[str, str]:
-        return {"Content-Type": "application/json"}
+        headers = {"Content-Type": "application/json"}
+        if self._uses_api_key_auth:
+            headers["X-API-Key"] = token
+        return headers
 
-    async def _ensure_jwt(self) -> None:
-        if self._jwt:
+    @property
+    def _uses_api_key_auth(self) -> bool:
+        return ":" not in self._api_token
+
+    def _get_jwt_expiry(self, token: str) -> float | None:
+        parts = token.split(".")
+        if len(parts) != 3:
+            return None
+        payload = parts[1]
+        payload += "=" * (-len(payload) % 4)
+        try:
+            data = json.loads(base64.urlsafe_b64decode(payload))
+        except (ValueError, TypeError, json.JSONDecodeError):
+            return None
+        exp = data.get("exp")
+        if isinstance(exp, (int, float)):
+            return float(exp)
+        return None
+
+    def _jwt_needs_refresh(self) -> bool:
+        if not self._jwt:
+            return True
+        if self._jwt_expires_at is None:
+            return False
+        return time.time() >= self._jwt_expires_at - 60
+
+    def _set_jwt(self, token: str) -> None:
+        self._jwt = token
+        self._jwt_expires_at = self._get_jwt_expiry(token)
+        self._client.headers["Authorization"] = f"Bearer {token}"
+
+    def _clear_jwt(self) -> None:
+        self._jwt = None
+        self._jwt_expires_at = None
+        self._client.headers.pop("Authorization", None)
+
+    async def _ensure_jwt(self, *, force_refresh: bool = False) -> None:
+        if not force_refresh and not self._jwt_needs_refresh():
             return
         parts = self._api_token.split(":", 1)
         if len(parts) != 2:
@@ -182,11 +225,19 @@ class PortainerClient(BaseServiceClient):
         token = data.get("jwt")
         if not token:
             raise ServiceConnectionError(self.service_name, "No jwt in auth response")
-        self._jwt = token
-        self._client.headers["Authorization"] = f"Bearer {self._jwt}"
+        self._set_jwt(token)
 
     async def _request(self, method: str, path: str, **kwargs: Any) -> Any:
+        if self._uses_api_key_auth:
+            return await super()._request(method, path, **kwargs)
         await self._ensure_jwt()
+        try:
+            return await super()._request(method, path, **kwargs)
+        except ToolExecutionError as e:
+            if "HTTP 401:" not in str(e):
+                raise
+        self._clear_jwt()
+        await self._ensure_jwt(force_refresh=True)
         return await super()._request(method, path, **kwargs)
 
     async def health_check(self) -> bool:

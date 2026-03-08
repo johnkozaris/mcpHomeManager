@@ -641,7 +641,7 @@ class ServiceController(Controller):
 
         service = GenericToolService(GenericToolDefinitionRepository(db_session))
         try:
-            created, skipped = await service.import_openapi(service_id, data.spec)
+            created, skipped, warnings = await service.import_openapi(service_id, data.spec)
         except (ValueError, GenericToolValidationError) as exc:
             raise ClientException(
                 detail=str(exc),
@@ -655,6 +655,7 @@ class ServiceController(Controller):
             status="imported",
             imported=created,
             skipped=skipped,
+            warnings=warnings,
             tools_count=len(created),
             message_code=ApiMessageCode.SERVICES_OPENAPI_IMPORTED.value,
         )

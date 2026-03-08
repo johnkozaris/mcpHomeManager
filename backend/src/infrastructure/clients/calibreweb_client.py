@@ -1,4 +1,7 @@
+from html import unescape
+from html.parser import HTMLParser
 from typing import Any
+from urllib.parse import urlparse
 
 import httpx
 
@@ -34,7 +37,12 @@ _TOOLS = [
                 "sort": {
                     "type": "string",
                     "default": "id",
-                    "description": "Field to sort by (e.g., id, title, authors, timestamp)",
+                    "description": (
+                        "Sort field forwarded to /ajax/listbooks. Common values include "
+                        "title, authors, tags, series, publishers, languages, sort, "
+                        "authors_sort, and series_index; unsupported values fall back "
+                        "to newest-first."
+                    ),
                 },
                 "order": {
                     "type": "string",
@@ -113,6 +121,30 @@ _TOOLS = [
 ]
 
 
+class _LoginFormParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.hidden_inputs: dict[str, str] = {}
+        self.has_remember_me = False
+
+    def handle_starttag(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
+        if tag.lower() != "input":
+            return
+        attributes = dict(attrs)
+        name = attributes.get("name")
+        if name is None:
+            return
+        if name == "remember_me":
+            self.has_remember_me = True
+        if attributes.get("type") != "hidden":
+            return
+        value = attributes.get("value")
+        if value is not None:
+            self.hidden_inputs[name] = unescape(value)
+
+
 class CalibreWebClient(BaseServiceClient):
     """Client for Calibre-Web e-book library management.
 
@@ -134,11 +166,60 @@ class CalibreWebClient(BaseServiceClient):
         encoded = base64.b64encode(token.encode()).decode()
         return {"Authorization": f"Basic {encoded}", "Accept": "application/json"}
 
+    @staticmethod
+    def _is_login_redirect(response: httpx.Response) -> bool:
+        if response.status_code not in {301, 302, 303, 307, 308}:
+            return False
+        location = response.headers.get("location", "")
+        redirect_path = urlparse(location).path or location
+        return redirect_path.startswith("/login")
+
+    @staticmethod
+    def _is_login_page(response: httpx.Response) -> bool:
+        if response.status_code != 200:
+            return False
+        content_type = response.headers.get("content-type", "").lower()
+        if "html" not in content_type:
+            return False
+        body = response.text.lower()
+        return (
+            ('name="username"' in body or "name='username'" in body)
+            and ('name="password"' in body or "name='password'" in body)
+            and "csrf_token" in body
+        )
+
+    @staticmethod
+    def _extract_login_bootstrap(html: str) -> tuple[str, str, bool]:
+        parser = _LoginFormParser()
+        parser.feed(html)
+        csrf_token = parser.hidden_inputs.get("csrf_token")
+        if not csrf_token:
+            raise ServiceConnectionError(
+                "calibreweb", "Login page missing csrf_token field"
+            )
+        return csrf_token, parser.hidden_inputs.get("next", ""), parser.has_remember_me
+
+    @staticmethod
+    def _parse_response_body(response: httpx.Response) -> Any:
+        if response.headers.get("content-type", "").startswith("application/json"):
+            try:
+                return response.json()
+            except Exception:
+                return response.text
+        body = response.text.strip()
+        if body.startswith(("{", "[")):
+            try:
+                return response.json()
+            except Exception:
+                return response.text
+        return response.text
+
     async def _ensure_session(self) -> None:
         """Authenticate via the Calibre-Web login form to obtain a session cookie.
 
         AJAX endpoints require a Flask login session rather than Basic Auth.
-        We POST to /login with form data and capture the session cookie.
+        We first GET /login to seed the session cookie and capture the CSRF token,
+        then POST the full login form payload.
         """
         if self._session_authenticated:
             return
@@ -150,21 +231,42 @@ class CalibreWebClient(BaseServiceClient):
             )
         username, password = parts
         try:
+            login_page = await self._client.get("/login", follow_redirects=False)
+            login_page.raise_for_status()
+            csrf_token, next_value, has_remember_me = self._extract_login_bootstrap(
+                login_page.text
+            )
+            form_data: dict[str, str] = {
+                "username": username,
+                "password": password,
+                "csrf_token": csrf_token,
+                "next": next_value,
+            }
+            if has_remember_me:
+                form_data["remember_me"] = "on"
             resp = await self._client.post(
                 "/login",
-                data={"username": username, "password": password},
+                data=form_data,
                 follow_redirects=False,
             )
-            # Calibre-Web redirects on successful login (302) and sets session cookies.
-            # A 200 response with the login page means invalid credentials.
-            if resp.status_code == 200 and "flash_danger" in resp.text:
+            if self._is_login_redirect(resp):
                 raise ServiceConnectionError(
                     self.service_name, "Login failed — check username and password"
                 )
+            if self._is_login_page(resp):
+                raise ServiceConnectionError(
+                    self.service_name, "Login failed — check username and password"
+                )
+            if not (200 <= resp.status_code < 400):
+                resp.raise_for_status()
         except httpx.ConnectError as e:
             raise ServiceConnectionError(self.service_name, f"Cannot connect: {e}") from e
         except httpx.TimeoutException as e:
             raise ServiceConnectionError(self.service_name, f"Timeout during login: {e}") from e
+        except httpx.HTTPStatusError as e:
+            raise ServiceConnectionError(
+                self.service_name, f"Login failed with HTTP {e.response.status_code}"
+            ) from e
         except ServiceConnectionError:
             raise
         except Exception as e:
@@ -173,21 +275,47 @@ class CalibreWebClient(BaseServiceClient):
             ) from e
         self._session_authenticated = True
 
-    async def _request(self, method: str, path: str, **kwargs: Any) -> Any:
+    async def _request_with_session(self, method: str, path: str, **kwargs: Any) -> httpx.Response:
         await self._ensure_session()
-        try:
-            return await super()._request(method, path, **kwargs)
-        except ToolExecutionError:
-            # Session may have expired — re-authenticate once and retry
+        response = await self._client.request(method, path, follow_redirects=False, **kwargs)
+        if self._is_login_redirect(response) or self._is_login_page(response):
             self._session_authenticated = False
             await self._ensure_session()
-            return await super()._request(method, path, **kwargs)
+            response = await self._client.request(
+                method, path, follow_redirects=False, **kwargs
+            )
+        return response
+
+    async def _request(self, method: str, path: str, **kwargs: Any) -> Any:
+        try:
+            response = await self._request_with_session(method, path, **kwargs)
+            if self._is_login_redirect(response) or self._is_login_page(response):
+                raise ToolExecutionError(
+                    self.service_name, "Authentication failed after re-login"
+                )
+            response.raise_for_status()
+            return self._parse_response_body(response)
+        except httpx.ConnectError as e:
+            raise ServiceConnectionError(self.service_name, f"Cannot connect: {e}") from e
+        except httpx.TimeoutException as e:
+            raise ServiceConnectionError(self.service_name, f"Timeout: {e}") from e
+        except httpx.HTTPStatusError as e:
+            raise ToolExecutionError(
+                self.service_name,
+                f"HTTP {e.response.status_code}: {e.response.text[:200]}",
+            ) from e
+        except ServiceConnectionError, ToolExecutionError:
+            raise
+        except Exception as e:
+            raise ServiceConnectionError(
+                self.service_name, f"Unexpected error: {type(e).__name__}: {e}"
+            ) from e
 
     async def health_check(self) -> bool:
         """Check health via the OPDS endpoint which supports Basic Auth."""
         try:
             resp = await self._client.request("GET", "/opds")
-            return resp.status_code < 500
+            return 200 <= resp.status_code < 300
         except Exception:
             return False
 

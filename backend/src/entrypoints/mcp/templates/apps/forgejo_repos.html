@@ -26,7 +26,7 @@
       <span>&#9733; {{ repo.stars_count }}</span>
       {% endif %}
       {% if repo.forks_count is defined %}
-      <span>&#128274; {{ repo.forks_count }}</span>
+      <span>Forks {{ repo.forks_count }}</span>
       {% endif %}
       {% if repo.updated_at %}
       <span>Updated {{ repo.updated_at | time_ago }}</span>

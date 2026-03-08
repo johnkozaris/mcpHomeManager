@@ -13,6 +13,7 @@ import {
   SERVICE_META,
   getServiceMeta,
 } from "@/lib/service-meta";
+import { BUILTIN_SERVICE_TYPES } from "@/lib/types";
 import { parseApiError } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -37,23 +38,26 @@ interface PrefillData {
 function CatalogGrid({ onSelect }: { onSelect: (type: ServiceType) => void }) {
   return (
     <div className="grid grid-cols-2 gap-2">
-      {Object.entries(SERVICE_META).map(([type, meta]) => (
-        <button
-          key={type}
-          onClick={() => onSelect(type as ServiceType)}
-          className="flex items-center gap-3 p-3 rounded-xl border border-line hover:border-line-strong hover:bg-surface-hover transition-all text-left group"
-        >
-          <ServiceIconBadge type={type as ServiceType} size="sm" />
-          <div className="min-w-0">
-            <p className="text-sm font-medium text-ink group-hover:text-terra transition-colors">
-              {meta.label}
-            </p>
-            <p className="text-2xs text-ink-tertiary truncate">
-              {meta.description}
-            </p>
-          </div>
-        </button>
-      ))}
+      {BUILTIN_SERVICE_TYPES.map((type) => {
+        const meta = SERVICE_META[type];
+        return (
+          <button
+            key={type}
+            onClick={() => onSelect(type)}
+            className="flex items-center gap-3 p-3 rounded-xl border border-line hover:border-line-strong hover:bg-surface-hover transition-all text-left group"
+          >
+            <ServiceIconBadge type={type} size="sm" />
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-ink group-hover:text-terra transition-colors">
+                {meta.label}
+              </p>
+              <p className="text-2xs text-ink-tertiary truncate">
+                {meta.description}
+              </p>
+            </div>
+          </button>
+        );
+      })}
     </div>
   );
 }

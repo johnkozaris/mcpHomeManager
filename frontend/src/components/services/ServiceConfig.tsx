@@ -50,9 +50,9 @@ export function ServiceConfig({
   const appName = useAppName();
   const tokenGuides = getTokenGuides(appName);
 
-  const serviceTypes = Object.entries(SERVICE_META).map(([value, meta]) => ({
-    value: value as ServiceType,
-    label: meta.label,
+  const serviceTypes = BUILTIN_SERVICE_TYPES.map((value) => ({
+    value,
+    label: SERVICE_META[value].label,
   }));
 
   const guide = (BUILTIN_SERVICE_TYPES as readonly string[]).includes(

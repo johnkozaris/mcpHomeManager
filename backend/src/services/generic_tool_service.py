@@ -121,35 +121,53 @@ class GenericToolService:
         self,
         service_id: UUID,
         spec: str,
-    ) -> tuple[list[str], list[str]]:
+    ) -> tuple[list[str], list[str], list[str]]:
         parser = OpenAPIParser()
-        specs = parser.parse(spec)
+        parsed = parser.parse(spec)
+        if not parsed.tools and not parsed.warnings:
+            raise GenericToolValidationError(
+                "OpenAPI spec does not define any importable operations"
+            )
 
         existing_tools = await self._repo.get_by_service_id(service_id)
         existing_names = {tool.tool_name for tool in existing_tools}
+        seen_names = set(existing_names)
 
         imported: list[str] = []
         skipped: list[str] = []
-        for candidate in specs:
-            if candidate.tool_name in existing_names:
+        warnings = list(parsed.warnings)
+        for candidate in parsed.tools:
+            if candidate.tool_name in seen_names:
                 skipped.append(candidate.tool_name)
+                if candidate.tool_name not in existing_names:
+                    warnings.append(
+                        f"Skipped {candidate.tool_name}: duplicate tool name in imported spec"
+                    )
                 continue
 
             try:
                 validate_tool_name(candidate.tool_name)
             except ValueError:
                 skipped.append(candidate.tool_name)
+                warnings.append(f"Skipped {candidate.tool_name}: invalid tool name")
                 continue
 
-            await self._repo.create(
-                service_id=service_id,
-                tool_name=candidate.tool_name,
-                description=candidate.description,
-                http_method=self._normalize_http_method(candidate.http_method),
-                path_template=candidate.path_template,
-                params_schema=candidate.params_schema,
-            )
+            try:
+                await self._repo.create(
+                    service_id=service_id,
+                    tool_name=candidate.tool_name,
+                    description=candidate.description,
+                    http_method=self._normalize_http_method(candidate.http_method),
+                    path_template=candidate.path_template,
+                    params_schema=candidate.params_schema,
+                )
+            except IntegrityError:
+                skipped.append(candidate.tool_name)
+                warnings.append(f"Skipped {candidate.tool_name}: duplicate tool name")
+                seen_names.add(candidate.tool_name)
+                continue
+
             imported.append(candidate.tool_name)
+            seen_names.add(candidate.tool_name)
 
-        return imported, skipped
-
+        return imported, skipped, warnings

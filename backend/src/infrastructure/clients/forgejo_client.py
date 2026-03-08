@@ -13,7 +13,7 @@ _TOOLS = [
         http_method="GET",
         path_template="/api/v1/user/repos",
         service_type=ServiceType.FORGEJO,
-        description="List repositories accessible to the authenticated user",
+        description="List repositories owned by the authenticated user",
         parameters_schema={
             "type": "object",
             "properties": {
@@ -93,6 +93,7 @@ _TOOLS = [
                     "default": "open",
                 },
                 "page": {"type": "integer", "default": 1},
+                "limit": {"type": "integer", "default": 20},
             },
             "required": ["owner", "repo"],
         },
@@ -173,6 +174,16 @@ class ForgejoClient(BaseServiceClient, IAppProvider):
         repo = self._validate_path_segment(arguments["repo"], "repo")
         return f"/api/v1/repos/{owner}/{repo}"
 
+    async def _list_owner_repos(self, owner_filter: str) -> Any:
+        owner = self._validate_path_segment(owner_filter, "owner")
+        params = {"page": 1, "limit": 50}
+        try:
+            return await self._request("GET", f"/api/v1/users/{owner}/repos", params=params)
+        except ToolExecutionError as exc:
+            if not exc.reason.startswith("HTTP 404"):
+                raise
+            return await self._request("GET", f"/api/v1/orgs/{owner}/repos", params=params)
+
     async def execute_tool(self, tool_name: str, arguments: dict[str, Any]) -> Any:
         match tool_name:
             case "forgejo_list_repos":
@@ -188,6 +199,7 @@ class ForgejoClient(BaseServiceClient, IAppProvider):
                     "GET",
                     f"{self._repo_path(arguments)}/issues",
                     params={
+                        "type": "issues",
                         "state": arguments.get("state", "open"),
                         "page": arguments.get("page", 1),
                         "limit": arguments.get("limit", 20),
@@ -206,6 +218,7 @@ class ForgejoClient(BaseServiceClient, IAppProvider):
                     params={
                         "state": arguments.get("state", "open"),
                         "page": arguments.get("page", 1),
+                        "limit": arguments.get("limit", 20),
                     },
                 )
             case "forgejo_create_pull_request":
@@ -243,13 +256,7 @@ class ForgejoClient(BaseServiceClient, IAppProvider):
 
         owner_filter = arguments.get("owner")
         if owner_filter:
-            owner = self._validate_path_segment(owner_filter, "owner")
-            result = await self._request(
-                "GET",
-                "/api/v1/repos/search",
-                params={"q": "", "owner": owner, "limit": 50},
-            )
-            repos = result.get("data", result) if isinstance(result, dict) else result
+            repos = await self._list_owner_repos(owner_filter)
         else:
             repos = await self._request(
                 "GET",

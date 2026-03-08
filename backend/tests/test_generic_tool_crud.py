@@ -15,6 +15,7 @@ from tests.conftest import (
 
 from domain.entities.service_connection import ServiceType
 from domain.validation import validate_tool_name
+from services.generic_tool_service import GenericToolService, GenericToolValidationError
 
 
 class TestGenericToolCRUDLifecycle:
@@ -282,6 +283,166 @@ class TestOpenAPIImportSkipLogic:
         assert original is not None
         assert original.description == "Get users"  # not "Get users v2"
         assert original.path_template == "/users"  # not "/v2/users"
+
+
+class TestGenericToolServiceOpenAPIImport:
+    @pytest.fixture
+    def repo(self) -> FakeGenericToolRepository:
+        return FakeGenericToolRepository()
+
+    @pytest.fixture
+    def service_id(self) -> UUID:
+        return uuid4()
+
+    async def test_import_openapi_returns_warnings_for_unsupported_shapes(
+        self,
+        repo: FakeGenericToolRepository,
+        service_id: UUID,
+    ):
+        service = GenericToolService(repo)
+        spec = """
+openapi: 3.0.0
+info:
+  title: Demo
+  version: "1.0"
+paths:
+  /sessions:
+    post:
+      operationId: createSession
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+    head:
+      operationId: headSessions
+  /uploads:
+    post:
+      operationId: uploadFile
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+"""
+
+        imported, skipped, warnings = await service.import_openapi(service_id, spec)
+
+        assert imported == ["createSession"]
+        assert skipped == []
+        assert warnings == [
+            "Skipped HEAD /sessions: unsupported HTTP method",
+            "Skipped uploadFile: unsupported request body media types (multipart/form-data)",
+        ]
+
+    async def test_import_openapi_preserves_request_shape_metadata(
+        self,
+        repo: FakeGenericToolRepository,
+        service_id: UUID,
+    ):
+        service = GenericToolService(repo)
+        spec = """
+openapi: 3.0.0
+info:
+  title: Demo
+  version: "1.0"
+paths:
+  /widgets/{widgetId}:
+    parameters:
+      - name: widgetId
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      operationId: updateWidget
+      parameters:
+        - name: verbose
+          in: query
+          schema:
+            type: boolean
+        - name: trace
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+"""
+
+        imported, skipped, warnings = await service.import_openapi(service_id, spec)
+
+        assert imported == ["updateWidget"]
+        assert skipped == []
+        assert warnings == []
+
+        created = await repo.get_by_name(service_id, "updateWidget")
+        assert created is not None
+        metadata = created.params_schema["x-mcp-home-request-shape"]
+        assert metadata["parameters"]["widgetId"]["in"] == "path"
+        assert metadata["parameters"]["verbose"]["in"] == "query"
+        assert metadata["parameters"]["trace"]["in"] == "header"
+        assert metadata["body"]["encoding"] == "json"
+
+    async def test_import_openapi_skips_duplicate_tool_names_with_warning(
+        self,
+        repo: FakeGenericToolRepository,
+        service_id: UUID,
+    ):
+        service = GenericToolService(repo)
+        spec = """
+openapi: 3.0.0
+info:
+  title: Demo
+  version: "1.0"
+paths:
+  /users:
+    get:
+      operationId: listUsers
+  /members:
+    get:
+      operationId: listUsers
+"""
+
+        imported, skipped, warnings = await service.import_openapi(service_id, spec)
+
+        assert imported == ["listUsers"]
+        assert skipped == ["listUsers"]
+        assert warnings == ["Skipped listUsers: duplicate tool name in imported spec"]
+
+    async def test_import_openapi_rejects_specs_without_importable_operations(
+        self,
+        repo: FakeGenericToolRepository,
+        service_id: UUID,
+    ):
+        service = GenericToolService(repo)
+        spec = """
+openapi: 3.1.1
+info:
+  title: Demo
+  version: "1.0"
+paths: {}
+"""
+
+        with pytest.raises(
+            GenericToolValidationError,
+            match="OpenAPI spec does not define any importable operations",
+        ):
+            await service.import_openapi(service_id, spec)
 
 
 class TestToolNameValidation:

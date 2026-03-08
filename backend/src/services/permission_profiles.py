@@ -23,6 +23,10 @@ def _read_only(read_tools: list[str], all_tools: list[str]) -> dict[str, bool]:
     return {t: (t in read_tools) for t in all_tools}
 
 
+def _all_except(excluded_tools: list[str], all_tools: list[str]) -> dict[str, bool]:
+    return {t: (t not in excluded_tools) for t in all_tools}
+
+
 # ── Forgejo ──────────────────────────────────────────────────────────────
 
 _FORGEJO_TOOLS = [
@@ -67,7 +71,42 @@ _IMMICH_TOOLS = [
     "immich_get_album",
     "immich_server_stats",
 ]
-_IMMICH_READ = list(_IMMICH_TOOLS)
+_IMMICH_STANDARD_READ = [
+    "immich_search_photos",
+    "immich_get_asset",
+    "immich_list_albums",
+    "immich_get_album",
+]
+_IMMICH_ADMIN_ONLY = ["immich_server_stats"]
+
+
+def _make_immich_profiles() -> list[PermissionProfile]:
+    return [
+        PermissionProfile(
+            name="read_only",
+            label="Read Only",
+            description=(
+                "Enable standard Immich read/query tools. "
+                "Admin-only server statistics stay disabled."
+            ),
+            tool_states=_read_only(_IMMICH_STANDARD_READ, _IMMICH_TOOLS),
+        ),
+        PermissionProfile(
+            name="contributor",
+            label="Contributor",
+            description=(
+                "Enable non-admin Immich tools. "
+                "Server statistics still require an admin API key."
+            ),
+            tool_states=_all_except(_IMMICH_ADMIN_ONLY, _IMMICH_TOOLS),
+        ),
+        PermissionProfile(
+            name="admin",
+            label="Full Access",
+            description="Enable all Immich tools, including admin-only server statistics.",
+            tool_states=_all_enabled(_IMMICH_TOOLS),
+        ),
+    ]
 
 # ── Nextcloud ────────────────────────────────────────────────────────────
 
@@ -210,7 +249,6 @@ _WIKIJS_READ = [
     "wikijs_list_pages",
     "wikijs_get_page",
     "wikijs_search",
-    "wikijs_list_users",
 ]
 
 
@@ -295,7 +333,7 @@ PROFILES: dict[ServiceType, list[PermissionProfile]] = {
     ServiceType.FORGEJO: _make_profiles(_FORGEJO_TOOLS, _FORGEJO_READ),
     ServiceType.HOME_ASSISTANT: _make_profiles(_HA_TOOLS, _HA_READ),
     ServiceType.PAPERLESS: _make_profiles(_PAPERLESS_TOOLS, _PAPERLESS_READ),
-    ServiceType.IMMICH: _make_profiles(_IMMICH_TOOLS, _IMMICH_READ),
+    ServiceType.IMMICH: _make_immich_profiles(),
     ServiceType.NEXTCLOUD: _make_profiles(_NEXTCLOUD_TOOLS, _NEXTCLOUD_READ),
     ServiceType.UPTIME_KUMA: _make_profiles(_UPTIMEKUMA_TOOLS, _UPTIMEKUMA_READ),
     ServiceType.ADGUARD: _make_profiles(_ADGUARD_TOOLS, _ADGUARD_READ),

@@ -168,8 +168,8 @@ export const SERVICE_META: Record<BuiltinServiceType, ServiceMeta> = {
     "generic_rest",
     Globe,
     "var(--brand-generic-rest)",
-    "Generic REST",
-    "Custom REST API service",
+    "Custom API",
+    "Connect any REST API",
   ),
 };
 

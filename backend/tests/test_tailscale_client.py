@@ -36,6 +36,10 @@ class TestTailscaleClient:
         defs = client.get_tool_definitions()
         assert len(defs) == 5
         assert all(d.service_type == ServiceType.TAILSCALE for d in defs)
+        list_devices = next(d for d in defs if d.name == "tailscale_list_devices")
+        assert "filters" in list_devices.parameters_schema["properties"]
+        get_device = next(d for d in defs if d.name == "tailscale_get_device")
+        assert "fields" in get_device.parameters_schema["properties"]
 
     async def test_unknown_tool_raises(self):
         client = TailscaleClient("https://api.tailscale.com/api/v2", "tskey-api-test")
@@ -67,16 +71,59 @@ class TestTailscaleClient:
         mock = _patch_client_transport(client)
         mock.request.return_value = _mock_response({"devices": [{"id": "1", "hostname": "laptop"}]})
 
-        result = await client.execute_tool("tailscale_list_devices", {"fields": "all"})
+        result = await client.execute_tool(
+            "tailscale_list_devices",
+            {
+                "fields": "all",
+                "filters": {
+                    "hostname": "laptop",
+                    "authorized": True,
+                    "tags": ["tag:prod", "tag:router"],
+                },
+            },
+        )
         assert result == {"devices": [{"id": "1", "hostname": "laptop"}]}
+        call_args = mock.request.call_args
+        assert call_args[0][0] == "GET"
+        assert "/tailnet/-/devices" in call_args[0][1]
+        assert call_args.kwargs["params"] == {
+            "fields": "all",
+            "hostname": "laptop",
+            "authorized": "true",
+            "tags": ["tag:prod", "tag:router"],
+        }
+
+    async def test_list_devices_rejects_invalid_filter_name(self):
+        client = TailscaleClient("https://api.tailscale.com/api/v2", "tskey-api-test")
+
+        with pytest.raises(ToolExecutionError, match="Invalid filter name"):
+            await client.execute_tool(
+                "tailscale_list_devices",
+                {"filters": {"nested.field": "value"}},
+            )
+
+    async def test_list_devices_rejects_non_object_filters(self):
+        client = TailscaleClient("https://api.tailscale.com/api/v2", "tskey-api-test")
+
+        with pytest.raises(ToolExecutionError, match="filters must be an object"):
+            await client.execute_tool(
+                "tailscale_list_devices",
+                {"filters": []},
+            )
 
     async def test_get_device(self):
         client = TailscaleClient("https://api.tailscale.com/api/v2", "tskey-api-test")
         mock = _patch_client_transport(client)
         mock.request.return_value = _mock_response({"id": "abc123", "hostname": "server"})
 
-        result = await client.execute_tool("tailscale_get_device", {"device_id": "abc123"})
+        result = await client.execute_tool(
+            "tailscale_get_device", {"device_id": "abc123", "fields": "all"}
+        )
         assert result == {"id": "abc123", "hostname": "server"}
+        call_args = mock.request.call_args
+        assert call_args[0][0] == "GET"
+        assert "/device/abc123" in call_args[0][1]
+        assert call_args.kwargs["params"] == {"fields": "all"}
 
     async def test_authorize_device(self):
         client = TailscaleClient("https://api.tailscale.com/api/v2", "tskey-api-test")

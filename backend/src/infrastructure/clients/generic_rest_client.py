@@ -9,7 +9,7 @@ from urllib.parse import quote, urlparse
 
 import httpx
 
-from domain.entities.generic_tool_spec import GenericToolSpec
+from domain.entities.generic_tool_spec import REQUEST_SHAPE_METADATA_KEY, GenericToolSpec
 from domain.entities.service_connection import ServiceType
 from domain.entities.tool_definition import ToolDefinition
 from domain.exceptions import ToolExecutionError
@@ -121,30 +121,21 @@ class GenericRestClient(IServiceClient):
         if spec is None:
             raise ToolExecutionError(tool_name, f"Unknown tool: {tool_name}")
 
-        path = spec.path_template
-        path_params = re.findall(r"\{(\w+)\}", path)
-        remaining_args = dict(arguments)
-
-        missing = [p for p in path_params if p not in remaining_args]
-        if missing:
-            raise ValueError(f"Missing required path parameters: {', '.join(missing)}")
-
-        for param in path_params:
-            value = str(remaining_args.pop(param))
-            # Block path traversal
-            if ".." in value or "/" in value or "\\" in value:
-                raise ValueError(f"Invalid path parameter '{param}': contains forbidden characters")
-            path = path.replace(f"{{{param}}}", quote(value, safe=""))
-
         method = spec.http_method.upper()
-        if method == "GET":
-            resp = await self._client.get(path, params=remaining_args)
-        elif method == "DELETE":
-            resp = await self._client.delete(path, params=remaining_args)
-        elif method in ("POST", "PUT", "PATCH"):
-            resp = await self._client.request(method, path, json=remaining_args)
+        request_shape = spec.params_schema.get(REQUEST_SHAPE_METADATA_KEY)
+        if isinstance(request_shape, dict):
+            path, request_kwargs = self._build_imported_request(spec, arguments, request_shape)
+            resp = await self._client.request(method, path, **request_kwargs)
         else:
-            raise ValueError(f"Unsupported HTTP method: {method}")
+            path, remaining_args = self._interpolate_path(spec.path_template, arguments)
+            if method == "GET":
+                resp = await self._client.get(path, params=remaining_args)
+            elif method == "DELETE":
+                resp = await self._client.delete(path, params=remaining_args)
+            elif method in ("POST", "PUT", "PATCH"):
+                resp = await self._client.request(method, path, json=remaining_args)
+            else:
+                raise ValueError(f"Unsupported HTTP method: {method}")
 
         try:
             resp.raise_for_status()
@@ -157,6 +148,116 @@ class GenericRestClient(IServiceClient):
             return resp.json()
         except Exception:
             return resp.text
+
+    def _build_imported_request(
+        self,
+        spec: GenericToolSpec,
+        arguments: dict[str, Any],
+        request_shape: dict[str, Any],
+    ) -> tuple[str, dict[str, Any]]:
+        parameter_metadata = request_shape.get("parameters", {})
+        path_args = {
+            name: value
+            for name, value in arguments.items()
+            if isinstance(parameter_metadata, dict)
+            and isinstance(parameter_metadata.get(name), dict)
+            and parameter_metadata[name].get("in") == "path"
+        }
+        path, remaining_args = self._interpolate_path(
+            spec.path_template,
+            arguments,
+            explicit_path_args=path_args,
+        )
+
+        params: dict[str, Any] = {}
+        headers: dict[str, Any] = {}
+        cookies: dict[str, Any] = {}
+        body_args: dict[str, Any] = {}
+
+        for name, value in list(remaining_args.items()):
+            metadata = (
+                parameter_metadata.get(name, {})
+                if isinstance(parameter_metadata, dict)
+                else {}
+            )
+            location = metadata.get("in")
+            if location == "query":
+                params[name] = value
+                remaining_args.pop(name)
+            elif location == "header":
+                header_name = metadata.get("name", name)
+                headers[header_name] = value
+                remaining_args.pop(name)
+            elif location == "cookie":
+                cookie_name = metadata.get("name", name)
+                cookies[cookie_name] = value
+                remaining_args.pop(name)
+
+        body_metadata = request_shape.get("body", {})
+        body_property_names = body_metadata.get("propertyNames", [])
+        if isinstance(body_property_names, list):
+            for name in body_property_names:
+                if name in remaining_args:
+                    body_args[name] = remaining_args.pop(name)
+
+        request_kwargs: dict[str, Any] = {}
+        if params:
+            request_kwargs["params"] = params
+        if headers:
+            request_kwargs["headers"] = headers
+        if cookies:
+            request_kwargs["cookies"] = cookies
+
+        encoding = body_metadata.get("encoding")
+        if encoding == "json":
+            json_body = {**body_args, **remaining_args}
+            if json_body:
+                request_kwargs["json"] = json_body
+        elif encoding == "form-urlencoded":
+            form_body = {**body_args, **remaining_args}
+            if form_body:
+                request_kwargs["data"] = form_body
+            remaining_args = {}
+            request_headers = dict(request_kwargs.get("headers", {}))
+            request_headers["Content-Type"] = body_metadata.get(
+                "mediaType",
+                "application/x-www-form-urlencoded",
+            )
+            request_kwargs["headers"] = request_headers
+        elif remaining_args:
+            if spec.http_method.upper() in {"GET", "DELETE"}:
+                request_kwargs["params"] = {**request_kwargs.get("params", {}), **remaining_args}
+            else:
+                request_kwargs["json"] = remaining_args
+
+        return path, request_kwargs
+
+    def _interpolate_path(
+        self,
+        path_template: str,
+        arguments: dict[str, Any],
+        *,
+        explicit_path_args: dict[str, Any] | None = None,
+    ) -> tuple[str, dict[str, Any]]:
+        path = path_template
+        path_params = re.findall(r"\{([^}]+)\}", path)
+        remaining_args = dict(arguments)
+        path_values = explicit_path_args or {
+            name: remaining_args[name] for name in path_params if name in remaining_args
+        }
+
+        missing = [param for param in path_params if param not in path_values]
+        if missing:
+            raise ValueError(f"Missing required path parameters: {', '.join(missing)}")
+
+        for param in path_params:
+            value = str(path_values[param])
+            if ".." in value or "/" in value or "\\" in value:
+                raise ValueError(f"Invalid path parameter '{param}': contains forbidden characters")
+            path = path.replace(f"{{{param}}}", quote(value, safe=""))
+            remaining_args.pop(param, None)
+
+        return path, remaining_args
 
     def get_tool_definitions(self) -> list[ToolDefinition]:
         return [

@@ -1,11 +1,14 @@
+import json
 from typing import Any
+from urllib.parse import urlsplit, urlunsplit
 
 from domain.entities.service_connection import ServiceType
 from domain.entities.tool_definition import ToolDefinition
 from domain.exceptions import ServiceConnectionError, ToolExecutionError
 from infrastructure.clients.base_client import BaseServiceClient
 
-_API = "/api/greader.php/reader/api/0"
+_GREADER_PATH = "/api/greader.php"
+_READER_API_PATH = "/reader/api/0"
 
 _TOOLS = [
     ToolDefinition(
@@ -107,11 +110,36 @@ class FreshRSSClient(BaseServiceClient):
     service_name = "freshrss"
 
     def __init__(self, base_url: str, api_token: str, **kwargs: Any) -> None:
-        super().__init__(base_url, api_token, **kwargs)
+        normalized_base_url, self._greader_base_path = self._normalize_base_url(base_url)
+        super().__init__(normalized_base_url, api_token, **kwargs)
         self._auth_token: str | None = None
+        self._write_token: str | None = None
 
     def _build_headers(self, token: str) -> dict[str, str]:
-        return {"Content-Type": "application/json"}
+        return {"Accept": "application/json"}
+
+    @staticmethod
+    def _normalize_base_url(base_url: str) -> tuple[str, str]:
+        parsed = urlsplit(base_url)
+        normalized_base_url = urlunsplit((parsed.scheme, parsed.netloc, "", "", ""))
+        path = parsed.path.rstrip("/")
+
+        if path.endswith(("/api/greader.php", "/greader.php")):
+            greader_base_path = path
+        elif path.endswith("/api"):
+            greader_base_path = f"{path}/greader.php"
+        elif path:
+            greader_base_path = f"{path}{_GREADER_PATH}"
+        else:
+            greader_base_path = _GREADER_PATH
+
+        return normalized_base_url, greader_base_path
+
+    def _greader_path(self, suffix: str) -> str:
+        return f"{self._greader_base_path}{suffix}"
+
+    def _reader_api_path(self, suffix: str) -> str:
+        return self._greader_path(f"{_READER_API_PATH}{suffix}")
 
     async def _ensure_auth(self) -> None:
         if self._auth_token:
@@ -124,7 +152,7 @@ class FreshRSSClient(BaseServiceClient):
         username, password = parts
         try:
             resp = await self._client.post(
-                "/api/greader.php/accounts/ClientLogin",
+                self._greader_path("/accounts/ClientLogin"),
                 data={"Email": username, "Passwd": password},
             )
             resp.raise_for_status()
@@ -137,13 +165,42 @@ class FreshRSSClient(BaseServiceClient):
         if not self._auth_token:
             raise ServiceConnectionError(self.service_name, "No Auth token in ClientLogin response")
         self._client.headers["Authorization"] = f"GoogleLogin auth={self._auth_token}"
+        self._write_token = None
 
     async def _request(self, method: str, path: str, **kwargs: Any) -> Any:
         await self._ensure_auth()
         return await super()._request(method, path, **kwargs)
 
+    async def _ensure_write_token(self) -> str:
+        if self._write_token:
+            return self._write_token
+
+        token = await self._request("GET", self._reader_api_path("/token"))
+        self._write_token = token.strip() if isinstance(token, str) else str(token).strip()
+        if not self._write_token:
+            raise ServiceConnectionError(self.service_name, "No write token in token response")
+        return self._write_token
+
+    async def _post_with_write_token(self, path: str, data: dict[str, str]) -> Any:
+        payload = dict(data)
+        payload["T"] = await self._ensure_write_token()
+        return await self._request("POST", path, data=payload)
+
+    async def _request_json_text_compatible(self, method: str, path: str, **kwargs: Any) -> Any:
+        result = await self._request(method, path, **kwargs)
+        if isinstance(result, str):
+            stripped = result.strip()
+            if stripped.startswith(("{", "[")):
+                try:
+                    return json.loads(stripped)
+                except json.JSONDecodeError:
+                    pass
+        return result
+
     async def health_check(self) -> bool:
-        result = await self._request("GET", f"{_API}/subscription/list", params={"output": "json"})
+        result = await self._request(
+            "GET", self._reader_api_path("/subscription/list"), params={"output": "json"}
+        )
         return isinstance(result, dict)
 
     def get_tool_definitions(self) -> list[ToolDefinition]:
@@ -153,22 +210,24 @@ class FreshRSSClient(BaseServiceClient):
         match tool_name:
             case "freshrss_list_feeds":
                 return await self._request(
-                    "GET", f"{_API}/subscription/list", params={"output": "json"}
+                    "GET", self._reader_api_path("/subscription/list"), params={"output": "json"}
                 )
             case "freshrss_get_unread_count":
-                return await self._request("GET", f"{_API}/unread-count", params={"output": "json"})
+                return await self._request(
+                    "GET", self._reader_api_path("/unread-count"), params={"output": "json"}
+                )
             case "freshrss_get_articles":
                 count = int(arguments.get("count", 20))
                 return await self._request(
                     "GET",
-                    f"{_API}/stream/contents/user/-/state/com.google/reading-list",
+                    self._reader_api_path("/stream/contents/user/-/state/com.google/reading-list"),
                     params={"output": "json", "n": str(count)},
                 )
             case "freshrss_get_unread":
                 count = int(arguments.get("count", 20))
                 return await self._request(
                     "GET",
-                    f"{_API}/stream/contents/user/-/state/com.google/reading-list",
+                    self._reader_api_path("/stream/contents/user/-/state/com.google/reading-list"),
                     params={
                         "output": "json",
                         "n": str(count),
@@ -177,24 +236,22 @@ class FreshRSSClient(BaseServiceClient):
                 )
             case "freshrss_mark_read":
                 item_id = arguments["item_id"]
-                return await self._request(
-                    "POST",
-                    f"{_API}/edit-tag",
+                return await self._post_with_write_token(
+                    self._reader_api_path("/edit-tag"),
                     data={"i": item_id, "a": "user/-/state/com.google/read"},
                 )
             case "freshrss_star_article":
                 item_id = arguments["item_id"]
-                return await self._request(
-                    "POST",
-                    f"{_API}/edit-tag",
+                return await self._post_with_write_token(
+                    self._reader_api_path("/edit-tag"),
                     data={"i": item_id, "a": "user/-/state/com.google/starred"},
                 )
             case "freshrss_add_feed":
                 url = arguments["url"]
-                return await self._request(
+                return await self._request_json_text_compatible(
                     "POST",
-                    f"{_API}/subscription/quickadd",
-                    params={"quickadd": url},
+                    self._reader_api_path("/subscription/quickadd"),
+                    data={"quickadd": url},
                 )
             case _:
                 raise ToolExecutionError(tool_name, f"Unknown tool: {tool_name}")

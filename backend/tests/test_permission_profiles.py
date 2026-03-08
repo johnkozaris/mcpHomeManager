@@ -55,3 +55,22 @@ class TestPermissionProfiles:
         read_only = next(p for p in profiles if p.name == "read_only")
         assert read_only.tool_states["uptimekuma_list_monitors"] is True
         assert read_only.tool_states["uptimekuma_pause_monitor"] is False
+
+    def test_wikijs_read_only_disables_admin_user_listing(self) -> None:
+        profiles = PROFILES[ServiceType.WIKIJS]
+        read_only = next(p for p in profiles if p.name == "read_only")
+        assert read_only.tool_states["wikijs_list_pages"] is True
+        assert read_only.tool_states["wikijs_get_page"] is True
+        assert read_only.tool_states["wikijs_search"] is True
+        assert read_only.tool_states["wikijs_list_users"] is False
+
+    def test_immich_admin_only_stats_profile_gating(self) -> None:
+        profiles = PROFILES[ServiceType.IMMICH]
+        read_only = next(p for p in profiles if p.name == "read_only")
+        contributor = next(p for p in profiles if p.name == "contributor")
+        admin = next(p for p in profiles if p.name == "admin")
+
+        assert read_only.tool_states["immich_server_stats"] is False
+        assert contributor.tool_states["immich_server_stats"] is False
+        assert admin.tool_states["immich_server_stats"] is True
+        assert contributor.tool_states["immich_search_photos"] is True

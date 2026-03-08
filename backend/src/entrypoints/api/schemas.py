@@ -223,6 +223,7 @@ class ImportOpenAPIResult(msgspec.Struct):
     imported: list[str]
     tools_count: int
     skipped: list[str] = []
+    warnings: list[str] = []
     message_code: str | None = None
 
 

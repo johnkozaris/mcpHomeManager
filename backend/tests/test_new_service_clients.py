@@ -236,17 +236,24 @@ class TestStirlingPdfClient:
     async def test_stirling_health(self):
         client = StirlingPdfClient("http://test:8080", "my-api-key")
         mock = _patch_client_transport(client)
-        mock.request.return_value = _mock_response({"status": "ok"})
+        mock.request.return_value = _mock_response({"status": "UP", "version": "1.2.3"})
 
         result = await client.execute_tool("stirling_health", {})
-        assert result == {"status": "ok"}
+        assert result == {"status": "UP", "version": "1.2.3"}
+        mock.request.assert_called_once_with("GET", "/api/v1/info/status")
 
     async def test_get_operations_returns_static_dict(self):
         client = StirlingPdfClient("http://test:8080", "my-api-key")
         result = await client.execute_tool("stirling_get_operations", {})
         assert isinstance(result, dict)
+        assert result["coverage"] == "representative_subset"
+        assert (
+            result["documentation"]["online_api_docs"]
+            == "https://registry.scalar.com/@stirlingpdf/apis/stirling-pdf-processing-api/"
+        )
         assert "operations" in result
         assert "merge_pdfs" in result["operations"]
+        assert "API or web UI directly" in result["note"]
 
 
 # ---------------------------------------------------------------------------

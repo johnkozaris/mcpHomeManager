@@ -15,7 +15,7 @@ const TOKEN_GUIDE_DEFAULTS: Record<TokenGuideType, TokenGuide> = {
       'Click your profile avatar in the top-right corner and select "Settings"',
       'In the left sidebar, click "Applications"',
       'Under "Manage Access Tokens", enter a name for your token (e.g., "{appName}")',
-      "Select the permissions your token needs — for full access, check all scopes. At minimum you need: read:organization, read:repository, read:issue, write:issue",
+      "Select the permissions your token needs — for full access, check all scopes. At minimum you need: read:user, read:organization, read:repository, write:repository, read:issue, write:issue",
       'Click "Generate Token" and copy the token immediately — it won’t be shown again',
       "Paste the token in the field above",
     ],
@@ -30,15 +30,14 @@ const TOKEN_GUIDE_DEFAULTS: Record<TokenGuideType, TokenGuide> = {
       "Copy the token shown in the dialog — it will only be displayed once",
       "Paste the token in the field above",
     ],
-    note: "Home Assistant tokens start with eyJ…",
+    note: "Home Assistant long-lived access tokens are opaque strings shown once when you create them.",
   },
   paperless: {
     steps: [
-      "Open your Paperless-ngx instance and log in as an admin user",
-      "Click the gear icon or navigate to Settings in the top navigation",
-      'Scroll down or look for the "API" section',
-      "Your API token is shown here — click the copy icon to copy it",
-      'If no token exists, click "Generate" to create one',
+      "Open your Paperless-ngx instance and log in",
+      'Open "My Profile" from the user menu',
+      "Find the API token section on your profile page and copy the token shown there",
+      'If no token exists yet, generate one there (or create one programmatically via /api/token/)',
       "Paste the token in the field above",
     ],
   },
@@ -49,9 +48,11 @@ const TOKEN_GUIDE_DEFAULTS: Record<TokenGuideType, TokenGuide> = {
       'Select "Account Settings" from the dropdown',
       'Scroll down to "API Keys"',
       'Click "New API Key", give it a name like "{appName}"',
+      "Select the permissions/scopes this key needs. At minimum choose asset.read and album.read; add server.statistics for admin statistics tools.",
       "Copy the generated key immediately — it won’t be shown again",
       "Paste the key in the field above",
     ],
+    note: "Server statistics tools need an admin key that includes server.statistics. Non-admin scoped keys still work for personal library tools.",
   },
   nextcloud: {
     steps: [
@@ -64,18 +65,18 @@ const TOKEN_GUIDE_DEFAULTS: Record<TokenGuideType, TokenGuide> = {
       "Copy the generated password — this is your API token",
       "Paste it in the field above",
     ],
-    note: "Format: username:app-password (e.g., admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx)",
+    note: "Format: login-name:app-password (for example, admin:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx). Nextcloud app passwords may also be labeled device-specific passwords. Use the same login name you enter on the Nextcloud sign-in form, even if your DAV/WebDAV UID differs.",
   },
-  uptimekuma: {
-    steps: [
-      "Open your Uptime Kuma instance and log in",
-      'Click "Settings" in the left sidebar',
-      'Navigate to the "API Keys" tab',
-      'Click "Add API Key" and enter a name like "{appName}"',
-      "Set an expiry date or leave it blank for no expiration",
-      'Click "Create" and copy the generated API key',
-      "Paste the key in the field above",
-    ],
+    uptimekuma: {
+      steps: [
+        "Open your Uptime Kuma instance and log in",
+        "Use the same username and password you use in the Uptime Kuma web UI",
+        "Enter them in the field above in the format: username:password",
+        "If the account uses 2FA, append the current 6-digit code inline: username:password:123456",
+        "You can also use a remembered-session JWT from a prior web login (optionally prefixed with jwt:)",
+        "Do not use an API key here — API keys only cover metrics scraping, not monitor management",
+      ],
+      note: "Accepted formats: username:password, username:password:123456 for 2FA, or a remembered-session JWT (optionally prefixed with jwt:).",
   },
   adguard: {
     steps: [
@@ -91,25 +92,26 @@ const TOKEN_GUIDE_DEFAULTS: Record<TokenGuideType, TokenGuide> = {
       "Enter your email and password in the format: email:password",
       "These are the same credentials you use to log into the NPM web interface",
     ],
-    note: "Format: email:password (e.g., admin@example.com:changeme)",
+    note: "Format: email:password (e.g., admin@example.com:changeme). Accounts that require 2FA are not supported yet.",
   },
-  portainer: {
-    steps: [
-      "Portainer uses your login credentials for API access",
-      "Enter your username and password in the format: username:password",
-      "These are the same credentials you use to log into the Portainer web interface",
-    ],
-    note: "Format: username:password (e.g., admin:mypassword)",
+    portainer: {
+      steps: [
+        "Open your Portainer instance and log in",
+        'Open "My account", then create an access token in the "Access tokens" section (Portainer may ask you to re-enter your password)',
+        "Copy that token and paste it directly in the field above",
+        "If you cannot use an API key, you can still use your Portainer username and password in the format: username:password",
+      ],
+      note: "Preferred: paste a Portainer access token / API key from My account → Access tokens directly (sent as X-API-Key). Fallback: username:password.",
   },
-  freshrss: {
-    steps: [
-      "FreshRSS uses a separate API password for programmatic access",
-      "In FreshRSS, go to Settings → Profile → API Management",
-      "Enable the “Allow API access” option if not already enabled",
-      "Set an API password (this is different from your login password)",
-      "Enter your FreshRSS username and API password in the format: username:api_password",
+    freshrss: {
+      steps: [
+        "FreshRSS uses a separate API password for programmatic access",
+        "In FreshRSS, open your Profile settings, then the Authentication / API access section",
+        "Enable API access if it is not already enabled",
+        "Set an API password (this is different from your login password)",
+        "Enter your FreshRSS username and API password in the format: username:api_password",
     ],
-    note: "Format: username:api_password — the API password is set separately in FreshRSS settings, not your login password",
+    note: "Format: username:api_password — the API password is separate from your login password. If the API address is configured separately, use your FreshRSS URL plus /api/greader.php.",
   },
   wallabag: {
     steps: [
@@ -122,23 +124,24 @@ const TOKEN_GUIDE_DEFAULTS: Record<TokenGuideType, TokenGuide> = {
   },
   stirlingpdf: {
     steps: [
-      "Open your Stirling PDF instance and log in as an administrator",
-      "Click the settings cog (⚙️) in the top right corner to open Account Settings",
-      "Find or generate your personal API key in the settings panel",
-      "Alternatively, use the global API key set via SECURITY_CUSTOMGLOBALAPIKEY environment variable",
+      "Open your Stirling PDF instance",
+      "If login is enabled, sign in and open Account Settings from the settings cog (⚙️) in the top right corner",
+      "Find or generate a personal API key there",
+      "If your deployment uses SECURITY_CUSTOMGLOBALAPIKEY, you can use that global API key instead",
       "Paste the API key in the field above",
     ],
-    note: "Uses X-API-KEY header. Login must be enabled in Stirling PDF for API key auth to work",
+    note: "Uses X-API-KEY header. Some deployments use a global API key and do not require a user login.",
   },
-  wikijs: {
-    steps: [
-      "Open your Wiki.js instance and log in as an administrator",
-      "Navigate to Administration → API Access",
-      'Click "Create API Key" and set a name (e.g., "{appName}")',
-      "Select the appropriate permission group (Full Access recommended)",
-      "Set an expiration date or leave blank for no expiry",
-      "Copy the generated API key and paste it in the field above",
-    ],
+    wikijs: {
+      steps: [
+        "Open your Wiki.js instance and log in with an account that can create API keys",
+        "Navigate to Administration → API Access",
+        'Click "Create API Key" and set a name (e.g., "{appName}")',
+        "Select the scopes this key needs. read:pages covers health/list/search/get page tools, read:source covers source/system reads, write:pages is needed for page create/update tools, and user-management tools need additional user scopes such as write:users or manage:users.",
+        "Set an expiration date or leave blank for no expiry",
+        "Copy the generated API key and paste it in the field above",
+      ],
+      note: "Wiki.js API keys are bearer tokens, but page rules must also allow this key to access the pages you want. When you create pages, choose the locale you want those pages to use.",
   },
   tailscale: {
     steps: [
@@ -157,7 +160,7 @@ const TOKEN_GUIDE_DEFAULTS: Record<TokenGuideType, TokenGuide> = {
       "Enter your Calibre-Web username and password in the format: username:password",
       "These are the same credentials you use to log into the Calibre-Web web interface",
     ],
-    note: "Default credentials are admin/admin123 — change them before connecting. Format: username:password",
+    note: "Calibre-Web uses your normal web login plus OPDS/basic-auth-compatible credentials rather than a separate personal token. Default credentials are admin/admin123 — change them before connecting. Format: username:password",
   },
   cloudflare: {
     steps: [
@@ -165,7 +168,7 @@ const TOKEN_GUIDE_DEFAULTS: Record<TokenGuideType, TokenGuide> = {
       'Click your profile icon in the top-right corner and select "My Profile"',
       'In the left sidebar, click "API Tokens"',
       'Click "Create Token"',
-      "Use a custom token template and set the following permissions: Zone:DNS:Edit, Zone:Zone:Read, Account:Cloudflare Tunnel:Edit",
+      "For the current DNS and tunnel tools, use a custom token template with these permissions: Zone:DNS:Edit, Zone:Zone:Read, Account:Cloudflare Tunnel:Read",
       "Optionally restrict the token to specific zones or accounts",
       'Click "Continue to summary" then "Create Token"',
       "Copy the token immediately — it won’t be shown again",

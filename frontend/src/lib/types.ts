@@ -1,4 +1,5 @@
 export type BuiltinServiceType =
+  | "generic_rest"
   | "forgejo"
   | "homeassistant"
   | "paperless"
@@ -14,11 +15,11 @@ export type BuiltinServiceType =
   | "wikijs"
   | "calibreweb"
   | "tailscale"
-  | "cloudflare"
-  | "generic_rest";
+  | "cloudflare";
 export type ServiceType = BuiltinServiceType | (string & {});
 
 export const BUILTIN_SERVICE_TYPES: BuiltinServiceType[] = [
+  "generic_rest",
   "forgejo",
   "homeassistant",
   "paperless",
@@ -35,7 +36,6 @@ export const BUILTIN_SERVICE_TYPES: BuiltinServiceType[] = [
   "calibreweb",
   "tailscale",
   "cloudflare",
-  "generic_rest",
 ];
 export type HealthStatus = "healthy" | "unhealthy" | "unknown";
 
@@ -225,6 +225,7 @@ export interface OpenAPIImportResult extends BackendMessageCodeFields {
   status: string;
   imported: string[];
   skipped: string[];
+  warnings: string[];
   tools_count: number;
 }
 

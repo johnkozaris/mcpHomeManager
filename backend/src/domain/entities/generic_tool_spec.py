@@ -3,6 +3,8 @@
 from dataclasses import dataclass
 from typing import Any
 
+REQUEST_SHAPE_METADATA_KEY = "x-mcp-home-request-shape"
+
 
 @dataclass(frozen=True)
 class GenericToolSpec:

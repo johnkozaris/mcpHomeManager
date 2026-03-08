@@ -104,6 +104,7 @@ class TestAppTemplateRendering:
         assert "Repository Browser" in html
         assert "user/my-repo" in html
         assert "A test repo" in html
+        assert "Forks 2" in html
 
     def test_forgejo_repos_empty(self):
         html = self.engine.render(

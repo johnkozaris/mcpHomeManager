@@ -64,6 +64,13 @@ _TOOLS = [
                     "type": "object",
                     "description": "Additional service data (e.g. brightness, temperature)",
                 },
+                "return_response": {
+                    "type": "boolean",
+                    "description": (
+                        "Request Home Assistant's return_response mode "
+                        "for services that return data"
+                    ),
+                },
             },
             "required": ["domain", "service"],
         },
@@ -73,7 +80,7 @@ _TOOLS = [
         http_method="GET",
         path_template="/api/services",
         service_type=ServiceType.HOME_ASSISTANT,
-        description="List all available Home Assistant services and their parameters",
+        description="List Home Assistant service domains and the services they expose",
         parameters_schema={
             "type": "object",
             "properties": {
@@ -117,6 +124,21 @@ class HomeAssistantClient(BaseServiceClient, IAppProvider):
     def get_tool_definitions(self) -> list[ToolDefinition]:
         return list(_TOOLS)
 
+    async def _call_service(self, arguments: dict[str, Any]) -> Any:
+        payload: dict[str, Any] = {}
+        if target_entity := arguments.get("entity_id"):
+            payload["entity_id"] = target_entity
+        if data := arguments.get("data"):
+            payload.update(data)
+
+        ha_domain = self._validate_path_segment(arguments["domain"], "domain")
+        ha_service = self._validate_path_segment(arguments["service"], "service")
+        path = f"/api/services/{ha_domain}/{ha_service}"
+        if arguments.get("return_response"):
+            path = f"{path}?return_response"
+
+        return await self._request("POST", path, json=payload)
+
     async def execute_tool(self, tool_name: str, arguments: dict[str, Any]) -> Any:
         match tool_name:
             case "ha_get_entity_state":
@@ -136,18 +158,7 @@ class HomeAssistantClient(BaseServiceClient, IAppProvider):
                     for s in states
                 ]
             case "ha_call_service":
-                payload: dict[str, Any] = {}
-                if target_entity := arguments.get("entity_id"):
-                    payload["entity_id"] = target_entity
-                if data := arguments.get("data"):
-                    payload.update(data)
-                ha_domain = self._validate_path_segment(arguments["domain"], "domain")
-                ha_service = self._validate_path_segment(arguments["service"], "service")
-                return await self._request(
-                    "POST",
-                    f"/api/services/{ha_domain}/{ha_service}",
-                    json=payload,
-                )
+                return await self._call_service(arguments)
             case "ha_get_services":
                 services = await self._request("GET", "/api/services")
                 domain = arguments.get("domain")
@@ -198,10 +209,5 @@ class HomeAssistantClient(BaseServiceClient, IAppProvider):
         if app_name != "ha_entity_dashboard":
             raise ToolExecutionError(app_name, f"Unknown app: {app_name}")
         if action == "call_service":
-            domain = self._validate_path_segment(payload["domain"], "domain")
-            service = self._validate_path_segment(payload["service"], "service")
-            svc_data: dict[str, Any] = {}
-            if entity_id := payload.get("entity_id"):
-                svc_data["entity_id"] = entity_id
-            await self._request("POST", f"/api/services/{domain}/{service}", json=svc_data)
+            await self._call_service(payload)
         return await self.fetch_app_data(app_name, payload.get("refresh_args", {}))

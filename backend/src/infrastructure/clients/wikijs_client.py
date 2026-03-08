@@ -11,7 +11,7 @@ _TOOLS = [
         http_method="POST",
         path_template="/graphql",
         service_type=ServiceType.WIKIJS,
-        description="List all pages in Wiki.js (title, path, id, updated)",
+        description="List Wiki.js pages (requires read:pages)",
         parameters_schema={"type": "object", "properties": {}},
     ),
     ToolDefinition(
@@ -19,7 +19,10 @@ _TOOLS = [
         http_method="POST",
         path_template="/graphql",
         service_type=ServiceType.WIKIJS,
-        description="Get a Wiki.js page content by ID",
+        description=(
+            "Get a Wiki.js page by ID, including source content "
+            "(requires read:pages plus read:source, or write/admin source access)"
+        ),
         parameters_schema={
             "type": "object",
             "properties": {
@@ -33,11 +36,22 @@ _TOOLS = [
         http_method="POST",
         path_template="/graphql",
         service_type=ServiceType.WIKIJS,
-        description="Search Wiki.js pages by text query",
+        description=(
+            "Search Wiki.js pages by text query, optionally filtering by path or locale "
+            "(requires read:pages)"
+        ),
         parameters_schema={
             "type": "object",
             "properties": {
                 "query": {"type": "string", "description": "Search query text"},
+                "path": {
+                    "type": "string",
+                    "description": "Optional path filter to narrow the search scope",
+                },
+                "locale": {
+                    "type": "string",
+                    "description": "Optional locale code to restrict search results",
+                },
             },
             "required": ["query"],
         },
@@ -47,13 +61,18 @@ _TOOLS = [
         http_method="POST",
         path_template="/graphql",
         service_type=ServiceType.WIKIJS,
-        description="Create a new Wiki.js page",
+        description="Create a new Wiki.js Markdown page (requires write:pages or higher)",
         parameters_schema={
             "type": "object",
             "properties": {
                 "path": {"type": "string", "description": "Page path (e.g. 'docs/setup')"},
                 "title": {"type": "string", "description": "Page title"},
                 "content": {"type": "string", "description": "Page content in Markdown"},
+                "locale": {
+                    "type": "string",
+                    "default": "en",
+                    "description": "Page locale code (for example, 'en' or 'fr')",
+                },
                 "description": {
                     "type": "string",
                     "default": "",
@@ -68,7 +87,7 @@ _TOOLS = [
         http_method="POST",
         path_template="/graphql",
         service_type=ServiceType.WIKIJS,
-        description="Update an existing Wiki.js page",
+        description="Update an existing Wiki.js page (requires write:pages or higher)",
         parameters_schema={
             "type": "object",
             "properties": {
@@ -85,7 +104,7 @@ _TOOLS = [
         http_method="POST",
         path_template="/graphql",
         service_type=ServiceType.WIKIJS,
-        description="List all Wiki.js users",
+        description="List Wiki.js users (requires write:users, manage:users, or higher)",
         parameters_schema={"type": "object", "properties": {}},
     ),
 ]
@@ -109,8 +128,10 @@ class WikiJsClient(BaseServiceClient):
         return result["data"]
 
     async def health_check(self) -> bool:
-        data = await self._graphql("{ site { info { currentVersion } } }")
-        return isinstance(data, dict) and "site" in data
+        data = await self._graphql("{ pages { list(limit: 1) { id } } }")
+        pages = data.get("pages") if isinstance(data, dict) else None
+        page_list = pages.get("list") if isinstance(pages, dict) else None
+        return isinstance(page_list, list)
 
     def get_tool_definitions(self) -> list[ToolDefinition]:
         return list(_TOOLS)
@@ -118,22 +139,27 @@ class WikiJsClient(BaseServiceClient):
     async def execute_tool(self, tool_name: str, arguments: dict[str, Any]) -> Any:
         match tool_name:
             case "wikijs_list_pages":
-                data = await self._graphql("{ pages { list { id path title updatedAt } } }")
+                data = await self._graphql("{ pages { list { id path locale title updatedAt } } }")
                 return data["pages"]["list"]
             case "wikijs_get_page":
                 page_id = int(arguments["id"])
                 data = await self._graphql(
                     "query ($id: Int!) { pages { single(id: $id)"
-                    " { id path title content updatedAt createdAt } } }",
+                    " { id path locale title content updatedAt createdAt } } }",
                     variables={"id": page_id},
                 )
                 return data["pages"]["single"]
             case "wikijs_search":
-                query = arguments["query"]
+                variables: dict[str, Any] = {"query": arguments["query"]}
+                if "path" in arguments:
+                    variables["path"] = arguments["path"]
+                if "locale" in arguments:
+                    variables["locale"] = arguments["locale"]
                 data = await self._graphql(
-                    "query ($query: String!) { pages { search(query: $query)"
-                    " { results { id title path description } totalHits } } }",
-                    variables={"query": query},
+                    "query ($query: String!, $path: String, $locale: String)"
+                    " { pages { search(query: $query, path: $path, locale: $locale)"
+                    " { results { id title path locale description } totalHits suggestions } } }",
+                    variables=variables,
                 )
                 return data["pages"]["search"]
             case "wikijs_create_page":
@@ -143,7 +169,7 @@ class WikiJsClient(BaseServiceClient):
                     "editor": "markdown",
                     "isPublished": True,
                     "isPrivate": False,
-                    "locale": "en",
+                    "locale": arguments.get("locale", "en"),
                     "path": arguments["path"],
                     "tags": [],
                     "title": arguments["title"],
@@ -158,7 +184,7 @@ class WikiJsClient(BaseServiceClient):
                     " isPrivate: $isPrivate, locale: $locale, path: $path,"
                     " tags: $tags, title: $title) {"
                     " responseResult { succeeded errorCode message }"
-                    " page { id path title } } } }",
+                    " page { id path locale title } } } }",
                     variables=variables,
                 )
                 result = data["pages"]["create"]
@@ -180,7 +206,7 @@ class WikiJsClient(BaseServiceClient):
                     " pages { update(id: $id, content: $content,"
                     " description: $description, title: $title) {"
                     " responseResult { succeeded errorCode message }"
-                    " page { id path title } } } }",
+                    " page { id path locale title } } } }",
                     variables=update_vars,
                 )
                 result = data["pages"]["update"]

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useImportOpenapi } from "@/hooks/useServices";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { useScrollLock } from "@/hooks/useScrollLock";
@@ -28,35 +28,37 @@ export function ImportOpenAPIModal({ open, onClose, serviceId }: Props) {
   useFocusTrap(dialogRef, open);
   useScrollLock(open);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setImportResult(null);
     setSpec("");
     onClose();
-  };
+  }, [onClose]);
 
   useEffect(() => {
     if (!open) return;
 
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") {
-        onClose();
+        handleClose();
       }
     }
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [open, onClose]);
+  }, [open, handleClose]);
 
   if (!open) return null;
 
   const importedCount = importResult?.imported.length ?? 0;
   const skippedCount = importResult?.skipped.length ?? 0;
+  const warningCount = importResult?.warnings.length ?? 0;
   const allSkipped =
     importResult !== null && importedCount === 0 && skippedCount > 0;
   const hasSkipped =
     importResult !== null && skippedCount > 0 && importedCount > 0;
   const allImported =
     importResult !== null && importedCount > 0 && skippedCount === 0;
+  const hasWarnings = importResult !== null && warningCount > 0;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -109,6 +111,20 @@ export function ImportOpenAPIModal({ open, onClose, serviceId }: Props) {
                   {t("allSkippedSummary", { count: skippedCount })}
                 </p>
               )}
+              {hasWarnings && (
+                <div className="space-y-2 rounded-xl border border-line bg-canvas px-3 py-3">
+                  <p className="text-sm font-medium text-clay">
+                    {t("warningsSummary", { count: warningCount })}
+                  </p>
+                  <ul className="list-disc space-y-1 pl-5 text-xs text-ink-secondary">
+                    {importResult.warnings.map((warning) => (
+                      <li key={warning} className="break-words">
+                        {warning}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <div className="flex justify-end">
                 <Button onClick={handleClose}>{t("ok")}</Button>
               </div>
@@ -143,17 +159,18 @@ export function ImportOpenAPIModal({ open, onClose, serviceId }: Props) {
                       {
                         onSuccess: (result) => {
                           setSpec("");
-                          if (
+                          const shouldAutoClose =
                             result.imported.length > 0 &&
-                            result.skipped.length === 0
-                          ) {
-                            setImportResult(result);
+                            result.skipped.length === 0 &&
+                            result.warnings.length === 0;
+
+                          setImportResult(result);
+
+                          if (shouldAutoClose) {
                             setTimeout(() => {
                               setImportResult(null);
                               onClose();
                             }, 1500);
-                          } else {
-                            setImportResult(result);
                           }
                         },
                       },

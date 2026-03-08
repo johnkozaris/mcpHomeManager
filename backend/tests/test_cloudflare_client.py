@@ -35,6 +35,11 @@ class TestCloudflareClient:
         defs = client.get_tool_definitions()
         assert len(defs) == 5
         assert all(d.service_type == ServiceType.CLOUDFLARE for d in defs)
+        zones_tool = next(d for d in defs if d.name == "cloudflare_list_zones")
+        per_page_schema = zones_tool.parameters_schema["properties"]["per_page"]
+        assert per_page_schema["description"] == "Zones per page (5-50)"
+        assert per_page_schema["minimum"] == 5
+        assert per_page_schema["maximum"] == 50
 
     async def test_unknown_tool_raises(self):
         client = CloudflareClient("https://api.cloudflare.com", "my-api-token")

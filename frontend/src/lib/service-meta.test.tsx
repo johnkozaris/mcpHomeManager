@@ -5,7 +5,7 @@ import {
   ServiceIcon,
   ServiceIconBadge,
 } from "./service-meta";
-import type { ServiceType } from "./types";
+import { BUILTIN_SERVICE_TYPES, type ServiceType } from "./types";
 
 describe("SERVICE_META", () => {
   const expectedTypes: ServiceType[] = [
@@ -40,6 +40,10 @@ describe("SERVICE_META", () => {
 
   it("has no extra entries beyond expected types", () => {
     expect(Object.keys(SERVICE_META).sort()).toEqual([...expectedTypes].sort());
+  });
+
+  it("prioritizes custom api first in onboarding order", () => {
+    expect(BUILTIN_SERVICE_TYPES[0]).toBe("generic_rest");
   });
 });
 

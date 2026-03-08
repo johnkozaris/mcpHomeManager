@@ -20,7 +20,9 @@ _TOOLS = [
                 "per_page": {
                     "type": "integer",
                     "default": 20,
-                    "description": "Items per page (max 50)",
+                    "minimum": 5,
+                    "maximum": 50,
+                    "description": "Zones per page (5-50)",
                 },
             },
         },
