@@ -43,6 +43,8 @@ META_TOOL_NAMES = (
     "mcp_home_ui_service_control",
     "mcp_home_ui_config",
     "mcp_home_list_tools",
+    "mcp_home_update_service",
+    "mcp_home_delete_service",
     "mcp_home_add_generic_tool",
     "mcp_home_delete_generic_tool",
     "mcp_home_update_generic_tool",
@@ -177,13 +179,102 @@ def register_meta_tools(
             {"name": name, "service_type": service_type},
             start,
         )
+        active = tool_registry.active_tools
+        tool_count = sum(1 for t in active.values() if t.service_name == svc.name)
         return json.dumps(
             {
                 "status": "created",
                 "name": svc.name,
                 "service_type": svc.service_type.value,
+                "tools_registered": tool_count,
+                "note": (
+                    f"Service '{display_name}' connected with {tool_count} tools. "
+                    "New tools are available immediately for MCP clients with active sessions. "
+                    "Some clients (Claude Code, Copilot CLI) may require a restart to discover them."
+                ),
             }
         )
+
+    @mcp.tool(
+        name="mcp_home_update_service",
+        description=(
+            "Update an existing service connection. "
+            "Only provided fields are changed — omit fields you don't want to update."
+        ),
+    )
+    async def update_service(
+        name: str,
+        display_name: str | None = None,
+        base_url: str | None = None,
+        api_token: str | None = None,
+        is_enabled: bool | None = None,
+    ) -> str:
+        _require_self_mcp_access()
+        _require_admin_user()
+        start = time.monotonic()
+        async with session_factory() as session:
+            repo = ServiceRepository(session)
+            svc = await repo.get_by_name(name)
+            if svc is None or svc.id is None:
+                return json.dumps({"error": f"Service '{name}' not found"})
+
+            manager = ServiceManager(
+                repository=repo,
+                encryption=encryption,
+                client_factory=client_factory,
+            )
+            svc = await manager.update_connection(
+                svc.id,
+                display_name=display_name,
+                base_url=base_url,
+                api_token=api_token,
+                is_enabled=is_enabled,
+            )
+            await session.commit()
+
+        await tool_registry.refresh()
+        await _audit_meta_tool(
+            "mcp_home_update_service",
+            {"name": name},
+            start,
+        )
+        return json.dumps(
+            {
+                "status": "updated",
+                "name": svc.name,
+                "service_type": svc.service_type.value,
+            }
+        )
+
+    @mcp.tool(
+        name="mcp_home_delete_service",
+        description="Permanently delete a service connection and all its tools",
+    )
+    async def delete_service(name: str) -> str:
+        _require_self_mcp_access()
+        _require_admin_user()
+        start = time.monotonic()
+        async with session_factory() as session:
+            repo = ServiceRepository(session)
+            svc = await repo.get_by_name(name)
+            if svc is None or svc.id is None:
+                return json.dumps({"error": f"Service '{name}' not found"})
+
+            manager = ServiceManager(
+                repository=repo,
+                encryption=encryption,
+                client_factory=client_factory,
+            )
+            await manager.delete_connection(svc.id)
+            await session.commit()
+
+        await tool_registry.refresh()
+        await _audit_meta_tool(
+            "mcp_home_delete_service",
+            {"name": name},
+            start,
+        )
+        return json.dumps({"status": "deleted", "name": name})
 
     @mcp.tool(
         name="mcp_home_toggle_tool",

@@ -3,6 +3,7 @@
   "page": {
     "title": "AI 에이전트 연결",
     "description": "아래 AI 클라이언트에 MCP 엔드포인트를 추가하세요. 연결되면 홈랩 도구가 자동으로 감지됩니다.",
+    "restartNote": "새 서비스를 연결하면 대부분의 클라이언트는 새 도구를 즉시 인식합니다. Claude Code, Cursor, Copilot은 시작 시 도구를 캐시하므로 새로 추가된 도구를 보려면 재시작이 필요합니다.",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },

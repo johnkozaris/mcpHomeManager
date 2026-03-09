@@ -3,6 +3,7 @@
   "page": {
     "title": "KI-Agenten verbinden",
     "description": "Füge deinen MCP-Endpunkt unten in einen beliebigen KI-Client ein. Nach der Verbindung werden deine Homelab-Tools automatisch erkannt.",
+    "restartNote": "Wenn du einen neuen Service verbindest, erkennen die meisten Clients die neuen Tools sofort. Claude Code, Cursor und Copilot laden Tools beim Start — starte sie neu, um neu hinzugefügte Tools zu sehen.",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },

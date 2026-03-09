@@ -20,12 +20,11 @@
       "currentUserFallback": "admin",
       "selfMcp": {
         "title": "Ferramentas internas via MCP",
-        "description": "Quando ativado, os agentes de IA podem gerir este gateway através do próprio MCP — listar serviços, ativar ou desativar ferramentas, adicionar ligações e consultar registos sem recorrer à interface web.",
-        "accessPrefix": "O acesso é concedido por utilizador em",
+        "description": "Permite que agentes de IA giram este gateway diretamente — ligar serviços, alternar ferramentas e consultar registos sem a interface web.",
+        "restartHint": "Alguns clientes (Claude Code, Cursor, Copilot) precisam de ser reiniciados após adicionar serviços para ver as novas ferramentas.",
+        "accessPrefix": "O acesso por utilizador pode ser configurado em",
         "userManagementLink": "Gestão de utilizadores",
-        "accessSuffix": ".",
-        "defaultsPrefix": "Usa as predefinições da variável de ambiente",
-        "defaultsSuffix": "após reinício."
+        "accessSuffix": "."
       }
     },
     "apiKey": {

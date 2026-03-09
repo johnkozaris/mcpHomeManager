@@ -19,12 +19,11 @@
       "currentUserFallback": "admin",
       "selfMcp": {
         "title": "Self-MCP Tools",
-        "description": "When enabled, AI agents can manage this gateway through MCP itself — listing services, toggling tools, adding connections, and viewing logs without using the web UI.",
-        "accessPrefix": "Access is granted per-user in",
+        "description": "Let AI agents manage this gateway directly — connect services, toggle tools, and view logs without the web UI.",
+        "restartHint": "Some clients (Claude Code, Cursor, Copilot) need a restart after services are added to see new tools.",
+        "accessPrefix": "Per-user access can be configured in",
         "userManagementLink": "User Management",
-        "accessSuffix": ".",
-        "defaultsPrefix": "Defaults from",
-        "defaultsSuffix": " env var on restart."
+        "accessSuffix": "."
       }
     },
     "apiKey": {

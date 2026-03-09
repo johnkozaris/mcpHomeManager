@@ -3,6 +3,7 @@
   "page": {
     "title": "连接 AI 智能体",
     "description": "把你的 MCP 地址添加到下方任意 AI 客户端。连接后，系统会自动发现你的 homelab 工具。",
+    "restartNote": "连接新服务后，大多数客户端会立即识别新工具。Claude Code、Cursor 和 Copilot 会在启动时缓存工具——需要重启才能看到新添加的工具。",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },

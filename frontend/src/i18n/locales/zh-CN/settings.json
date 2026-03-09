@@ -20,12 +20,11 @@
       "currentUserFallback": "admin",
       "selfMcp": {
         "title": "MCP 自管理工具",
-        "description": "启用后，AI 智能体可以直接通过 MCP 管理这个网关——查看服务、切换工具、添加连接，以及查看日志，而无需打开 Web 界面。",
-        "accessPrefix": "访问权限可在",
+        "description": "让 AI 智能体直接管理这个网关——连接服务、切换工具、查看日志，无需打开 Web 界面。",
+        "restartHint": "部分客户端（Claude Code、Cursor、Copilot）在添加服务后需要重启才能看到新工具。",
+        "accessPrefix": "可在",
         "userManagementLink": "用户管理",
-        "accessSuffix": "中按用户配置。",
-        "defaultsPrefix": "默认值来自",
-        "defaultsSuffix": "环境变量，重启后生效。"
+        "accessSuffix": "中按用户配置访问权限。"
       }
     },
     "apiKey": {

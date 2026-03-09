@@ -2,6 +2,7 @@
   "page": {
     "title": "Connect AI Agents",
     "description": "Add your MCP endpoint to any AI client below. Once connected, your homelab tools will be discovered automatically.",
+    "restartNote": "When you connect a new service, most clients pick up the new tools instantly. Claude Code, Cursor, and Copilot cache tools at startup — restart them to see newly added tools.",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },

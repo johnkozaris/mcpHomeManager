@@ -20,12 +20,11 @@
       "currentUserFallback": "admin",
       "selfMcp": {
         "title": "Outils Self-MCP",
-        "description": "Quand ils sont activés, les agents IA peuvent gérer cette passerelle directement via MCP : lister les services, activer ou désactiver des outils, ajouter des connexions et consulter les journaux sans passer par l'interface web.",
-        "accessPrefix": "L’accès se règle par utilisateur dans",
+        "description": "Permet aux agents IA de gérer cette passerelle directement — connecter des services, activer ou désactiver des outils et consulter les journaux sans passer par l’interface web.",
+        "restartHint": "Certains clients (Claude Code, Cursor, Copilot) doivent être redémarrés après l’ajout de services pour voir les nouveaux outils.",
+        "accessPrefix": "L’accès par utilisateur se configure dans",
         "userManagementLink": "Gestion des utilisateurs",
-        "accessSuffix": ".",
-        "defaultsPrefix": "Paramètres par défaut issus de la variable d’environnement",
-        "defaultsSuffix": " au redémarrage."
+        "accessSuffix": "."
       }
     },
     "apiKey": {

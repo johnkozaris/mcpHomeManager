@@ -3,6 +3,7 @@
   "page": {
     "title": "Conectar agentes de IA",
     "description": "Conecte seu endpoint MCP a qualquer cliente de IA abaixo. Depois de conectar, as ferramentas do seu homelab serão descobertas automaticamente.",
+    "restartNote": "Ao conectar um novo serviço, a maioria dos clientes detecta as novas ferramentas imediatamente. Claude Code, Cursor e Copilot armazenam ferramentas em cache na inicialização — reinicie-os para ver as ferramentas recém-adicionadas.",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },

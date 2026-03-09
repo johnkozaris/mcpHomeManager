@@ -39,6 +39,95 @@ class _PermissiveArgs(ArgModelBase):
 _PERMISSIVE_METADATA = FuncMetadata(arg_model=_PermissiveArgs)
 
 
+def _build_server_instructions(
+    registry: ToolRegistry | None = None,
+    self_mcp_enabled: bool = False,
+) -> str:
+    """Generate MCP server instructions based on current server state."""
+    from domain.entities.service_connection import ServiceType
+
+    service_types = ", ".join(t.value for t in ServiceType)
+
+    parts: list[str] = [
+        "Central MCP gateway that gives AI agents access to self-hosted homelab services "
+        "through a single endpoint.",
+    ]
+
+    # Short descriptions so the LLM understands what each service type is
+    _type_labels: dict[str, str] = {
+        "forgejo": "Git hosting",
+        "homeassistant": "home automation",
+        "paperless": "document management",
+        "immich": "photo library",
+        "nextcloud": "file storage",
+        "uptimekuma": "uptime monitoring",
+        "adguard": "DNS ad-blocking",
+        "nginxproxymanager": "reverse proxy",
+        "portainer": "container management",
+        "freshrss": "RSS reader",
+        "wallabag": "read-it-later",
+        "stirlingpdf": "PDF tools",
+        "wikijs": "wiki",
+        "calibreweb": "e-book library",
+        "tailscale": "VPN mesh network",
+        "cloudflare": "DNS & CDN",
+        "generic_rest": "custom REST API",
+    }
+
+    # Describe connected services
+    has_services = False
+    if registry is not None:
+        active = registry.active_tools
+        # Collect unique (service_name, service_type) pairs
+        svc_info: dict[str, str] = {}
+        for t in active.values():
+            if t.service_name not in svc_info:
+                svc_info[t.service_name] = t.definition.service_type.value
+
+        has_services = bool(svc_info)
+        if has_services:
+            svc_parts = []
+            for name, stype in sorted(svc_info.items()):
+                label = _type_labels.get(stype, stype)
+                svc_parts.append(f"{name} ({label})")
+            first_name = sorted(svc_info.keys())[0]
+            parts.append(
+                f"Connected services: {', '.join(svc_parts)}. "
+                f"Tools are prefixed by service name (e.g. {first_name}_). "
+                f"Use mcp_home_list_tools to see what's available."
+            )
+
+    # Management guidance depends on both self-MCP and service state
+    if self_mcp_enabled:
+        if not has_services:
+            parts.append(
+                "No services are connected yet. "
+                "Use mcp_home_add_service to connect one."
+            )
+        parts.append(
+            f"You can manage this gateway: add, update, or remove services and toggle tools. "
+            f"Supported service_type values: {service_types}. "
+            f"For unlisted services, use generic_rest with mcp_home_add_generic_tool to define custom endpoints."
+        )
+    else:
+        if not has_services:
+            parts.append(
+                "No services are connected yet. "
+                "Use the web UI (Services page) to connect one."
+            )
+        parts.append(
+            "Self-management tools are disabled. "
+            "Services can be managed through the web UI, or an admin can enable self-MCP in Settings."
+        )
+
+    parts.append(
+        "New tools register immediately but some clients (Claude Code, Cursor, Copilot) "
+        "need a restart to discover them."
+    )
+
+    return " ".join(parts)
+
+
 class MCPServerFactory:
     """Builds and manages the FastMCP server with dynamically registered tools."""
 
@@ -58,15 +147,24 @@ class MCPServerFactory:
         self._template_engine = TemplateEngine()
         self._mcp = FastMCP(
             name=settings.mcp_server_name,
+            instructions=_build_server_instructions(),
             streamable_http_path="/",
             json_response=True,
             stateless_http=True,
+        )
+
+    def _refresh_instructions(self) -> None:
+        """Update server instructions to reflect current state."""
+        self._mcp._mcp_server.instructions = _build_server_instructions(
+            registry=self._registry,
+            self_mcp_enabled=settings.self_mcp_enabled,
         )
 
     async def initialize(self) -> None:
         """Register tools from DB-configured services onto the MCP server."""
         await self._registry.build()
         self.sync_meta_tools(settings.self_mcp_enabled)
+        self._refresh_instructions()
 
         logger.info("MCP server initialized with %d service tools", len(self._registered_tools))
 
@@ -263,6 +361,7 @@ class MCPServerFactory:
                 logger.exception("Failed to register new app %s", app_name)
 
         self._registered_apps = synced_apps
+        self._refresh_instructions()
         logger.info("MCP tools synced: %d tools, %d apps", len(synced), len(synced_apps))
 
     @staticmethod

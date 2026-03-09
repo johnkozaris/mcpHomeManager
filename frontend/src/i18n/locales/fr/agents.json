@@ -3,6 +3,7 @@
   "page": {
     "title": "Connecter des agents IA",
     "description": "Ajoute ton point de terminaison MCP dans l’un des clients IA ci-dessous. Une fois connecté, les outils de ton homelab seront détectés automatiquement.",
+    "restartNote": "Quand tu connectes un nouveau service, la plupart des clients détectent les outils immédiatement. Claude Code, Cursor et Copilot mettent en cache les outils au démarrage — redémarre-les pour voir les outils nouvellement ajoutés.",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },

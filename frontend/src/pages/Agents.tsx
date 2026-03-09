@@ -107,6 +107,9 @@ export function Agents() {
         <p className="page-description max-w-xl">
           {t("description")}
         </p>
+        <p className="text-2xs text-ink-faint mt-1.5 max-w-xl leading-relaxed">
+          {t("restartNote")}
+        </p>
       </div>
 
       <McpEndpointBar apiKey={apiKey} />

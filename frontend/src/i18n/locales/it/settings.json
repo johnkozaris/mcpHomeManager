@@ -20,12 +20,11 @@
       "currentUserFallback": "admin",
       "selfMcp": {
         "title": "Strumenti self-MCP",
-        "description": "Quando è attivo, gli agenti AI possono gestire questo gateway direttamente via MCP: elencare servizi, attivare/disattivare strumenti, aggiungere connessioni e visualizzare i log senza usare la UI web.",
-        "accessPrefix": "L'accesso è concesso per utente in",
+        "description": "Permette agli agenti AI di gestire questo gateway direttamente — collegare servizi, attivare o disattivare strumenti e visualizzare i log senza la UI web.",
+        "restartHint": "Alcuni client (Claude Code, Cursor, Copilot) devono essere riavviati dopo l'aggiunta di servizi per vedere i nuovi strumenti.",
+        "accessPrefix": "L'accesso per utente si configura in",
         "userManagementLink": "Gestione utenti",
-        "accessSuffix": ".",
-        "defaultsPrefix": "Valori predefiniti letti dalla variabile d'ambiente",
-        "defaultsSuffix": "al riavvio."
+        "accessSuffix": "."
       }
     },
     "apiKey": {

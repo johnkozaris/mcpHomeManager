@@ -3,6 +3,7 @@
   "page": {
     "title": "Collega gli agenti AI",
     "description": "Collega il tuo endpoint MCP a uno dei client AI qui sotto. Una volta collegato, gli strumenti del tuo homelab verranno rilevati automaticamente.",
+    "restartNote": "Quando colleghi un nuovo servizio, la maggior parte dei client rileva subito i nuovi strumenti. Claude Code, Cursor e Copilot memorizzano gli strumenti all'avvio — riavviali per vedere quelli appena aggiunti.",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },

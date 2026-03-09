@@ -33,6 +33,7 @@ frontend/playwright-report/
 
 # AI assistant config
 .claude/
+.mcp.json
 CLAUDE.md
 frontend/CLAUDE.md
 .github/copilot-instructions.md

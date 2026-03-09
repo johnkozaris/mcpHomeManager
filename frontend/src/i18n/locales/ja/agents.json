@@ -3,6 +3,7 @@
   "page": {
     "title": "AIエージェントを接続",
     "description": "以下の AI クライアントに MCP エンドポイントを追加してください。接続すると、ホームラボのツールが自動的に検出されます。",
+    "restartNote": "新しいサービスを接続すると、ほとんどのクライアントは新しいツールをすぐに認識します。Claude Code、Cursor、Copilot は起動時にツールをキャッシュするため、新しいツールを表示するには再起動が必要です。",
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },

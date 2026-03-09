@@ -286,11 +286,11 @@ export function Settings() {
                     </>
                   )}
                 </p>
-                <p className="text-2xs text-ink-faint mt-1">
-                  {t("security.selfMcp.defaultsPrefix")}{" "}
-                  <code className="font-mono">SELF_MCP_ENABLED</code>
-                  {t("security.selfMcp.defaultsSuffix")}
-                </p>
+                {config?.self_mcp_enabled && (
+                  <p className="text-2xs text-ink-faint mt-1 leading-relaxed">
+                    {t("security.selfMcp.restartHint")}
+                  </p>
+                )}
               </div>
               <div className="flex items-center justify-between py-3">
                 <div className="flex items-center gap-2.5">

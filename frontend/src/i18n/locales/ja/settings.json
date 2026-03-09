@@ -20,12 +20,11 @@
       "currentUserFallback": "admin",
       "selfMcp": {
         "title": "セルフ管理用 MCP ツール",
-        "description": "有効にすると、AI エージェントが MCP 経由でこのゲートウェイ自体を管理できるようになります。Web UI を使わずに、サービスの一覧表示、ツールの切り替え、接続の追加、ログの閲覧を行えます。",
-        "accessPrefix": "アクセス権はユーザーごとに",
+        "description": "AI エージェントがこのゲートウェイを直接管理できるようにします。Web UI を使わずに、サービスの接続、ツールの切り替え、ログの閲覧が可能です。",
+        "restartHint": "一部のクライアント（Claude Code、Cursor、Copilot）は、サービス追加後に再起動しないと新しいツールが表示されません。",
+        "accessPrefix": "ユーザーごとのアクセス権は",
         "userManagementLink": "ユーザー管理",
-        "accessSuffix": "で設定します。",
-        "defaultsPrefix": "デフォルトは",
-        "defaultsSuffix": "環境変数から読み込まれ、再起動時に適用されます。"
+        "accessSuffix": "で設定できます。"
       }
     },
     "apiKey": {

@@ -20,12 +20,11 @@
       "currentUserFallback": "admin",
       "selfMcp": {
         "title": "Self-MCP-Tools",
-        "description": "Wenn aktiviert, können KI-Agenten dieses Gateway direkt über MCP verwalten – Services auflisten, Tools aktivieren oder deaktivieren, Verbindungen hinzufügen und Protokolle ansehen, ohne die Weboberfläche zu verwenden.",
-        "accessPrefix": "Der Zugriff wird pro Benutzer in der",
+        "description": "KI-Agenten können dieses Gateway direkt verwalten – Services verbinden, Tools umschalten und Protokolle einsehen, ohne die Weboberfläche zu verwenden.",
+        "restartHint": "Manche Clients (Claude Code, Cursor, Copilot) müssen nach dem Hinzufügen von Services neu gestartet werden, um neue Tools zu sehen.",
+        "accessPrefix": "Der Zugriff kann pro Benutzer in der",
         "userManagementLink": "Benutzerverwaltung",
-        "accessSuffix": " konfiguriert.",
-        "defaultsPrefix": "Standardwerte aus der",
-        "defaultsSuffix": " Umgebungsvariable beim Neustart."
+        "accessSuffix": " konfiguriert."
       }
     },
     "apiKey": {
