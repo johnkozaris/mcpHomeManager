@@ -10,32 +10,20 @@ MCP Home Manager runs as two Docker containers — the application and a Postgre
 ### Quick Start
 
 :::steps
-1. **Download the files** — Grab `docker-compose.yml` and `.env.example` from the [latest GitHub release](https://github.com/johnkozaris/mcpHomeManager/releases/latest), or clone the repository:
+1. **Download the files** — Grab `docker-compose.yml` from the [latest GitHub release](https://github.com/johnkozaris/mcpHomeManager/releases/latest), or clone the repository:
 
 ```bash
 git clone https://github.com/johnkozaris/mcpHomeManager.git
 cd mcpHomeManager
 ```
 
-2. **Create your environment file** — Copy the example and set a strong database password:
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env` and change `POSTGRES_PASSWORD` to a strong, unique password:
-
-```bash
-POSTGRES_PASSWORD=your-strong-password-here
-```
-
-3. **Start the stack**:
+2. **Start the stack**:
 
 ```bash
 docker compose up -d
 ```
 
-4. **Open the web UI** — Navigate to `http://your-server:8000` to complete [first-time setup](first-setup).
+3. **Open the web UI** — Navigate to `http://your-server:8000` to complete [first-time setup](first-setup).
 :::
 
 ### What Gets Deployed
@@ -59,7 +47,7 @@ The application container runs with hardened security defaults:
 
 ### Configuration
 
-The `.env` file controls all configuration. At minimum, you need to set `POSTGRES_PASSWORD`. See [Environment Variables](environment-variables) for the full reference.
+The compose file works without any `.env` file. To customise defaults, create a `.env` alongside `docker-compose.yml` and override only what you need. See [Environment Variables](environment-variables) for the full reference.
 
 Common options you may want to change:
 

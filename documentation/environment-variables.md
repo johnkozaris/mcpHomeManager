@@ -1,13 +1,6 @@
 ## Environment Variables
 
-All configuration is set via environment variables in the `.env` file. Copy `.env.example` to `.env` before starting MCP Home Manager.
-
-### Required
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `POSTGRES_PASSWORD` | — | Password for the PostgreSQL database. **Must be set.** |
-| `MCP_HOME_IMAGE` | — | Docker image for the application. Set in `.env.example`. |
+All configuration is set via environment variables. The `docker-compose.yml` includes sensible defaults for every variable — no `.env` file is required. To customise, create a `.env` file alongside `docker-compose.yml` and override only what you need.
 
 ### Application
 
@@ -28,7 +21,7 @@ All configuration is set via environment variables in the `.env` file. Copy `.en
 |----------|---------|-------------|
 | `POSTGRES_DB` | `mcp_home` | PostgreSQL database name |
 | `POSTGRES_USER` | `mcp` | PostgreSQL username |
-| `POSTGRES_PASSWORD` | — | PostgreSQL password (**required**) |
+| `POSTGRES_PASSWORD` | `mcp` | PostgreSQL password. The default is safe because the database is on an isolated Docker network and not exposed to the host. |
 | `POSTGRES_IMAGE` | `postgres:17-alpine` | PostgreSQL Docker image |
 | `DATABASE_URL` | — | Full connection string. Overrides individual `POSTGRES_*` variables. Format: `postgresql+asyncpg://user:pass@host:5432/dbname` |
 
@@ -47,18 +40,11 @@ You can set `ENCRYPTION_KEY` as an environment variable to use a specific key (e
 ### Example `.env` File
 
 ```bash
-# Application
-APP_PORT=8000
-PUBLIC_URL=http://localhost:8000
-APP_NAME=MCP Manager
-MCP_SERVER_NAME=My Homelab
-
-# Image
-MCP_HOME_IMAGE=ghcr.io/johnkozaris/mcp-home-manager:latest
-
-# Database
-POSTGRES_IMAGE=postgres:17-alpine
-POSTGRES_DB=mcp_home
-POSTGRES_USER=mcp
-POSTGRES_PASSWORD=change-this-strong-password
+# Optional — override only what you need.
+# APP_PORT=9000
+# PUBLIC_URL=https://mcp.example.com
+# APP_NAME=My MCP Manager
+# MCP_SERVER_NAME=My Homelab
+# POSTGRES_PASSWORD=custom-password
+# POSTGRES_IMAGE=postgres:17-alpine
 ```

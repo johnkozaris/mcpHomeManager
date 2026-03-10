@@ -168,31 +168,24 @@ jobs:
           IMAGE_URL: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         run: |
           mkdir -p release-assets
-          cp docker-compose.yml release-assets/docker-compose.yml
+          cp .env.example release-assets/.env.example
           python3 - <<'PY'
-          import os
+          import os, re
           from pathlib import Path
 
           image = f"{os.environ['IMAGE_URL']}:{os.environ['RELEASE_VERSION']}"
-          source = Path(".env.example").read_text(encoding="utf-8").splitlines()
-          rendered: list[str] = []
-          replaced = False
+          compose = Path("docker-compose.yml").read_text(encoding="utf-8")
 
-          for line in source:
-              if line.startswith("MCP_HOME_IMAGE="):
-                  rendered.append(f"MCP_HOME_IMAGE={image}")
-                  replaced = True
-              else:
-                  rendered.append(line)
-
-          if not replaced:
-              raise SystemExit("MCP_HOME_IMAGE entry not found in .env.example")
-
-          rendered.insert(0, f"# Generated for release v{os.environ['RELEASE_VERSION']}")
-          Path("release-assets/.env.example").write_text(
-              "\n".join(rendered) + "\n",
-              encoding="utf-8",
+          # Pin the image tag in docker-compose.yml for the release
+          updated, count = re.subn(
+              r"(image:\s*)ghcr\.io/johnkozaris/mcp-home-manager:\S+",
+              rf"\g<1>{image}",
+              compose,
           )
+          if count != 1:
+              raise SystemExit(f"Expected 1 image replacement, got {count}")
+
+          Path("release-assets/docker-compose.yml").write_text(updated, encoding="utf-8")
           PY
 
       - name: Validate release asset bundle
@@ -215,8 +208,8 @@ jobs:
           ## Operator quickstart
 
           - Download \`docker-compose.yml\` and \`.env.example\` from this release.
-          - Copy \`.env.example\` to \`.env\`, then set a strong \`POSTGRES_PASSWORD\` before starting the stack.
-          - This release bundle pins \`MCP_HOME_IMAGE\` to \`${IMAGE_URL}:${RELEASE_VERSION}\`.
+          - The compose file works without any \`.env\` file. To customise, copy \`.env.example\` to \`.env\` and uncomment what you need.
+          - The release \`docker-compose.yml\` pins the app image to \`${IMAGE_URL}:${RELEASE_VERSION}\`.
           - Persistent state lives in Docker volumes \`pgdata\` (PostgreSQL) and \`app_data\` (application data and encryption key).
           - The published image digest is keylessly signed with Cosign; see \`verify-image-signature.txt\` in the release assets.
 

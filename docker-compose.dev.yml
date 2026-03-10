@@ -1,4 +1,4 @@
-# Dev overrides — copy .env.example to .env first, then run:
+# Dev overrides — builds from source instead of pulling the GHCR image:
 # docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 # This file is for contributors and is not part of the release asset bundle.
 services:

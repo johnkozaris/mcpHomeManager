@@ -1,7 +1,7 @@
 # MCP Home Manager — self-hosted runtime compose file
 # Docs: https://github.com/johnkozaris/mcpHomeManager
-# Copy .env.example to .env before running docker compose.
-# For stable installs, prefer the docker-compose.yml and .env.example from a GitHub Release.
+# Works out of the box: docker compose up -d (no .env required)
+# To customise, create a .env file — see .env.example for options.
 services:
   db:
     image: ${POSTGRES_IMAGE:-postgres:17-alpine}
@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-mcp_home}
       POSTGRES_USER: ${POSTGRES_USER:-mcp}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mcp}
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -21,20 +21,20 @@ services:
       - no-new-privileges:true
 
   app:
-    image: ${MCP_HOME_IMAGE:?Set MCP_HOME_IMAGE in .env}
+    image: ghcr.io/johnkozaris/mcp-home-manager:latest
     restart: unless-stopped
     ports:
       - "${APP_PORT:-8000}:8000"
     environment:
-      DATABASE_URL: ${DATABASE_URL:-}
-      APP_NAME: ${APP_NAME:-MCP Manager}
-      POSTGRES_HOST: db
-      POSTGRES_PORT: "5432"
+      POSTGRES_HOST: ${POSTGRES_HOST:-db}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       POSTGRES_DB: ${POSTGRES_DB:-mcp_home}
       POSTGRES_USER: ${POSTGRES_USER:-mcp}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mcp}
+      APP_NAME: ${APP_NAME:-MCP Manager}
       PUBLIC_URL: ${PUBLIC_URL:-http://localhost:8000}
       MCP_SERVER_NAME: ${MCP_SERVER_NAME:-My Homelab}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:-}
     volumes:
       - app_data:/app/data
     depends_on:

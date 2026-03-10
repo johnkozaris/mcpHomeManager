@@ -129,6 +129,7 @@ ignore = [
     "S107",   # hardcoded-password-default — test helper defaults
     "S311",   # suspicious-non-cryptographic-random — fine in tests
 ]
+"src/config.py" = ["T20"]          # print() ok for key-gen messages
 "src/serve.py" = ["T20"]          # print() ok in entrypoint
 "src/cli.py" = ["T20", "S101"]    # print() and assert ok in CLI
 

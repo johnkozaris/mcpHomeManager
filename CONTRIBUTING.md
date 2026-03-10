@@ -30,7 +30,6 @@ pnpm dev                  # dev server on :3000, proxies /api and /mcp to :8000
 ### Full stack (Docker)
 
 ```bash
-cp .env.example .env      # set POSTGRES_PASSWORD
 docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 ```
 

@@ -174,20 +174,7 @@ async def provide_service_manager(
 async def app_lifespan(app: Litestar) -> AsyncGenerator[None]:
     logger.info("Starting %s...", settings.app_name)
 
-    if not settings.encryption_key:
-        raise RuntimeError(
-            "ENCRYPTION_KEY is required. Set it in .env or let the Docker entrypoint generate it."
-        )
-
-    try:
-        encryption = FernetEncryption(settings.encryption_key)
-    except (ValueError, Exception) as e:
-        raise RuntimeError(
-            f"Invalid ENCRYPTION_KEY: {e}. "
-            "If using Docker, check /app/data/encryption_key for corruption. "
-            'Generate a new key with: python -c "from cryptography.fernet import Fernet; '
-            'print(Fernet.generate_key().decode())"'
-        ) from e
+    encryption = FernetEncryption(settings.encryption_key)
 
     client_factory = ServiceClientFactory()
 
@@ -294,7 +281,7 @@ def create_app() -> Litestar:
 
     rate_limit_config = RateLimitConfig(
         rate_limit=("minute", 120),
-        exclude=["/metrics", "/api/health/config", "/api/setup/status"],
+        exclude=["/metrics", "/api/health", "/api/setup/status"],
     )
 
     # Serve built frontend as SPA — backend serves everything on one port.

@@ -22,7 +22,6 @@ Connect your services once in the dashboard, then use them from Claude, ChatGPT,
 ```bash
 git clone https://github.com/johnkozaris/mcpHomeManager.git
 cd mcpHomeManager
-cp .env.example .env        # set POSTGRES_PASSWORD before continuing
 docker compose up -d
 ```
 

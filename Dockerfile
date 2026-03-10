@@ -33,7 +33,8 @@ LABEL org.opencontainers.image.title="MCP Home Manager" \
     org.opencontainers.image.vendor="MCP Home Manager Contributors" \
     org.opencontainers.image.version="${APP_VERSION}" \
     org.opencontainers.image.revision="${VCS_REF}" \
-    org.opencontainers.image.created="${BUILD_DATE}"
+    org.opencontainers.image.created="${BUILD_DATE}" \
+    org.opencontainers.image.base.name="docker.io/library/python:3.14-slim"
 
 # Install curl for healthcheck (slim image has no curl/wget)
 RUN apt-get update && apt-get install -y --no-install-recommends curl \
@@ -59,9 +60,6 @@ RUN uv sync --no-dev
 # Copy built frontend into static/ (Litestar serves this via create_static_files_router)
 COPY --from=frontend-build /app/dist /app/static
 
-# Entrypoint: run migrations then start server
-COPY entrypoint.sh /app/entrypoint.sh
-
 # Non-root user with access to /app (including /app/data for persisted encryption key)
 RUN mkdir -p /app/data \
     && adduser --disabled-password --no-create-home appuser \
@@ -72,7 +70,7 @@ ENV UV_NO_CACHE=1
 
 EXPOSE 8000
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
     CMD curl -sf http://localhost:8000/api/health/ || exit 1
 
-CMD ["/app/entrypoint.sh"]
+CMD ["/app/.venv/bin/python", "-m", "serve"]

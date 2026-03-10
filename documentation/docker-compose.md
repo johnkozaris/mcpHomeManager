@@ -1,6 +1,6 @@
 ## Docker Compose
 
-MCP Home Manager uses a two-service Docker Compose stack: the application server and a PostgreSQL database.
+MCP Home Manager uses a two-service Docker Compose stack: the application server and a PostgreSQL database. The compose file works without any `.env` file — just paste it and deploy.
 
 ### Default Configuration
 
@@ -14,7 +14,7 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-mcp_home}
       POSTGRES_USER: ${POSTGRES_USER:-mcp}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mcp}
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -26,20 +26,20 @@ services:
       - no-new-privileges:true
 
   app:
-    image: ${MCP_HOME_IMAGE:?Set MCP_HOME_IMAGE in .env}
+    image: ghcr.io/johnkozaris/mcp-home-manager:latest
     restart: unless-stopped
     ports:
       - "${APP_PORT:-8000}:8000"
     environment:
-      DATABASE_URL: ${DATABASE_URL:-}
-      APP_NAME: ${APP_NAME:-MCP Manager}
-      POSTGRES_HOST: db
-      POSTGRES_PORT: "5432"
+      POSTGRES_HOST: ${POSTGRES_HOST:-db}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       POSTGRES_DB: ${POSTGRES_DB:-mcp_home}
       POSTGRES_USER: ${POSTGRES_USER:-mcp}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mcp}
+      APP_NAME: ${APP_NAME:-MCP Manager}
       PUBLIC_URL: ${PUBLIC_URL:-http://localhost:8000}
       MCP_SERVER_NAME: ${MCP_SERVER_NAME:-My Homelab}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:-}
     volumes:
       - app_data:/app/data
     depends_on:
@@ -58,11 +58,15 @@ volumes:
   app_data:
 ```
 
+Every variable has a `:-default` fallback, so the compose file is self-contained. No `.env` file is needed — just `docker compose up -d`.
+
 ### Services
 
 **`db` — PostgreSQL database**
 
 Stores all persistent data: service connections, user accounts, tool permissions, and audit logs. Credentials are encrypted at the application level before being written to the database.
+
+The default database password (`mcp`) is safe because the database runs on an isolated Docker network and is not exposed to the host. Override it via `.env` if your environment requires it.
 
 The healthcheck ensures the application container does not start until the database is ready to accept connections.
 
@@ -89,9 +93,9 @@ Both volumes contain critical data. Back up `pgdata` for your database and `app_
 
 ### Customization
 
-**Change the host port:**
+To override any default, create a `.env` file alongside `docker-compose.yml`:
 
-Set `APP_PORT` in your `.env` file:
+**Change the host port:**
 
 ```bash
 APP_PORT=9000
@@ -99,7 +103,7 @@ APP_PORT=9000
 
 **Use an external database:**
 
-Set `DATABASE_URL` in your `.env` to a full connection string:
+Set `DATABASE_URL` to a full connection string:
 
 ```bash
 DATABASE_URL=postgresql+asyncpg://user:pass@external-db:5432/mcp_home
@@ -109,10 +113,6 @@ When using an external database, you can remove the `db` service and `pgdata` vo
 
 **Pin a specific version:**
 
-Instead of `:latest`, use a specific release tag in `MCP_HOME_IMAGE`:
-
-```bash
-MCP_HOME_IMAGE=ghcr.io/johnkozaris/mcp-home-manager:v1.2.0
-```
+Instead of `:latest`, edit the `image:` line in `docker-compose.yml` directly, or use the version-pinned compose file from a [GitHub Release](https://github.com/johnkozaris/mcpHomeManager/releases).
 
 See the full list of configuration options in [Environment Variables](environment-variables).
