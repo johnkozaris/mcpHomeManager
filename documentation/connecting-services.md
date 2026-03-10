@@ -5,7 +5,7 @@ MCP Home Manager connects to your homelab services using their APIs. Each servic
 ### How Connections Work
 
 When you connect a service, MCP Home Manager:
-1. Encrypts and stores the credentials in PostgreSQL
+1. Encrypts and stores the credentials in the database
 2. Tests the connection immediately
 3. Registers the service's tools with the MCP endpoint
 4. Begins periodic health checks

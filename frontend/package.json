@@ -22,7 +22,7 @@
     "llm",
     "ai-agents"
   ],
-  "packageManager": "pnpm@10.30.0",
+  "packageManager": "pnpm@10.32.0",
   "engines": {
     "node": ">=24.13.1"
   },
@@ -35,7 +35,6 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test"
   },
   "knip": {
@@ -47,50 +46,46 @@
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
     "@tanstack/react-query": "^5.90.21",
-    "@tanstack/react-router": "^1.161.1",
-    "i18next": "^25.8.14",
+    "@tanstack/react-router": "^1.166.7",
+    "i18next": "^25.8.17",
     "i18next-browser-languagedetector": "^8.2.1",
     "i18next-icu": "^2.4.3",
     "i18next-resources-to-backend": "^1.2.1",
-    "lucide-react": "^0.575.0",
+    "lucide-react": "^0.577.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-i18next": "^16.5.4",
-    "recharts": "^3.7.0"
+    "react-i18next": "^16.5.6",
+    "recharts": "^3.8.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@tailwindcss/vite": "^4.2.0",
+    "@tailwindcss/vite": "^4.2.1",
     "@tanstack/eslint-plugin-query": "^5.91.4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "@types/node": "^25.3.0",
+    "@types/node": "^25.4.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.4",
-    "@vitest/coverage-v8": "^4.0.18",
     "babel-plugin-react-compiler": "^1.0.0",
-    "eslint": "^10.0.0",
-    "eslint-plugin-oxlint": "^1.49.0",
+    "eslint": "^10.0.3",
+    "eslint-plugin-oxlint": "^1.51.0",
     "eslint-plugin-react-hooks": "^7.0.1",
     "jsdom": "^28.1.0",
-    "knip": "^5.84.1",
+    "knip": "^5.86.0",
     "oxlint": "^1.49.0",
     "playwright": "^1.58.2",
     "prettier": "^3.8.1",
-    "tailwindcss": "^4.2.0",
+    "tailwindcss": "^4.2.1",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.56.0",
+    "typescript-eslint": "^8.57.0",
     "vite": "^7.3.1",
     "vitest": "^4.0.18"
   },
   "pnpm": {
     "overrides": {
-      "minimatch@<10": "^10.2.1",
-      "rollup@<4.59.0": "^4.59.0",
-      "dompurify@<3.2.8": "^3.2.8",
-      "ajv@<6.14.0": "^6.14.0"
+      "dompurify@<3.3.2": "^3.3.2"
     }
   }
 }

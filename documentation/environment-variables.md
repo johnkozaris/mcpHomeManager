@@ -17,13 +17,16 @@ All configuration is set via environment variables. The `docker-compose.yml` inc
 
 ### Database
 
+The default database is SQLite — zero configuration required. All data is stored in the `app_data` volume. To use PostgreSQL instead, set `DATABASE_URL` or use the `docker-compose.postgres.yml` override file.
+
 | Variable | Default | Description |
 |----------|---------|-------------|
+| `DATABASE_URL` | SQLite (auto) | Full database connection string. For PostgreSQL: `postgresql+asyncpg://user:pass@host:5432/dbname` |
+| `POSTGRES_PASSWORD` | — | When set (without `DATABASE_URL`), builds a PostgreSQL URL from the `POSTGRES_*` variables below |
+| `POSTGRES_HOST` | `db` | PostgreSQL host (only used when `POSTGRES_PASSWORD` is set) |
+| `POSTGRES_PORT` | `5432` | PostgreSQL port |
 | `POSTGRES_DB` | `mcp_home` | PostgreSQL database name |
 | `POSTGRES_USER` | `mcp` | PostgreSQL username |
-| `POSTGRES_PASSWORD` | `mcp` | PostgreSQL password. The default is safe because the database is on an isolated Docker network and not exposed to the host. |
-| `POSTGRES_IMAGE` | `postgres:17-alpine` | PostgreSQL Docker image |
-| `DATABASE_URL` | — | Full connection string. Overrides individual `POSTGRES_*` variables. Format: `postgresql+asyncpg://user:pass@host:5432/dbname` |
 
 ### Auto-Generated
 
@@ -45,6 +48,5 @@ You can set `ENCRYPTION_KEY` as an environment variable to use a specific key (e
 # PUBLIC_URL=https://mcp.example.com
 # APP_NAME=My MCP Manager
 # MCP_SERVER_NAME=My Homelab
-# POSTGRES_PASSWORD=custom-password
-# POSTGRES_IMAGE=postgres:17-alpine
+# DATABASE_URL=postgresql+asyncpg://user:pass@host:5432/dbname
 ```

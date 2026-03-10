@@ -1,6 +1,6 @@
 ## Installation
 
-MCP Home Manager runs as two Docker containers — the application and a PostgreSQL database. The recommended setup takes about two minutes.
+MCP Home Manager runs as a single Docker container with an embedded SQLite database. The recommended setup takes about two minutes.
 
 ### Prerequisites
 
@@ -30,13 +30,11 @@ docker compose up -d
 
 | Container | Image | Purpose |
 |-----------|-------|---------|
-| `db` | `postgres:17-alpine` | PostgreSQL database |
-| `app` | `ghcr.io/johnkozaris/mcp-home-manager:latest` | Application server |
+| `app` | `ghcr.io/johnkozaris/mcp-home-manager:latest` | Application server + SQLite database |
 
 | Volume | Purpose |
 |--------|---------|
-| `pgdata` | PostgreSQL data (service connections, users, audit logs) |
-| `app_data` | Application data (auto-generated encryption key) |
+| `app_data` | SQLite database, auto-generated encryption key |
 
 The application container runs with hardened security defaults:
 

@@ -60,7 +60,7 @@ RUN uv sync --no-dev
 # Copy built frontend into static/ (Litestar serves this via create_static_files_router)
 COPY --from=frontend-build /app/dist /app/static
 
-# Non-root user with access to /app (including /app/data for persisted encryption key)
+# Non-root user with access to /app (including /app/data for encryption key + SQLite DB)
 RUN mkdir -p /app/data \
     && adduser --disabled-password --no-create-home appuser \
     && chown -R appuser:appuser /app

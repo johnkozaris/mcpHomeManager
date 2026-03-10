@@ -169,6 +169,7 @@ jobs:
         run: |
           mkdir -p release-assets
           cp .env.example release-assets/.env.example
+          cp docker-compose.postgres.yml release-assets/docker-compose.postgres.yml
           python3 - <<'PY'
           import os, re
           from pathlib import Path
@@ -210,12 +211,12 @@ jobs:
           - Download \`docker-compose.yml\` and \`.env.example\` from this release.
           - The compose file works without any \`.env\` file. To customise, copy \`.env.example\` to \`.env\` and uncomment what you need.
           - The release \`docker-compose.yml\` pins the app image to \`${IMAGE_URL}:${RELEASE_VERSION}\`.
-          - Persistent state lives in Docker volumes \`pgdata\` (PostgreSQL) and \`app_data\` (application data and encryption key).
+          - Persistent state lives in the \`app_data\` Docker volume (encryption key + SQLite database). For PostgreSQL, also use \`docker-compose.postgres.yml\` override.
           - The published image digest is keylessly signed with Cosign; see \`verify-image-signature.txt\` in the release assets.
 
           ## Upgrade checklist
 
-          1. Back up \`pgdata\` and \`app_data\`.
+          1. Back up the \`app_data\` volume (and \`pgdata\` if using PostgreSQL).
           2. Replace your deployment files with the assets from this release.
           3. Review \`.env\` for any new settings.
           4. Run \`docker compose pull && docker compose up -d\`.
@@ -224,7 +225,8 @@ jobs:
           ## Notes
 
           - \`docker-compose.dev.yml\` is for contributors and is not part of the release bundle.
-          - The default PostgreSQL image follows the configured major line in \`.env\` (\`POSTGRES_IMAGE\`) while the app image is pinned to this exact release.
+          - Default database is SQLite (zero config). For PostgreSQL, use the \`docker-compose.postgres.yml\` override file.
+          - The app image is pinned to this exact release.
           EOF
 
       - name: Write release metadata

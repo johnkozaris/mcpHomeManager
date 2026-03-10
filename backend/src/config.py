@@ -8,8 +8,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _KEY_PATH = Path("/app/data/encryption_key")
 
-# Dev-only default — Docker users never see DATABASE_URL
-_DEV_DATABASE_URL = "postgresql+asyncpg://mcp:changeme@localhost:5432/mcp_home"
+_DEFAULT_DB_PATH = Path("/app/data/mcp_home.db")
+_DEV_DB_URL = "sqlite+aiosqlite:///mcp_home.db"
 
 
 class Settings(BaseSettings):
@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     app_name: str = "MCP Manager"
     debug: bool = False
 
-    # Database — built from POSTGRES_* parts; DATABASE_URL overrides if set explicitly
+    # Database — defaults to SQLite; POSTGRES_* parts or DATABASE_URL override
     database_url: str = Field(default="", repr=False)
     postgres_host: str = "db"
     postgres_port: int = 5432
@@ -63,7 +63,7 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def _resolve_database_url(self) -> Settings:
-        """Build DATABASE_URL from POSTGRES_* parts when not set explicitly."""
+        """Build DATABASE_URL from POSTGRES_* parts, or default to SQLite."""
         if self.database_url:
             return self
 
@@ -75,10 +75,17 @@ class Settings(BaseSettings):
                 f"@{self.postgres_host}:{self.postgres_port}"
                 f"/{quote(self.postgres_db, safe='')}"
             )
+        elif _DEFAULT_DB_PATH.parent.exists():
+            # Docker: /app/data volume exists — store DB there
+            self.database_url = f"sqlite+aiosqlite:///{_DEFAULT_DB_PATH}"
         else:
-            # Local dev — no POSTGRES_PASSWORD, no DATABASE_URL
-            self.database_url = _DEV_DATABASE_URL
+            # Local dev: relative path in working directory
+            self.database_url = _DEV_DB_URL
         return self
+
+    @property
+    def is_sqlite(self) -> bool:
+        return self.database_url.startswith("sqlite")
 
     @model_validator(mode="after")
     def _resolve_encryption_key(self) -> Settings:

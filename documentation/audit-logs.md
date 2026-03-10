@@ -45,4 +45,4 @@ The `mcp_home_get_logs` self-MCP tool supports filtering by user, service, and t
 
 ### Retention
 
-Audit logs are stored in the PostgreSQL database. There is no automatic retention policy — logs grow over time. For large installations, consider periodically archiving or cleaning old records directly in the database.
+Audit logs are stored in the database (SQLite by default, or PostgreSQL if configured). There is no automatic retention policy — logs grow over time. For large installations, consider periodically archiving or cleaning old records directly in the database.

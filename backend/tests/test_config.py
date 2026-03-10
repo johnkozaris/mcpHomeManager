@@ -10,14 +10,22 @@ from cryptography.fernet import Fernet
 import config as config_mod
 
 
-def _make_settings(tmp_path: Path, env: dict[str, str] | None = None) -> config_mod.Settings:
+def _make_settings(
+    tmp_path: Path,
+    env: dict[str, str] | None = None,
+    *,
+    db_path: Path | None = None,
+) -> config_mod.Settings:
     """Build a Settings instance with _KEY_PATH pointed at tmp_path."""
     key_path = tmp_path / "encryption_key"
+    # Point _DEFAULT_DB_PATH to a non-existent dir so tests get the dev SQLite URL
+    effective_db_path = db_path or (tmp_path / "nonexistent" / "mcp_home.db")
     combined_env = {"ENCRYPTION_KEY": "", "DATABASE_URL": "", **(env or {})}
 
     with (
         patch.dict(os.environ, combined_env, clear=False),
         patch.object(config_mod, "_KEY_PATH", key_path),
+        patch.object(config_mod, "_DEFAULT_DB_PATH", effective_db_path),
     ):
         return config_mod.Settings(
             _env_file=None,  # type: ignore[call-arg]
@@ -151,7 +159,7 @@ class TestDatabaseUrlFromParts:
     def test_dev_default_when_no_password(self, tmp_path: Path) -> None:
         key = Fernet.generate_key().decode()
         s = _make_settings(tmp_path, env={"ENCRYPTION_KEY": key})
-        assert s.database_url == config_mod._DEV_DATABASE_URL
+        assert s.database_url == config_mod._DEV_DB_URL
 
     def test_defaults_with_only_password(self, tmp_path: Path) -> None:
         """Minimal Docker config: user only sets POSTGRES_PASSWORD."""
@@ -172,6 +180,27 @@ class TestDatabaseUrlFromParts:
             },
         )
         assert s.database_url == "postgresql+asyncpg://mcp:s3cret@db:5432/custom_db"
+
+    def test_is_sqlite_true_by_default(self, tmp_path: Path) -> None:
+        key = Fernet.generate_key().decode()
+        s = _make_settings(tmp_path, env={"ENCRYPTION_KEY": key})
+        assert s.is_sqlite is True
+
+    def test_is_sqlite_false_for_postgres(self, tmp_path: Path) -> None:
+        key = Fernet.generate_key().decode()
+        s = _make_settings(
+            tmp_path,
+            env={"ENCRYPTION_KEY": key, "POSTGRES_PASSWORD": "s3cret"},
+        )
+        assert s.is_sqlite is False
+
+    def test_sqlite_uses_data_dir_in_docker(self, tmp_path: Path) -> None:
+        data_dir = tmp_path / "data"
+        data_dir.mkdir()
+        db_path = data_dir / "mcp_home.db"
+        key = Fernet.generate_key().decode()
+        s = _make_settings(tmp_path, env={"ENCRYPTION_KEY": key}, db_path=db_path)
+        assert s.database_url == f"sqlite+aiosqlite:///{db_path}"
 
     def test_secrets_hidden_from_repr(self, tmp_path: Path) -> None:
         key = Fernet.generate_key().decode()

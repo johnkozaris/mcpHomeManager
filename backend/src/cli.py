@@ -11,9 +11,10 @@ import asyncio
 import getpass
 import sys
 
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from config import settings
+from database import create_configured_engine
 from infrastructure.persistence.user_repository import UserRepository
 from services.user_service import UserService
 
@@ -21,7 +22,7 @@ from services.user_service import UserService
 async def _reset_admin_password() -> None:
     username = sys.argv[1] if len(sys.argv) > 1 else None
 
-    engine = create_async_engine(settings.database_url)
+    engine = create_configured_engine(settings.database_url, is_sqlite=settings.is_sqlite)
     session_factory = async_sessionmaker(engine, expire_on_commit=False)
 
     try:

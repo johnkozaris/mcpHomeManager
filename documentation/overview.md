@@ -15,7 +15,7 @@ One MCP endpoint gives your AI agent structured access to every connected servic
 ### How It Works
 
 :::steps
-1. **Deploy** — Run `docker compose up -d` to start MCP Home Manager and PostgreSQL
+1. **Deploy** — Run `docker compose up -d` to start MCP Home Manager
 2. **Connect services** — Add your homelab services through the web UI (URL + credentials)
 3. **Point your AI agent** — Configure Claude Desktop, Claude Code, Cursor, or another MCP client to use your endpoint at `http://your-server:8000/mcp/`
 :::

@@ -4,7 +4,7 @@ MCP Home Manager is designed to keep your data local and secure.
 
 ### Your data stays on your server
 
-All service credentials, API keys, and configuration are stored in your local PostgreSQL database. Nothing is sent to external servers. The application runs entirely on your hardware.
+All service credentials, API keys, and configuration are stored in your local database (SQLite by default, or PostgreSQL if configured). Nothing is sent to external servers. The application runs entirely on your hardware.
 
 ### Credential protection
 

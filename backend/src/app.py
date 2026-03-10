@@ -31,9 +31,10 @@ from litestar.plugins.prometheus import PrometheusConfig, PrometheusController
 from litestar.plugins.structlog import StructlogConfig, StructlogPlugin
 from litestar.static_files import create_static_files_router
 from litestar.types import Receive, Scope, Send
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from config import settings
+from database import create_configured_engine
 from domain.exceptions import (
     EncryptionError,
     ServiceConnectionError,
@@ -170,74 +171,6 @@ async def provide_service_manager(
     )
 
 
-@contextlib.asynccontextmanager
-async def app_lifespan(app: Litestar) -> AsyncGenerator[None]:
-    logger.info("Starting %s...", settings.app_name)
-
-    encryption = FernetEncryption(settings.encryption_key)
-
-    client_factory = ServiceClientFactory()
-
-    engine = create_async_engine(settings.database_url)
-    session_factory = async_sessionmaker(engine, expire_on_commit=False)
-
-    from advanced_alchemy.base import UUIDAuditBase
-
-    importlib.import_module("infrastructure.persistence.orm_models")
-
-    async with engine.begin() as conn:
-        await conn.run_sync(UUIDAuditBase.metadata.create_all)
-
-    tool_registry = ToolRegistry(
-        session_factory=session_factory,
-        encryption=encryption,
-        client_factory=client_factory,
-        service_repo_factory=ServiceRepository,
-        tool_repo_factory=ToolPermissionRepository,
-        generic_tool_repo_factory=GenericToolDefinitionRepository,
-    )
-    mcp_factory = MCPServerFactory(
-        tool_registry=tool_registry,
-        session_factory=session_factory,
-        encryption=encryption,
-        client_factory=client_factory,
-    )
-    tool_registry.set_on_rebuild(mcp_factory.sync_tools)
-    await mcp_factory.initialize()
-
-    app.state.encryption = encryption
-    app.state.client_factory = client_factory
-    app.state.tool_registry = tool_registry
-    app.state.mcp_factory = mcp_factory
-    app.state.session_factory = session_factory
-    app.state.db_healthy = True
-
-    mcp_factory.get_asgi_app()
-
-    health_runner = HealthCheckRunner(
-        session_factory,
-        encryption,
-        client_factory,
-        interval_seconds=settings.health_check_interval_seconds,
-        service_repo_factory=ServiceRepository,
-    )
-    app.state.health_runner = health_runner
-    health_task = asyncio.create_task(health_runner.run_forever())
-
-    async with mcp_factory.session_manager.run():
-        logger.info("%s is ready", settings.app_name)
-        try:
-            yield
-        finally:
-            health_task.cancel()
-            with contextlib.suppress(asyncio.CancelledError):
-                await health_task
-
-    logger.info("Shutting down %s...", settings.app_name)
-    await tool_registry.cleanup()
-    await engine.dispose()
-
-
 @asgi("/mcp", is_mount=True, copy_scope=False)
 async def mcp_asgi_handler(scope: Scope, receive: Receive, send: Send) -> None:
     """Forward /mcp/* to the MCP SDK's Streamable HTTP app."""
@@ -257,11 +190,77 @@ async def mcp_asgi_handler(scope: Scope, receive: Receive, send: Send) -> None:
 
 
 def create_app() -> Litestar:
+    engine = create_configured_engine(settings.database_url, is_sqlite=settings.is_sqlite)
+
     db_config = SQLAlchemyAsyncConfig(
-        connection_string=settings.database_url,
+        engine_instance=engine,
         create_all=False,  # Tables created in lifespan before registry build
     )
     db_plugin = SQLAlchemyPlugin(config=db_config)
+
+    @contextlib.asynccontextmanager
+    async def app_lifespan(app: Litestar) -> AsyncGenerator[None]:
+        logger.info("Starting %s...", settings.app_name)
+
+        encryption = FernetEncryption(settings.encryption_key)
+        client_factory = ServiceClientFactory()
+        session_factory = async_sessionmaker(engine, expire_on_commit=False)
+
+        from advanced_alchemy.base import UUIDAuditBase
+
+        importlib.import_module("infrastructure.persistence.orm_models")
+
+        async with engine.begin() as conn:
+            await conn.run_sync(UUIDAuditBase.metadata.create_all)
+
+        tool_registry = ToolRegistry(
+            session_factory=session_factory,
+            encryption=encryption,
+            client_factory=client_factory,
+            service_repo_factory=ServiceRepository,
+            tool_repo_factory=ToolPermissionRepository,
+            generic_tool_repo_factory=GenericToolDefinitionRepository,
+        )
+        mcp_factory = MCPServerFactory(
+            tool_registry=tool_registry,
+            session_factory=session_factory,
+            encryption=encryption,
+            client_factory=client_factory,
+        )
+        tool_registry.set_on_rebuild(mcp_factory.sync_tools)
+        await mcp_factory.initialize()
+
+        app.state.encryption = encryption
+        app.state.client_factory = client_factory
+        app.state.tool_registry = tool_registry
+        app.state.mcp_factory = mcp_factory
+        app.state.session_factory = session_factory
+        app.state.db_healthy = True
+
+        mcp_factory.get_asgi_app()
+
+        health_runner = HealthCheckRunner(
+            session_factory,
+            encryption,
+            client_factory,
+            interval_seconds=settings.health_check_interval_seconds,
+            service_repo_factory=ServiceRepository,
+        )
+        app.state.health_runner = health_runner
+        health_task = asyncio.create_task(health_runner.run_forever())
+
+        async with mcp_factory.session_manager.run():
+            logger.info("%s is ready", settings.app_name)
+            try:
+                yield
+            finally:
+                health_task.cancel()
+                with contextlib.suppress(asyncio.CancelledError):
+                    await health_task
+
+        logger.info("Shutting down %s...", settings.app_name)
+        await tool_registry.cleanup()
+        await engine.dispose()
 
     # Litestar's built-in StructlogPlugin — auto-configures structlog + stdlib,
     # handles TTY detection, coloured dev output, JSON in prod, request middleware.

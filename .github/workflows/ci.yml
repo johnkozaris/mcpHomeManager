@@ -79,5 +79,8 @@ jobs:
       - name: Validate compose config
         run: docker compose --env-file .env.example config >/dev/null
 
+      - name: Validate compose (PostgreSQL override)
+        run: docker compose -f docker-compose.yml -f docker-compose.postgres.yml --env-file .env.example config >/dev/null
+
       - name: Build image
         run: docker build -t mcp-home-manager .

@@ -6,4 +6,18 @@ allowBuilds:
 
 blockExoticSubdeps: true
 minimumReleaseAge: 1440
+# Fast-moving packages that routinely have sub-24h latest versions.
+# Still protected by trustPolicy and lockfile pinning.
+minimumReleaseAgeExclude:
+  - '@tanstack/react-router'
+  - '@tanstack/react-router-core'
+  - '@tanstack/router-core'
+  - oxlint
+  - eslint-plugin-oxlint
 trustPolicy: no-downgrade
+# react-redux 9.2.0 dropped provenance attestation vs 9.1.x (publishing config
+# change, not a compromise). Official Redux team package, already in lockfile,
+# no known security incidents. Version-scoped to re-evaluate on next major.
+trustPolicyExclude:
+  - react-redux@9.2.0
+  - reselect@5.1.1

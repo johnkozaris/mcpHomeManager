@@ -11,14 +11,14 @@ MCP Home Manager is an open-source project. Contributions, bug reports, and feat
 ### Architecture
 
 ```
-backend/           Python 3.14, Litestar, FastMCP, SQLAlchemy, asyncpg
+backend/           Python 3.14, Litestar, FastMCP, SQLAlchemy, aiosqlite/asyncpg
 frontend/          React 19, Vite, Tailwind v4, TanStack Query
 ```
 
 The backend follows **hexagonal architecture** (Ports & Adapters):
 
 - **Domain layer** — Entities (`ServiceConnection`, `ToolDefinition`, `User`), ports (interfaces), and business logic
-- **Infrastructure layer** — Service client adapters (one per service type), PostgreSQL persistence, encryption
+- **Infrastructure layer** — Service client adapters (one per service type), database persistence (SQLAlchemy), encryption
 - **Entrypoints** — Litestar REST API (web UI backend) and MCP server (AI agent endpoint)
 
 #### MCP Server Instructions
@@ -81,7 +81,7 @@ Some adapters also implement `IAppProvider` to serve interactive HTML apps via M
 | Web framework | [Litestar](https://litestar.dev/) |
 | MCP server | [FastMCP](https://github.com/jlowin/fastmcp) |
 | ORM | SQLAlchemy 2.0 (async) |
-| Database | PostgreSQL (asyncpg driver) |
+| Database | SQLite (default) or PostgreSQL (via `DATABASE_URL`) |
 | Frontend | React 19 + TypeScript + Vite 6 |
 | Package management | uv (Python), pnpm (Node) |
 
