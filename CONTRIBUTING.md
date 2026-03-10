@@ -1,16 +1,12 @@
 # Contributing to MCP Home Manager
 
-Thanks for helping improve MCP Home Manager.
-
-This project is an open-source MCP gateway for homelab services, and we welcome bug fixes, security improvements, docs updates, and new service integrations.
+Thanks for helping improve MCP Home Manager. We welcome bug fixes, security improvements, docs updates, and new service integrations.
 
 ## Prerequisites
 
-- Python 3.14+
-- [uv](https://docs.astral.sh/uv/)
-- Node.js 24+ with corepack enabled
-- pnpm
-- Docker (recommended for local full-stack runs)
+- Python 3.14+ and [uv](https://docs.astral.sh/uv/)
+- Node.js 24+ with corepack enabled and pnpm
+- Docker (for full-stack runs)
 
 ## Local setup
 
@@ -19,7 +15,7 @@ This project is an open-source MCP gateway for homelab services, and we welcome 
 ```bash
 cd backend
 uv sync
-uv run mcp-home
+uv run mcp-home          # dev server on :8000
 ```
 
 ### Frontend
@@ -28,92 +24,101 @@ uv run mcp-home
 cd frontend
 corepack enable
 pnpm install
-pnpm dev
+pnpm dev                  # dev server on :3000, proxies /api and /mcp to :8000
 ```
 
-Frontend installs are governed by `frontend/pnpm-workspace.yaml`, which enforces reviewed dependency build rules, release-age delay, and trust-policy checks. If a future package genuinely needs an install-script or trust-policy exception, research it first and add the narrowest version-scoped exception instead of weakening the policy broadly.
-
-### Docker / full stack
+### Full stack (Docker)
 
 ```bash
-cp .env.example .env
-# Set a strong POSTGRES_PASSWORD before first start
-docker compose up -d
+cp .env.example .env      # set POSTGRES_PASSWORD
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 ```
 
-For contributor workflows, `docker-compose.dev.yml` is a local override for source builds. It is not part of the GitHub Release asset bundle.
+`docker-compose.dev.yml` builds from source. It is not part of release assets.
 
 ## Run checks before opening a PR
 
-### Backend checks
+### Backend
 
 ```bash
 cd backend
 uv run ruff check src/
+uv run ruff format --check src/
 uv run mypy
 npx --yes pyright
 uv run python -m pytest -x -q
 ```
 
-### Frontend checks
+### Frontend
 
 ```bash
 cd frontend
+pnpm exec tsc -b
 pnpm lint
-pnpm build
-pnpm test
+pnpm exec knip
+pnpm exec vitest run
 ```
 
-## What to know about this codebase
+All of these run in CI — a PR with failures won't merge.
 
-### Backend structure
+## Architecture
 
-The backend uses a ports-and-adapters layout:
+### Backend (Python / Litestar)
 
-`entrypoints -> services -> domain <- infrastructure`
+Ports-and-adapters layout:
 
-- `domain/`: entities, ports, exceptions (framework-free)
-- `services/`: business/use-case orchestration
-- `entrypoints/`: Litestar API + MCP mount
-- `infrastructure/`: persistence, external clients, encryption, metrics
+```
+entrypoints → services → domain ← infrastructure
+```
 
-### Frontend structure
+- `domain/` — entities, ports, exceptions (framework-free)
+- `services/` — business logic and orchestration
+- `entrypoints/` — Litestar REST API + FastMCP server
+- `infrastructure/` — persistence, HTTP clients, encryption
 
-Primary flow:
+API schemas use `msgspec.Struct` (Pydantic is for settings only). Tests use in-memory fakes from `conftest.py` — no database needed.
 
-`lib/types.ts -> lib/api.ts -> hooks/useServices.ts -> pages -> components`
+### Frontend (React / Vite)
 
-- TanStack Query is the source of truth for server state
-- TanStack Router route definitions are in `src/routeTree.tsx`
+```
+lib/types.ts → lib/api.ts → hooks/ → pages/ → components/
+```
 
-## Project conventions
+- TanStack Query for server state, TanStack Router for routing
+- Tailwind v4 with CSS custom properties in `globals.css`
+- All colors via tokens — never hardcode hex in components
 
-- Use `uv` for Python workflows and `pnpm` for frontend workflows.
-- API schemas are `msgspec.Struct` (Pydantic is for settings only).
-- Backend tests should use in-memory fakes from `backend/tests/conftest.py`.
-- Use “Connect” wording in UX copy for services.
-- Keep UI colors token-based (`frontend/src/styles/globals.css`), not hardcoded per component.
-- Do not store plaintext secrets; keep existing auth/encryption patterns intact.
+## Conventions
+
+- Use `uv` for Python, `pnpm` for frontend — no global installs
+- "Connect" not "Add" when referring to services in UI copy
+- `text-xs` (13px) is the minimum text size — do not use `text-2xs`
+- Do not store plaintext secrets; maintain existing auth/encryption patterns
+- Frontend dependency builds are locked via `pnpm-workspace.yaml` — do not widen `allowBuilds` without thorough security review
+
+## Localization (i18n)
+
+Frontend strings use `i18next` + `react-i18next`. Source language is `en`. Locale files: `frontend/src/i18n/locales/<locale>/`.
+
+Supported: `en`, `es`, `pt-BR`, `pt-PT`, `zh-CN`, `ja`, `ko`, `el`, `de`, `fr`, `th`, `it`
+
+When translating: keep ICU syntax and placeholders intact, use natural phrasing, keep technical loanwords (API, token, JSON, URL, MCP) when native speakers would.
 
 ## Pull requests
 
-1. Create a feature branch from `main`
+1. Branch from `main`
 2. Make focused changes
-3. Run relevant checks above
-4. Open a PR with:
-   - what changed
-   - why it changed
-   - how to test it
+3. Run the checks above
+4. Open a PR explaining what changed, why, and how to test it
 
 ## Release model
 
-If you're maintaining releases, keep `backend/pyproject.toml` and `frontend/package.json` aligned, then push an annotated semver tag from `main` (for example `git tag -a v0.1.0 -m "Release v0.1.0"` followed by `git push origin v0.1.0`). The publish workflow handles GHCR publishing and GitHub Release assets automatically; after it finishes, verify the release page before announcing it.
+Maintainers: keep versions aligned in `backend/pyproject.toml` and `frontend/package.json`, then push an annotated semver tag (`git tag -a v0.2.0 -m "Release v0.2.0" && git push origin v0.2.0`). The publish workflow handles GHCR images, cosign signing, and GitHub Release assets automatically.
 
 ## Security issues
 
-Please do not open public issues for sensitive vulnerabilities.
-Follow [SECURITY.md](SECURITY.md) for reporting instructions.
+Do not open public issues for vulnerabilities. Follow [SECURITY.md](SECURITY.md).
 
-## Contribution license
+## License
 
-By submitting a contribution, you agree that your contributions are licensed under this repository's MIT License.
+Contributions are licensed under this repository's [MIT License](LICENSE).
