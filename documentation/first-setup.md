@@ -12,7 +12,7 @@ After [installing](installation) MCP Home Manager, complete the one-time setup t
    - **Email** — Optional, used for password reset emails
    - **Password** — Minimum 8 characters, enter it twice to confirm
 
-3. **Save your API key** — After creating your account, the setup page displays your API key. **Copy it now** — the key is shown only once. It is hashed after this screen and cannot be recovered. If you lose it, you can generate a new one from your account settings.
+3. **Save your API key** — After creating your account, the setup page displays your API key. Copy it now. You can reveal it again later from your account settings, but once you regenerate a new key the old one is permanently lost.
 :::
 
 :::info API Key Security
@@ -31,7 +31,7 @@ After setup, you land on the dashboard. From here you can:
 
 :::steps
 1. **Go to Services** — Click "Services" in the sidebar
-2. **Add a service** — Click "Add Service"
+2. **Connect a service** — Click "Connect Service"
 3. **Choose the service type** — Select from the 17 built-in adapters or use Generic REST
 4. **Enter connection details** — Provide the service URL and credentials (format varies by service — see the [Connecting Services](connecting-services) guide)
 5. **Test the connection** — The connection is tested automatically on save
@@ -49,8 +49,10 @@ For detailed setup instructions for each AI agent:
 - [Claude Desktop](claude-desktop)
 - [Claude Code](claude-code)
 - [Cursor](cursor)
-- [ChatGPT](chatgpt)
 - [Codex](codex)
+- [GitHub Copilot CLI](copilot-cli)
+- [OpenCode](opencode)
+- [ChatGPT](chatgpt)
 
 ### What's Next
 
