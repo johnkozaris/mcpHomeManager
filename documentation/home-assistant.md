@@ -26,7 +26,7 @@ Control your smart home through your AI agent. Query entity states, list devices
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** Home Assistant
 - **URL:** Your Home Assistant URL (e.g., `http://192.168.1.100:8123`)
 - **Credentials:** Paste your long-lived access token

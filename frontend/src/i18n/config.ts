@@ -16,7 +16,6 @@ export const SUPPORTED_LOCALES = [
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
 
 export const DEFAULT_LOCALE: SupportedLocale = "en";
-export const FALLBACK_LOCALE: SupportedLocale = DEFAULT_LOCALE;
 
 export const DEFAULT_NAMESPACE = "common";
 export const TRANSLATION_NAMESPACES = [

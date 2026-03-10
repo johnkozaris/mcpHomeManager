@@ -26,7 +26,7 @@ Manage your Forgejo repositories, issues, and pull requests through your AI agen
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** Forgejo
 - **URL:** Your Forgejo URL (e.g., `http://192.168.1.100:3000`)
 - **Credentials:** Paste your personal access token

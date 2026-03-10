@@ -100,24 +100,22 @@ def _build_server_instructions(
     # Management guidance depends on both self-MCP and service state
     if self_mcp_enabled:
         if not has_services:
-            parts.append(
-                "No services are connected yet. "
-                "Use mcp_home_add_service to connect one."
-            )
+            parts.append("No services are connected yet. Use mcp_home_add_service to connect one.")
         parts.append(
             f"You can manage this gateway: add, update, or remove services and toggle tools. "
             f"Supported service_type values: {service_types}. "
-            f"For unlisted services, use generic_rest with mcp_home_add_generic_tool to define custom endpoints."
+            "For unlisted services, use generic_rest with "
+            "mcp_home_add_generic_tool to define custom endpoints."
         )
     else:
         if not has_services:
             parts.append(
-                "No services are connected yet. "
-                "Use the web UI (Services page) to connect one."
+                "No services are connected yet. Use the web UI (Services page) to connect one."
             )
         parts.append(
             "Self-management tools are disabled. "
-            "Services can be managed through the web UI, or an admin can enable self-MCP in Settings."
+            "Services can be managed through the web UI, "
+            "or an admin can enable self-MCP in Settings."
         )
 
     parts.append(

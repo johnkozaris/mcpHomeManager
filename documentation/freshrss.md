@@ -27,7 +27,7 @@ Read and manage your RSS feeds through your AI agent. Browse articles, manage re
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** FreshRSS
 - **URL:** Your FreshRSS URL (e.g., `http://192.168.1.100:8080`). Can point to the root or directly to `/api/greader.php`.
 - **Credentials:** `username:password` format (e.g., `admin:your-api-password`)

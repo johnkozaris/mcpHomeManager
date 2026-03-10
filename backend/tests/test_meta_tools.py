@@ -50,4 +50,4 @@ class TestMetaToolsRegistration:
         tool_names = {tool.name for tool in mcp._tool_manager.list_tools()}
         expected = set(META_TOOL_NAMES)
         assert expected.issubset(tool_names)
-        assert len(tool_names) == 12
+        assert len(tool_names) == len(META_TOOL_NAMES)

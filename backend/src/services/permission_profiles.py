@@ -95,8 +95,7 @@ def _make_immich_profiles() -> list[PermissionProfile]:
             name="contributor",
             label="Contributor",
             description=(
-                "Enable non-admin Immich tools. "
-                "Server statistics still require an admin API key."
+                "Enable non-admin Immich tools. Server statistics still require an admin API key."
             ),
             tool_states=_all_except(_IMMICH_ADMIN_ONLY, _IMMICH_TOOLS),
         ),
@@ -107,6 +106,7 @@ def _make_immich_profiles() -> list[PermissionProfile]:
             tool_states=_all_enabled(_IMMICH_TOOLS),
         ),
     ]
+
 
 # ── Nextcloud ────────────────────────────────────────────────────────────
 

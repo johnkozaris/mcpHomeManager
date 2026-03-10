@@ -25,7 +25,7 @@ Manage your read-it-later articles through your AI agent. Save URLs, search entr
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** Wallabag
 - **URL:** Your Wallabag URL (e.g., `http://192.168.1.100:8080`)
 - **Credentials:** `client_id:client_secret:username:password` format (e.g., `1_abc123:xyz789:user:your-password`)

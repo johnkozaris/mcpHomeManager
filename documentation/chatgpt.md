@@ -1,24 +1,44 @@
 ## ChatGPT
 
-ChatGPT's MCP support is still evolving. As of early 2026, MCP integration in ChatGPT is limited compared to Claude Desktop or Claude Code.
+ChatGPT supports remote MCP servers through Developer Mode. Unlike Claude Code or Cursor, ChatGPT connects to your server over the internet — it does not read a local config file.
 
-### Current Status
+### Prerequisites
 
-ChatGPT has begun rolling out MCP support, but availability and configuration may vary depending on your ChatGPT plan and region. Check [OpenAI's documentation](https://platform.openai.com/docs) for the latest on MCP support.
+- ChatGPT Plus or Pro subscription
+- A publicly accessible MCP endpoint (HTTPS required)
 
-### Configuration
+:::info Public Endpoint Required
+ChatGPT connects to your MCP server from OpenAI's infrastructure, not from your local machine. Your endpoint must be reachable over the internet via HTTPS. Use a [reverse proxy](reverse-proxy) with a domain and TLS certificate, or a tunnel service like Cloudflare Tunnel. Exposing your MCP endpoint to the internet is your responsibility — review the [security](security) guide and understand the risks before proceeding.
+:::
 
-If MCP support is available in your ChatGPT setup, the configuration follows the standard pattern:
+### Setup
 
-- **Endpoint URL:** `http://your-server:8000/mcp/`
-- **Authentication:** `Authorization: Bearer YOUR_API_KEY`
+:::steps
+1. **Enable Developer Mode** — Go to **Settings > Apps & Connectors > Advanced settings** and enable Developer Mode
 
-Replace `your-server` with the hostname or IP of your MCP Home Manager instance, and `YOUR_API_KEY` with the API key from [First Setup](first-setup).
+2. **Create a connector** — Back in Apps & Connectors, click **Create** and select **MCP Server**
 
-### Recommended Alternatives
+3. **Enter your endpoint** — Provide a name (e.g., "My Homelab") and paste your public endpoint URL:
 
-For the most complete MCP experience, consider:
+```
+https://mcp.your-domain.com/mcp/
+```
 
-- [Claude Desktop](claude-desktop) — Full MCP support including interactive apps
-- [Claude Code](claude-code) — CLI-based MCP integration
-- [Cursor](cursor) — IDE with MCP support
+4. **Click Create** — New conversations will automatically discover your homelab tools
+:::
+
+Replace `mcp.your-domain.com` with the public hostname of your MCP Home Manager instance.
+
+### Authentication
+
+ChatGPT's MCP connector currently uses its own authentication flow. Pass your API key in the endpoint configuration. Check [OpenAI's MCP documentation](https://developers.openai.com/api/docs/mcp/) for the latest on authentication options.
+
+### MCP Apps
+
+ChatGPT has begun rolling out support for MCP Apps (interactive HTML content returned by tools). Services like Home Assistant's entity dashboard may render as interactive panels in your conversation.
+
+### Limitations
+
+- Only available with ChatGPT Plus or Pro
+- Requires a publicly accessible HTTPS endpoint (no local-only setups)
+- Developer Mode is still in beta — behavior may change

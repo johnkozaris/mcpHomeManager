@@ -127,9 +127,7 @@ class _LoginFormParser(HTMLParser):
         self.hidden_inputs: dict[str, str] = {}
         self.has_remember_me = False
 
-    def handle_starttag(
-        self, tag: str, attrs: list[tuple[str, str | None]]
-    ) -> None:
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         if tag.lower() != "input":
             return
         attributes = dict(attrs)
@@ -194,9 +192,7 @@ class CalibreWebClient(BaseServiceClient):
         parser.feed(html)
         csrf_token = parser.hidden_inputs.get("csrf_token")
         if not csrf_token:
-            raise ServiceConnectionError(
-                "calibreweb", "Login page missing csrf_token field"
-            )
+            raise ServiceConnectionError("calibreweb", "Login page missing csrf_token field")
         return csrf_token, parser.hidden_inputs.get("next", ""), parser.has_remember_me
 
     @staticmethod
@@ -233,9 +229,7 @@ class CalibreWebClient(BaseServiceClient):
         try:
             login_page = await self._client.get("/login", follow_redirects=False)
             login_page.raise_for_status()
-            csrf_token, next_value, has_remember_me = self._extract_login_bootstrap(
-                login_page.text
-            )
+            csrf_token, next_value, has_remember_me = self._extract_login_bootstrap(login_page.text)
             form_data: dict[str, str] = {
                 "username": username,
                 "password": password,
@@ -281,18 +275,14 @@ class CalibreWebClient(BaseServiceClient):
         if self._is_login_redirect(response) or self._is_login_page(response):
             self._session_authenticated = False
             await self._ensure_session()
-            response = await self._client.request(
-                method, path, follow_redirects=False, **kwargs
-            )
+            response = await self._client.request(method, path, follow_redirects=False, **kwargs)
         return response
 
     async def _request(self, method: str, path: str, **kwargs: Any) -> Any:
         try:
             response = await self._request_with_session(method, path, **kwargs)
             if self._is_login_redirect(response) or self._is_login_page(response):
-                raise ToolExecutionError(
-                    self.service_name, "Authentication failed after re-login"
-                )
+                raise ToolExecutionError(self.service_name, "Authentication failed after re-login")
             response.raise_for_status()
             return self._parse_response_body(response)
         except httpx.ConnectError as e:

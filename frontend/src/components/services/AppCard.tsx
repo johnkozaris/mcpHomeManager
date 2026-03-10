@@ -15,7 +15,7 @@ export function AppCard({ app, onPreview }: Props) {
     <div className="flex items-center justify-between p-3 rounded-xl border border-line">
       <div className="min-w-0">
         <p className="text-sm font-semibold text-ink">{app.title}</p>
-        <p className="text-2xs text-ink-tertiary truncate">{app.description}</p>
+        <p className="text-xs text-ink-tertiary truncate">{app.description}</p>
       </div>
       <Button variant="secondary" size="sm" onClick={() => onPreview(app)}>
         <Eye size={14} />

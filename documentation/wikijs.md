@@ -27,7 +27,7 @@ Manage your wiki pages through your AI agent. Search, read, create, and update w
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** Wiki.js
 - **URL:** Your Wiki.js URL (e.g., `http://192.168.1.100:3000`)
 - **Credentials:** Paste your API key

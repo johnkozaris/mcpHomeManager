@@ -123,7 +123,7 @@ class NextcloudClient(BaseServiceClient):
             data = await self._request_ocs_json(
                 "/ocs/v1.php/cloud/capabilities", tool_name="nextcloud_health_check"
             )
-        except (ServiceConnectionError, ToolExecutionError):
+        except ServiceConnectionError, ToolExecutionError:
             return False
         return isinstance(data, dict) and isinstance(data.get("capabilities"), dict)
 
@@ -192,15 +192,11 @@ class NextcloudClient(BaseServiceClient):
                 "Nextcloud Notes API v1 is unavailable on this server. Enable the Notes app first.",
             )
 
-        data = await self._request_ocs_json(
-            "/ocs/v2.php/cloud/capabilities", tool_name=tool_name
-        )
+        data = await self._request_ocs_json("/ocs/v2.php/cloud/capabilities", tool_name=tool_name)
         capabilities = data.get("capabilities")
         notes_capabilities = capabilities.get("notes") if isinstance(capabilities, dict) else None
         api_versions = (
-            notes_capabilities.get("api_version")
-            if isinstance(notes_capabilities, dict)
-            else None
+            notes_capabilities.get("api_version") if isinstance(notes_capabilities, dict) else None
         )
         if isinstance(api_versions, list) and any(
             self._supports_notes_api_v1(version) for version in api_versions
@@ -296,9 +292,7 @@ class NextcloudClient(BaseServiceClient):
             "total": len(entries),
         }
 
-    def _parse_propfind_item(
-        self, response: Any, user_id: str
-    ) -> dict[str, Any] | None:
+    def _parse_propfind_item(self, response: Any, user_id: str) -> dict[str, Any] | None:
         href_text = response.findtext("d:href", default="", namespaces=_DAV_NAMESPACES)
         item_path = self._href_to_nextcloud_path(href_text, user_id)
         if item_path is None:
@@ -342,9 +336,7 @@ class NextcloudClient(BaseServiceClient):
             "file_id": prop.findtext("oc:fileid", default=None, namespaces=_DAV_NAMESPACES),
         }
 
-    def _successful_propfind_props(
-        self, response: Any
-    ) -> Any | None:
+    def _successful_propfind_props(self, response: Any) -> Any | None:
         for propstat in response.findall("d:propstat", _DAV_NAMESPACES):
             status = propstat.findtext("d:status", default="", namespaces=_DAV_NAMESPACES)
             if " 2" not in status:

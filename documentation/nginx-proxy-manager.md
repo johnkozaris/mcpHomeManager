@@ -16,7 +16,7 @@ Manage your reverse proxy hosts through your AI agent. View, create, and manage 
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** Nginx Proxy Manager
 - **URL:** Your NPM URL (e.g., `http://192.168.1.100:81`)
 - **Credentials:** `email:password` format (e.g., `admin@example.com:your-password`)

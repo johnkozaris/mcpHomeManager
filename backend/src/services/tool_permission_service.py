@@ -33,4 +33,3 @@ class ToolPermissionService:
             http_method_override=http_method_override,
             path_template_override=path_template_override,
         )
-

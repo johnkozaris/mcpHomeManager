@@ -15,7 +15,7 @@ Monitor your services and manage uptime monitors through your AI agent.
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** Uptime Kuma
 - **URL:** Your Uptime Kuma URL (e.g., `http://192.168.1.100:3001`)
 - **Credentials:** `username:password` format (e.g., `admin:your-password`)

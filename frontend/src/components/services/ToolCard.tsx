@@ -294,7 +294,7 @@ export function ToolCard({
                   {desc}
                 </p>
                 {hint && (
-                  <p className="text-2xs text-clay mt-1.5 flex items-center gap-1">
+                  <p className="text-xs text-clay mt-1.5 flex items-center gap-1">
                     <span className="font-semibold">{t("hintLabel")}</span>{" "}
                     {hint}
                   </p>
@@ -308,11 +308,11 @@ export function ToolCard({
             <Badge variant={tool.http_method_override || tool.path_template_override ? "brand" : "default"}>
               {tool.http_method_override ?? tool.http_method}
             </Badge>
-            <code className="text-2xs text-ink-tertiary font-mono truncate">
+            <code className="text-xs text-ink-tertiary font-mono truncate">
               {tool.path_template_override ?? tool.path_template}
             </code>
             {(tool.http_method_override || tool.path_template_override) && (
-              <span className="text-2xs text-clay">
+              <span className="text-xs text-clay">
                 {t("customizedParenthetical")}
               </span>
             )}
@@ -326,7 +326,7 @@ export function ToolCard({
                 <button
                   type="button"
                   onClick={() => setExpanded(!expanded)}
-                  className="flex items-center gap-1 text-2xs font-medium text-ink-tertiary hover:text-terra transition-colors"
+                  className="flex items-center gap-1 text-xs font-medium text-ink-tertiary hover:text-terra transition-colors"
                 >
                   <ChevronDown
                     size={11}
@@ -336,7 +336,7 @@ export function ToolCard({
                 </button>
               )}
               {!hasParams && (
-                <span className="text-2xs text-ink-faint">{t("noParams")}</span>
+                <span className="text-xs text-ink-faint">{t("noParams")}</span>
               )}
             </div>
 
@@ -419,7 +419,7 @@ export function ToolCard({
           <div>
             <label
               htmlFor={`desc-${tool.name}`}
-              className="text-2xs font-semibold text-ink-tertiary uppercase tracking-wider block mb-1"
+              className="text-xs font-semibold text-ink-tertiary uppercase tracking-wider block mb-1"
             >
               {t("toolDescriptionLabel")}
             </label>
@@ -435,7 +435,7 @@ export function ToolCard({
           <div>
             <label
               htmlFor={`hint-${tool.name}`}
-              className="text-2xs font-semibold text-ink-tertiary uppercase tracking-wider block mb-1"
+              className="text-xs font-semibold text-ink-tertiary uppercase tracking-wider block mb-1"
             >
               {t("aiHintLabel")}{" "}
               <span className="font-normal normal-case tracking-normal">
@@ -450,13 +450,13 @@ export function ToolCard({
               className="w-full text-xs px-3 py-2 rounded-lg bg-canvas border border-line-strong text-ink placeholder:text-ink-faint focus:outline-none focus:shadow-focus focus:border-transparent transition-all"
               placeholder={t("aiHintPlaceholder")}
             />
-            <p className="text-2xs text-ink-faint mt-1">
+            <p className="text-xs text-ink-faint mt-1">
               {t("aiHintHelpText")}
             </p>
           </div>
           {tool.http_method && (
             <div>
-              <span className="text-2xs font-semibold text-ink-tertiary uppercase tracking-wider block mb-1.5">
+              <span className="text-xs font-semibold text-ink-tertiary uppercase tracking-wider block mb-1.5">
                 {t("endpointLabel")}
               </span>
               <div className="flex gap-2">
@@ -477,7 +477,7 @@ export function ToolCard({
                   placeholder={t("endpointPathPlaceholder")}
                 />
               </div>
-              <p className="text-2xs text-ink-faint mt-1">
+              <p className="text-xs text-ink-faint mt-1">
                 {t("endpointHelpPrefix")}{" "}
                 <code className="text-terra">{"{param}"}</code>{" "}
                 {t("endpointHelpSuffix")}
@@ -486,7 +486,7 @@ export function ToolCard({
           )}
           {hasParams && (
             <div>
-              <span className="text-2xs font-semibold text-ink-tertiary uppercase tracking-wider block mb-1.5">
+              <span className="text-xs font-semibold text-ink-tertiary uppercase tracking-wider block mb-1.5">
                 {t("parameterDescriptionsLabel")}
               </span>
               <EditableParameterSchema
@@ -520,7 +520,7 @@ export function ToolCard({
                     onSaveOverrides?.(tool, null, null, null, null);
                     setEditing(false);
                   }}
-                  className="ml-auto text-2xs text-ink-tertiary hover:text-rust transition-colors"
+                  className="ml-auto text-xs text-ink-tertiary hover:text-rust transition-colors"
                 >
                 {t("resetToOriginal")}
               </button>

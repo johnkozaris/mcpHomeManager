@@ -4,7 +4,7 @@ MCP Home Manager connects to your homelab services using their APIs. Each servic
 
 ### How Connections Work
 
-When you add a service, MCP Home Manager:
+When you connect a service, MCP Home Manager:
 1. Encrypts and stores the credentials in PostgreSQL
 2. Tests the connection immediately
 3. Registers the service's tools with the MCP endpoint
@@ -14,12 +14,22 @@ When you add a service, MCP Home Manager:
 
 :::steps
 1. **Navigate to Services** — Click "Services" in the sidebar
-2. **Click "Add Service"**
+2. **Click "Connect Service"**
 3. **Select the service type** — Choose from the 17 built-in adapters or Generic REST
 4. **Enter the base URL** — The URL where the service API is reachable (e.g., `http://192.168.1.100:8123`)
 5. **Enter credentials** — Format depends on the service type (see table below)
 6. **Save** — The connection is tested automatically. If it fails, check the URL and credentials.
 :::
+
+### After Connecting
+
+Tools are registered on the MCP endpoint immediately. Most MCP clients discover them right away. Claude Code, Cursor, and Copilot cache the tool list at startup — restart them to see newly added tools.
+
+### Service Name and Display Name
+
+Each service has a **name** (slug) and a **display name**. The name is used as a prefix for all the service's tools — for example, a Forgejo service named `forgejo` produces tools like `forgejo_list_repos`, `forgejo_create_issue`, etc. The display name appears in the web UI and has no effect on tool names.
+
+Choose a short, descriptive name. If you connect multiple services of the same type, give them distinct names (e.g., `forgejo_work`, `forgejo_personal`).
 
 ### Credential Formats
 
@@ -44,6 +54,8 @@ Each service type expects credentials in a specific format:
 | [Cloudflare](cloudflare) | API token (Bearer) | `abc123def456...` |
 | [Stirling PDF](stirling-pdf) | API key | `your-api-key` |
 | [Generic REST](generic-rest) | Varies (Bearer, API key, Basic, or none) | Depends on target API |
+
+For services not in this list, use [Generic REST](generic-rest) to define custom API endpoints.
 
 ### Managing Tools
 

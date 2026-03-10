@@ -24,7 +24,7 @@ Browse files and notes on your Nextcloud instance through your AI agent.
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** Nextcloud
 - **URL:** Your Nextcloud URL (e.g., `http://192.168.1.100:8080`)
 - **Credentials:** `username:app-password` format (e.g., `user:xxxxx-xxxxx-xxxxx-xxxxx-xxxxx`)

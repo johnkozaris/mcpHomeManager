@@ -247,12 +247,8 @@ class ToolRegistry:
                             schema_override = (
                                 override.parameters_schema_override if override else None
                             )
-                            method_override = (
-                                override.http_method_override if override else None
-                            )
-                            path_override = (
-                                override.path_template_override if override else None
-                            )
+                            method_override = override.http_method_override if override else None
+                            path_override = override.path_template_override if override else None
 
                             resolved = tool_def
                             if desc_override:
@@ -328,7 +324,9 @@ class ToolRegistry:
                             result.append(active)
 
                     _register_tools(
-                        client, overrides, svc,
+                        client,
+                        overrides,
+                        svc,
                         custom_client=custom_tool_client,
                         override_specs=endpoint_override_specs,
                     )
@@ -355,9 +353,7 @@ class ToolRegistry:
                                 if spec.tool_name in store:
                                     old = store[spec.tool_name]
                                     if old.client is None:
-                                        store[spec.tool_name] = replace(
-                                            old, client=override_client
-                                        )
+                                        store[spec.tool_name] = replace(old, client=override_client)
                             # Also patch in result list
                             for i, at in enumerate(result):
                                 if at.definition.name == spec.tool_name and at.client is None:

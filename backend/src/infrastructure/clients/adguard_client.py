@@ -145,9 +145,7 @@ class AdGuardClient(BaseServiceClient):
                 recent = arguments.get("recent")
                 if recent is not None:
                     stats_params["recent"] = recent
-                return await self._request(
-                    "GET", "/control/stats", params=stats_params or None
-                )
+                return await self._request("GET", "/control/stats", params=stats_params or None)
             case "adguard_list_filters":
                 return await self._request("GET", "/control/filtering/status")
             case "adguard_list_rewrites":

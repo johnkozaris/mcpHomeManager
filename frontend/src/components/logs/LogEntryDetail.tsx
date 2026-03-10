@@ -17,7 +17,7 @@ export function LogEntryDetail({ entry, serviceId }: Props) {
     <div className="px-5 py-4 bg-canvas-secondary border-t border-line space-y-3">
       {entry.error_message && (
         <div className="p-3 rounded-lg bg-rust-bg border border-rust">
-          <p className="text-2xs text-ink-tertiary uppercase tracking-wider mb-1">
+          <p className="text-xs text-ink-tertiary uppercase tracking-wider mb-1">
             {t("error")}
           </p>
           <p className="text-xs text-rust font-mono whitespace-pre-wrap">
@@ -28,7 +28,7 @@ export function LogEntryDetail({ entry, serviceId }: Props) {
 
       {entry.input_summary && (
         <div>
-          <p className="text-2xs text-ink-tertiary uppercase tracking-wider mb-1">
+          <p className="text-xs text-ink-tertiary uppercase tracking-wider mb-1">
             {t("input")}
           </p>
           <p className="text-xs text-ink-secondary font-mono whitespace-pre-wrap">

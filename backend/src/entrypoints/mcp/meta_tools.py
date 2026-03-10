@@ -190,7 +190,8 @@ def register_meta_tools(
                 "note": (
                     f"Service '{display_name}' connected with {tool_count} tools. "
                     "New tools are available immediately for MCP clients with active sessions. "
-                    "Some clients (Claude Code, Copilot CLI) may require a restart to discover them."
+                    "Some clients (Claude Code, Copilot CLI) may "
+                    "require a restart to discover them."
                 ),
             }
         )
@@ -243,6 +244,10 @@ def register_meta_tools(
                 "status": "updated",
                 "name": svc.name,
                 "service_type": svc.service_type.value,
+                "note": (
+                    "Some clients (Claude Code, Copilot CLI) cache tools at startup "
+                    "and may need a restart to reflect the changes."
+                ),
             }
         )
 
@@ -274,7 +279,16 @@ def register_meta_tools(
             {"name": name},
             start,
         )
-        return json.dumps({"status": "deleted", "name": name})
+        return json.dumps(
+            {
+                "status": "deleted",
+                "name": name,
+                "note": (
+                    "Some clients (Claude Code, Copilot CLI) cache tools at startup "
+                    "and may need a restart to reflect the removal."
+                ),
+            }
+        )
 
     @mcp.tool(
         name="mcp_home_toggle_tool",

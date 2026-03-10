@@ -32,7 +32,7 @@ Always use a scoped API token with the minimum permissions needed. Do **not** us
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** Cloudflare
 - **URL:** `https://api.cloudflare.com/client/v4` (this is the default Cloudflare API endpoint)
 - **Credentials:** Paste your API token

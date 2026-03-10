@@ -209,7 +209,7 @@ export function Settings() {
                 <CardTitle>{t("language.title")}</CardTitle>
               </div>
             </CardHeader>
-            <p className="text-2xs text-ink-tertiary mt-1 mb-3">
+            <p className="text-xs text-ink-tertiary mt-1 mb-3">
               {t("language.description")}
             </p>
             <div className="grid grid-cols-2 gap-2">
@@ -273,7 +273,7 @@ export function Settings() {
                     </Badge>
                   )}
                 </div>
-                <p className="text-2xs text-ink-tertiary mt-2 leading-relaxed">
+                <p className="text-xs text-ink-tertiary mt-2 leading-relaxed">
                   {t("security.selfMcp.description")}
                   {config?.self_mcp_enabled && (
                     <>
@@ -287,7 +287,7 @@ export function Settings() {
                   )}
                 </p>
                 {config?.self_mcp_enabled && (
-                  <p className="text-2xs text-ink-faint mt-1 leading-relaxed">
+                  <p className="text-xs text-ink-faint mt-1 leading-relaxed">
                     {t("security.selfMcp.restartHint")}
                   </p>
                 )}
@@ -317,7 +317,7 @@ export function Settings() {
                   {hasApiKey ? t("apiKey.status.active") : t("apiKey.status.notSet")}
                 </Badge>
               </div>
-              <p className="text-2xs text-ink-tertiary mb-3">
+              <p className="text-xs text-ink-tertiary mb-3">
                 {t("apiKey.description")}
               </p>
 
@@ -526,7 +526,7 @@ export function Settings() {
                   <CardTitle>{t("smtp.title")}</CardTitle>
                 </div>
               </CardHeader>
-              <p className="text-2xs text-ink-tertiary mt-2 mb-3">
+              <p className="text-xs text-ink-tertiary mt-2 mb-3">
                 {t("smtp.description")}
               </p>
               <div className="space-y-3">
@@ -534,7 +534,7 @@ export function Settings() {
                   <div className="col-span-2">
                     <label
                       htmlFor="smtp-host"
-                      className="block text-2xs font-medium text-ink-secondary mb-1"
+                      className="block text-xs font-medium text-ink-secondary mb-1"
                     >
                       {t("smtp.fields.host")}
                     </label>
@@ -550,7 +550,7 @@ export function Settings() {
                   <div>
                     <label
                       htmlFor="smtp-port"
-                      className="block text-2xs font-medium text-ink-secondary mb-1"
+                      className="block text-xs font-medium text-ink-secondary mb-1"
                     >
                       {t("smtp.fields.port")}
                     </label>
@@ -566,7 +566,7 @@ export function Settings() {
                 <div>
                   <label
                     htmlFor="smtp-username"
-                    className="block text-2xs font-medium text-ink-secondary mb-1"
+                    className="block text-xs font-medium text-ink-secondary mb-1"
                   >
                     {t("smtp.fields.username")}
                   </label>
@@ -580,7 +580,7 @@ export function Settings() {
                   />
                 </div>
                 <div>
-                  <label className="block text-2xs font-medium text-ink-secondary mb-1">
+                  <label className="block text-xs font-medium text-ink-secondary mb-1">
                     {t("smtp.fields.password")}{" "}
                     {smtpConfig?.has_password && (
                       <span className="text-ink-faint">
@@ -603,7 +603,7 @@ export function Settings() {
                 <div>
                   <label
                     htmlFor="smtp-from"
-                    className="block text-2xs font-medium text-ink-secondary mb-1"
+                    className="block text-xs font-medium text-ink-secondary mb-1"
                   >
                     {t("smtp.fields.fromEmail")}
                   </label>

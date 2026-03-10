@@ -5,29 +5,28 @@ import { buildMcpJsonConfig, getMcpEndpoint } from "@/lib/utils";
 import { useCurrentUser } from "@/hooks/useAuth";
 import { api } from "@/lib/api";
 import {
-  Terminal,
   Globe,
-  Sparkles,
-  MonitorSmartphone,
-  Code2,
   Puzzle,
   ChevronDown,
+  Terminal,
 } from "lucide-react";
+import {
+  ClaudeIcon,
+  OpenAIIcon,
+  CursorIcon,
+  CopilotIcon,
+} from "@/components/icons/AgentIcons";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 function AgentCard({
   name,
   icon: Icon,
-  color,
-  bg,
   badge,
   children,
 }: {
   name: string;
   icon: React.ComponentType<{ size?: number; className?: string }>;
-  color: string;
-  bg: string;
   badge?: string;
   children: React.ReactNode;
 }) {
@@ -38,11 +37,8 @@ function AgentCard({
         onClick={() => setOpen(!open)}
         className="w-full flex items-center gap-4 p-5 text-left hover:bg-surface-hover transition-colors cursor-pointer group"
       >
-        <div
-          className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-          style={{ backgroundColor: bg, color }}
-        >
-          <Icon size={18} />
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0">
+          <Icon size={22} />
         </div>
         <div className="flex items-center gap-2 flex-1">
           <span className="text-base font-bold text-ink group-hover:text-terra transition-colors">
@@ -51,7 +47,7 @@ function AgentCard({
           {badge && <Badge variant="brand">{badge}</Badge>}
         </div>
         <div
-          className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all shrink-0 ${open ? "bg-terra text-white rotate-180" : "bg-canvas-tertiary text-ink-tertiary group-hover:bg-canvas-hover"}`}
+          className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all shrink-0 border ${open ? "bg-terra text-white border-terra rotate-180" : "border-line-strong text-ink-secondary group-hover:border-line-hover group-hover:text-ink"}`}
         >
           <ChevronDown size={16} />
         </div>
@@ -67,15 +63,9 @@ function AgentCard({
   );
 }
 
-function Guide({
-  color,
-  children,
-}: {
-  color: string;
-  children: React.ReactNode;
-}) {
+function Guide({ children }: { children: React.ReactNode }) {
   return (
-    <div className="border-l-2 pl-4 space-y-2" style={{ borderColor: color }}>
+    <div className="border-l-2 border-line-strong pl-4 space-y-2">
       {children}
     </div>
   );
@@ -83,6 +73,12 @@ function Guide({
 
 function Step({ children }: { children: React.ReactNode }) {
   return <p className="text-base text-ink leading-relaxed">{children}</p>;
+}
+
+function RestartHint({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-sm text-ink-tertiary italic">{children}</p>
+  );
 }
 
 export function Agents() {
@@ -107,9 +103,6 @@ export function Agents() {
         <p className="page-description max-w-xl">
           {t("description")}
         </p>
-        <p className="text-2xs text-ink-faint mt-1.5 max-w-xl leading-relaxed">
-          {t("restartNote")}
-        </p>
       </div>
 
       <McpEndpointBar apiKey={apiKey} />
@@ -117,12 +110,10 @@ export function Agents() {
       <div className="space-y-3">
         <AgentCard
           name={t("cards.claudeDesktop.name")}
-          icon={Sparkles}
-          color="var(--terra)"
-          bg="var(--terra-bg)"
+          icon={ClaudeIcon}
           badge={t("cards.claudeDesktop.badge")}
         >
-          <Guide color="var(--terra)">
+          <Guide>
             <Step>
               {t("cards.claudeDesktop.steps.step1.before")}{" "}
               <strong>{t("cards.claudeDesktop.steps.step1.settings")}</strong>{" "}
@@ -133,7 +124,7 @@ export function Agents() {
             </Step>
             <Step>
               {t("cards.claudeDesktop.steps.step2.beforeFile")}{" "}
-              <code className="text-xs font-mono text-terra">
+              <code className="text-sm font-mono text-terra">
                 claude_desktop_config.json
               </code>
               {t("cards.claudeDesktop.steps.step2.afterFile")}{" "}
@@ -144,7 +135,7 @@ export function Agents() {
             </Step>
           </Guide>
           <TerminalBlock code={jsonConfig} label="claude_desktop_config.json" />
-          <Guide color="var(--terra)">
+          <Guide>
             <Step>
               {t("cards.claudeDesktop.steps.step3.before")}{" "}
               <strong>{t("cards.claudeDesktop.steps.step3.emphasis")}</strong>{" "}
@@ -164,18 +155,16 @@ export function Agents() {
               </em>
             </Step>
           </Guide>
-          <p className="text-xs text-ink-tertiary">
+          <p className="text-sm text-ink-tertiary">
             {t("cards.claudeDesktop.configPath")}
           </p>
         </AgentCard>
 
         <AgentCard
           name={t("cards.claudeCode.name")}
-          icon={Terminal}
-          color="var(--terra)"
-          bg="var(--terra-bg)"
+          icon={ClaudeIcon}
         >
-          <Guide color="var(--terra)">
+          <Guide>
             <Step>
               {t("cards.claudeCode.steps.step1")}
             </Step>
@@ -184,10 +173,10 @@ export function Agents() {
             code={`claude mcp add homelab --transport http --header "Authorization: Bearer ${keyPlaceholder}" ${mcpEndpoint}`}
             label={t("cards.claudeCode.terminalLabel")}
           />
-          <Guide color="var(--terra)">
+          <Guide>
             <Step>
               {t("cards.claudeCode.steps.step2.before")}{" "}
-              <code className="text-xs font-mono text-terra">
+              <code className="text-sm font-mono text-terra">
                 claude mcp list
               </code>{" "}
               {t("cards.claudeCode.steps.step2.after")}
@@ -196,31 +185,32 @@ export function Agents() {
               {t("cards.claudeCode.steps.step3")}
             </Step>
           </Guide>
-          <p className="text-xs text-ink-tertiary">
+          <p className="text-sm text-ink-tertiary">
             {t("cards.claudeCode.removePrefix")}{" "}
             <code className="font-mono text-terra">
               claude mcp remove homelab
             </code>
           </p>
+          <RestartHint>
+            {t("restartHint.claudeCode")}
+          </RestartHint>
         </AgentCard>
 
         <AgentCard
           name={t("cards.cursor.name")}
-          icon={Code2}
-          color="var(--info)"
-          bg="var(--info-bg)"
+          icon={CursorIcon}
         >
-          <Guide color="var(--info)">
+          <Guide>
             <Step>
               {t("cards.cursor.steps.step1.before")}{" "}
-              <code className="text-xs font-mono text-terra">
+              <code className="text-sm font-mono text-terra">
                 .cursor/mcp.json
               </code>{" "}
               {t("cards.cursor.steps.step1.after")}
             </Step>
           </Guide>
           <TerminalBlock code={jsonConfig} label=".cursor/mcp.json" />
-          <Guide color="var(--info)">
+          <Guide>
             <Step>
               {t("cards.cursor.steps.step2")}
             </Step>
@@ -228,15 +218,16 @@ export function Agents() {
               {t("cards.cursor.steps.step3")}
             </Step>
           </Guide>
+          <RestartHint>
+            {t("restartHint.cursor")}
+          </RestartHint>
         </AgentCard>
 
         <AgentCard
           name={t("cards.chatgpt.name")}
-          icon={MonitorSmartphone}
-          color="var(--sage)"
-          bg="var(--sage-bg)"
+          icon={OpenAIIcon}
         >
-          <Guide color="var(--sage)">
+          <Guide>
             <Step>
               {t("cards.chatgpt.steps.step1.before")}{" "}
               <strong>{t("cards.chatgpt.steps.step1.settings")}</strong>{" "}
@@ -254,7 +245,7 @@ export function Agents() {
             </Step>
             <Step>
               {t("cards.chatgpt.steps.step3.before")}{" "}
-              <code className="text-xs font-mono text-terra">
+              <code className="text-sm font-mono text-terra">
                 {mcpEndpoint}
               </code>
             </Step>
@@ -271,12 +262,113 @@ export function Agents() {
         </AgentCard>
 
         <AgentCard
+          name={t("cards.codex.name")}
+          icon={OpenAIIcon}
+        >
+          <Guide>
+            <Step>
+              {t("cards.codex.steps.step1")}
+            </Step>
+          </Guide>
+          <TerminalBlock
+            code={`codex mcp add homelab --url ${mcpEndpoint} --bearer-token-env-var MCP_HOME_KEY`}
+            label="Terminal"
+          />
+          <Guide>
+            <Step>
+              {t("cards.codex.steps.step2.before")}{" "}
+              <code className="text-sm font-mono text-terra">
+                ~/.codex/config.toml
+              </code>
+              {t("cards.codex.steps.step2.after")}
+            </Step>
+          </Guide>
+          <TerminalBlock
+            code={`[mcp_servers.homelab]\nurl = "${mcpEndpoint}"\nbearer_token_env_var = "MCP_HOME_KEY"`}
+            label="config.toml"
+          />
+          <Guide>
+            <Step>
+              {t("cards.codex.steps.step3.before")}{" "}
+              <code className="text-sm font-mono text-terra">
+                export MCP_HOME_KEY="{keyPlaceholder}"
+              </code>
+              {t("cards.codex.steps.step3.after")}
+            </Step>
+            <Step>
+              {t("cards.codex.steps.step4.before")}{" "}
+              <code className="text-sm font-mono text-terra">codex mcp</code>{" "}
+              {t("cards.codex.steps.step4.after")}
+            </Step>
+          </Guide>
+          <p className="text-sm text-ink-tertiary">
+            Works for both the Codex CLI and the Codex desktop app — they share the same config.
+          </p>
+          <RestartHint>
+            {t("restartHint.codex")}
+          </RestartHint>
+        </AgentCard>
+
+        <AgentCard
+          name={t("cards.copilotCli.name")}
+          icon={CopilotIcon}
+        >
+          <Guide>
+            <Step>
+              {t("cards.copilotCli.steps.step1.before")}{" "}
+              <code className="text-sm font-mono text-terra">
+                ~/.copilot/mcp-config.json
+              </code>
+              {t("cards.copilotCli.steps.step1.after")}
+            </Step>
+          </Guide>
+          <TerminalBlock code={jsonConfig} label="mcp-config.json" />
+          <Guide>
+            <Step>
+              {t("cards.copilotCli.steps.step2.before")}{" "}
+              <code className="text-sm font-mono text-terra">/mcp add homelab</code>{" "}
+              {t("cards.copilotCli.steps.step2.after")}
+            </Step>
+            <Step>
+              {t("cards.copilotCli.steps.step3.before")}{" "}
+              <code className="text-sm font-mono text-terra">/mcp show</code>{" "}
+              {t("cards.copilotCli.steps.step3.after")}
+            </Step>
+          </Guide>
+          <RestartHint>
+            {t("restartHint.copilotCli")}
+          </RestartHint>
+        </AgentCard>
+
+        <AgentCard
+          name={t("cards.opencode.name")}
+          icon={Terminal}
+        >
+          <Guide>
+            <Step>
+              {t("cards.opencode.steps.step1.before")}{" "}
+              <code className="text-sm font-mono text-terra">
+                opencode.json
+              </code>{" "}
+              {t("cards.opencode.steps.step1.after")}
+            </Step>
+          </Guide>
+          <TerminalBlock
+            code={JSON.stringify({ mcp: { homelab: { type: "remote", url: mcpEndpoint, headers: { Authorization: `Bearer ${keyPlaceholder}` } } } }, null, 2)}
+            label="opencode.json"
+          />
+          <Guide>
+            <Step>
+              {t("cards.opencode.steps.step2")}
+            </Step>
+          </Guide>
+        </AgentCard>
+
+        <AgentCard
           name={t("cards.openWebui.name")}
           icon={Globe}
-          color="var(--clay)"
-          bg="var(--clay-bg)"
         >
-          <Guide color="var(--clay)">
+          <Guide>
             <Step>
               {t("cards.openWebui.steps.step1.before")}{" "}
               <strong>{t("cards.openWebui.steps.step1.adminPanel")}</strong>{" "}
@@ -289,7 +381,7 @@ export function Agents() {
               {t("cards.openWebui.steps.step2.before")}{" "}
               <strong>{t("cards.openWebui.steps.step2.addMcpConnection")}</strong>
               {t("cards.openWebui.steps.step2.after")}{" "}
-              <code className="text-xs font-mono text-terra">
+              <code className="text-sm font-mono text-terra">
                 {mcpEndpoint}
               </code>
             </Step>
@@ -307,10 +399,8 @@ export function Agents() {
         <AgentCard
           name={t("cards.otherClients.name")}
           icon={Puzzle}
-          color="var(--stone)"
-          bg="var(--stone-bg)"
         >
-          <p className="text-sm text-ink-secondary">
+          <p className="text-base text-ink-secondary">
             {t("cards.otherClients.description")}
           </p>
           <div className="grid grid-cols-3 gap-3">
@@ -335,20 +425,18 @@ export function Agents() {
                 key={item.id}
                 className="p-3 rounded-xl bg-canvas text-center"
               >
-                <p className="text-2xs font-bold uppercase tracking-wider text-ink-tertiary mb-1">
+                <p className="text-xs font-bold uppercase tracking-wider text-ink-tertiary mb-1">
                   {item.label}
                 </p>
-                <p className="text-sm font-semibold text-ink">{item.value}</p>
+                <p className="text-base font-semibold text-ink">{item.value}</p>
               </div>
             ))}
           </div>
-          <div className="space-y-1.5 text-sm text-ink-secondary">
-            <p>
-              {t("cards.otherClients.sse.before")}{" "}
-              <code className="font-mono text-terra">/sse</code>
-              {t("cards.otherClients.sse.after")}
-            </p>
-          </div>
+          <p className="text-sm text-ink-secondary">
+            {t("cards.otherClients.sse.before")}{" "}
+            <code className="font-mono text-terra">/sse</code>
+            {t("cards.otherClients.sse.after")}
+          </p>
         </AgentCard>
       </div>
     </div>

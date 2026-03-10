@@ -32,7 +32,7 @@ Use your Portainer admin credentials in `username:password` format.
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** Portainer
 - **URL:** Your Portainer URL (e.g., `http://192.168.1.100:9000`)
 - **Credentials:** Your API key (e.g., `ptr_abc123...`) or `username:password`

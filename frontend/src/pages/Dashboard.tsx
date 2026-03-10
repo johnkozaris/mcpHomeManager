@@ -147,7 +147,7 @@ function StatRow({
             <p className="text-lg font-bold text-ink leading-tight">
               {s.value}
             </p>
-            <p className="text-2xs text-ink-tertiary">{s.sub}</p>
+            <p className="text-xs text-ink-tertiary">{s.sub}</p>
           </div>
         </div>
       ))}
@@ -431,7 +431,7 @@ function DashboardView({
                         {entry.tool_name}
                       </span>
                     </div>
-                    <span className="text-2xs text-ink-tertiary font-mono shrink-0">
+                    <span className="text-xs text-ink-tertiary font-mono shrink-0">
                       {entry.duration_ms}ms
                     </span>
                   </div>
@@ -487,7 +487,7 @@ function DashboardView({
                     <span className="text-sm font-semibold text-ink group-hover:text-terra transition-colors">
                       {a.label}
                     </span>
-                    <span className="block text-2xs text-ink-tertiary">
+                    <span className="block text-xs text-ink-tertiary">
                       {a.desc}
                     </span>
                   </div>

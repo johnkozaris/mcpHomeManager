@@ -11,7 +11,7 @@ The Generic REST adapter lets you connect any REST API to MCP Home Manager — e
 ### Setting Up a Generic REST Service
 
 :::steps
-1. **Go to Services → Add Service**
+1. **Go to Services → Connect Service**
 2. **Select "Generic REST"** as the service type
 3. **Enter the base URL** — The root URL of the API (e.g., `http://192.168.1.100:5000/api`)
 4. **Enter credentials** — Choose the appropriate auth method (see below)

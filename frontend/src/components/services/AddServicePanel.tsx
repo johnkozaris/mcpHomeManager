@@ -51,7 +51,7 @@ function CatalogGrid({ onSelect }: { onSelect: (type: ServiceType) => void }) {
               <p className="text-sm font-medium text-ink group-hover:text-terra transition-colors">
                 {meta.label}
               </p>
-              <p className="text-2xs text-ink-tertiary truncate">
+              <p className="text-xs text-ink-tertiary truncate">
                 {meta.description}
               </p>
             </div>
@@ -106,7 +106,7 @@ function ScanSection({
                   <p className="text-sm font-medium text-ink group-hover:text-terra transition-colors">
                     {svc.display_name}
                   </p>
-                  <p className="text-2xs text-ink-tertiary font-mono truncate">
+                  <p className="text-xs text-ink-tertiary font-mono truncate">
                     {svc.suggested_url}
                   </p>
                 </div>
@@ -273,7 +273,7 @@ export function AddServicePanel({ open, onClose }: Props) {
 
               <div className="flex items-center gap-3">
                 <div className="flex-1 border-t border-line" />
-                <span className="text-2xs text-ink-tertiary">{t("or")}</span>
+                <span className="text-xs text-ink-tertiary">{t("or")}</span>
                 <div className="flex-1 border-t border-line" />
               </div>
 

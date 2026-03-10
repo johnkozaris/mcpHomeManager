@@ -303,9 +303,7 @@ class NginxProxyManagerClient(BaseServiceClient):
         elif isinstance(raw_expand, list) and all(isinstance(value, str) for value in raw_expand):
             expand_values = raw_expand
         else:
-            raise ToolExecutionError(
-                tool_name, "expand must be a string or list of strings"
-            )
+            raise ToolExecutionError(tool_name, "expand must be a string or list of strings")
 
         allowed_values = cls._EXPAND_OPTIONS_BY_TOOL.get(tool_name)
         if not allowed_values:

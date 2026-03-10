@@ -261,7 +261,7 @@ export function Logs() {
           <>
             <Card className="!p-0 overflow-hidden">
               <div className="overflow-x-auto">
-                <div className="flex items-center py-2.5 px-5 bg-canvas-secondary text-2xs font-semibold uppercase tracking-wider text-ink-tertiary border-b border-line min-w-[640px]">
+                <div className="flex items-center py-2.5 px-5 bg-canvas-secondary text-xs font-semibold uppercase tracking-wider text-ink-tertiary border-b border-line min-w-[640px]">
                   <span className="w-18">{t("table.headers.status")}</span>
                   <span className="flex-1">{t("table.headers.tool")}</span>
                   <span className="w-28">{t("table.headers.service")}</span>
@@ -299,7 +299,7 @@ export function Logs() {
                           <code className="flex-1 text-xs font-mono text-ink truncate">
                             {entry.tool_name}
                           </code>
-                          <span className="w-28 flex items-center gap-1.5 text-2xs text-ink-tertiary truncate">
+                          <span className="w-28 flex items-center gap-1.5 text-xs text-ink-tertiary truncate">
                             {svcType && (
                               <ServiceIcon type={svcType} size={12} />
                             )}
@@ -326,7 +326,7 @@ export function Logs() {
                           </span>
                           <span className="w-20 text-right">
                             {entry.created_at && (
-                              <span className="text-2xs text-ink-tertiary">
+                              <span className="text-xs text-ink-tertiary">
                                 {formatRelativeTime(new Date(entry.created_at))}
                               </span>
                             )}

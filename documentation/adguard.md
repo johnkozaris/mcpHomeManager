@@ -17,7 +17,7 @@ Monitor and manage your DNS filtering through your AI agent. Check filtering sta
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** AdGuard Home
 - **URL:** Your AdGuard Home URL (e.g., `http://192.168.1.100:3000`)
 - **Credentials:** `username:password` format (e.g., `admin:your-password`)

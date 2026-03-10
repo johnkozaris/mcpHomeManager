@@ -30,7 +30,7 @@ docker exec -it paperless python manage.py create_api_token your-username
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** Paperless-ngx
 - **URL:** Your Paperless-ngx URL (e.g., `http://192.168.1.100:8000`)
 - **Credentials:** Paste your API token

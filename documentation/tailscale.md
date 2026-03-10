@@ -29,7 +29,7 @@ Ensure your API key has the appropriate ACL permissions for the operations you w
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** Tailscale
 - **URL:** `https://api.tailscale.com` (this is the default — Tailscale uses a cloud API)
 - **Credentials:** Paste your API key (e.g., `tskey-api-abc123...`)

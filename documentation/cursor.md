@@ -22,3 +22,7 @@ Add MCP Home Manager to Cursor's MCP configuration.
 :::
 
 Replace `your-server` with the hostname or IP of your MCP Home Manager instance, and `YOUR_API_KEY` with the API key from [First Setup](first-setup).
+
+### When Services Change
+
+Cursor caches the tool list at startup. After connecting or removing services in MCP Home Manager, quit and reopen Cursor to see the updated tools.

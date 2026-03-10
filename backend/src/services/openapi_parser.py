@@ -267,8 +267,7 @@ class OpenAPIParser:
         body_properties = body_schema.get("properties", {})
         if not isinstance(body_properties, dict):
             return None, (
-                f"Skipped {tool_name}: unsupported {supported_media_type} "
-                "request body properties"
+                f"Skipped {tool_name}: unsupported {supported_media_type} request body properties"
             )
 
         body_property_names: list[str] = []

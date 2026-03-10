@@ -176,7 +176,7 @@ class WallabagClient(BaseServiceClient):
     def _compute_expiry_deadline(expires_in: Any) -> float | None:
         try:
             lifetime_seconds = float(expires_in)
-        except (TypeError, ValueError):
+        except TypeError, ValueError:
             return None
         return time.monotonic() + max(lifetime_seconds - _TOKEN_REFRESH_LEEWAY_SECONDS, 0.0)
 

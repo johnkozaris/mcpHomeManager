@@ -15,7 +15,7 @@ Browse your e-book library through your AI agent. Search for books, browse by au
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** Calibre-Web
 - **URL:** Your Calibre-Web URL (e.g., `http://192.168.1.100:8083`)
 - **Credentials:** `username:password` format (e.g., `admin:your-password`)

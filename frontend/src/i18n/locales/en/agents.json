@@ -2,7 +2,12 @@
   "page": {
     "title": "Connect AI Agents",
     "description": "Add your MCP endpoint to any AI client below. Once connected, your homelab tools will be discovered automatically.",
-    "restartNote": "When you connect a new service, most clients pick up the new tools instantly. Claude Code, Cursor, and Copilot cache tools at startup — restart them to see newly added tools.",
+    "restartHint": {
+      "claudeCode": "Claude Code caches tools at startup. Restart it after connecting or removing services to pick up changes.",
+      "cursor": "Cursor caches tools at startup. Quit and reopen after connecting or removing services.",
+      "copilotCli": "Copilot CLI caches tools at startup. Restart it after connecting or removing services.",
+      "codex": "Codex caches tools at startup. Restart it after connecting or removing services."
+    },
     "placeholders": {
       "apiKey": "YOUR_API_KEY"
     },
@@ -93,7 +98,52 @@
         },
         "note": {
           "label": "Note:",
-          "body": "ChatGPT requires a publicly accessible endpoint. Use the included Caddy config or a tunnel service like Cloudflare Tunnel if your server is local-only."
+          "body": "ChatGPT requires a publicly accessible HTTPS endpoint. Use a reverse proxy with TLS or a tunnel service like Cloudflare Tunnel. Exposing your endpoint to the internet is at your own risk — review the security guide first."
+        }
+      },
+      "codex": {
+        "name": "Codex (OpenAI)",
+        "steps": {
+          "step1": "Run the following command to add MCP Home Manager:",
+          "step2": {
+            "before": "Or add to",
+            "after": ":"
+          },
+          "step3": {
+            "before": "Set the environment variable:",
+            "after": ""
+          },
+          "step4": {
+            "before": "Verify with",
+            "after": "— you should see \"homelab\" in the list"
+          }
+        }
+      },
+      "copilotCli": {
+        "name": "GitHub Copilot CLI",
+        "steps": {
+          "step1": {
+            "before": "Create or edit",
+            "after": ":"
+          },
+          "step2": {
+            "before": "Or use the interactive command inside a session:",
+            "after": "and select HTTP transport"
+          },
+          "step3": {
+            "before": "Verify with",
+            "after": "inside a session"
+          }
+        }
+      },
+      "opencode": {
+        "name": "OpenCode",
+        "steps": {
+          "step1": {
+            "before": "Add to",
+            "after": "(project root or global config):"
+          },
+          "step2": "Your homelab tools are available once OpenCode connects to the server"
         }
       },
       "openWebui": {

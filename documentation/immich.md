@@ -26,7 +26,7 @@ Search and browse your photo library through your AI agent. Find photos using na
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** Immich
 - **URL:** Your Immich URL (e.g., `http://192.168.1.100:2283`)
 - **Credentials:** Paste your API key

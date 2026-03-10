@@ -21,6 +21,41 @@ The backend follows **hexagonal architecture** (Ports & Adapters):
 - **Infrastructure layer** — Service client adapters (one per service type), PostgreSQL persistence, encryption
 - **Entrypoints** — Litestar REST API (web UI backend) and MCP server (AI agent endpoint)
 
+#### MCP Server Instructions
+
+The MCP server sends dynamic instructions to connected AI agents so they understand what's available without manual prompting.
+
+`_build_server_instructions()` in `entrypoints/mcp/server.py` generates the instruction string from the current server state. It lists connected services with human-readable labels from a `_type_labels` dict (e.g., `forgejo` → "Git hosting", `paperless` → "document management"). When self-MCP is enabled, the instructions include the supported `service_type` enum values and direct the agent to use management tools. When self-MCP is off, they point the agent to the web UI instead.
+
+Instructions are refreshed after every `sync_tools()` call via `_refresh_instructions()`, which writes directly to `self._mcp._mcp_server.instructions` (FastMCP has no public setter for this).
+
+#### Meta-Tools
+
+Self-MCP management tools are defined in `entrypoints/mcp/meta_tools.py`.
+
+`META_TOOL_NAMES` is a tuple of all meta-tool names, used by the server factory to register or remove them when self-MCP is toggled. `register_meta_tools()` takes the FastMCP instance, session factory, encryption, client factory, and tool registry, then registers all tool handlers.
+
+The full set of meta-tools:
+
+| Tool | Access | Purpose |
+|------|--------|---------|
+| `mcp_home_list_services` | self-MCP | List services with health and tool counts |
+| `mcp_home_add_service` | admin + self-MCP | Connect a new service |
+| `mcp_home_update_service` | admin + self-MCP | Update service URL, credentials, or state |
+| `mcp_home_delete_service` | admin + self-MCP | Delete a service and its tools |
+| `mcp_home_toggle_tool` | admin + self-MCP | Enable/disable a tool |
+| `mcp_home_list_tools` | self-MCP | List all tools with status |
+| `mcp_home_health` | self-MCP | System health summary |
+| `mcp_home_get_logs` | self-MCP | Query audit logs |
+| `mcp_home_add_generic_tool` | admin + self-MCP | Define a custom tool on any service |
+| `mcp_home_update_generic_tool` | admin + self-MCP | Modify a custom tool definition |
+| `mcp_home_delete_generic_tool` | admin + self-MCP | Remove a custom tool |
+| `mcp_home_ui_dashboard` | self-MCP | Interactive HTML dashboard |
+| `mcp_home_ui_service_control` | self-MCP | Interactive service control panel |
+| `mcp_home_ui_config` | self-MCP | Interactive config viewer |
+
+Write operations (add, update, delete, toggle) require admin privileges checked via `_require_admin_user()`. All meta-tools require self-MCP access checked via `_require_self_mcp_access()`, which verifies both the global setting and the per-user flag.
+
 ### Service Adapter Structure
 
 Each service integration is a self-contained client in `backend/src/infrastructure/clients/`:

@@ -328,7 +328,7 @@ export function Shell({ children }: { children: ReactNode }) {
                   </span>
                   <button
                     onClick={handleLogout}
-                    className="text-2xs text-white/30 hover:text-white/70 transition-colors whitespace-nowrap"
+                    className="text-xs text-white/30 hover:text-white/70 transition-colors whitespace-nowrap"
                     title={signOutLabel}
                   >
                     {signOutLabel}

@@ -49,8 +49,10 @@ Your AI agent can then interact with all your connected services through natural
 - [Claude Desktop](claude-desktop) — Full MCP support with interactive apps
 - [Claude Code](claude-code) — CLI-based MCP integration
 - [Cursor](cursor) — IDE with MCP support
-- [ChatGPT](chatgpt) — Evolving MCP support
-- [Codex](codex) — OpenAI's coding agent
+- [Codex](codex) — OpenAI's coding agent (CLI + desktop)
+- [GitHub Copilot CLI](copilot-cli) — GitHub's terminal agent
+- [OpenCode](opencode) — Open-source terminal agent
+- [ChatGPT](chatgpt) — Requires publicly accessible HTTPS endpoint
 
 ### Requirements
 

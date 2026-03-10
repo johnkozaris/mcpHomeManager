@@ -42,9 +42,7 @@
     "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-mono: "SF Mono", "JetBrains Mono", Menlo, monospace;
 
-  --text-2xs: 0.75rem;
-  --text-2xs--line-height: 1.125rem;
-  --text-xs: 0.8125rem;
+--text-xs: 0.8125rem;
   --text-xs--line-height: 1.25rem;
   --text-sm: 0.875rem;
   --text-sm--line-height: 1.375rem;
@@ -88,7 +86,7 @@
   --ink: #1a1816;
   --ink-secondary: #4a4641;
   --ink-tertiary: #78736b;
-  --ink-faint: #b8b2a8;
+  --ink-faint: #968f84;
 
   --line: rgba(0, 0, 0, 0.06);
   --line-strong: rgba(0, 0, 0, 0.1);
@@ -129,7 +127,7 @@
   --ink: #f5f2ef;
   --ink-secondary: #d5d0c9;
   --ink-tertiary: #a8a29a;
-  --ink-faint: #5c5854;
+  --ink-faint: #6e6963;
 
   --line: rgba(255, 255, 255, 0.06);
   --line-strong: rgba(255, 255, 255, 0.1);
@@ -306,21 +304,34 @@
     background: linear-gradient(135deg, #1e3446 0%, #1e4458 40%, #1e4e46 100%);
   }
 
-  /* Tool card — elevated surface with subtle hover */
+  /* Tool card — elevated surface with visible border */
   .tool-card {
     @apply bg-surface rounded-2xl overflow-hidden;
+    border: 1px solid var(--line-strong);
     box-shadow:
       0 1px 3px rgba(0, 0, 0, 0.06),
       0 1px 2px rgba(0, 0, 0, 0.04);
     transition:
       box-shadow 0.2s ease,
+      border-color 0.2s ease,
       transform 0.2s ease;
   }
   .tool-card:hover {
+    border-color: var(--line-hover);
     box-shadow:
-      0 4px 12px rgba(0, 0, 0, 0.08),
-      0 2px 4px rgba(0, 0, 0, 0.04);
+      0 4px 12px rgba(0, 0, 0, 0.1),
+      0 2px 4px rgba(0, 0, 0, 0.06);
     transform: translateY(-1px);
+  }
+  .dark .tool-card {
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.2),
+      0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+  .dark .tool-card:hover {
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.3),
+      0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   /* Dark warm sidebar */

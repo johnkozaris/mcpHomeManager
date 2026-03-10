@@ -109,7 +109,7 @@ export interface UpdateServiceRequest {
   config?: Record<string, unknown>;
 }
 
-export interface BackendMessageCodeFields {
+interface BackendMessageCodeFields {
   code?: string | null;
   message_code?: string | null;
 }

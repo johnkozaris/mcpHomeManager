@@ -23,7 +23,7 @@ Check the status and available operations of your Stirling PDF instance through 
 
 ### Connecting
 
-In MCP Home Manager, go to **Services → Add Service**:
+In MCP Home Manager, go to **Services → Connect Service**:
 - **Type:** Stirling PDF
 - **URL:** Your Stirling PDF URL (e.g., `http://192.168.1.100:8080`)
 - **Credentials:** Your API key

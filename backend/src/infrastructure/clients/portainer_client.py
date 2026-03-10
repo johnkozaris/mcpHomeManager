@@ -181,7 +181,7 @@ class PortainerClient(BaseServiceClient):
         payload += "=" * (-len(payload) % 4)
         try:
             data = json.loads(base64.urlsafe_b64decode(payload))
-        except (ValueError, TypeError, json.JSONDecodeError):
+        except ValueError, TypeError, json.JSONDecodeError:
             return None
         exp = data.get("exp")
         if isinstance(exp, (int, float)):

@@ -6,7 +6,6 @@ import { initReactI18next } from "react-i18next";
 import {
   DEFAULT_LOCALE,
   DEFAULT_NAMESPACE,
-  FALLBACK_LOCALE,
   LOCALE_COOKIE_NAME,
   LOCALE_STORAGE_KEY,
   SUPPORTED_LOCALES,
@@ -61,7 +60,7 @@ void i18n
   .use(initReactI18next)
   .init({
     supportedLngs: [...SUPPORTED_LOCALES],
-    fallbackLng: FALLBACK_LOCALE,
+    fallbackLng: DEFAULT_LOCALE,
     defaultNS: DEFAULT_NAMESPACE,
     fallbackNS: DEFAULT_NAMESPACE,
     ns: [...TRANSLATION_NAMESPACES],

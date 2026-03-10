@@ -176,9 +176,7 @@ class GenericRestClient(IServiceClient):
 
         for name, value in list(remaining_args.items()):
             metadata = (
-                parameter_metadata.get(name, {})
-                if isinstance(parameter_metadata, dict)
-                else {}
+                parameter_metadata.get(name, {}) if isinstance(parameter_metadata, dict) else {}
             )
             location = metadata.get("in")
             if location == "query":

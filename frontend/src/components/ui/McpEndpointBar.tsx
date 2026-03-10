@@ -37,7 +37,7 @@ export function McpEndpointBar({ apiKey }: { apiKey?: string | null } = {}) {
         <Terminal size={16} className="text-white" />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-2xs font-bold uppercase tracking-wider text-ink-tertiary">
+        <p className="text-xs font-bold uppercase tracking-wider text-ink-tertiary">
           {t("label")}
         </p>
         <code className="text-sm font-mono text-ink truncate block">

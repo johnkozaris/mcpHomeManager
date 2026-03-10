@@ -45,9 +45,7 @@ class GenericToolService:
         normalized = method.upper()
         if normalized not in HTTP_METHODS:
             allowed = ", ".join(sorted(HTTP_METHODS))
-            raise GenericToolValidationError(
-                f"Invalid HTTP method '{method}'. Use: {allowed}"
-            )
+            raise GenericToolValidationError(f"Invalid HTTP method '{method}'. Use: {allowed}")
         return normalized
 
     async def create_tool(

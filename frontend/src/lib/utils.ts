@@ -125,7 +125,7 @@ function getExtraCode(extra: unknown): string | null {
   return asString(payload?.message_code) ?? asString(payload?.code);
 }
 
-export function getBackendMessageCode(
+function getBackendMessageCode(
   payload: BackendMessagePayload | null | undefined,
 ): string | null {
   if (!payload) return null;
