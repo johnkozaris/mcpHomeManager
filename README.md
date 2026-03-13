@@ -1,11 +1,15 @@
 # MCP Home Manager
 
+**[Website - mcphomemanager.com](https://mcphomemanager.com)**
+
 [![CI](https://img.shields.io/github/actions/workflow/status/johnkozaris/mcpHomeManager/ci.yml?branch=main&label=ci)](https://github.com/johnkozaris/mcpHomeManager/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/johnkozaris/mcpHomeManager?display_name=tag)](https://github.com/johnkozaris/mcpHomeManager/releases)
 [![License](https://img.shields.io/github/license/johnkozaris/mcpHomeManager)](LICENSE)
 [![GHCR](https://img.shields.io/badge/ghcr-package-blue?logo=github)](https://github.com/johnkozaris/mcpHomeManager/pkgs/container/mcp-home-manager)
 
 **Self-hosted gateway that connects your homelab services to AI clients through the [Model Context Protocol](https://modelcontextprotocol.io).**
+
+![MCP Home Manager Overview](docs/McpManager.png)
 
 Connect your services once in the dashboard, then use them from Claude, ChatGPT, Cursor, Codex, Copilot, or any MCP-compatible client.
 
