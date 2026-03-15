@@ -34,7 +34,7 @@ If you have two-factor authentication enabled, append the TOTP code:
 
 ### Limitations
 
-- **Socket.IO connection** — Uptime Kuma uses Socket.IO (not REST). The initial connection may be slower to establish compared to REST-based services.
+- **WebSocket connection** — Uptime Kuma uses WebSocket connections (via Socket.IO) instead of a REST API. The initial connection may be slower to establish compared to REST-based services.
 - **No heartbeat history** — Cannot retrieve historical heartbeat data
 - **2FA requires current code** — If 2FA is enabled, you must update the credentials with a fresh TOTP code each time the connection needs to re-authenticate. Consider creating a dedicated account without 2FA for MCP Home Manager.
 

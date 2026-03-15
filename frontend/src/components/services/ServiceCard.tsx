@@ -23,13 +23,20 @@ export function ServiceCard({ service }: { service: ServiceConnection }) {
     });
   }
 
+  const isUnhealthy = service.health_status === "unhealthy";
+
   return (
     <Link
       to="/services/$id"
       params={{ id: service.id }}
       onMouseEnter={handlePrefetch}
       onFocus={handlePrefetch}
-      className="card p-5 flex flex-col gap-3 group transition-all duration-200"
+      className={[
+        "card card-interactive p-5 flex flex-col gap-3 group transition-all duration-200",
+        isUnhealthy && "border-l-[3px] border-l-rust",
+      ]
+        .filter(Boolean)
+        .join(" ")}
     >
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
@@ -49,9 +56,6 @@ export function ServiceCard({ service }: { service: ServiceConnection }) {
         </div>
         <Badge variant="brand">{t("toolsCount", { count: service.tool_count })}</Badge>
       </div>
-      <p className="text-xs text-ink-faint font-mono truncate">
-        {service.base_url}
-      </p>
     </Link>
   );
 }

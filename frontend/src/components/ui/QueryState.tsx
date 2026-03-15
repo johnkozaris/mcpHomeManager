@@ -8,6 +8,7 @@ interface QueryStateProps {
   error?: Error | null;
   loadingMessage?: string;
   errorMessage?: string;
+  skeleton?: ReactNode;
   children: ReactNode;
 }
 
@@ -17,6 +18,7 @@ export function QueryState({
   error,
   loadingMessage,
   errorMessage,
+  skeleton,
   children,
 }: QueryStateProps) {
   const { t } = useTranslation("errors");
@@ -49,6 +51,7 @@ export function QueryState({
   }
 
   if (isLoading) {
+    if (skeleton) return <>{skeleton}</>;
     return (
       <div className="flex items-center justify-center py-16">
         <div className="flex items-center gap-3">

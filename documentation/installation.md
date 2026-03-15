@@ -1,81 +1,69 @@
 ## Installation
 
-MCP Home Manager runs as a single Docker container with an embedded SQLite database. The recommended setup takes about two minutes.
+MCP Home Manager is a single Docker container. Pull it from GitHub Container Registry and run it.
 
-### Prerequisites
+### Option 1: Use the provided compose file
 
-- Docker Engine 20.10+
-- Docker Compose v2+ (`docker compose` — not the legacy `docker-compose`)
-
-### Quick Start
-
-:::steps
-1. **Download the files** — Grab `docker-compose.yml` from the [latest GitHub release](https://github.com/johnkozaris/mcpHomeManager/releases/latest), or clone the repository:
+The fastest way. Clone the repo and start:
 
 ```bash
 git clone https://github.com/johnkozaris/mcpHomeManager.git
 cd mcpHomeManager
-```
-
-2. **Start the stack**:
-
-```bash
 docker compose up -d
 ```
 
-3. **Open the web UI** — Navigate to `http://your-server:8000` to complete [first-time setup](first-setup).
-:::
+Or grab just the `docker-compose.yml` from the [latest release](https://github.com/johnkozaris/mcpHomeManager/releases/latest) and run `docker compose up -d` in the same directory.
 
-### What Gets Deployed
+### Option 2: Pull the image directly
 
-| Container | Image | Purpose |
-|-----------|-------|---------|
-| `app` | `ghcr.io/johnkozaris/mcp-home-manager:latest` | Application server + SQLite database |
+If you manage your own compose files or use Portainer/Dockge/another stack manager, pull the image and configure it yourself:
 
-| Volume | Purpose |
-|--------|---------|
-| `app_data` | SQLite database, auto-generated encryption key |
+```
+ghcr.io/johnkozaris/mcp-home-manager:latest
+```
 
-The application container runs with hardened security defaults:
+Minimal setup:
 
-- **Read-only filesystem** — The container filesystem is mounted read-only
-- **No new privileges** — Prevents privilege escalation
-- **All capabilities dropped** — Minimal Linux capabilities
-- **Non-root user** — Runs as `appuser`, not root
+```yaml
+services:
+  mcp-home-manager:
+    image: ghcr.io/johnkozaris/mcp-home-manager:latest
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - mcp_data:/app/data
 
-### Configuration
+volumes:
+  mcp_data:
+```
 
-The compose file works without any `.env` file. To customise defaults, create a `.env` alongside `docker-compose.yml` and override only what you need. See [Environment Variables](environment-variables) for the full reference.
+The container stores its SQLite database and encryption key in `/app/data`. Mount a volume there so your data survives restarts.
 
-Common options you may want to change:
+See [Docker Compose](docker-compose) for the full hardened configuration with read-only filesystem and dropped capabilities.
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `APP_PORT` | `8000` | Host port for the web UI and MCP endpoint |
-| `PUBLIC_URL` | `http://localhost:8000` | Public-facing URL (used in password reset emails) |
-| `APP_NAME` | `MCP Manager` | Branding shown in the web UI |
-| `MCP_SERVER_NAME` | `My Homelab` | Name shown to MCP clients |
+### After starting
+
+Open `http://your-server:8000` in your browser to complete [first-time setup](first-setup).
 
 ### Updating
-
-Pull the latest image and recreate the container:
 
 ```bash
 docker compose pull
 docker compose up -d
 ```
 
-Your data is stored in Docker volumes and persists across updates.
+Data is stored in Docker volumes and persists across updates.
 
 ### Uninstalling
 
-To remove the containers but keep your data:
+Remove containers but keep data:
 
 ```bash
 docker compose down
 ```
 
-To remove everything including data:
+Remove everything including data:
 
 ```bash
 docker compose down -v

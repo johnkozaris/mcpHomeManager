@@ -2,6 +2,8 @@
 
 If you expose MCP Home Manager outside your local network, always use a reverse proxy with TLS. Below are example configurations for common reverse proxies.
 
+Set `PUBLIC_URL` in your `.env` to match your external URL (e.g., `https://mcp.your-domain.com`) **before** configuring your proxy. This is used for password reset email links and the web UI.
+
 ### Nginx
 
 ```nginx
@@ -47,6 +49,5 @@ labels:
 
 ### Important Notes
 
-- Set `PUBLIC_URL` in your `.env` to match your external URL (e.g., `https://mcp.your-domain.com`). This is used for password reset email links.
 - MCP clients that connect to the `/mcp/` endpoint also go through the reverse proxy — ensure your proxy does not strip the `Authorization` header.
-- If you use Cloudflare or another CDN, ensure WebSocket support is enabled if your MCP client uses the SSE transport.
+- MCP Home Manager uses Server-Sent Events (SSE) for streaming. Most reverse proxies handle SSE without special configuration. If your MCP client uses WebSocket transport instead, ensure your proxy supports WebSocket upgrades (Cloudflare and other CDNs may need this enabled explicitly).

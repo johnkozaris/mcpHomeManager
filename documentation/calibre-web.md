@@ -34,7 +34,7 @@ In MCP Home Manager, go to **Services → Connect Service**:
 
 - **Form-based auth** — Calibre-Web uses HTML form-based login (session cookies), not a REST API. This means authentication may be slower than token-based services.
 - **No file downloads** — Cannot download book files (EPUB, PDF, etc.) through MCP
-- **OPDS health check** — The health check uses the OPDS endpoint. If OPDS is disabled in Calibre-Web settings, health checks will fail.
+- **OPDS health check** — The health check uses the OPDS endpoint (OPDS is a standard catalog format for ebooks). If OPDS is disabled in Calibre-Web settings, health checks will fail.
 
 ### Example Prompts
 

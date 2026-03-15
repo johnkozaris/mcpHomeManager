@@ -4,7 +4,7 @@ Search and browse your photo library through your AI agent. Find photos using na
 
 ### What You Can Do
 
-- Search photos using natural language (powered by CLIP/ML)
+- Search photos using natural language (powered by CLIP/ML — CLIP is the image recognition AI that powers Immich's search)
 - Browse albums and their contents
 - View detailed asset metadata
 - Check server storage statistics
@@ -34,7 +34,7 @@ In MCP Home Manager, go to **Services → Connect Service**:
 ### Available Tools
 
 :::tools
-- `immich_search_photos` — Search photos using natural language queries (uses CLIP ML model)
+- `immich_search_photos` — Search photos using natural language queries (uses CLIP, Immich's image recognition AI model)
 - `immich_get_asset` — Get detailed metadata for a specific asset (photo or video)
 - `immich_list_albums` — List all albums
 - `immich_get_album` — Get album details and its assets
@@ -43,7 +43,7 @@ In MCP Home Manager, go to **Services → Connect Service**:
 
 ### Limitations
 
-- **ML-based search** — `immich_search_photos` uses Immich's CLIP model for natural language search. Results depend on how well the ML model understands your query, not keyword matching.
+- **ML-based search** — `immich_search_photos` uses Immich's CLIP model (the image recognition AI that powers visual search) for natural language search. Results depend on how well the model understands your query, not keyword matching.
 - **Admin stats** — `immich_server_stats` requires an admin-level API key. Regular user keys will get a permission error.
 - **Read-only** — Cannot upload, delete, or modify photos through MCP
 - **Metadata only** — Returns asset metadata and URLs, not actual image content

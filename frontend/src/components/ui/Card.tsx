@@ -17,8 +17,7 @@ export function Card({
       className={[
         "card p-5",
         accent && "border-l-[3px]",
-        hoverable &&
-          "hover:border-line-hover hover:shadow-elevated transition-all duration-200 cursor-pointer",
+        hoverable && "card-interactive cursor-pointer",
         className,
       ]
         .filter(Boolean)

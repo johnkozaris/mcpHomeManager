@@ -58,5 +58,5 @@ For detailed setup instructions for each AI agent:
 
 - [Connecting Services](connecting-services) — Detailed guide for connecting each service type
 - [Environment Variables](environment-variables) — Fine-tune your configuration
-- [Multi-User](multi-user) — Add more users with scoped access
+- [Users & Access Control](users-api-keys) — Add more users with scoped access
 - [Self-MCP](self-mcp) — Manage MCP Home Manager through your AI agent

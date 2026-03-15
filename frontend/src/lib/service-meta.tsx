@@ -1,29 +1,33 @@
+import { FileScan, Globe, Puzzle } from "lucide-react";
 import {
-  GitBranch,
-  Home,
-  FileText,
-  Camera,
-  Cloud,
-  CloudCog,
-  Activity,
-  Shield,
-  Network,
-  Container,
-  Rss,
-  Bookmark,
-  FileScan,
-  BookOpen,
-  Library,
-  Globe,
-  Waypoints,
-  Puzzle,
-  type LucideIcon,
-} from "lucide-react";
+  ForgejoLogo,
+  HomeAssistantLogo,
+  PaperlessLogo,
+  ImmichLogo,
+  NextcloudLogo,
+  UptimeKumaLogo,
+  AdGuardLogo,
+  NginxProxyManagerLogo,
+  PortainerLogo,
+  FreshRSSLogo,
+  WallabagLogo,
+  WikiJsLogo,
+  CalibreWebLogo,
+  CloudflareLogo,
+  TailscaleLogo,
+} from "@/components/icons/ServiceLogos";
 import { translateText } from "@/i18n/translate";
 import type { BuiltinServiceType, ServiceType } from "./types";
 
+type ServiceIconComponent = React.ComponentType<{
+  size?: number | string;
+  color?: string;
+  className?: string;
+  style?: React.CSSProperties;
+}>;
+
 interface ServiceMeta {
-  icon: LucideIcon;
+  icon: ServiceIconComponent;
   label: string;
   description: string;
   color: string;
@@ -31,7 +35,7 @@ interface ServiceMeta {
 
 function createServiceMeta(
   type: BuiltinServiceType,
-  icon: LucideIcon,
+  icon: ServiceIconComponent,
   color: string,
   fallbackLabel: string,
   fallbackDescription: string,
@@ -54,77 +58,77 @@ function createServiceMeta(
 export const SERVICE_META: Record<BuiltinServiceType, ServiceMeta> = {
   forgejo: createServiceMeta(
     "forgejo",
-    GitBranch,
+    ForgejoLogo,
     "var(--brand-forgejo)",
     "Forgejo",
     "Git hosting & CI/CD",
   ),
   homeassistant: createServiceMeta(
     "homeassistant",
-    Home,
+    HomeAssistantLogo,
     "var(--brand-homeassistant)",
     "Home Assistant",
     "Smart home automation",
   ),
   paperless: createServiceMeta(
     "paperless",
-    FileText,
+    PaperlessLogo,
     "var(--brand-paperless)",
     "Paperless-ngx",
     "Document management",
   ),
   immich: createServiceMeta(
     "immich",
-    Camera,
+    ImmichLogo,
     "var(--brand-immich)",
     "Immich",
     "Photo & video management",
   ),
   nextcloud: createServiceMeta(
     "nextcloud",
-    Cloud,
+    NextcloudLogo,
     "var(--brand-nextcloud)",
     "Nextcloud",
     "Cloud storage & sync",
   ),
   uptimekuma: createServiceMeta(
     "uptimekuma",
-    Activity,
+    UptimeKumaLogo,
     "var(--brand-uptimekuma)",
     "Uptime Kuma",
     "Uptime monitoring",
   ),
   adguard: createServiceMeta(
     "adguard",
-    Shield,
+    AdGuardLogo,
     "var(--brand-adguard)",
     "AdGuard Home",
     "DNS filtering & ad blocking",
   ),
   nginxproxymanager: createServiceMeta(
     "nginxproxymanager",
-    Network,
+    NginxProxyManagerLogo,
     "var(--brand-nginxproxymanager)",
     "Nginx Proxy Manager",
     "Reverse proxy & SSL",
   ),
   portainer: createServiceMeta(
     "portainer",
-    Container,
+    PortainerLogo,
     "var(--brand-portainer)",
     "Portainer",
     "Container management",
   ),
   freshrss: createServiceMeta(
     "freshrss",
-    Rss,
+    FreshRSSLogo,
     "var(--brand-freshrss)",
     "FreshRSS",
     "RSS feed reader",
   ),
   wallabag: createServiceMeta(
     "wallabag",
-    Bookmark,
+    WallabagLogo,
     "var(--brand-wallabag)",
     "Wallabag",
     "Read-it-later articles",
@@ -138,28 +142,28 @@ export const SERVICE_META: Record<BuiltinServiceType, ServiceMeta> = {
   ),
   wikijs: createServiceMeta(
     "wikijs",
-    BookOpen,
+    WikiJsLogo,
     "var(--brand-wikijs)",
     "Wiki.js",
     "Team knowledge base",
   ),
   calibreweb: createServiceMeta(
     "calibreweb",
-    Library,
+    CalibreWebLogo,
     "var(--brand-calibreweb)",
     "Calibre-Web",
     "E-book library management",
   ),
   cloudflare: createServiceMeta(
     "cloudflare",
-    CloudCog,
+    CloudflareLogo,
     "var(--brand-cloudflare)",
     "Cloudflare",
     "DNS, tunnels, and zero trust management",
   ),
   tailscale: createServiceMeta(
     "tailscale",
-    Waypoints,
+    TailscaleLogo,
     "var(--brand-tailscale)",
     "Tailscale",
     "VPN mesh network and device management",
@@ -197,7 +201,7 @@ export function ServiceIcon({
   className,
 }: {
   type: ServiceType;
-  size?: number;
+  size?: number | string;
   className?: string;
 }) {
   const meta = getServiceMeta(type);

@@ -52,7 +52,7 @@ In MCP Home Manager, go to **Services → Connect Service**:
 
 ### Limitations
 
-- **Endpoint ID required** — Container operations require an `endpoint_id` (environment ID). List endpoints first to get the ID.
+- **Endpoint ID required** — Container operations require an `endpoint_id`. Portainer calls each Docker host an "endpoint." The endpoint ID (usually `1` for single-host setups) identifies which host to manage. List endpoints first to get the ID.
 - **No create/delete** — Cannot create or delete containers or stacks through MCP
 - **JWT refresh** — When using username/password auth, JWT tokens auto-refresh but may have brief authentication interruptions
 

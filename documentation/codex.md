@@ -2,6 +2,10 @@
 
 Add MCP Home Manager to Codex using the CLI or by editing the config file. The same configuration works for both the Codex CLI and the Codex desktop app.
 
+:::info Config Precedence
+Global config (`~/.codex/config.toml`) applies everywhere. Project config (`.codex/config.toml`) overrides it for that project.
+:::
+
 ### Option 1: CLI
 
 ```bash
@@ -10,6 +14,8 @@ codex mcp add homelab \
   --url http://your-server:8000/mcp/ \
   --bearer-token-env-var MCP_HOME_KEY
 ```
+
+The `--bearer-token-env-var` flag tells Codex which environment variable holds the API key. Codex reads it at runtime and sends it as a `Bearer` token in the `Authorization` header.
 
 ### Option 2: Config File
 
@@ -27,7 +33,7 @@ Then set the environment variable with your API key:
 export MCP_HOME_KEY="YOUR_API_KEY"
 ```
 
-Replace `your-server` with the hostname or IP of your MCP Home Manager instance, and `YOUR_API_KEY` with the key from [First Setup](first-setup).
+Use the URL from your [installation](installation) (e.g., `http://192.168.1.100:8000/mcp/`) and the API key from [First Setup](first-setup).
 
 ### Verify
 
@@ -39,4 +45,4 @@ Codex supports MCP Apps (interactive HTML content). Services like Home Assistant
 
 ### When Services Change
 
-Codex caches the tool list at startup. When you connect or remove services in MCP Home Manager, restart Codex to pick up the new tools.
+MCP Home Manager registers new tools immediately. Codex caches tools at startup — restart it to see changes.

@@ -34,7 +34,7 @@ Create a `.mcp.json` file at the root of your project:
 
 Add `.mcp.json` to your `.gitignore` — it contains your API key.
 
-Replace `your-server` with the hostname or IP of your MCP Home Manager instance, and `YOUR_API_KEY` with the key from the step above.
+Use the URL from your [installation](installation) (e.g., `http://192.168.1.100:8000/mcp/`) and the API key from the step above.
 
 ### Verify
 
@@ -42,4 +42,4 @@ After adding the server, your homelab tools will be available in Claude Code. Ru
 
 ### When Services Change
 
-Claude Code caches the tool list at startup. When you connect, update, or remove services in MCP Home Manager, restart Claude Code to pick up the new tools. Tools do not refresh mid-session.
+MCP Home Manager registers new tools immediately. Claude Code caches tools at startup — restart it to see changes.

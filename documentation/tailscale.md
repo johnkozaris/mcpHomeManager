@@ -4,7 +4,7 @@ Manage your Tailscale network through your AI agent. View devices, manage author
 
 ### What You Can Do
 
-- List devices on your tailnet
+- List devices on your tailnet (your Tailscale private network)
 - View device details and routes
 - Authorize new devices
 - Check DNS nameserver configuration
@@ -24,7 +24,7 @@ Manage your Tailscale network through your AI agent. View devices, manage author
 :::
 
 :::info API Key Permissions
-Ensure your API key has the appropriate ACL permissions for the operations you want to perform. Read-only keys can list devices; write keys are needed for authorization.
+Ensure your API key has the appropriate ACL (Access Control List — Tailscale's permission rules) permissions for the operations you want to perform. Read-only keys can list devices; write keys are needed for authorization.
 :::
 
 ### Connecting
@@ -37,7 +37,7 @@ In MCP Home Manager, go to **Services → Connect Service**:
 ### Available Tools
 
 :::tools
-- `tailscale_list_devices` — List all devices on your tailnet
+- `tailscale_list_devices` — List all devices on your tailnet (your Tailscale private network)
 - `tailscale_get_device` — Get detailed information about a specific device
 - `tailscale_authorize_device` — Authorize a pending device
 - `tailscale_get_device_routes` — Get subnet routes for a device
@@ -47,7 +47,7 @@ In MCP Home Manager, go to **Services → Connect Service**:
 ### Limitations
 
 - **Cloud API** — Operates against the Tailscale cloud API (`api.tailscale.com`), not a local service. Requires internet access from your MCP Home Manager instance.
-- **ACL permissions** — The API key must have appropriate ACL permissions for the operations you want to perform
+- **ACL permissions** — The API key must have appropriate ACL (Access Control List) permissions for the operations you want to perform
 - **No device removal** — Cannot remove devices from the tailnet through MCP
 
 ### Example Prompts

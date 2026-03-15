@@ -2,6 +2,11 @@
 
 Add MCP Home Manager to OpenCode by editing the config file.
 
+### Prerequisites
+
+- OpenCode installed
+- Your MCP Home Manager API key from [First Setup](first-setup)
+
 ### Configuration
 
 Add a remote MCP server entry to `opencode.json` — either globally at `~/.config/opencode/opencode.json` or in your project root:
@@ -20,7 +25,7 @@ Add a remote MCP server entry to `opencode.json` — either globally at `~/.conf
 }
 ```
 
-Replace `your-server` with the hostname or IP of your MCP Home Manager instance, and `YOUR_API_KEY` with the key from [First Setup](first-setup).
+Use the URL from your [installation](installation) (e.g., `http://192.168.1.100:8000/mcp/`) and the API key from [First Setup](first-setup).
 
 ### Verify
 
@@ -28,4 +33,4 @@ Your homelab tools will be available to the LLM alongside built-in tools once Op
 
 ### When Services Change
 
-Restart OpenCode to pick up newly added or removed tools.
+MCP Home Manager registers new tools immediately. OpenCode caches tools at startup — restart it to see changes.

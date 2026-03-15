@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/Input";
 import { Toggle } from "@/components/ui/Toggle";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { QueryState } from "@/components/ui/QueryState";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { useTranslation } from "react-i18next";
 
 export function Users() {
@@ -269,11 +270,11 @@ export function Users() {
             )}
           </Card>
         ) : (
-          <div className="text-center py-12 text-ink-tertiary">
-            <UserPlus size={32} className="mx-auto mb-3 opacity-40" />
-            <p className="text-base">{t("empty.title")}</p>
-            <p className="text-sm mt-1">{t("empty.description")}</p>
-          </div>
+          <EmptyState
+            icon={UserPlus}
+            title={t("empty.title")}
+            description={t("empty.description")}
+          />
         )}
       </QueryState>
 

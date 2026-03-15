@@ -34,10 +34,10 @@ The default database is SQLite — zero configuration required. All data is stor
 |----------|-------------|
 | `ENCRYPTION_KEY` | Fernet encryption key used to encrypt service credentials at rest. **Auto-generated on first start** and saved to `/app/data/encryption_key`. |
 
-:::info Do Not Change ENCRYPTION_KEY After Setup
-The encryption key is generated automatically the first time MCP Home Manager starts. It is persisted in the `app_data` Docker volume. If you lose this key or change it, all stored service credentials become unreadable and must be re-entered.
+:::info Fernet Encryption
+Fernet is a symmetric encryption standard. MCP Home Manager uses it to encrypt stored service credentials. The key is auto-generated on first run. Never change it after setup — you'll lose access to all stored credentials.
 
-You can set `ENCRYPTION_KEY` as an environment variable to use a specific key (e.g., when restoring from backup). If set, it takes precedence over the file in `/app/data/`.
+To restore from backup, set `ENCRYPTION_KEY` as an environment variable with your original key. If set, it takes precedence over the file in `/app/data/`.
 :::
 
 ### Example `.env` File

@@ -12,7 +12,7 @@ The dashboard is the main landing page after logging in to MCP Home Manager. It 
 | Unhealthy | Red | Service failed to respond or returned an error |
 | Unknown | Gray | Service has not been checked yet |
 
-**Recent activity** — A feed of recent MCP tool calls across all services, showing which tools were used and whether they succeeded.
+**Recent activity** — A feed of recent MCP tool calls across all services. Each entry shows the tool name, timestamp, which user or API key triggered it, the target service, and whether the call succeeded or failed.
 
 **Onboarding guidance** — If you have not yet connected any services, the dashboard shows helpful prompts to guide you through adding your first service and configuring an AI agent.
 

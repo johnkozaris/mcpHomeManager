@@ -32,7 +32,7 @@ Create or edit `~/.copilot/mcp-config.json`:
 
 For project-scoped configuration, place `.copilot/mcp-config.json` in your project root instead.
 
-Replace `your-server` with the hostname or IP of your MCP Home Manager instance, and `YOUR_API_KEY` with the key from [First Setup](first-setup).
+Use the URL from your [installation](installation) (e.g., `http://192.168.1.100:8000/mcp/`) and the API key from [First Setup](first-setup).
 
 ### Verify
 
@@ -40,4 +40,4 @@ Run `/mcp show` inside a Copilot CLI session to see connected servers and their 
 
 ### When Services Change
 
-Copilot CLI caches the tool list at startup. When you connect or remove services in MCP Home Manager, restart Copilot CLI to pick up the new tools.
+MCP Home Manager registers new tools immediately. Copilot CLI caches tools at startup — restart it to see changes.

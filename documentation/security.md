@@ -16,8 +16,8 @@ All service credentials, API keys, and configuration are stored in your local da
 ### Network security recommendations
 
 - **Always use HTTPS** when exposing MCP Home Manager outside your local network. Use a reverse proxy (Nginx, Caddy, Traefik) with TLS termination. See the [Reverse Proxy guide](reverse-proxy).
-- **Rate limiting** is enabled by default: 120 requests/minute globally, with automatic blocking after 10 failed authentication attempts per IP.
-- **SSRF protection** blocks requests to cloud metadata endpoints (169.254.169.254, etc.) with DNS rebinding protection, while still allowing private/internal IPs for homelab use.
+- **Rate limiting** is enabled by default: 120 requests per minute per IP address, with automatic blocking after 10 failed authentication attempts per IP.
+- **SSRF protection** — SSRF (Server-Side Request Forgery) protection blocks requests to cloud metadata endpoints like `169.254.169.254`, preventing credential theft if an attacker controls a service URL. DNS rebinding protection is also enabled. Private/internal IPs are still allowed for homelab use.
 
 ### Container hardening
 
