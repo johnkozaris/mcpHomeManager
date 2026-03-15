@@ -8,7 +8,18 @@ import { QueryState } from "@/components/ui/QueryState";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Server, Plus, Download, Upload, AlertCircle } from "lucide-react";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { useTranslation } from "react-i18next";
+
+function ServicesSkeleton() {
+  return (
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {Array.from({ length: 6 }, (_, i) => (
+        <Skeleton key={i} className="h-[160px]" />
+      ))}
+    </div>
+  );
+}
 
 export function Services() {
   const { t } = useTranslation("services", { keyPrefix: "listPage" });
@@ -77,9 +88,10 @@ export function Services() {
         error={error instanceof Error ? error : null}
         loadingMessage={t("query.loading")}
         errorMessage={t("query.error")}
+        skeleton={<ServicesSkeleton />}
       >
         {services && services.length > 0 ? (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {services.map((svc) => (
               <ServiceCard key={svc.id} service={svc} />
             ))}

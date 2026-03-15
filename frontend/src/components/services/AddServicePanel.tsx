@@ -37,7 +37,7 @@ interface PrefillData {
 
 function CatalogGrid({ onSelect }: { onSelect: (type: ServiceType) => void }) {
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
       {BUILTIN_SERVICE_TYPES.map((type) => {
         const meta = SERVICE_META[type];
         return (

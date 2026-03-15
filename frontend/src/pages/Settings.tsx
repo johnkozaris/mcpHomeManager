@@ -527,8 +527,8 @@ export function Settings() {
                     <p className="text-xs text-ink-tertiary">
                       {t("smtp.description")}
                     </p>
-                    <div className="grid grid-cols-3 gap-3">
-                      <div className="col-span-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div className="sm:col-span-2">
                         <label
                           htmlFor="smtp-host"
                           className="block text-xs font-medium text-ink-secondary mb-1"

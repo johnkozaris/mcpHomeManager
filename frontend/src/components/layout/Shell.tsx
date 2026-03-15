@@ -270,7 +270,7 @@ export function Shell({ children }: { children: ReactNode }) {
       </aside>
 
       <div className="flex-1 overflow-y-auto">
-        <div className="px-14 py-8">{children}</div>
+        <div className="px-4 sm:px-8 lg:px-14 py-6 sm:py-8">{children}</div>
       </div>
     </div>
   );

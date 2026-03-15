@@ -158,7 +158,7 @@ export function AddToolModal({ open, onClose, serviceId, editTool }: Props) {
             onChange={(e) => setDescription(e.target.value)}
             required
           />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <label
                 htmlFor="http-method"
