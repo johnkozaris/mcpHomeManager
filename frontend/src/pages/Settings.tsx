@@ -32,7 +32,9 @@ import {
   Trash2,
   Eye,
   Globe,
+  ChevronDown,
 } from "lucide-react";
+import { Toggle } from "@/components/ui/Toggle";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -108,6 +110,7 @@ export function Settings() {
   const [smtpEnabled, setSmtpEnabled] = useState(true);
   const [smtpSynced, setSmtpSynced] = useState<typeof smtpConfig>(undefined);
   const [smtpSaved, setSmtpSaved] = useState(false);
+  const [smtpOpen, setSmtpOpen] = useState(false);
   const [smtpTestResult, setSmtpTestResult] = useState<SmtpTestResult | null>(
     null,
   );
@@ -171,14 +174,12 @@ export function Settings() {
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-clay-bg">
-                  <Palette size={16} className="text-clay" />
-                </div>
+              <div className="flex items-center gap-2">
+                <Palette size={16} className="text-clay" />
                 <CardTitle>{t("appearance.title")}</CardTitle>
               </div>
             </CardHeader>
-            <div className="mt-3 grid grid-cols-2 gap-3">
+            <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
               <button
                 onClick={() => theme === "dark" && toggle()}
                 className={`p-4 rounded-xl border-2 transition-all text-center ${theme === "light" ? "border-terra bg-terra-bg" : "border-line hover:border-line-strong"}`}
@@ -202,17 +203,15 @@ export function Settings() {
 
           <Card>
             <CardHeader>
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-terra-bg">
-                  <Globe size={16} className="text-terra" />
-                </div>
+              <div className="flex items-center gap-2">
+                <Globe size={16} className="text-terra" />
                 <CardTitle>{t("language.title")}</CardTitle>
               </div>
             </CardHeader>
             <p className="text-xs text-ink-tertiary mt-1 mb-3">
               {t("language.description")}
             </p>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {SUPPORTED_LOCALES.map((locale) => (
                 <button
                   key={locale}
@@ -235,10 +234,8 @@ export function Settings() {
 
           <Card>
             <CardHeader>
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-sage-bg">
-                  <Shield size={16} className="text-sage" />
-                </div>
+              <div className="flex items-center gap-2">
+                <Shield size={16} className="text-sage" />
                 <CardTitle>{t("security.title")}</CardTitle>
               </div>
             </CardHeader>
@@ -252,15 +249,11 @@ export function Settings() {
                     </span>
                   </div>
                   {isAdmin ? (
-                    <button
-                      onClick={() => toggleSelfMcp.mutate()}
+                    <Toggle
+                      checked={!!config?.self_mcp_enabled}
+                      onChange={() => toggleSelfMcp.mutate()}
                       disabled={toggleSelfMcp.isPending}
-                      className={`w-10 h-5 rounded-full transition-colors ${config?.self_mcp_enabled ? "bg-terra" : "bg-line-strong"}`}
-                    >
-                      <div
-                        className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${config?.self_mcp_enabled ? "translate-x-5" : "translate-x-0.5"}`}
-                      />
-                    </button>
+                    />
                   ) : (
                     <Badge
                       variant={
@@ -407,10 +400,8 @@ export function Settings() {
 
           <Card>
             <CardHeader>
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-info-bg">
-                  <Info size={16} className="text-info" />
-                </div>
+              <div className="flex items-center gap-2">
+                <Info size={16} className="text-info" />
                 <CardTitle>{t("about.title")}</CardTitle>
               </div>
             </CardHeader>
@@ -432,10 +423,8 @@ export function Settings() {
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-terra-bg">
-                  <Terminal size={16} className="text-terra" />
-                </div>
+              <div className="flex items-center gap-2">
+                <Terminal size={16} className="text-terra" />
                 <CardTitle>{t("endpoint.title")}</CardTitle>
               </div>
             </CardHeader>
@@ -448,7 +437,7 @@ export function Settings() {
               </code>
               <button
                 onClick={copy}
-                className="shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold bg-(--coral) text-white hover:opacity-90 transition-opacity"
+                className="shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold bg-[var(--coral)] text-white hover:opacity-90 transition-opacity"
               >
                 {copied ? <Check size={13} /> : <Copy size={13} />}
               </button>
@@ -463,10 +452,8 @@ export function Settings() {
 
           <Card>
             <CardHeader>
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-sage-bg">
-                  <HeartPulse size={16} className="text-sage" />
-                </div>
+              <div className="flex items-center gap-2">
+                <HeartPulse size={16} className="text-sage" />
                 <CardTitle>{t("systemHealth.title")}</CardTitle>
               </div>
             </CardHeader>
@@ -516,179 +503,183 @@ export function Settings() {
               </div>
             </div>
           </Card>
+
           {isAdmin && (
             <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-terra-bg">
+              <button
+                onClick={() => setSmtpOpen(!smtpOpen)}
+                className="flex items-center justify-between w-full text-left"
+              >
+                <div className="flex items-center gap-2">
                   <Mail size={16} className="text-terra" />
-                </div>
                   <CardTitle>{t("smtp.title")}</CardTitle>
                 </div>
-              </CardHeader>
-              <p className="text-xs text-ink-tertiary mt-2 mb-3">
-                {t("smtp.description")}
-              </p>
-              <div className="space-y-3">
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="col-span-2">
-                    <label
-                      htmlFor="smtp-host"
-                      className="block text-xs font-medium text-ink-secondary mb-1"
-                    >
-                      {t("smtp.fields.host")}
-                    </label>
-                    <input
-                      id="smtp-host"
-                      type="text"
-                      value={smtpHost}
-                      onChange={(e) => setSmtpHost(e.target.value)}
-                      className="w-full px-2.5 py-1.5 rounded-lg border border-line bg-canvas text-ink text-sm"
-                      placeholder={t("smtp.placeholders.host")}
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="smtp-port"
-                      className="block text-xs font-medium text-ink-secondary mb-1"
-                    >
-                      {t("smtp.fields.port")}
-                    </label>
-                    <input
-                      id="smtp-port"
-                      type="number"
-                      value={smtpPort}
-                      onChange={(e) => setSmtpPort(e.target.value)}
-                      className="w-full px-2.5 py-1.5 rounded-lg border border-line bg-canvas text-ink text-sm"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label
-                    htmlFor="smtp-username"
-                    className="block text-xs font-medium text-ink-secondary mb-1"
-                  >
-                    {t("smtp.fields.username")}
-                  </label>
-                  <input
-                    id="smtp-username"
-                    type="text"
-                    value={smtpUsername}
-                    onChange={(e) => setSmtpUsername(e.target.value)}
-                    className="w-full px-2.5 py-1.5 rounded-lg border border-line bg-canvas text-ink text-sm"
-                    placeholder={t("smtp.placeholders.username")}
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-ink-secondary mb-1">
-                    {t("smtp.fields.password")}{" "}
-                    {smtpConfig?.has_password && (
-                      <span className="text-ink-faint">
-                        {t("smtp.fields.passwordHint")}
+                <ChevronDown
+                  size={16}
+                  className={`text-ink-tertiary transition-transform duration-200 ${smtpOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+              <div
+                className={`grid transition-[grid-template-rows] duration-200 ease-out ${smtpOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+              >
+                <div className="overflow-hidden">
+                  <div className="pt-4 space-y-3">
+                    <p className="text-xs text-ink-tertiary">
+                      {t("smtp.description")}
+                    </p>
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="col-span-2">
+                        <label
+                          htmlFor="smtp-host"
+                          className="block text-xs font-medium text-ink-secondary mb-1"
+                        >
+                          {t("smtp.fields.host")}
+                        </label>
+                        <input
+                          id="smtp-host"
+                          type="text"
+                          value={smtpHost}
+                          onChange={(e) => setSmtpHost(e.target.value)}
+                          className="w-full px-2.5 py-1.5 rounded-lg border border-line bg-canvas text-ink text-sm"
+                          placeholder={t("smtp.placeholders.host")}
+                        />
+                      </div>
+                      <div>
+                        <label
+                          htmlFor="smtp-port"
+                          className="block text-xs font-medium text-ink-secondary mb-1"
+                        >
+                          {t("smtp.fields.port")}
+                        </label>
+                        <input
+                          id="smtp-port"
+                          type="number"
+                          value={smtpPort}
+                          onChange={(e) => setSmtpPort(e.target.value)}
+                          className="w-full px-2.5 py-1.5 rounded-lg border border-line bg-canvas text-ink text-sm"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="smtp-username"
+                        className="block text-xs font-medium text-ink-secondary mb-1"
+                      >
+                        {t("smtp.fields.username")}
+                      </label>
+                      <input
+                        id="smtp-username"
+                        type="text"
+                        value={smtpUsername}
+                        onChange={(e) => setSmtpUsername(e.target.value)}
+                        className="w-full px-2.5 py-1.5 rounded-lg border border-line bg-canvas text-ink text-sm"
+                        placeholder={t("smtp.placeholders.username")}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-ink-secondary mb-1">
+                        {t("smtp.fields.password")}{" "}
+                        {smtpConfig?.has_password && (
+                          <span className="text-ink-faint">
+                            {t("smtp.fields.passwordHint")}
+                          </span>
+                        )}
+                      </label>
+                      <input
+                        type="password"
+                        value={smtpPassword}
+                        onChange={(e) => setSmtpPassword(e.target.value)}
+                        className="w-full px-2.5 py-1.5 rounded-lg border border-line bg-canvas text-ink text-sm"
+                        placeholder={
+                          smtpConfig?.has_password
+                            ? t("smtp.placeholders.passwordMasked")
+                            : t("smtp.placeholders.password")
+                        }
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="smtp-from"
+                        className="block text-xs font-medium text-ink-secondary mb-1"
+                      >
+                        {t("smtp.fields.fromEmail")}
+                      </label>
+                      <input
+                        id="smtp-from"
+                        type="email"
+                        value={smtpFrom}
+                        onChange={(e) => setSmtpFrom(e.target.value)}
+                        className="w-full px-2.5 py-1.5 rounded-lg border border-line bg-canvas text-ink text-sm"
+                        placeholder={t("smtp.placeholders.fromEmail")}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-ink-secondary">
+                        {t("smtp.toggles.useTls")}
                       </span>
-                    )}
-                  </label>
-                  <input
-                    type="password"
-                    value={smtpPassword}
-                    onChange={(e) => setSmtpPassword(e.target.value)}
-                    className="w-full px-2.5 py-1.5 rounded-lg border border-line bg-canvas text-ink text-sm"
-                    placeholder={
-                      smtpConfig?.has_password
-                        ? t("smtp.placeholders.passwordMasked")
-                        : t("smtp.placeholders.password")
-                    }
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="smtp-from"
-                    className="block text-xs font-medium text-ink-secondary mb-1"
-                  >
-                    {t("smtp.fields.fromEmail")}
-                  </label>
-                  <input
-                    id="smtp-from"
-                    type="email"
-                    value={smtpFrom}
-                    onChange={(e) => setSmtpFrom(e.target.value)}
-                    className="w-full px-2.5 py-1.5 rounded-lg border border-line bg-canvas text-ink text-sm"
-                    placeholder={t("smtp.placeholders.fromEmail")}
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-ink-secondary">
-                    {t("smtp.toggles.useTls")}
-                  </span>
-                  <button
-                    onClick={() => setSmtpTls(!smtpTls)}
-                    className={`w-10 h-5 rounded-full transition-colors ${smtpTls ? "bg-terra" : "bg-line-strong"}`}
-                  >
-                    <div
-                      className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${smtpTls ? "translate-x-5" : "translate-x-0.5"}`}
-                    />
-                  </button>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-ink-secondary">
-                    {t("smtp.toggles.enabled")}
-                  </span>
-                  <button
-                    onClick={() => setSmtpEnabled(!smtpEnabled)}
-                    className={`w-10 h-5 rounded-full transition-colors ${smtpEnabled ? "bg-terra" : "bg-line-strong"}`}
-                  >
-                    <div
-                      className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${smtpEnabled ? "translate-x-5" : "translate-x-0.5"}`}
-                    />
-                  </button>
-                </div>
+                      <Toggle
+                        checked={smtpTls}
+                        onChange={(v) => setSmtpTls(v)}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-ink-secondary">
+                        {t("smtp.toggles.enabled")}
+                      </span>
+                      <Toggle
+                        checked={smtpEnabled}
+                        onChange={(v) => setSmtpEnabled(v)}
+                      />
+                    </div>
 
-                {saveSmtp.isError && (
-                  <div className="p-2.5 rounded-lg text-xs bg-rust-bg text-rust border border-rust">
-                    {parseApiError(
-                      saveSmtp.error,
-                      t("smtp.errors.saveFailed"),
+                    {saveSmtp.isError && (
+                      <div className="p-2.5 rounded-lg text-xs bg-rust-bg text-rust border border-rust">
+                        {parseApiError(
+                          saveSmtp.error,
+                          t("smtp.errors.saveFailed"),
+                        )}
+                      </div>
                     )}
+
+                    {smtpTestResult && (
+                      <div
+                        className={`p-2.5 rounded-lg text-xs ${smtpTestResult.success ? "bg-sage-bg text-sage border border-sage" : "bg-rust-bg text-rust border border-rust"}`}
+                      >
+                        {smtpTestMessage ?? smtpTestResult.message}
+                      </div>
+                    )}
+
+                    <div className="flex gap-2 pt-1">
+                      <Button
+                        size="sm"
+                        onClick={() => saveSmtp.mutate()}
+                        disabled={saveSmtp.isPending || !smtpHost}
+                      >
+                        {smtpSaved ? (
+                          <>
+                            <Check size={13} /> {t("smtp.actions.saved")}
+                          </>
+                        ) : saveSmtp.isPending ? (
+                          t("smtp.actions.saving")
+                        ) : (
+                          t("smtp.actions.save")
+                        )}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setSmtpTestResult(null);
+                          testSmtp.mutate();
+                        }}
+                        disabled={testSmtp.isPending || !smtpConfig?.is_enabled}
+                      >
+                        {testSmtp.isPending
+                          ? t("smtp.actions.sending")
+                          : t("smtp.actions.sendTestEmail")}
+                      </Button>
+                    </div>
                   </div>
-                )}
-
-                {smtpTestResult && (
-                  <div
-                    className={`p-2.5 rounded-lg text-xs ${smtpTestResult.success ? "bg-sage-bg text-sage border border-sage" : "bg-rust-bg text-rust border border-rust"}`}
-                  >
-                    {smtpTestMessage ?? smtpTestResult.message}
-                  </div>
-                )}
-
-                <div className="flex gap-2 pt-1">
-                  <Button
-                    size="sm"
-                    onClick={() => saveSmtp.mutate()}
-                    disabled={saveSmtp.isPending || !smtpHost}
-                  >
-                    {smtpSaved ? (
-                      <>
-                        <Check size={13} /> {t("smtp.actions.saved")}
-                      </>
-                    ) : saveSmtp.isPending ? (
-                      t("smtp.actions.saving")
-                    ) : (
-                      t("smtp.actions.save")
-                    )}
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => {
-                      setSmtpTestResult(null);
-                      testSmtp.mutate();
-                    }}
-                    disabled={testSmtp.isPending || !smtpConfig?.is_enabled}
-                  >
-                    {testSmtp.isPending
-                      ? t("smtp.actions.sending")
-                      : t("smtp.actions.sendTestEmail")}
-                  </Button>
                 </div>
               </div>
             </Card>

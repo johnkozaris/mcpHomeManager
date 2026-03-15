@@ -3,6 +3,7 @@
   "heroBanner": {
     "title": "将你的 homelab 连接到 AI",
     "description": "只需连接一次，就能在 Claude、ChatGPT、Cursor 等客户端中直接使用。",
+    "dismiss": "关闭",
     "actions": {
       "connectService": "连接服务",
       "setupGuide": "设置指南"
@@ -31,6 +32,7 @@
     "more": "更多"
   },
   "howItWorks": {
+    "dismiss": "关闭",
     "title": "工作原理",
     "steps": {
       "connect": {

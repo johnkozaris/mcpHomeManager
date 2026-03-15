@@ -34,7 +34,6 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { QueryState } from "@/components/ui/QueryState";
-import { StatCard } from "@/components/ui/StatCard";
 import { Input } from "@/components/ui/Input";
 import { Toggle } from "@/components/ui/Toggle";
 import { Badge } from "@/components/ui/Badge";
@@ -157,6 +156,7 @@ export function ServiceDetail() {
                   <button
                     onClick={() => navigate({ to: "/services" })}
                     className="text-ink-tertiary hover:text-ink transition-colors"
+                    aria-label="Back to services"
                   >
                     <ArrowLeft size={18} />
                   </button>
@@ -345,34 +345,44 @@ export function ServiceDetail() {
                   </div>
                 </Card>
               ) : (
-                <div className="grid grid-cols-4 gap-4">
-                  <StatCard
-                    label={t("stats.health.label")}
-                    value={service.health_status}
-                    icon={HeartPulse}
-                    iconColor={
-                      service.health_status === "healthy"
-                        ? "var(--sage)"
-                        : "var(--rust)"
-                    }
-                  />
-                  <StatCard
-                    label={t("stats.tools.label")}
-                    value={service.tools.length}
-                    sub={t("stats.tools.sub", {
-                      count: service.tools.filter((tool) => tool.is_enabled).length,
-                    })}
-                    icon={Wrench}
-                    iconColor="var(--info)"
-                  />
-                  <StatCard
-                    label={t("stats.lastTested.label")}
-                    value={lastChecked}
-                    icon={Clock}
-                    iconColor="var(--clay)"
-                  />
-                  <Card>
-                    <p className="section-label mb-2">{t("state.label")}</p>
+                <div className="card !p-0 flex flex-col sm:flex-row sm:divide-x divide-y sm:divide-y-0 divide-line overflow-hidden">
+                  <div className="flex-1 flex items-center gap-2.5 px-5 py-3.5">
+                    <HeartPulse
+                      size={15}
+                      className="shrink-0"
+                      style={{
+                        color:
+                          service.health_status === "healthy"
+                            ? "var(--sage)"
+                            : "var(--rust)",
+                      }}
+                    />
+                    <span className="text-base font-bold text-ink">
+                      {service.health_status}
+                    </span>
+                    <span className="text-xs text-ink-tertiary">
+                      {t("stats.health.label")}
+                    </span>
+                  </div>
+                  <div className="flex-1 flex items-center gap-2.5 px-5 py-3.5">
+                    <Wrench size={15} className="shrink-0 text-info" />
+                    <span className="text-base font-bold text-ink">
+                      {service.tools.length}
+                    </span>
+                    <span className="text-xs text-ink-tertiary truncate">
+                      {t("stats.tools.sub", {
+                        count: service.tools.filter((tool) => tool.is_enabled)
+                          .length,
+                      })}
+                    </span>
+                  </div>
+                  <div className="flex-1 flex items-center gap-2.5 px-5 py-3.5">
+                    <Clock size={15} className="shrink-0 text-clay" />
+                    <span className="text-base font-bold text-ink truncate">
+                      {lastChecked}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2.5 px-5 py-3.5">
                     <Toggle
                       checked={service.is_enabled}
                       onChange={() =>
@@ -387,7 +397,7 @@ export function ServiceDetail() {
                           : t("state.disabled")
                       }
                     />
-                  </Card>
+                  </div>
                 </div>
               )}
 
@@ -434,7 +444,7 @@ export function ServiceDetail() {
               {state.appPreviewHtml && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                   <div
-                    className="absolute inset-0 bg-black/40"
+                    className="absolute inset-0 overlay-backdrop"
                     onClick={() =>
                       dispatch({
                         type: "SET_APP_PREVIEW",

@@ -4,6 +4,8 @@ import { useNavigate } from "@tanstack/react-router";
 import { api } from "@/lib/api";
 import { queryClient } from "@/lib/queryClient";
 import { parseApiError } from "@/lib/utils";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 import { Copy, Check } from "lucide-react";
 import logoSrc from "@/assets/logo.png";
 import { useTranslation } from "react-i18next";
@@ -56,7 +58,7 @@ export function Setup() {
               <Check className="w-6 h-6 text-sage" />
             </div>
             <h1 className="text-xl font-semibold text-ink">{t("complete.title")}</h1>
-            <p className="text-sm text-ink-muted mt-1">
+            <p className="text-sm text-ink-tertiary mt-1">
               {t("complete.description")}
             </p>
           </div>
@@ -89,16 +91,16 @@ export function Setup() {
               </div>
             </div>
 
-            <button
+            <Button
+              size="lg"
               onClick={() => {
                 queryClient.clear();
                 navigate({ to: "/" });
               }}
-              className="w-full py-2.5 rounded-lg bg-terra text-white text-sm font-medium
-                         hover:bg-terra-hover active:scale-[0.98] transition-all"
+              className="w-full"
             >
               {t("complete.continue")}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -109,11 +111,11 @@ export function Setup() {
     <div className="min-h-screen bg-canvas flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
-          <img src={logoSrc} alt="" height={48} className="h-12 w-auto mb-4 drop-shadow-lg" />
+          <img src={logoSrc} alt={appName} height={48} className="h-12 w-auto mb-4 drop-shadow-lg" />
           <h1 className="text-xl font-semibold text-ink">
             {t("welcome.title", { appName })}
           </h1>
-          <p className="text-sm text-ink-muted mt-1">
+          <p className="text-sm text-ink-tertiary mt-1">
             {t("welcome.description")}
           </p>
         </div>
@@ -129,108 +131,60 @@ export function Setup() {
             </div>
           )}
 
-          <div>
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium text-ink mb-1.5"
-            >
-              {t("fields.username.label")}
-            </label>
-            <input
-              id="username"
-              type="text"
-              autoComplete="username"
-              autoFocus
-              required
-              minLength={2}
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-line bg-canvas text-ink text-sm
-                         placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
-                         transition-colors"
-            />
-          </div>
+          <Input
+            id="username"
+            label={t("fields.username.label")}
+            type="text"
+            autoComplete="username"
+            autoFocus
+            required
+            minLength={2}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
 
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-ink mb-1.5"
-            >
-              {t("fields.email.label")}{" "}
-              <span className="text-ink-faint font-normal">
-                {t("fields.email.optionalHint")}
-              </span>
-            </label>
-            <input
-              id="email"
-              type="email"
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-line bg-canvas text-ink text-sm
-                         placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
-                         transition-colors"
-              placeholder={t("fields.email.placeholder")}
-            />
-          </div>
+          <Input
+            id="email"
+            label={`${t("fields.email.label")} ${t("fields.email.optionalHint")}`}
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder={t("fields.email.placeholder")}
+          />
 
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-ink mb-1.5"
-            >
-              {t("fields.password.label")}
-            </label>
-            <input
-              id="password"
-              type="password"
-              autoComplete="new-password"
-              required
-              minLength={8}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-line bg-canvas text-ink text-sm
-                         placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
-                         transition-colors"
-              placeholder={t("fields.password.placeholder")}
-            />
-          </div>
+          <Input
+            id="password"
+            label={t("fields.password.label")}
+            type="password"
+            autoComplete="new-password"
+            required
+            minLength={8}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder={t("fields.password.placeholder")}
+          />
 
-          <div>
-            <label
-              htmlFor="confirmPassword"
-              className="block text-sm font-medium text-ink mb-1.5"
-            >
-              {t("fields.confirmPassword.label")}
-            </label>
-            <input
-              id="confirmPassword"
-              type="password"
-              autoComplete="new-password"
-              required
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-               className={`w-full px-3 py-2 rounded-lg border bg-canvas text-ink text-sm
-                          placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
-                          transition-colors ${confirmPassword && !passwordsMatch ? "border-rust" : "border-line"}`}
-               placeholder={t("fields.confirmPassword.placeholder")}
-             />
-             {confirmPassword && !passwordsMatch && (
-               <p className="text-xs text-rust mt-1">
-                 {t("fields.confirmPassword.mismatch")}
-               </p>
-             )}
-           </div>
+          <Input
+            id="confirmPassword"
+            label={t("fields.confirmPassword.label")}
+            type="password"
+            autoComplete="new-password"
+            required
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder={t("fields.confirmPassword.placeholder")}
+            error={confirmPassword && !passwordsMatch ? t("fields.confirmPassword.mismatch") : undefined}
+          />
 
-          <button
+          <Button
             type="submit"
+            size="lg"
             disabled={!canSubmit}
-              className="w-full py-2.5 rounded-lg bg-terra text-white text-sm font-medium
-                       hover:bg-terra-hover active:scale-[0.98] transition-all
-                       disabled:opacity-50 disabled:pointer-events-none"
+            className="w-full"
           >
             {loading ? t("actions.creatingAccount") : t("actions.createAdminAccount")}
-          </button>
+          </Button>
         </form>
       </div>
     </div>

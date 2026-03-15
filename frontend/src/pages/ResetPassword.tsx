@@ -1,13 +1,17 @@
 import { useState } from "react";
+import { useAppName } from "@/hooks/useAppName";
 import { Link, useSearch } from "@tanstack/react-router";
 import { api } from "@/lib/api";
 import { parseApiError } from "@/lib/utils";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 import { ArrowLeft } from "lucide-react";
 import logoSrc from "@/assets/logo.png";
 import { useTranslation } from "react-i18next";
 
 export function ResetPassword() {
   const { t } = useTranslation("auth", { keyPrefix: "resetPassword" });
+  const appName = useAppName();
   const { token } = useSearch({ from: "/reset-password" });
 
   const [password, setPassword] = useState("");
@@ -58,7 +62,7 @@ export function ResetPassword() {
     <div className="min-h-screen bg-canvas flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
-          <img src={logoSrc} alt="" height={48} className="h-12 w-auto mb-4 drop-shadow-lg" />
+          <img src={logoSrc} alt={appName} height={48} className="h-12 w-auto mb-4 drop-shadow-lg" />
           <h1 className="text-xl font-semibold text-ink">
             {success ? t("title.success") : t("title.default")}
           </h1>
@@ -86,64 +90,39 @@ export function ResetPassword() {
                 </div>
               )}
 
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-ink mb-1.5"
-                >
-                  {t("fields.password.label")}
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  autoComplete="new-password"
-                  autoFocus
-                  required
-                  minLength={8}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-line bg-canvas text-ink text-sm
-                             placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
-                             transition-colors"
-                  placeholder={t("fields.password.placeholder")}
-                />
-              </div>
+              <Input
+                id="password"
+                label={t("fields.password.label")}
+                type="password"
+                autoComplete="new-password"
+                autoFocus
+                required
+                minLength={8}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder={t("fields.password.placeholder")}
+              />
 
-              <div>
-                <label
-                  htmlFor="confirmPassword"
-                  className="block text-sm font-medium text-ink mb-1.5"
-                >
-                  {t("fields.confirmPassword.label")}
-                </label>
-                <input
-                  id="confirmPassword"
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                   className={`w-full px-3 py-2 rounded-lg border bg-canvas text-ink text-sm
-                              placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
-                              transition-colors ${confirmPassword && !passwordsMatch ? "border-rust" : "border-line"}`}
-                   placeholder={t("fields.confirmPassword.placeholder")}
-                 />
-                {confirmPassword && !passwordsMatch && (
-                  <p className="text-xs text-rust mt-1">
-                    {t("fields.confirmPassword.mismatch")}
-                  </p>
-                )}
-              </div>
+              <Input
+                id="confirmPassword"
+                label={t("fields.confirmPassword.label")}
+                type="password"
+                autoComplete="new-password"
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder={t("fields.confirmPassword.placeholder")}
+                error={confirmPassword && !passwordsMatch ? t("fields.confirmPassword.mismatch") : undefined}
+              />
 
-              <button
+              <Button
                 type="submit"
+                size="lg"
                 disabled={!canSubmit}
-                className="w-full py-2.5 rounded-lg bg-terra text-white text-sm font-medium
-                           hover:bg-terra-hover active:scale-[0.98] transition-all
-                           disabled:opacity-50 disabled:pointer-events-none"
+                className="w-full"
               >
                 {loading ? t("actions.resetting") : t("actions.resetPassword")}
-              </button>
+              </Button>
             </form>
           )}
         </div>

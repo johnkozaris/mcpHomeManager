@@ -54,7 +54,7 @@ export function TerminalBlock({ code, label }: Props) {
         </div>
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1 text-xs transition-colors hover:text-white focus-visible:outline-none focus-visible:shadow-focus rounded"
+          className="flex items-center gap-1 text-xs transition-colors hover:text-[var(--terminal-text)] focus-visible:outline-none focus-visible:shadow-focus rounded"
           style={{ color: "var(--terminal-label)" }}
           aria-label={t("copyToClipboard")}
         >

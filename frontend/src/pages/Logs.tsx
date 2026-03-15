@@ -1,13 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { MiniAreaChart } from "@/components/ui/MiniAreaChart";
 import {
   ScrollText,
   Activity,
@@ -21,11 +14,11 @@ import {
 import { useAuditLog, useServices } from "@/hooks/useServices";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { Card } from "@/components/ui/Card";
-import { StatCard } from "@/components/ui/StatCard";
 import { QueryState } from "@/components/ui/QueryState";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Input } from "@/components/ui/Input";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { ServiceIcon } from "@/lib/service-meta";
 import { LogEntryDetail } from "@/components/logs/LogEntryDetail";
 import { formatRelativeTime } from "@/lib/utils";
@@ -33,6 +26,15 @@ import type { ServiceType } from "@/lib/types";
 import { useTranslation } from "react-i18next";
 
 const PAGE_SIZE = 50;
+
+function LogsSkeleton() {
+  return (
+    <div className="space-y-4">
+      <Skeleton className="h-[52px]" />
+      <Skeleton className="h-[300px]" />
+    </div>
+  );
+}
 
 export function Logs() {
   const { t } = useTranslation("logs", { keyPrefix: "page" });
@@ -107,43 +109,33 @@ export function Logs() {
         <p className="page-description">{t("description")}</p>
       </div>
 
-      <div
-        className={`grid gap-4 ${totalPages <= 1 ? "grid-cols-4" : "grid-cols-1"}`}
-      >
-        <StatCard
-          label={t("stats.totalCalls")}
-          value={total}
-          icon={Activity}
-          iconColor="var(--terra)"
-          iconBg="var(--terra-bg)"
-        />
+      <div className="card !p-0 flex flex-col sm:flex-row sm:divide-x divide-y sm:divide-y-0 divide-line overflow-hidden">
+        <div className="flex-1 flex items-center gap-2.5 px-5 py-3.5">
+          <Activity size={15} className="shrink-0" style={{ color: "var(--terra)" }} />
+          <span className="text-base font-bold text-ink">{total}</span>
+          <span className="text-xs text-ink-tertiary">{t("stats.totalCalls")}</span>
+        </div>
         {totalPages <= 1 && (
           <>
-              <StatCard
-                label={t("stats.successRate")}
-                value={
-                  total > 0
-                    ? `${Math.round((successes / Math.max(entries.length, 1)) * 100)}%`
-                  : "\u2014"
-              }
-              icon={CheckCircle2}
-              iconColor="var(--sage)"
-              iconBg="var(--sage-bg)"
-            />
-              <StatCard
-                label={t("stats.errors")}
-                value={errors_}
-                icon={AlertCircle}
-                iconColor="var(--rust)"
-              iconBg="var(--rust-bg)"
-            />
-              <StatCard
-                label={t("stats.avgLatency")}
-                value={`${avgMs}ms`}
-                icon={Timer}
-                iconColor="var(--info)"
-              iconBg="var(--info-bg)"
-            />
+            <div className="flex-1 flex items-center gap-2.5 px-5 py-3.5">
+              <CheckCircle2 size={15} className="shrink-0" style={{ color: "var(--sage)" }} />
+              <span className="text-base font-bold text-ink">
+                {total > 0
+                  ? `${Math.round((successes / Math.max(entries.length, 1)) * 100)}%`
+                  : "\u2014"}
+              </span>
+              <span className="text-xs text-ink-tertiary">{t("stats.successRate")}</span>
+            </div>
+            <div className="flex-1 flex items-center gap-2.5 px-5 py-3.5">
+              <AlertCircle size={15} className="shrink-0" style={{ color: "var(--rust)" }} />
+              <span className="text-base font-bold text-ink">{errors_}</span>
+              <span className="text-xs text-ink-tertiary">{t("stats.errors")}</span>
+            </div>
+            <div className="flex-1 flex items-center gap-2.5 px-5 py-3.5">
+              <Timer size={15} className="shrink-0" style={{ color: "var(--info)" }} />
+              <span className="text-base font-bold text-ink">{avgMs}ms</span>
+              <span className="text-xs text-ink-tertiary">{t("stats.avgLatency")}</span>
+            </div>
           </>
         )}
       </div>
@@ -151,60 +143,9 @@ export function Logs() {
       {chartData.length > 0 && (
         <Card>
           <h2 className="section-label mb-4">{t("chart.callsOverTime")}</h2>
-          <div className="h-48">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartData}>
-                <defs>
-                  <linearGradient
-                    id="callsGradient"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop
-                      offset="5%"
-                      stopColor="var(--terra)"
-                      stopOpacity={0.2}
-                    />
-                    <stop
-                      offset="95%"
-                      stopColor="var(--terra)"
-                      stopOpacity={0}
-                    />
-                  </linearGradient>
-                </defs>
-                <XAxis
-                  dataKey="hour"
-                  tick={{ fontSize: 10, fill: "var(--ink-tertiary)" }}
-                  axisLine={{ stroke: "var(--line)" }}
-                  tickLine={false}
-                />
-                <YAxis
-                  tick={{ fontSize: 10, fill: "var(--ink-tertiary)" }}
-                  axisLine={false}
-                  tickLine={false}
-                  width={30}
-                />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "var(--surface)",
-                    border: "1px solid var(--line)",
-                    borderRadius: "12px",
-                    fontSize: "12px",
-                    color: "var(--ink)",
-                  }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="calls"
-                  stroke="var(--terra)"
-                  strokeWidth={2}
-                  fill="url(#callsGradient)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
+          <MiniAreaChart
+            data={chartData.map((d) => ({ label: d.hour, value: d.calls }))}
+          />
         </Card>
       )}
 
@@ -256,6 +197,7 @@ export function Logs() {
         isError={isError}
         error={error instanceof Error ? error : null}
         loadingMessage={t("query.loading")}
+        skeleton={<LogsSkeleton />}
       >
         {entries.length > 0 ? (
           <>
@@ -361,7 +303,7 @@ export function Logs() {
                   <button
                     onClick={() => setPage((p) => Math.max(0, p - 1))}
                     disabled={page === 0}
-                    className="p-1.5 rounded-lg text-ink-tertiary hover:text-ink hover:bg-surface-hover transition-all disabled:opacity-30 disabled:pointer-events-none"
+                    className="p-2 rounded-lg text-ink-tertiary hover:text-ink hover:bg-surface-hover transition-all disabled:opacity-30 disabled:pointer-events-none"
                   >
                     <ChevronLeft size={16} />
                   </button>
@@ -373,7 +315,7 @@ export function Logs() {
                       setPage((p) => Math.min(totalPages - 1, p + 1))
                     }
                     disabled={page >= totalPages - 1}
-                    className="p-1.5 rounded-lg text-ink-tertiary hover:text-ink hover:bg-surface-hover transition-all disabled:opacity-30 disabled:pointer-events-none"
+                    className="p-2 rounded-lg text-ink-tertiary hover:text-ink hover:bg-surface-hover transition-all disabled:opacity-30 disabled:pointer-events-none"
                   >
                     <ChevronRight size={16} />
                   </button>

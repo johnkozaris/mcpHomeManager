@@ -46,7 +46,6 @@ export default defineConfig({
         manualChunks: {
           "vendor-react": ["react", "react-dom", "@tanstack/react-router"],
           "vendor-query": ["@tanstack/react-query"],
-          "vendor-recharts": ["recharts"],
         },
       },
     },

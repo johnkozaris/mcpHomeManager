@@ -39,7 +39,7 @@
   --color-stone-bg: var(--stone-bg);
 
   --font-sans:
-    "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-mono: "SF Mono", "JetBrains Mono", Menlo, monospace;
 
 --text-xs: 0.8125rem;
@@ -170,7 +170,6 @@
   body {
     @apply bg-canvas text-ink antialiased;
     font-weight: 425;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   ::selection {
@@ -231,24 +230,9 @@
 
 /* ─── Component classes ────────────────────────────────────── */
 @layer components {
-  /* Cards — borderless with subtle shadow, smooth hover elevation */
+  /* Cards — borderless with subtle shadow */
   .card {
     @apply bg-surface rounded-2xl;
-    box-shadow:
-      0 1px 3px rgba(0, 0, 0, 0.06),
-      0 1px 2px rgba(0, 0, 0, 0.04);
-    transition:
-      box-shadow 0.2s ease,
-      transform 0.2s ease;
-  }
-  .card:hover {
-    box-shadow:
-      0 6px 16px rgba(0, 0, 0, 0.1),
-      0 2px 6px rgba(0, 0, 0, 0.06);
-    transform: translateY(-1px);
-  }
-  .card:active {
-    transform: translateY(0);
     box-shadow:
       0 1px 3px rgba(0, 0, 0, 0.06),
       0 1px 2px rgba(0, 0, 0, 0.04);
@@ -258,7 +242,23 @@
       0 1px 3px rgba(0, 0, 0, 0.2),
       0 1px 2px rgba(0, 0, 0, 0.15);
   }
-  .dark .card:hover {
+
+  /* Interactive cards — hover lift for clickable cards only */
+  .card-interactive {
+    transition:
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+  .card-interactive:hover {
+    box-shadow:
+      0 6px 16px rgba(0, 0, 0, 0.1),
+      0 2px 6px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+  }
+  .card-interactive:active {
+    transform: translateY(0);
+  }
+  .dark .card-interactive:hover {
     box-shadow:
       0 6px 20px rgba(0, 0, 0, 0.3),
       0 2px 6px rgba(0, 0, 0, 0.2);
@@ -296,12 +296,12 @@
     @apply text-ink-secondary hover:text-ink hover:bg-canvas-tertiary;
   }
 
-  /* Hero gradient banner — soft blue-to-teal, clean and modern */
+  /* Hero gradient banner — terra accent base */
   .hero-banner {
-    background: linear-gradient(135deg, #3a6b8c 0%, #4a88a8 40%, #4a9a8e 100%);
+    background: linear-gradient(135deg, #3a5fa0 0%, #4a7cc9 40%, #5a8ec0 100%);
   }
   .dark .hero-banner {
-    background: linear-gradient(135deg, #1e3446 0%, #1e4458 40%, #1e4e46 100%);
+    background: linear-gradient(135deg, #1e2d46 0%, #1e3a58 40%, #1e4860 100%);
   }
 
   /* Tool card — elevated surface with visible border */
@@ -356,6 +356,7 @@
     background: rgba(255, 255, 255, 0.06);
     color: #e8e4dc;
   }
+
   .sidebar-link-active {
     padding: 10px 14px;
     border-radius: var(--radius-lg);
@@ -364,5 +365,10 @@
     white-space: nowrap;
     overflow: hidden;
     box-shadow: inset 3px 0 0 var(--terra);
+  }
+
+  /* Modal overlay backdrop */
+  .overlay-backdrop {
+    background-color: rgb(0 0 0 / 0.4);
   }
 }

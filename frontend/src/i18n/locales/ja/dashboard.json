@@ -3,6 +3,7 @@
   "heroBanner": {
     "title": "homelabをAIに接続",
     "description": "一度サービスを接続すれば、Claude、ChatGPT、Cursor などからツールを使えます。",
+    "dismiss": "閉じる",
     "actions": {
       "connectService": "サービスを接続",
       "setupGuide": "セットアップガイド"
@@ -31,6 +32,7 @@
     "more": "さらに表示"
   },
   "howItWorks": {
+    "dismiss": "閉じる",
     "title": "使い方",
     "steps": {
       "connect": {

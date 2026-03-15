@@ -3,6 +3,7 @@
   "heroBanner": {
     "title": "Ligue o seu homelab à IA",
     "description": "Ligue serviços uma vez e use depois as respetivas ferramentas no Claude, ChatGPT, Cursor e noutros clientes.",
+    "dismiss": "Fechar",
     "actions": {
       "connectService": "Ligar serviço",
       "setupGuide": "Guia de configuração"
@@ -31,6 +32,7 @@
     "more": "Mais"
   },
   "howItWorks": {
+    "dismiss": "Fechar",
     "title": "Como funciona",
     "steps": {
       "connect": {

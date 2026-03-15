@@ -36,6 +36,7 @@ function AgentCard({
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center gap-4 p-5 text-left hover:bg-surface-hover transition-colors cursor-pointer group"
+        aria-expanded={open}
       >
         <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0">
           <Icon size={22} />
@@ -403,7 +404,7 @@ export function Agents() {
           <p className="text-base text-ink-secondary">
             {t("cards.otherClients.description")}
           </p>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {[
               {
                 id: "transport",

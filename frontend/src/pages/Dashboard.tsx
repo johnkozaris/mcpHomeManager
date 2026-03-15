@@ -6,7 +6,6 @@ import {
   Activity,
   ArrowRight,
   Plus,
-  Bot,
   Zap,
   X,
 } from "lucide-react";
@@ -25,6 +24,7 @@ import type { ServiceType } from "@/lib/types";
 import { StatusDot } from "@/components/ui/StatusDot";
 import { isDismissed, dismiss } from "@/lib/utils";
 import type { ServiceConnection } from "@/lib/types";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { useTranslation } from "react-i18next";
 
 /* ─── Hero — compact ───────────────────────────────────────── */
@@ -33,33 +33,22 @@ function HeroBanner({ onDismiss }: { onDismiss: () => void }) {
 
   return (
     <div className="hero-banner relative overflow-hidden rounded-2xl">
-      <div className="absolute inset-0 pointer-events-none" aria-hidden>
-        <svg
-          className="absolute -top-16 -right-16 w-56 h-56"
-          viewBox="0 0 224 224"
-        >
-          <circle cx="224" cy="0" r="160" fill="white" fillOpacity="0.07" />
-        </svg>
-      </div>
-
       <button
         onClick={onDismiss}
-        className="absolute top-3 right-3 z-20 w-7 h-7 rounded-lg bg-black/20 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-white hover:bg-black/30 transition-all"
+        className="absolute top-1.5 right-1.5 z-10 w-9 h-9 rounded-lg bg-white/15 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/25 transition-all"
+        aria-label={t("dismiss")}
       >
         <X size={14} />
       </button>
 
-      <div className="relative z-10 px-7 py-6">
+      <div className="px-7 py-6">
         <h1 className="text-xl font-bold text-white tracking-tight">
           {t("title")}
         </h1>
         <p className="text-sm text-white/60 mt-1.5">{t("description")}</p>
         <div className="flex items-center gap-3 mt-4">
           <Link to="/services">
-            <Button
-              size="sm"
-              className="!bg-white !text-[var(--terra-dark)] hover:!bg-white/90 !shadow-lg !font-bold !rounded-xl"
-            >
+            <Button variant="inverse" size="sm" className="!rounded-xl">
               <Plus size={14} /> {t("actions.connectService")}
             </Button>
           </Link>
@@ -78,8 +67,8 @@ function HeroBanner({ onDismiss }: { onDismiss: () => void }) {
   );
 }
 
-/* ─── Compact stat row ─────────────────────────────────────── */
-function StatRow({
+/* ─── Inline stat bar ─────────────────────────────────────── */
+function StatBar({
   services,
   toolCount,
   auditCount,
@@ -97,28 +86,25 @@ function StatRow({
       id: "services",
       icon: Server,
       color: "var(--terra)",
-      bg: "var(--terra-bg)",
       value: `${services.length}`,
-      sub: t("services.sub", { count: enabled }),
+      label: t("services.sub", { count: enabled }),
     },
     {
       id: "tools",
       icon: Wrench,
       color: "var(--sage)",
-      bg: "var(--sage-bg)",
       value: `${toolCount}`,
-      sub: t("tools.sub"),
+      label: t("tools.sub"),
     },
     {
       id: "health",
       icon: Activity,
       color: healthy === services.length ? "var(--sage)" : "var(--clay)",
-      bg: healthy === services.length ? "var(--sage-bg)" : "var(--clay-bg)",
       value:
         healthy === services.length
           ? t("health.ok")
           : `${healthy}/${services.length}`,
-      sub:
+      label:
         healthy === services.length
           ? t("health.allConnected")
           : t("health.needsAttention"),
@@ -127,28 +113,18 @@ function StatRow({
       id: "apiCalls",
       icon: Zap,
       color: "var(--info)",
-      bg: "var(--info-bg)",
       value: `${auditCount}`,
-      sub: t("apiCalls.sub"),
+      label: t("apiCalls.sub"),
     },
   ];
 
   return (
-    <div className="grid grid-cols-4 gap-3">
+    <div className="card !p-0 flex flex-col sm:flex-row sm:divide-x divide-y sm:divide-y-0 divide-line overflow-hidden">
       {stats.map((s) => (
-        <div key={s.id} className="card !p-4 flex items-center gap-3">
-          <div
-            className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-            style={{ backgroundColor: s.bg }}
-          >
-            <s.icon size={16} style={{ color: s.color }} />
-          </div>
-          <div className="min-w-0">
-            <p className="text-lg font-bold text-ink leading-tight">
-              {s.value}
-            </p>
-            <p className="text-xs text-ink-tertiary">{s.sub}</p>
-          </div>
+        <div key={s.id} className="flex-1 flex items-center gap-2.5 px-5 py-3.5">
+          <s.icon size={15} style={{ color: s.color }} className="shrink-0" />
+          <span className="text-base font-bold text-ink">{s.value}</span>
+          <span className="text-xs text-ink-tertiary truncate">{s.label}</span>
         </div>
       ))}
     </div>
@@ -159,11 +135,17 @@ function StatRow({
 function ServiceRow({ service }: { service: ServiceConnection }) {
   const { t } = useTranslation("dashboard", { keyPrefix: "serviceRow" });
   const meta = getServiceMeta(service.service_type);
+  const isUnhealthy = service.health_status === "unhealthy";
   return (
     <Link
       to="/services/$id"
       params={{ id: service.id }}
-      className="card flex items-center justify-between p-4 group transition-all duration-200"
+      className={[
+        "card card-interactive flex items-center justify-between p-4 group transition-all duration-200",
+        isUnhealthy && "border-l-[3px] border-l-rust",
+      ]
+        .filter(Boolean)
+        .join(" ")}
     >
       <div className="flex items-center gap-3">
         <ServiceIconBadge type={service.service_type} size="sm" />
@@ -212,7 +194,7 @@ function ServiceGrid() {
           >
             <div
               className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-              style={{ backgroundColor: `${meta.color}20` }}
+              style={{ backgroundColor: `color-mix(in srgb, ${meta.color} 12%, transparent)` }}
             >
               <meta.icon size={14} style={{ color: meta.color }} />
             </div>
@@ -245,54 +227,37 @@ function HowItWorks({ onDismiss }: { onDismiss: () => void }) {
     <div className="relative card !p-5">
       <button
         onClick={onDismiss}
-        className="absolute top-3 right-3 w-7 h-7 rounded-lg bg-canvas-tertiary flex items-center justify-center text-ink-tertiary hover:text-ink hover:bg-canvas-hover transition-all"
+        className="absolute top-1.5 right-1.5 w-9 h-9 rounded-lg bg-canvas-tertiary flex items-center justify-center text-ink-tertiary hover:text-ink hover:bg-canvas-hover transition-all"
+        aria-label={t("dismiss")}
       >
         <X size={14} />
       </button>
       <p className="text-xs font-bold uppercase tracking-wider text-ink-tertiary mb-3">
         {t("title")}
       </p>
-      <div className="space-y-3">
-        {[
-          {
-            id: "connect",
-            icon: Server,
-            color: "var(--terra)",
-            bg: "var(--terra-bg)",
-            title: t("steps.connect.title"),
-            desc: t("steps.connect.description"),
-          },
-          {
-            id: "configure",
-            icon: Wrench,
-            color: "var(--sage)",
-            bg: "var(--sage-bg)",
-            title: t("steps.configure.title"),
-            desc: t("steps.configure.description"),
-          },
-          {
-            id: "use",
-            icon: Bot,
-            color: "var(--coral)",
-            bg: "var(--coral-bg)",
-            title: t("steps.use.title"),
-            desc: t("steps.use.description"),
-          },
-        ].map((step) => (
-          <div key={step.id} className="flex items-center gap-3">
-            <div
-              className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-              style={{ backgroundColor: step.bg }}
-            >
-              <step.icon size={16} style={{ color: step.color }} />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-ink">{step.title}</p>
-              <p className="text-xs text-ink-secondary">{step.desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+      <ol className="space-y-2.5 text-sm text-ink-secondary">
+        <li className="flex gap-2">
+          <span className="text-xs font-bold text-ink-tertiary mt-0.5 shrink-0">1.</span>
+          <span>
+            <strong className="text-ink">{t("steps.connect.title")}</strong>
+            {" \u2014 "}{t("steps.connect.description")}
+          </span>
+        </li>
+        <li className="flex gap-2">
+          <span className="text-xs font-bold text-ink-tertiary mt-0.5 shrink-0">2.</span>
+          <span>
+            <strong className="text-ink">{t("steps.configure.title")}</strong>
+            {" \u2014 "}{t("steps.configure.description")}
+          </span>
+        </li>
+        <li className="flex gap-2">
+          <span className="text-xs font-bold text-ink-tertiary mt-0.5 shrink-0">3.</span>
+          <span>
+            <strong className="text-ink">{t("steps.use.title")}</strong>
+            {" \u2014 "}{t("steps.use.description")}
+          </span>
+        </li>
+      </ol>
     </div>
   );
 }
@@ -309,10 +274,10 @@ function WelcomeView() {
 
       {(!heroHidden || !howHidden) && (
         <div
-          className={`grid gap-5 ${!heroHidden && !howHidden ? "grid-cols-12" : ""}`}
+          className={`grid gap-5 ${!heroHidden && !howHidden ? "grid-cols-1 lg:grid-cols-12" : ""}`}
         >
           {!heroHidden && (
-            <div className={howHidden ? "" : "col-span-8"}>
+            <div className={howHidden ? "" : "lg:col-span-8"}>
               <HeroBanner
                 onDismiss={() => {
                   dismiss("hero");
@@ -322,7 +287,7 @@ function WelcomeView() {
             </div>
           )}
           {!howHidden && (
-            <div className={heroHidden ? "" : "col-span-4"}>
+            <div className={heroHidden ? "" : "lg:col-span-4"}>
               <HowItWorks
                 onDismiss={() => {
                   dismiss("howitworks");
@@ -363,6 +328,7 @@ function DashboardView({
 }) {
   const { t } = useTranslation("dashboard", { keyPrefix: "dashboardView" });
   const [heroHidden, setHeroHidden] = useState(isDismissed("hero"));
+  const hasActivity = audit && audit.length > 0;
 
   return (
     <div className="space-y-5">
@@ -377,14 +343,69 @@ function DashboardView({
         />
       )}
 
-      <StatRow
+      <StatBar
         services={services}
         toolCount={toolCount}
         auditCount={audit?.length ?? 0}
       />
 
-      <div className="grid grid-cols-12 gap-5">
-        <div className="col-span-7">
+      {hasActivity ? (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          <div className="lg:col-span-8">
+            <h2 className="section-label mb-3">{t("yourServices")}</h2>
+            <div className="space-y-2.5">
+              {services.map((svc) => (
+                <ServiceRow key={svc.id} service={svc} />
+              ))}
+            </div>
+            <Link
+              to="/services"
+              className="flex items-center gap-1.5 text-sm font-semibold text-terra hover:text-terra-light transition-colors mt-3"
+            >
+              {t("manageAll")} <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          <div className="lg:col-span-4">
+            <div className="flex items-center justify-between mb-2.5">
+              <h3 className="section-label">{t("recentActivity.title")}</h3>
+              <Link
+                to="/logs"
+                className="text-xs text-terra hover:text-terra-light transition-colors"
+              >
+                {t("recentActivity.viewAll")}
+              </Link>
+            </div>
+            <div className="card !p-3.5 space-y-2">
+              {audit.slice(0, 6).map((entry) => (
+                <div
+                  key={entry.id}
+                  className="flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Badge
+                      variant={
+                        entry.status === "success" ? "positive" : "critical"
+                      }
+                    >
+                      {entry.status === "success"
+                        ? t("recentActivity.statusOk")
+                        : t("recentActivity.statusError")}
+                    </Badge>
+                    <span className="text-xs text-ink font-mono truncate">
+                      {entry.tool_name}
+                    </span>
+                  </div>
+                  <span className="text-xs text-ink-tertiary font-mono shrink-0">
+                    {entry.duration_ms}ms
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div>
           <h2 className="section-label mb-3">{t("yourServices")}</h2>
           <div className="space-y-2.5">
             {services.map((svc) => (
@@ -398,108 +419,21 @@ function DashboardView({
             {t("manageAll")} <ArrowRight size={14} />
           </Link>
         </div>
+      )}
+    </div>
+  );
+}
 
-        <div className="col-span-5 space-y-5">
-          {audit && audit.length > 0 && (
-            <div>
-              <div className="flex items-center justify-between mb-2.5">
-                <h3 className="section-label">{t("recentActivity.title")}</h3>
-                <Link
-                  to="/logs"
-                  className="text-xs text-terra hover:text-terra-light transition-colors"
-                >
-                  {t("recentActivity.viewAll")}
-                </Link>
-              </div>
-              <div className="card !p-3.5 space-y-2">
-                {audit.slice(0, 5).map((entry) => (
-                  <div
-                    key={entry.id}
-                    className="flex items-center justify-between"
-                  >
-                    <div className="flex items-center gap-2 min-w-0">
-                      <Badge
-                        variant={
-                          entry.status === "success" ? "positive" : "critical"
-                        }
-                      >
-                        {entry.status === "success"
-                          ? t("recentActivity.statusOk")
-                          : t("recentActivity.statusError")}
-                      </Badge>
-                      <span className="text-xs text-ink font-mono truncate">
-                        {entry.tool_name}
-                      </span>
-                    </div>
-                    <span className="text-xs text-ink-tertiary font-mono shrink-0">
-                      {entry.duration_ms}ms
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div>
-            <h3 className="section-label mb-2.5">{t("quickActions.title")}</h3>
-            <div className="space-y-2">
-              {[
-                {
-                  id: "agents",
-                  to: "/agents",
-                  icon: Bot,
-                  color: "var(--terra)",
-                  bg: "var(--terra-bg)",
-                  label: t("quickActions.items.setupAgents.label"),
-                  desc: t("quickActions.items.setupAgents.description"),
-                },
-                {
-                  id: "services",
-                  to: "/services",
-                  icon: Plus,
-                  color: "var(--sage)",
-                  bg: "var(--sage-bg)",
-                  label: t("quickActions.items.connectService.label"),
-                  desc: t("quickActions.items.connectService.description"),
-                },
-                {
-                  id: "tools",
-                  to: "/tools",
-                  icon: Wrench,
-                  color: "var(--info)",
-                  bg: "var(--info-bg)",
-                  label: t("quickActions.items.manageTools.label"),
-                  desc: t("quickActions.items.manageTools.description"),
-                },
-              ].map((a) => (
-                <Link
-                  key={a.id}
-                  to={a.to}
-                  className="card flex items-center gap-3 !p-3.5 group transition-all duration-200"
-                >
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ backgroundColor: a.bg }}
-                  >
-                    <a.icon size={16} style={{ color: a.color }} />
-                  </div>
-                  <div className="flex-1">
-                    <span className="text-sm font-semibold text-ink group-hover:text-terra transition-colors">
-                      {a.label}
-                    </span>
-                    <span className="block text-xs text-ink-tertiary">
-                      {a.desc}
-                    </span>
-                  </div>
-                  <ArrowRight
-                    size={14}
-                    className="text-ink-faint opacity-0 group-hover:opacity-100 transition-opacity"
-                  />
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
+/* ─── Skeleton ────────────────────────────────────────────── */
+function DashboardSkeleton() {
+  return (
+    <div className="space-y-5">
+      <Skeleton className="h-10 w-full max-w-md" />
+      <Skeleton className="h-[52px]" />
+      <div className="space-y-2.5">
+        {Array.from({ length: 3 }, (_, i) => (
+          <Skeleton key={i} className="h-[68px]" />
+        ))}
       </div>
     </div>
   );
@@ -520,6 +454,7 @@ export function Dashboard() {
       error={error instanceof Error ? error : null}
       loadingMessage={t("loading")}
       errorMessage={t("error")}
+      skeleton={<DashboardSkeleton />}
     >
       {services && services.length > 0 ? (
         <DashboardView

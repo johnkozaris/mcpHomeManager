@@ -76,64 +76,6 @@ function SidebarLink({
   );
 }
 
-function BgShapes({ sidebarWidth }: { sidebarWidth: number }) {
-  return (
-    <div
-      className="fixed inset-0 pointer-events-none overflow-hidden"
-      style={{ left: sidebarWidth }}
-      aria-hidden
-    >
-      <svg
-        className="absolute -top-32 -right-32 w-[500px] h-[500px]"
-        viewBox="0 0 500 500"
-      >
-        <circle
-          cx="500"
-          cy="0"
-          r="380"
-          fill="var(--terra)"
-          fillOpacity="0.03"
-        />
-      </svg>
-      <svg
-        className="absolute bottom-16 left-10 w-36 h-36"
-        viewBox="0 0 144 144"
-      >
-        <circle cx="72" cy="72" r="68" fill="var(--coral)" fillOpacity="0.04" />
-      </svg>
-      <svg
-        className="absolute top-[40%] -right-24 w-60 h-60"
-        viewBox="0 0 240 240"
-      >
-        <circle
-          cx="120"
-          cy="120"
-          r="110"
-          stroke="var(--terra)"
-          strokeOpacity="0.04"
-          strokeWidth="2"
-          fill="none"
-        />
-      </svg>
-      <svg
-        className="absolute bottom-[20%] right-[30%] w-16 h-16"
-        viewBox="0 0 64 64"
-      >
-        <rect
-          x="8"
-          y="8"
-          width="48"
-          height="48"
-          rx="10"
-          fill="var(--sage)"
-          fillOpacity="0.04"
-          transform="rotate(15 32 32)"
-        />
-      </svg>
-    </div>
-  );
-}
-
 const COLLAPSED_KEY = "sidebar_collapsed";
 
 export function Shell({ children }: { children: ReactNode }) {
@@ -200,7 +142,7 @@ export function Shell({ children }: { children: ReactNode }) {
         >
           <img
             src={logoSrc}
-            alt=""
+            alt={appName}
             className={`shrink-0 drop-shadow-lg transition-all duration-300 w-auto ${collapsed ? "h-9" : "h-8"}`}
           />
           {!collapsed && (
@@ -210,7 +152,7 @@ export function Shell({ children }: { children: ReactNode }) {
               </span>
               <button
                 onClick={toggleCollapsed}
-                className="p-1 rounded-lg text-white/30 hover:text-white/70 hover:bg-white/5 transition-all"
+                className="p-2 rounded-lg text-white/50 hover:text-white/70 hover:bg-white/5 transition-all"
                 aria-label={t("actions.collapseSidebar", { ns: "nav" })}
                 title={t("actions.collapse", { ns: "nav" })}
               >
@@ -221,7 +163,7 @@ export function Shell({ children }: { children: ReactNode }) {
           {collapsed && (
             <button
               onClick={toggleCollapsed}
-              className="p-1 rounded-lg text-white/30 hover:text-white/70 hover:bg-white/5 transition-all"
+              className="p-2 rounded-lg text-white/50 hover:text-white/70 hover:bg-white/5 transition-all"
               aria-label={t("actions.expandSidebar", { ns: "nav" })}
               title={t("actions.expand", { ns: "nav" })}
             >
@@ -239,30 +181,6 @@ export function Shell({ children }: { children: ReactNode }) {
             <SidebarLink key={item.to} item={item} collapsed={collapsed} />
           ))}
         </nav>
-
-        {!collapsed && (
-          <div className="px-5 pb-2" aria-hidden>
-            <svg
-              width="100%"
-              height="36"
-              viewBox="0 0 180 36"
-              fill="none"
-              className="opacity-[0.07]"
-            >
-              <circle cx="18" cy="18" r="16" fill="var(--terra)" />
-              <circle cx="50" cy="22" r="10" fill="var(--coral)" />
-              <rect
-                x="72"
-                y="6"
-                width="22"
-                height="22"
-                rx="5"
-                fill="var(--sage)"
-                transform="rotate(12 83 17)"
-              />
-            </svg>
-          </div>
-        )}
 
         <div className="px-2 py-2 border-t border-white/5 space-y-0.5">
           <button
@@ -284,6 +202,7 @@ export function Shell({ children }: { children: ReactNode }) {
               onClick={() => setLangOpen((v) => !v)}
               className={`sidebar-link flex items-center gap-3 text-sm font-medium transition-all duration-200 w-full ${collapsed ? "justify-center" : ""}`}
               title={LOCALE_DISPLAY_NAMES[currentLocale]}
+              aria-label={LOCALE_DISPLAY_NAMES[currentLocale]}
             >
               <Globe size={18} className="shrink-0" />
               {!collapsed && (
@@ -328,7 +247,7 @@ export function Shell({ children }: { children: ReactNode }) {
                   </span>
                   <button
                     onClick={handleLogout}
-                    className="text-xs text-white/30 hover:text-white/70 transition-colors whitespace-nowrap"
+                    className="text-xs text-white/50 hover:text-white/70 transition-colors whitespace-nowrap"
                     title={signOutLabel}
                   >
                     {signOutLabel}
@@ -338,8 +257,9 @@ export function Shell({ children }: { children: ReactNode }) {
               {collapsed && (
                 <button
                   onClick={handleLogout}
-                  className="p-1 rounded-lg text-white/30 hover:text-white/70 hover:bg-white/5 transition-all"
+                  className="p-2 rounded-lg text-white/50 hover:text-white/70 hover:bg-white/5 transition-all"
                   title={signOutLabel}
+                  aria-label={signOutLabel}
                 >
                   <LogOut size={14} />
                 </button>
@@ -349,9 +269,8 @@ export function Shell({ children }: { children: ReactNode }) {
         </div>
       </aside>
 
-      <div className="flex-1 overflow-y-auto relative">
-        <BgShapes sidebarWidth={sidebarWidth} />
-        <div className="relative z-10 px-14 py-8">{children}</div>
+      <div className="flex-1 overflow-y-auto">
+        <div className="px-14 py-8">{children}</div>
       </div>
     </div>
   );

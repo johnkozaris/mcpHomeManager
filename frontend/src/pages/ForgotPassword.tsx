@@ -1,13 +1,17 @@
 import { useState } from "react";
+import { useAppName } from "@/hooks/useAppName";
 import { Link } from "@tanstack/react-router";
 import { api } from "@/lib/api";
 import { parseApiError } from "@/lib/utils";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 import { ArrowLeft } from "lucide-react";
 import logoSrc from "@/assets/logo.png";
 import { useTranslation } from "react-i18next";
 
 export function ForgotPassword() {
   const { t } = useTranslation("auth", { keyPrefix: "forgotPassword" });
+  const appName = useAppName();
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -32,9 +36,9 @@ export function ForgotPassword() {
     <div className="min-h-screen bg-canvas flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
-          <img src={logoSrc} alt="" height={48} className="h-12 w-auto mb-4 drop-shadow-lg" />
+          <img src={logoSrc} alt={appName} height={48} className="h-12 w-auto mb-4 drop-shadow-lg" />
           <h1 className="text-xl font-semibold text-ink">{t("title")}</h1>
-          <p className="text-sm text-ink-muted mt-1">
+          <p className="text-sm text-ink-tertiary mt-1">
             {sent ? t("subtitle.sent") : t("subtitle.default")}
           </p>
         </div>
@@ -59,42 +63,31 @@ export function ForgotPassword() {
                 </div>
               )}
 
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-ink mb-1.5"
-                >
-                  {t("emailLabel")}
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  autoComplete="email"
-                  autoFocus
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-line bg-canvas text-ink text-sm
-                             placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
-                             transition-colors"
-                  placeholder={t("emailPlaceholder")}
-                />
-              </div>
+              <Input
+                id="email"
+                label={t("emailLabel")}
+                type="email"
+                autoComplete="email"
+                autoFocus
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={t("emailPlaceholder")}
+              />
 
-              <button
+              <Button
                 type="submit"
+                size="lg"
                 disabled={loading || !email}
-                className="w-full py-2.5 rounded-lg bg-terra text-white text-sm font-medium
-                           hover:bg-terra-hover active:scale-[0.98] transition-all
-                           disabled:opacity-50 disabled:pointer-events-none"
+                className="w-full"
               >
                 {loading ? t("actions.sending") : t("actions.sendResetLink")}
-              </button>
+              </Button>
 
               <div className="text-center">
                 <Link
                   to="/login"
-                  className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-ink transition-colors"
+                  className="inline-flex items-center gap-1.5 text-sm text-ink-tertiary hover:text-ink transition-colors"
                 >
                   <ArrowLeft size={14} /> {t("backToSignIn")}
                 </Link>

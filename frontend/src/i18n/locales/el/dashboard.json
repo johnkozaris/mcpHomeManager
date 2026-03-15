@@ -3,6 +3,7 @@
   "heroBanner": {
     "title": "Σύνδεσε το homelab σου με AI",
     "description": "Σύνδεσε τις υπηρεσίες σου μία φορά και μετά χρησιμοποίησε τα εργαλεία τους από Claude, ChatGPT, Cursor κ.ά.",
+    "dismiss": "Παράβλεψη",
     "actions": {
       "connectService": "Σύνδεση υπηρεσίας",
       "setupGuide": "Οδηγός ρύθμισης"
@@ -31,6 +32,7 @@
     "more": "Περισσότερα"
   },
   "howItWorks": {
+    "dismiss": "Παράβλεψη",
     "title": "Πώς λειτουργεί",
     "steps": {
       "connect": {

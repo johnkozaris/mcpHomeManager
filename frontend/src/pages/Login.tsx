@@ -6,6 +6,8 @@ import { api } from "@/lib/api";
 import { queryKeys } from "@/lib/query-keys";
 import { queryClient } from "@/lib/queryClient";
 import { parseApiError } from "@/lib/utils";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 import logoSrc from "@/assets/logo.png";
 import { useTranslation } from "react-i18next";
 
@@ -44,9 +46,9 @@ export function Login() {
     <div className="min-h-screen bg-canvas flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
-          <img src={logoSrc} alt="" height={48} className="h-12 w-auto mb-4 drop-shadow-lg" />
+          <img src={logoSrc} alt={appName} height={48} className="h-12 w-auto mb-4 drop-shadow-sm" />
           <h1 className="text-xl font-semibold text-ink">{appName}</h1>
-          <p className="text-sm text-ink-muted mt-1">
+          <p className="text-sm text-ink-tertiary mt-1">
             {t("subtitle")}
           </p>
         </div>
@@ -62,64 +64,43 @@ export function Login() {
             </div>
           )}
 
-          <div>
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium text-ink mb-1.5"
-            >
-              {t("fields.username.label")}
-            </label>
-            <input
-              id="username"
-              type="text"
-              autoComplete="username"
-              autoFocus
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-line bg-canvas text-ink text-sm
-                         placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
-                         transition-colors"
-              placeholder={t("fields.username.placeholder")}
-            />
-          </div>
+          <Input
+            id="username"
+            label={t("fields.username.label")}
+            type="text"
+            autoComplete="username"
+            autoFocus
+            required
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder={t("fields.username.placeholder")}
+          />
 
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-ink mb-1.5"
-            >
-              {t("fields.password.label")}
-            </label>
-            <input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-line bg-canvas text-ink text-sm
-                         placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-terra/40 focus:border-terra
-                         transition-colors"
-              placeholder={t("fields.password.placeholder")}
-            />
-          </div>
+          <Input
+            id="password"
+            label={t("fields.password.label")}
+            type="password"
+            autoComplete="current-password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder={t("fields.password.placeholder")}
+          />
 
-          <button
+          <Button
             type="submit"
+            size="lg"
             disabled={loading || !username || !password}
-              className="w-full py-2.5 rounded-lg bg-terra text-white text-sm font-medium
-                       hover:bg-terra-hover active:scale-[0.98] transition-all
-                       disabled:opacity-50 disabled:pointer-events-none"
+            className="w-full"
           >
             {loading ? t("actions.signingIn") : t("actions.signIn")}
-          </button>
+          </Button>
 
           <div className="h-6 text-center">
             {config?.smtp_enabled && (
               <Link
                 to="/forgot-password"
-                className="text-sm text-ink-muted hover:text-terra transition-colors"
+                className="text-sm text-ink-tertiary hover:text-terra transition-colors"
               >
                 {t("actions.forgotPassword")}
               </Link>
